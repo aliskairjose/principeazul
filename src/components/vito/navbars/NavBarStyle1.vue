@@ -17,13 +17,6 @@
       </div>
       <nav class="navbar navbar-expand-lg navbar-light p-0">
           <div class="navbar-left">
-              <ul id="topbar-data-icon" class="d-flex p-0 topbar-menu-icon">
-                <li v-for="(item, index) in bookmark" :key="index">
-                  <router-link :to="item.link" class="nav-link" style="color: var(--iq-primary)">
-                    <i :class="`${item.icon}`"></i>
-                  </router-link>
-                </li>
-              </ul>
               <div class="iq-search-bar">
                   <form action="#" class="searchbox">
                     <input type="text" class="text search-input" @click="openSearch" v-model="globalSearch" placeholder="Type here to search...">
