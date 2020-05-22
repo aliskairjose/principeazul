@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 import Layout1 from '../layouts/Layout1'
 import Layout2 from '../layouts/Layout2'
 import DarkLayout1 from '../layouts/DarkLayout1'
-import DarkLayout2 from '../layouts/DarkLayout2'
 import Default from '../layouts/BlankLayout'
 import DarkDefault from '../layouts/DarkBlankLayout'
 import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
@@ -110,7 +109,7 @@ const childRoutes = (prop, mode) => [
   {
     path: 'home',
     name: prop + '.home',
-    meta: { dark: mode, auth: true, name: 'Home 2' },
+    meta: { dark: mode, auth: true, name: 'Home' },
     component: Dashboard2
   }
 ]
@@ -592,25 +591,11 @@ const routes = [
     children: childRoutes('dashboard')
   },
   {
-    path: '/dark/',
-    name: 'dashboard',
-    component: DarkLayout1,
-    meta: { auth: true },
-    children: childRoutes('dark.dashboard', true)
-  },
-  {
     path: '/',
     name: 'mini.dashboard',
     component: Layout2,
     meta: { auth: true },
     children: miniChildRoutes('mini.dashboard')
-  },
-  {
-    path: '/dark/',
-    name: 'mini.dashboard',
-    component: DarkLayout2,
-    meta: { auth: true },
-    children: miniChildRoutes('dark.mini.dashboard', true)
   },
   {
     path: '/core',
