@@ -116,7 +116,7 @@ export default {
           id: 1,
           name: 'Tiger Nixon',
           email: 'nixont@gmail.com',
-          phone: 'Edinburgh',
+          phone: '085455678',
           orders: '61',
           start_date: '2011/04/25',
           editable: false
@@ -125,7 +125,7 @@ export default {
           id: 2,
           name: 'Garrett Winters',
           email: 'Wintersg@gmail.com',
-          phone: 'Tokyo',
+          phone: '56578922',
           orders: '63',
           start_date: '2011/06/19',
           editable: false
