@@ -12,32 +12,44 @@
     "icon": "ri-home-3-line"
   },
   {
-    "title": "Social App",
+    "title": "Ordenes / Compras",
     "name": "Ordenes / Compras",
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.list"
+      "name": ""
     },
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-question-answer-line"
   },
   {
-    "title": "Todo",
+    "title": "CLientes",
     "name": "Clientes",
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name" : "app.todo"
+      "name" : "clients.client"
     },
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-user-line"
   },
   {
-    "title": "Project Management",
+    "title": "Inventario",
     "name": "Inventario",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "inventory.inventory"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-terminal-window-line"
+  },
+  {
+    "title": "Reporte",
+    "name": "Reporte",
     "is_heading": false,
     "is_active": false,
     "link": {
