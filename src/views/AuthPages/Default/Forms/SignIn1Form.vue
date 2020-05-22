@@ -78,13 +78,13 @@ export default {
   methods: {
     onSubmit () {
       this.jwtLogin()
-      /* if (this.formType === 'passport') {
-        this.passportLogin()
-      } else if (this.formType === 'jwt') {
-        this.jwtLogin()
-      } else if (this.formType === 'firebase') {
-        this.firebaseLogin()
-      } */
+      // if (this.formType === 'passport') {
+      //   this.passportLogin()
+      // } else if (this.formType === 'jwt') {
+      //   this.jwtLogin()
+      // } else if (this.formType === 'firebase') {
+      //   this.firebaseLogin()
+      // }
     },
     passportLogin () {
       auth.login(this.user).then(response => {
