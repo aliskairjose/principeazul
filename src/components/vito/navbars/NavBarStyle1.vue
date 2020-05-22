@@ -19,7 +19,7 @@
           <div class="navbar-left">
               <div class="iq-search-bar">
                   <form action="#" class="searchbox">
-                    <input type="text" class="text search-input" @click="openSearch" v-model="globalSearch" placeholder="Type here to search...">
+                    <input type="text" class="text search-input" @click="openSearch" v-model="globalSearch" placeholder="Escriba aqui para buscar...">
                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                     <GlobalSearch :search="globalSearch" @closeSearch="removeClass "/>
                   </form>
