@@ -37,7 +37,7 @@
           <b-collapse id="nav-collapse" is-nav>
             <slot name="responsiveRight" />
           </b-collapse>
-          <slot name="right" />
+          <!-- <slot name="right" /> -->
       </nav>
     </div>
   </div>
