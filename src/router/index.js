@@ -108,8 +108,8 @@ const miniChildRoutes = (prop, mode = false) => [
 
 const childRoutes = (prop, mode) => [
   {
-    path: 'home-2',
-    name: prop + '.home-2',
+    path: 'home',
+    name: prop + '.home',
     meta: { dark: mode, auth: true, name: 'Home 2' },
     component: Dashboard2
   }
