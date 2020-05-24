@@ -5,10 +5,12 @@ import Layout1 from '../layouts/Layout1'
 import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
 
 /* Dashboards View */
-import Dashboard2 from '../views/Dashboards/Dashboard2.vue'
-import Clients from '../views/Clients/Clients.vue'
-import Inventory from '../views/Inventory/Inventory.vue'
-import Callback from '../views/AuthPages/Default/Callback'
+import Dashboard2 from '@/views/Dashboards/Dashboard2.vue'
+import Clients from '@/views/Clients/Clients.vue'
+import Inventory from '@/views/Inventory/Inventory.vue'
+import Callback from '@/views/AuthPages/Default/Callback'
+import Order from '@/views/Orders/Order.vue'
+
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
 import SignUp1 from '../views/AuthPages/Default/SignUp1'
@@ -24,6 +26,12 @@ const paRoutes = (prop, mode = false) => [
     name: prop + '.home',
     meta: { dark: mode, auth: true, name: 'Home' },
     component: Dashboard2
+  },
+  {
+    path: 'orders',
+    name: prop + '.order',
+    meta: { dark: mode, auth: true, name: 'Orders' },
+    component: Order
   },
   {
     path: 'clients',
@@ -87,6 +95,13 @@ const routes = [
     component: Layout1,
     meta: { auth: true },
     children: paRoutes('dashboard')
+  },
+  {
+    path: '/',
+    name: 'order',
+    component: Layout1,
+    meta: { auth: true },
+    children: paRoutes('orders')
   },
   {
     path: '/',
