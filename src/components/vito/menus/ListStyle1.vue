@@ -28,6 +28,11 @@
         :className="`iq-submenu ${item.class_name}`"
       />
     </li>
+    <div class="d-inline-block w-100 text-center p-3">
+      <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}
+        <i class="ri-login-box-line ml-2"></i>
+      </a>
+    </div>
   </b-collapse>
 </template>
 <script>
@@ -49,6 +54,11 @@ export default {
   mounted () {
   },
   methods: {
+    logout () {
+      localStorage.removeItem('user')
+      localStorage.removeItem('access_token')
+      this.$router.push({ name: 'auth1.sign-in1' })
+    },
     activeLink (item) {
       return vito.getActiveLink(item, this.$route.name)
     }
