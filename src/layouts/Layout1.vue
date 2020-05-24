@@ -9,14 +9,14 @@
       <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo" :horizontal="horizontal" :items="horizontalMenu">
         <template slot="responsiveRight">
           <ul class="navbar-nav ml-auto navbar-list">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="search-toggle iq-waves-effect language-title" href="#"><img :src="selectedLang.image" alt="img-flaf" class="img-fluid mr-1" style="height: 16px; width: 16px;" /> {{ selectedLang.title }} <i class="ri-arrow-down-s-line"></i></a>
               <div class="iq-sub-dropdown">
                 <a class="iq-sub-card" href="javascript:void(0)" v-for="(lang, i) in langsOptions" :key="`Lang${i}`" @click="langChange(lang)">
                   <img :src="lang.image" alt="img-flaf" class="img-fluid mr-2" />{{ lang.title }}
                 </a>
               </div>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="javascript:void(0)" class="iq-waves-effect" :class="cartCount > 0 ? 'search-toggle' : ''">
                 <i class="ri-shopping-cart-2-line" />
