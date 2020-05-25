@@ -67,11 +67,7 @@ export default {
             icon: 'el-icon-edit'
           },
           handler: row => {
-            this.$message('Edit clicked')
-            console.log(row)
-            row.flow_no = 'hello word' + Math.random()
-            row.content = Math.random() > 0.5 ? 'Water flood' : 'Lock broken'
-            row.flow_type = Math.random() > 0.5 ? 'Repair' : 'Help'
+            this.$router.push('edit/' + row.id)
           },
           label: 'Edit'
         }, {
