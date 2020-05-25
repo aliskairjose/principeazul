@@ -8,6 +8,7 @@ import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
 import Dashboard2 from '@/views/Dashboards/Dashboard2.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import AddClient from '@/views/Clients/AddClient.vue'
+import EditClient from '@/views/Clients/EditClient.vue'
 import Inventory from '@/views/Inventory/Inventory.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
@@ -54,6 +55,12 @@ const clientRoutes = (prop, mode = false) => [
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Add Client' },
     component: AddClient
+  },
+  {
+    path: 'edit-client',
+    name: prop + '.edit',
+    meta: { dark: mode, auth: true, name: 'Edit Client' },
+    component: EditClient
   }
 ]
 

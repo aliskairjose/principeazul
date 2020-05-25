@@ -28,34 +28,12 @@
     "name": "Clientes",
     "is_heading": false,
     "is_active": false,
-    "link": "",
+    "link": {
+      "name": "client.list"
+    },
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-user-line",
-    "children": [
-      {
-        "title": "Lista de clientes",
-        "name": "Lista de clientes",
-        "is_active": false,
-        "link": {
-          "name" : "client.list"
-        },
-        "class_name": "",
-        "is_icon_class": true,
-        "icon": "ri-file-list-line"
-      },
-      {
-        "title": "Agregar Cliente",
-        "name": "Agregar Cliente",
-        "is_active": false,
-        "link": {
-          "name" : "client.add"
-        },
-        "class_name": "",
-        "is_icon_class": true,
-        "icon": "ri-user-add-line"
-      }
-    ]
+    "icon": "ri-user-line"
   },
   {
     "title": "Inventario",

@@ -75,8 +75,20 @@ export default {
   },
   methods: {
     add () {
-      let obj = this.default()
-      this.rows.push(obj)
+      this.$router.push('add-client')
+    },
+    edit (item) {
+      this.$router.push('edit-client')
+    },
+    remove (item) {
+      let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
+      if (mensaje) {
+        let index = this.rows.indexOf(item)
+        this.rows.splice(index, 1)
+      }
+    },
+    submit (item) {
+      item.editable = false
     },
     default () {
       return {
@@ -89,16 +101,6 @@ export default {
         salary: '$0',
         editable: false
       }
-    },
-    edit (item) {
-      item.editable = true
-    },
-    submit (item) {
-      item.editable = false
-    },
-    remove (item) {
-      let index = this.rows.indexOf(item)
-      this.rows.splice(index, 1)
     }
   },
   data () {
