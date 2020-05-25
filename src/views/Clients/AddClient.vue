@@ -24,7 +24,7 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Cédula:" label-for="cedula">
+                    <b-form-group class="col-md-6" label="Cédula / RUC:" label-for="cedula">
                       <ValidationProvider name="Cedula" rules="required" v-slot="{ errors }">
                         <b-form-input
                           v-model="user.cedula"
