@@ -6,7 +6,10 @@
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
-          <div class="iq-alert-text">El registro ha sido <b>eliminado</b> con éxito!</div>
+          <div class="iq-alert-text">
+            El registro ha sido
+            <b>eliminado</b> con éxito!
+          </div>
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
@@ -18,51 +21,16 @@
           <template v-slot:body>
             <b-row>
               <b-col md="12" class="table-responsive">
-                <b-table bordered hover :items="rows" :fields="columns" foot-clone>
-                  <template v-slot:cell(name)="data">
-                    <span v-if="!data.item.editable">{{ data.item.name }}</span>
-                    <input type="text" v-model="data.item.name" v-else class="form-control" />
-                  </template>
-                  <template v-slot:cell(email)="data">
-                    <span v-if="!data.item.editable">{{ data.item.email }}</span>
-                    <input type="text" v-model="data.item.email" v-else class="form-control" />
-                  </template>
-                  <template v-slot:cell(phone)="data">
-                    <span v-if="!data.item.editable">{{ data.item.phone }}</span>
-                    <input type="text" v-model="data.item.phone" v-else class="form-control" />
-                  </template>
-                  <template v-slot:cell(orders)="data">
-                    <span v-if="!data.item.editable">{{ data.item.orders }}</span>
-                    <input type="text" v-model="data.item.orders" v-else class="form-control" />
-                  </template>
-                  <template v-slot:cell(start_date)="data">
-                    <span v-if="!data.item.editable">{{ data.item.start_date }}</span>
-                    <input type="text" v-model="data.item.start_date" v-else class="form-control" />
-                  </template>
-                  <template v-slot:cell(salary)="data">
-                    <span v-if="!data.item.editable">{{ data.item.salary }}</span>
-                    <input type="text" v-model="data.item.salary" v-else class="form-control" />
-                  </template>
-                  <template v-slot:cell(action)="data">
-                    <b-button
-                      variant=" iq-bg-success mr-1 mb-1"
-                      size="sm"
-                      @click="edit(data.item)"
-                      v-if="!data.item.editable"
-                    >
-                      <i class="ri-ball-pen-fill m-0"></i>
-                    </b-button>
-                    <b-button
-                      variant=" iq-bg-success mr-1 mb-1"
-                      size="sm"
-                      @click="submit(data.item)"
-                      v-else
-                    >Ok</b-button>
-                    <b-button variant=" iq-bg-danger" size="sm" @click="remove(data.item)">
-                      <i class="ri-delete-bin-line m-0"></i>
-                    </b-button>
-                  </template>
-                </b-table>
+                <template>
+                  <data-tables :data="rows" :pagination-props="{ pageSizes: [5, 10, 15] }">
+                    <el-table-column
+                      v-for="title in titles"
+                      :prop="title.prop"
+                      :label="title.label"
+                      :key="title.label"
+                    ></el-table-column>
+                  </data-tables>
+                </template>
               </b-col>
             </b-row>
           </template>
@@ -71,6 +39,7 @@
     </b-row>
   </b-container>
 </template>
+
 <script>
 import { vito } from '../../config/pluginInit'
 
@@ -82,39 +51,11 @@ export default {
   methods: {
     add () {
       this.$router.push('add')
-    },
-    edit (item) {
-      // console.log(item)
-      this.$router.push('edit/' + item.id)
-    },
-    remove (item) {
-      let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
-      if (mensaje) {
-        let index = this.rows.indexOf(item)
-        this.rows.splice(index, 1)
-        this.isShow = true
-        setTimeout(() => {
-          this.isShow = false
-        }, 2000)
-      }
-    },
-    submit (item) {
-      item.editable = false
-    },
-    default () {
-      return {
-        id: this.rows.length,
-        name: '',
-        cedula: '',
-        email: '',
-        phone: ''
-      }
     }
   },
   data () {
     return {
-      isShow: false,
-      columns: [
+      titles: [
         { label: 'Nombre', key: 'name', class: 'text-left' },
         { label: 'Email', key: 'email', class: 'text-left' },
         { label: 'Telefono', key: 'phone', class: 'text-left' },

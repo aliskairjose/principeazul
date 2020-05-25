@@ -14,7 +14,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import DataTables and DataTablesServer together
 import VueDataTables from 'vue-data-tables'
+import lang from 'element-ui/lib/locale/lang/es'
+import locale from 'element-ui/lib/locale'
 
+locale.use(lang)
 global.Raphael = Raphael
 
 Vue.use(AlgoliaComponents)
