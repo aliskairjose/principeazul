@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
-        <b-alert :show="true" variant="success" class="bg-white" v-if="isShow">
+        <b-alert :show="isShow" variant="success" class="bg-white">
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
