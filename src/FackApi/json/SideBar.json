@@ -1,0 +1,84 @@
+[
+  {
+    "title": "Dashboard",
+    "name": "Dashboard",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "dashboard.home"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-home-3-line"
+  },
+  {
+    "title": "Ordenes / Compras",
+    "name": "Ordenes / Compras",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "orders.order"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-question-answer-line"
+  },
+  {
+    "title": "Clientes",
+    "name": "Clientes",
+    "is_heading": false,
+    "is_active": false,
+    "link": "",
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-user-line",
+    "children": [
+      {
+        "title": "Lista de clientes",
+        "name": "Lista de clientes",
+        "is_active": false,
+        "link": {
+          "name" : "client.list"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-list-line"
+      },
+      {
+        "title": "Agregar Cliente",
+        "name": "Agregar Cliente",
+        "is_active": false,
+        "link": {
+          "name" : "client.add"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-user-add-line"
+      }
+    ]
+  },
+  {
+    "title": "Inventario",
+    "name": "Inventario",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "inventory.inventory"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-terminal-window-line"
+  },
+  {
+    "title": "Reporte",
+    "name": "Reporte",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "app.project.management"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-terminal-window-line"
+  }
+]
