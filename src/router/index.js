@@ -45,19 +45,19 @@ const paRoutes = (prop, mode = false) => [
 
 const clientRoutes = (prop, mode = false) => [
   {
-    path: 'client-list',
+    path: 'client/list',
     name: prop + '.list',
     meta: { dark: mode, auth: true, name: 'Clients' },
     component: ClientList
   },
   {
-    path: 'add-client',
+    path: 'client/add',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Add Client' },
     component: AddClient
   },
   {
-    path: 'edit-client',
+    path: 'client/edit/:id',
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Edit Client' },
     component: EditClient

@@ -81,10 +81,11 @@ export default {
   },
   methods: {
     add () {
-      this.$router.push('add-client')
+      this.$router.push('add')
     },
     edit (item) {
-      this.$router.push('edit-client')
+      // console.log(item)
+      this.$router.push('edit/' + item.id)
     },
     remove (item) {
       let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
@@ -104,12 +105,9 @@ export default {
       return {
         id: this.rows.length,
         name: '',
+        cedula: '',
         email: '',
-        phone: '',
-        orders: '',
-        start_date: '2011/04/25',
-        salary: '$0',
-        editable: false
+        phone: ''
       }
     }
   },
