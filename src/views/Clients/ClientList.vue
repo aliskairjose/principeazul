@@ -13,7 +13,7 @@
             <h4 class="card-title">Listado de clientes</h4>
           </template>
           <template v-slot:headerAction>
-            <b-button variant="primary" @click="add">Agregar nuevo cliente</b-button>
+            <b-button variant="primary" @click="add">Nuevo cliente</b-button>
           </template>
           <template v-slot:body>
             <b-row>

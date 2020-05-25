@@ -57,7 +57,7 @@
                     </b-form-group>
                   </b-row>
                   <hr />
-                  <b-button variant="primary" type="submit">Agregar nuevo cliente</b-button>
+                  <b-button variant="primary" type="submit">Guardar</b-button>
                 </div>
               </template>
             </iq-card>
