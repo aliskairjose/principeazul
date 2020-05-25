@@ -22,7 +22,7 @@
             <b-row>
               <b-col md="12" class="table-responsive">
                 <template>
-                  <data-tables :data="rows" :pagination-props="{ pageSizes: [5, 10, 15] }">
+                  <data-tables :data="data" :action-col="actionCol" :pagination-props="{ pageSizes: [5, 10, 15] }">
                     <el-table-column
                       v-for="title in titles"
                       :prop="title.prop"
@@ -55,6 +55,39 @@ export default {
   },
   data () {
     return {
+      isShow: false,
+      actionCol: {
+        label: 'Accion',
+        props: {
+          align: 'center'
+        },
+        buttons: [{
+          props: {
+            type: 'primary',
+            icon: 'el-icon-edit'
+          },
+          handler: row => {
+            this.$message('Edit clicked')
+            console.log(row)
+            row.flow_no = 'hello word' + Math.random()
+            row.content = Math.random() > 0.5 ? 'Water flood' : 'Lock broken'
+            row.flow_type = Math.random() > 0.5 ? 'Repair' : 'Help'
+          },
+          label: 'Edit'
+        }, {
+          handler: row => {
+            let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
+            if (mensaje) {
+              this.data.splice(this.data.indexOf(row), 1)
+              this.isShow = true
+              setTimeout(() => {
+                this.isShow = false
+              }, 2000)
+            }
+          },
+          label: 'delete'
+        }]
+      },
       titles: [
         { label: 'Nombre', key: 'name', class: 'text-left' },
         { label: 'Email', key: 'email', class: 'text-left' },
@@ -63,7 +96,7 @@ export default {
         { label: 'Fecha creacion', key: 'start_date', class: 'text-left' },
         { label: 'Acciones', key: 'action', class: 'text-center' }
       ],
-      rows: [
+      data: [
         {
           id: 1,
           name: 'Tiger Nixon',
