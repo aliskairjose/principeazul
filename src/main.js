@@ -10,10 +10,16 @@ import './plugins'
 import './registerServiceWorker'
 import AlgoliaComponents from 'vue-instantsearch'
 import i18n from './i18n'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+// import DataTables and DataTablesServer together
+import VueDataTables from 'vue-data-tables'
 
 global.Raphael = Raphael
 
 Vue.use(AlgoliaComponents)
+Vue.use(ElementUI)
+Vue.use(VueDataTables)
 
 Vue.config.productionTip = false
 
