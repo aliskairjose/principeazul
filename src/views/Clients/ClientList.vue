@@ -2,6 +2,12 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
+        <b-alert :show="true" variant="success" class="bg-white" v-if="isShow">
+          <div class="iq-alert-icon">
+            <i class="ri-alert-line"></i>
+          </div>
+          <div class="iq-alert-text">El registro ha sido <b>eliminado</b> con éxito!</div>
+        </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
             <h4 class="card-title">Listado de clientes</h4>
@@ -85,6 +91,10 @@ export default {
       if (mensaje) {
         let index = this.rows.indexOf(item)
         this.rows.splice(index, 1)
+        this.isShow = true
+        setTimeout(() => {
+          this.isShow = false
+        }, 2000)
       }
     },
     submit (item) {
@@ -105,6 +115,7 @@ export default {
   },
   data () {
     return {
+      isShow: false,
       columns: [
         { label: 'Nombre', key: 'name', class: 'text-left' },
         { label: 'Email', key: 'email', class: 'text-left' },
