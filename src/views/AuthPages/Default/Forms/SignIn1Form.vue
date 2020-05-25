@@ -42,26 +42,12 @@
         </div>
         <button type="submit" class="btn btn-primary float-right">Inicia sesión</button>
       </div>
-      <!-- <div class="sign-info">
-          <span class="dark-color d-inline-block line-height-2">
-            Don't have an account?
-            <router-link to="/dark/auth/sign-up1" class="iq-waves-effect pr-4" v-if="$route.meta.dark">
-              Sign up
-            </router-link>
-            <router-link to="/auth/sign-up1" class="iq-waves-effect pr-4" v-else>
-              Sign up
-            </router-link>
-          </span>
-        <social-login-form></social-login-form>
-      </div>-->
     </form>
   </ValidationObserver>
 </template>
 
 <script>
 // import auth from '../../../../services/auth'
-// import firebase from 'firebase'
-// import SocialLoginForm from './SocialLoginForm'
 // import { vito } from '../../../../config/pluginInit'
 import { mapGetters } from 'vuex'
 
@@ -87,24 +73,7 @@ export default {
   methods: {
     onSubmit () {
       this.jwtLogin()
-      /* if (this.formType === 'passport') {
-          this.passportLogin()
-        } else if (this.formType === 'jwt') {
-          this.jwtLogin()
-        } else if (this.formType === 'firebase') {
-          this.firebaseLogin()
-      } */
     },
-    /* passportLogin () {
-      auth.login(this.user).then(response => {
-        if (response.status) {
-          localStorage.setItem('user', JSON.stringify(response.data))
-          this.$router.push({ name: 'mini.dashboard.home-1' })
-        } else if (response.data.errors.length > 0) {
-          this.$refs.form.setErrors(response.data.errors)
-        }
-      }).finally(() => { this.loading = false })
-    }, */
     jwtLogin () {
       let selectedUser = this.stateUsers.find(user => {
         return (user.email === this.user.email && user.password === this.user.password)
@@ -126,30 +95,6 @@ export default {
         this.$router.push({ name: 'dashboard.home' })
       }
     }
-    /* firebaseLogin () {
-      firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password).then((user) => {
-        let firebaseUser = firebase.auth().currentUser.providerData[0]
-        this.$store.dispatch('Setting/authUserAction', {
-          auth: true,
-          authType: 'firebase',
-          user: {
-            id: firebaseUser.uid,
-            name: firebaseUser.displayName,
-            mobileNo: firebaseUser.phoneNumber,
-            email: firebaseUser.email,
-            profileImage: firebaseUser.photoURL
-          }
-        })
-        localStorage.setItem('user', JSON.stringify(firebaseUser))
-        this.$router.push({ name: 'mini.dashboard.home-1' })
-      }).catch((err) => {
-        if (err.code === 'auth/user-not-found') {
-          vito.showSnackbar('error', 'These credentials do not match our records.')
-        } else {
-          vito.showSnackbar('error', err.message)
-        }
-      })
-    } */
   }
 }
 </script>

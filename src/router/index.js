@@ -138,9 +138,9 @@ router.beforeEach((to, from, next) => {
     if (authRequired && loggedIn === null) {
       return next('/auth/sign-in1')
     } else if (to.name === 'dashboard' || to.name === 'mini.dashboard') {
-      return next('/home-1')
+      return next('/home')
     } else if (to.name === 'dark.dashboard' || to.name === 'dark.mini.dashboard') {
-      return next('/dark/home-1')
+      return next('/home')
     }
   }
   next()
