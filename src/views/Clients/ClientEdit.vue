@@ -6,7 +6,7 @@
           <b-col lg="12">
             <iq-card>
               <template v-slot:headerTitle>
-                <h4 class="card-title">Editar Información de Cliente</h4>
+                <h4 class="card-title">{{title}}</h4>
               </template>
               <template v-slot:body>
                 <div class="new-user-info">
@@ -57,7 +57,7 @@
                     </b-form-group>
                   </b-row>
                   <hr />
-                  <b-button variant="primary" type="submit">Guardar</b-button>
+                  <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
               </template>
             </iq-card>
@@ -70,11 +70,23 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import { db } from '../../config/firebase'
-
 export default {
-  name: 'EditClient',
+  name: 'ClientEdit',
+  title: '',
+  btnTitle: '',
+  status: '',
   mounted () {
     vito.index()
+  },
+  created () {
+    if (this.getStatus() === 'add') {
+      this.title = 'Agregar nuevo cliente'
+      this.btnTitle = 'Crear cliente'
+    }
+    if (this.getStatus() === 'edit') {
+      this.title = 'Editar Cliente'
+      this.btnTitle = 'Guardar cambios'
+    }
   },
   data () {
     return {
@@ -107,6 +119,11 @@ export default {
     }
   },
   methods: {
+    getStatus () {
+      const id = this.$route.params.id
+      if (id) return 'edit'
+      if (!id) return 'add'
+    },
     onSubmit () {
       this.user.name = this.fullName
       db.collection('users').add(this.user)

@@ -155,7 +155,7 @@ export default {
       this.$router.push('add')
     },
     edit (item) {
-      this.$router.push('edit')
+      this.$router.push(`edit/${item.id}`)
     },
     submit (item) {
       // item.editable = false

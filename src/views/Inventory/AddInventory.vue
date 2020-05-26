@@ -55,6 +55,15 @@
                         placeholder="Categoria"
                       ></b-form-input>
                     </b-form-group>
+                    <b-form-group class="col-md-6" label="Categoría" label-for="type">
+                      <b-form-input
+                        v-model="product.type"
+                        type="text"
+                        name="type"
+                        id="type"
+                        placeholder="Tipo"
+                      ></b-form-input>
+                    </b-form-group>
                   </b-row>
                   <hr />
                   <b-button variant="primary" type="submit">Guardar</b-button>
