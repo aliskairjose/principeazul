@@ -21,9 +21,8 @@
                     <b-button
                       variant=" iq-bg-success mr-1 mb-1"
                       size="sm"
-                      @click="edit(items.item)"
-                      v-if="!items.item.editable">
-                      <i class="ri-ball-pen-fill m-0"></i>
+                      @click="add(items.item)">
+                      <i class="ri-add-line  m-0"></i>
                     </b-button>
                   </template>
                 </b-table>
@@ -59,6 +58,11 @@ export default {
     return {
       perPage: 3,
       currentPage: 1
+    }
+  },
+  methods: {
+    add (item) {
+      console.log(item.name)
     }
   },
   computed: {
