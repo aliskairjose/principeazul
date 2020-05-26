@@ -15,13 +15,47 @@
           <template v-slot:headerTitle>
             <h4 class="card-title">Lista de inventario</h4>
           </template>
-          <template v-slot:headerAction>
+          <!-- <template v-slot:headerAction>
             <b-button variant="primary" @click="add">Nuevo producto</b-button>
+          </template> -->
+          <template>
           </template>
           <template v-slot:body>
             <b-row>
+              <b-col md="4" class="my-1">
+                <b-form-group
+                  label="Filter"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="filterInput"
+                  class="mb-0">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      id="filterInput"
+                      placeholder="Type to Search">
+                    </b-form-input>
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col md="4" class="my-1">
+
+              </b-col>
+              <b-col md="4" class="my-1">
+                <b-form-group>
+                  <b-button variant="primary" @click="add">Nuevo producto</b-button>
+                </b-form-group>
+              </b-col>
               <b-col md="12" class="table-responsive">
-                <b-table striped bordered hover
+                <b-table
+                  striped
+                  bordered
+                  hover
                   :items="data"
                   :fields="titles"
                   :current-page="currentPage"
@@ -31,16 +65,16 @@
                       variant=" iq-bg-success mr-1 mb-1"
                       size="sm"
                       @click="edit(data.item)"
-                      v-if="!data.item.editable">
+                      v-if="!data.item.editable"
+                    >
                       <i class="ri-ball-pen-fill m-0"></i>
                     </b-button>
                     <b-button
                       variant=" iq-bg-success mr-1 mb-1"
                       size="sm"
                       @click="submit(data.item)"
-                      v-else>
-                      Ok
-                    </b-button>
+                      v-else
+                    >Ok</b-button>
                     <b-button variant=" iq-bg-danger" size="sm" @click="remove(data.item)">
                       <i class="ri-delete-bin-line m-0"></i>
                     </b-button>
@@ -71,12 +105,14 @@ export default {
   },
   data () {
     return {
+      sortBy: '',
+      filter: null,
       isShow: false,
       perPage: 3,
       currentPage: 1,
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
+        { label: 'FotCamo', key: 'photo', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
         { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
         { label: 'Tipo', key: 'type', class: 'text-left', sortable: true },
@@ -87,42 +123,42 @@ export default {
           id: 1,
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
-          quantity: '121',
+          quantity: '191',
           type: 'Principal'
         },
         {
           id: 2,
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
-          quantity: '121',
+          quantity: '101',
           type: 'Principal'
         },
         {
           id: 3,
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
-          quantity: '121',
+          quantity: '122',
           type: 'Principal'
         },
         {
           id: 4,
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
-          quantity: '121',
+          quantity: '124',
           type: 'Principal'
         },
         {
           id: 5,
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
-          quantity: '121',
+          quantity: '141',
           type: 'Principal'
         },
         {
           id: 6,
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
-          quantity: '121',
+          quantity: '131',
           type: 'Principal'
         }
       ]
@@ -152,6 +188,14 @@ export default {
   computed: {
     rows () {
       return this.data.length
+    },
+    sortOptions () {
+      // Create an options list from our fields
+      return this.titles
+        .filter(f => f.sortable)
+        .map(f => {
+          return { text: f.label, value: f.key }
+        })
     }
   }
 }

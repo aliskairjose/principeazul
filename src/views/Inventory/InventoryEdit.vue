@@ -60,7 +60,7 @@
                       </b-form-select>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="isShow">
-                        <b-button block variant="primary" @click="addSubproduct">Agregar subproductos</b-button>
+                        <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>Agregar subproductos</b-button>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
                       <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true>
@@ -72,6 +72,12 @@
                     </b-form-group>
                   </b-row>
                   <hr />
+                  <b-modal size="lg" id="modal-1" title="Lista de subproductos">
+                    <sub-product-table
+                      v-bind:items="subProducts"
+                      >
+                    </sub-product-table>
+                  </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
               </template>
@@ -87,11 +93,13 @@
 import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import SubProductTable from '@/views/Inventory/SubProductTable'
 export default {
   name: 'InventoryEdit',
   files: [],
   components: {
-    vueDropzone: vue2Dropzone
+    vueDropzone: vue2Dropzone,
+    SubProductTable
   },
   mounted () {
     vito.index()
@@ -128,6 +136,29 @@ export default {
         category: '',
         'type': ''
       },
+      titles: [
+        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
+        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
+        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
+        { label: 'Acción', key: 'accion', class: 'text-center' }
+      ],
+      subProducts: [
+        {
+          id: 1,
+          foto: 'Trendy Royal',
+          nombre: 'Trendy Royal'
+        },
+        {
+          id: 2,
+          foto: 'Trendy Royal',
+          nombre: 'Trendy Royal'
+        },
+        {
+          id: 3,
+          foto: 'Trendy Royal',
+          nombre: 'Trendy Royal'
+        }
+      ],
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 150,
@@ -137,27 +168,13 @@ export default {
     }
   },
   methods: {
-    handleFileDrop (e) {
-      let droppedFiles = e.dataTransfer.files
-      if (!droppedFiles) return
-      ([...droppedFiles]).forEach(f => {
-        this.files.push(f)
-      })
-    },
-    handleFileInput (e) {
-      let files = e.target.files
-      if (!files) return
-      ([...files]).forEach(f => {
-        this.files.push(f)
-      })
-    },
     getStatus () {
       const id = this.$route.params.id
       if (id) return 'edit'
       if (!id) return 'add'
     },
     addSubproduct () {
-      alert('agregar subproducto')
+      // alert('agregar subproducto')
     },
     onChange () {
       if (this.selectedType === '1') {
