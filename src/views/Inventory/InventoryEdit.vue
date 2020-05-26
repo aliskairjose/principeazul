@@ -62,6 +62,22 @@
                     <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="isShow">
                         <b-button block variant="primary" @click="addSubproduct">Agregar subproductos</b-button>
                     </b-form-group>
+                    <b-form-group class="col-md-12" >
+                      <div class="file-wrapper" @drop="handleFileDrop">
+                        Arrastre aquí sus imagenes<br> o <br> presione para buscar<br>
+                        <input type="file" name="file-input"
+                            multiple="True" @change="handleFileInput">
+                        <ul>
+                          <li
+                            v-for="(file, index) in files"
+                            v-bind:item="file"
+                            v-bind:index="index"
+                            v-bind:key="file.id">
+                            {{ file.name }} ({{ file.size }} b)
+                        </li>
+                        </ul>
+                      </div>
+                    </b-form-group>
                   </b-row>
                   <hr />
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
@@ -80,6 +96,7 @@ import { vito } from '../../config/pluginInit'
 
 export default {
   name: 'InventoryEdit',
+  files: [],
   mounted () {
     vito.index()
   },
@@ -118,6 +135,20 @@ export default {
     }
   },
   methods: {
+    handleFileDrop (e) {
+      let droppedFiles = e.dataTransfer.files
+      if (!droppedFiles) return
+      ([...droppedFiles]).forEach(f => {
+        this.files.push(f)
+      })
+    },
+    handleFileInput (e) {
+      let files = e.target.files
+      if (!files) return
+      ([...files]).forEach(f => {
+        this.files.push(f)
+      })
+    },
     getStatus () {
       const id = this.$route.params.id
       if (id) return 'edit'
@@ -137,3 +168,28 @@ export default {
 
 }
 </script>
+
+<style lang="stylus" scope>
+  .file-wrapper {
+      text-align: center;
+      width: 100vw;
+      height: 3em;
+      vertical-align: middle;
+      display: table-cell;
+      position: relative;
+      overflow: hidden;
+      border: solid 1px;
+      padding-top: 100px;
+  }
+  .file-wrapper input {
+      position: inherit;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      opacity: 0.0;
+      // filter: alpha(opacity=0);
+      // font-size: 300px;
+      height: 200px;
+      width 100%;
+  }
+</style>
