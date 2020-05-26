@@ -13,10 +13,10 @@
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Lista de clientes</h4>
+            <h4 class="card-title">Lista de inventario</h4>
           </template>
           <template v-slot:headerAction>
-            <b-button variant="primary" @click="add">Nuevo cliente</b-button>
+            <b-button variant="primary" @click="add">Nuevo producto</b-button>
           </template>
           <template v-slot:body>
             <b-row>
@@ -65,7 +65,7 @@
 <script>
 import { vito } from '../../config/pluginInit'
 export default {
-  name: 'ClientList',
+  name: 'InventoryList',
   mounted () {
     vito.index()
   },
@@ -75,77 +75,55 @@ export default {
       perPage: 3,
       currentPage: 1,
       titles: [
+        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
+        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Email', key: 'email', class: 'text-left', sortable: true },
-        { label: 'Telefono', key: 'phone', class: 'text-left', sortable: true },
-        { label: 'Ordenes', key: 'orders', class: 'text-left', sortable: true },
-        { label: 'Fecha creacion', key: 'start_date', class: 'text-left', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
+        { label: 'Tipo', key: 'type', class: 'text-left', sortable: true },
         { label: 'Action', key: 'action', class: 'text-center' }
       ],
       data: [
         {
           id: 1,
-          name: 'Tiger Nixon',
-          email: 'nixont@gmail.com',
-          phone: '085455678',
-          orders: '61',
-          start_date: '2011/04/25'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal',
+          quantity: '121',
+          type: 'Principal'
         },
         {
           id: 2,
-          name: 'Garrett Winters',
-          email: 'Wintersg@gmail.com',
-          phone: '56578922',
-          orders: '63',
-          start_date: '2011/06/19'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal',
+          quantity: '121',
+          type: 'Principal'
         },
         {
           id: 3,
-          name: 'Ashton Cox',
-          email: 'coxa@gmail.com',
-          phone: '89786546578',
-          orders: '69',
-          start_date: '2011/01/20'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal',
+          quantity: '121',
+          type: 'Principal'
         },
         {
           id: 4,
-          name: 'Cedric Kelly',
-          email: 'kellyc@gmail.com',
-          phone: '3456789876',
-          orders: '42',
-          start_date: '2011/02/02'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal',
+          quantity: '121',
+          type: 'Principal'
         },
         {
           id: 5,
-          name: 'Airi Satou',
-          email: 'stoua@gmail.com',
-          phone: '2345678',
-          orders: '39',
-          start_date: '2011/08/11'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal',
+          quantity: '121',
+          type: 'Principal'
         },
         {
-          id: 1,
-          name: 'Tiger Nixon',
-          email: 'tigern@gmail.com',
-          phone: '75434900987',
-          orders: '61',
-          start_date: '2011/04/25'
-        },
-        {
-          id: 5,
-          name: 'Airi Satou',
-          email: 'airis@gmail.com',
-          phone: '765434567',
-          orders: '39',
-          start_date: '2011/08/11'
-        },
-        {
-          id: 1,
-          name: 'Tiger Nixon',
-          email: 'tigernixon@gmail.com',
-          phone: '76544567',
-          orders: '61',
-          start_date: '2011/04/25'
+          id: 6,
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal',
+          quantity: '121',
+          type: 'Principal'
         }
       ]
     }

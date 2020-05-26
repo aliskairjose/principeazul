@@ -9,14 +9,6 @@
       <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo" :horizontal="horizontal" :items="horizontalMenu">
         <template slot="responsiveRight">
           <ul class="navbar-nav ml-auto navbar-list">
-            <!-- <li class="nav-item">
-              <a class="search-toggle iq-waves-effect language-title" href="#"><img :src="selectedLang.image" alt="img-flaf" class="img-fluid mr-1" style="height: 16px; width: 16px;" /> {{ selectedLang.title }} <i class="ri-arrow-down-s-line"></i></a>
-              <div class="iq-sub-dropdown">
-                <a class="iq-sub-card" href="javascript:void(0)" v-for="(lang, i) in langsOptions" :key="`Lang${i}`" @click="langChange(lang)">
-                  <img :src="lang.image" alt="img-flaf" class="img-fluid mr-2" />{{ lang.title }}
-                </a>
-              </div>
-            </li> -->
             <li class="nav-item">
               <a href="javascript:void(0)" class="iq-waves-effect" :class="cartCount > 0 ? 'search-toggle' : ''">
                 <i class="ri-shopping-cart-2-line" />
@@ -221,6 +213,7 @@ export default {
     NavBarStyle1
   },
   mounted () {
+    this.$i18n.locale = 'sp'
     this.updateRadio()
     body.classList.remove('sidebar-main-active')
     body.classList.remove('right-column-fixed')
@@ -341,16 +334,6 @@ export default {
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
       this.$router.push({ name: 'auth1.sign-in1' })
-    },
-    langChange (lang) {
-      this.langChangeState(lang)
-      this.$i18n.locale = lang.value
-      document.getElementsByClassName('iq-show')[0].classList.remove('iq-show')
-      if (lang.value === 'ar') {
-        this.rtlAdd(lang)
-      } else {
-        this.rtlRemove(lang)
-      }
     },
     ...mapActions({
       removeToCart: 'Ecommerce/removeToCartAction',
