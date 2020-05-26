@@ -6,7 +6,7 @@
           <b-col lg="12">
             <iq-card>
               <template v-slot:headerTitle>
-                <h4 class="card-title">Agregar Nuevo Producto</h4>
+                <h4 class="card-title">{{title}}</h4>
               </template>
               <template v-slot:body>
                 <div class="new-user-info">
@@ -66,7 +66,7 @@
                     </b-form-group>
                   </b-row>
                   <hr />
-                  <b-button variant="primary" type="submit">Guardar</b-button>
+                  <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
               </template>
             </iq-card>
@@ -81,9 +81,21 @@
 import { vito } from '../../config/pluginInit'
 
 export default {
-  name: 'AddInventory',
+  name: 'InventoryEdit',
+  title: '',
+  btnTitle: '',
   mounted () {
     vito.index()
+  },
+  created () {
+    if (this.getStatus() === 'add') {
+      this.title = 'Agregar nuevo producto'
+      this.btnTitle = 'Nuevo producto'
+    }
+    if (this.getStatus() === 'edit') {
+      this.title = 'Editar producto'
+      this.btnTitle = 'Guardar cambios'
+    }
   },
   data () {
     return {
@@ -95,6 +107,14 @@ export default {
         'type': ''
       }
     }
+  },
+  methods: {
+    getStatus () {
+      const id = this.$route.params.id
+      if (id) return 'edit'
+      if (!id) return 'add'
+    }
   }
+
 }
 </script>

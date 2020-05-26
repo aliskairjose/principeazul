@@ -81,10 +81,10 @@ export default {
   created () {
     if (this.getStatus() === 'add') {
       this.title = 'Agregar nuevo cliente'
-      this.btnTitle = 'Crear cliente'
+      this.btnTitle = 'Nuevo cliente'
     }
     if (this.getStatus() === 'edit') {
-      this.title = 'Editar Cliente'
+      this.title = 'Editar cliente'
       this.btnTitle = 'Guardar cambios'
     }
   },
