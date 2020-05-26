@@ -147,17 +147,17 @@ export default {
         {
           id: 1,
           photo: 'Trendy Royal',
-          name: 'Trendy Royal'
+          name: 'Trendy Royal Queen'
         },
         {
           id: 2,
           photo: 'Trendy Royal',
-          name: 'Trendy Royal'
+          name: 'Trendy Royal Prince'
         },
         {
           id: 3,
           photo: 'Trendy Royal',
-          name: 'Trendy Royal'
+          name: 'Trendy Royal King'
         }
       ],
       dropzoneOptions: {
