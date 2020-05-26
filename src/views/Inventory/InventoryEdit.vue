@@ -48,15 +48,19 @@
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
                       <b-form-select
-                        v-model="selected"
+                        v-model="selectedCategory"
                         :options="categories">
                       </b-form-select>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Tipo" label-for="type">
                       <b-form-select
-                        v-model="selected"
-                        :options="types">
+                        v-model="selectedType"
+                        :options="types"
+                        @change="onChange()">
                       </b-form-select>
+                    </b-form-group>
+                    <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="isShow">
+                        <b-button block variant="primary" @click="addSubproduct">Agregar subproductos</b-button>
                     </b-form-group>
                   </b-row>
                   <hr />
@@ -76,8 +80,6 @@ import { vito } from '../../config/pluginInit'
 
 export default {
   name: 'InventoryEdit',
-  title: '',
-  btnTitle: '',
   mounted () {
     vito.index()
   },
@@ -93,7 +95,9 @@ export default {
   },
   data () {
     return {
-      selected: null,
+      isShow: false,
+      selectedType: null,
+      selectedCategory: null,
       types: [
         { value: null, text: 'Seleccione un tipo' },
         { value: '1', text: 'Principal' },
@@ -118,6 +122,16 @@ export default {
       const id = this.$route.params.id
       if (id) return 'edit'
       if (!id) return 'add'
+    },
+    addSubproduct () {
+      alert('agregar subproducto')
+    },
+    onChange () {
+      if (this.selectedType === '1') {
+        this.isShow = true
+      } else {
+        this.isShow = false
+      }
     }
   }
 
