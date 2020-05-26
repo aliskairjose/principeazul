@@ -32,7 +32,7 @@ const paRoutes = (prop, mode = false) => [
   {
     path: 'orders',
     name: prop + '.order',
-    meta: { dark: mode, auth: true, name: 'Orders' },
+    meta: { dark: mode, auth: true, name: 'Ordenes' },
     component: Order
   }
 ]

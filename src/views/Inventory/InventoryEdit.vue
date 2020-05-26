@@ -47,22 +47,16 @@
                       ></b-form-input>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
-                      <b-form-input
-                        v-model="product.category"
-                        type="text"
-                        name="category"
-                        id="category"
-                        placeholder="Categoria"
-                      ></b-form-input>
+                      <b-form-select
+                        v-model="selected"
+                        :options="categories">
+                      </b-form-select>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Categoría" label-for="type">
-                      <b-form-input
-                        v-model="product.type"
-                        type="text"
-                        name="type"
-                        id="type"
-                        placeholder="Tipo"
-                      ></b-form-input>
+                    <b-form-group class="col-md-6" label="Tipo" label-for="type">
+                      <b-form-select
+                        v-model="selected"
+                        :options="types">
+                      </b-form-select>
                     </b-form-group>
                   </b-row>
                   <hr />
@@ -99,6 +93,17 @@ export default {
   },
   data () {
     return {
+      selected: null,
+      types: [
+        { value: null, text: 'Seleccione un tipo' },
+        { value: '1', text: 'Principal' },
+        { value: '2', text: 'Secundario' }
+      ],
+      categories: [
+        { value: null, text: 'Seleccione una categoria' },
+        { value: '1', text: 'Categoria 1' },
+        { value: '2', text: 'Categoria 2' }
+      ],
       product: {
         name: '',
         descripcion: '',
