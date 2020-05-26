@@ -10,6 +10,7 @@ import ClientList from '@/views/Clients/ClientList.vue'
 import AddClient from '@/views/Clients/AddClient.vue'
 import EditClient from '@/views/Clients/EditClient.vue'
 import InventoryList from '@/views/Inventory/InventoryList.vue'
+import AddInventory from '@/views/Inventory/AddInventory.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
 
@@ -68,8 +69,20 @@ const inventoryRoutes = (prop, mode = false) => [
   {
     path: 'inventory/list',
     name: prop + '.list',
-    meta: { dark: mode, auth: true, name: 'Clients' },
+    meta: { dark: mode, auth: true, name: 'Inventory' },
     component: InventoryList
+  },
+  {
+    path: 'inventory/add',
+    name: prop + '.add',
+    meta: { dark: mode, auth: true, name: 'Add Product' },
+    component: AddInventory
+  },
+  {
+    path: 'inventory/edit/:id',
+    name: prop + '.edit',
+    meta: { dark: mode, auth: true, name: 'Edit Product' },
+    component: EditClient
   }
 ]
 
