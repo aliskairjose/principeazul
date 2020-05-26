@@ -13,7 +13,7 @@
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Listado de clientes</h4>
+            <h4 class="card-title">Lista de clientes</h4>
           </template>
           <template v-slot:headerAction>
             <b-button variant="primary" @click="add">Nuevo cliente</b-button>
@@ -21,16 +21,39 @@
           <template v-slot:body>
             <b-row>
               <b-col md="12" class="table-responsive">
-                <template>
-                  <data-tables :data="data" :action-col="actionCol" :pagination-props="{ pageSizes: [5, 10, 15] }">
-                    <el-table-column
-                      v-for="title in titles"
-                      :prop="title.prop"
-                      :label="title.label"
-                      :key="title.label"
-                    ></el-table-column>
-                  </data-tables>
-                </template>
+                <b-table striped bordered hover
+                  :items="data"
+                  :fields="titles"
+                  :current-page="currentPage"
+                  :per-page="perPage">
+                  <template v-slot:cell(action)="data">
+                    <b-button
+                      variant=" iq-bg-success mr-1 mb-1"
+                      size="sm"
+                      @click="edit(data.item)"
+                      v-if="!data.item.editable">
+                      <i class="ri-ball-pen-fill m-0"></i>
+                    </b-button>
+                    <b-button
+                      variant=" iq-bg-success mr-1 mb-1"
+                      size="sm"
+                      @click="submit(data.item)"
+                      v-else>
+                      Ok
+                    </b-button>
+                    <b-button variant=" iq-bg-danger" size="sm" @click="remove(data.item)">
+                      <i class="ri-delete-bin-line m-0"></i>
+                    </b-button>
+                  </template>
+                </b-table>
+              </b-col>
+              <b-col md="12">
+                <b-pagination
+                  v-model="currentPage"
+                  :total-rows="rows"
+                  :per-page="perPage"
+                  aria-controls="my-table">
+                </b-pagination>
               </b-col>
             </b-row>
           </template>
@@ -39,58 +62,26 @@
     </b-row>
   </b-container>
 </template>
-
 <script>
 import { vito } from '../../config/pluginInit'
-
+import '../../plugins/datatable'
 export default {
   name: 'ClientList',
   mounted () {
     vito.index()
   },
-  methods: {
-    add () {
-      this.$router.push('add')
-    }
-  },
   data () {
     return {
       isShow: false,
-      actionCol: {
-        label: 'Accion',
-        props: {
-          align: 'center'
-        },
-        buttons: [{
-          props: {
-            type: 'primary',
-            icon: 'el-icon-edit'
-          },
-          handler: row => {
-            this.$router.push('edit/' + row.id)
-          },
-          label: 'Edit'
-        }, {
-          handler: row => {
-            let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
-            if (mensaje) {
-              this.data.splice(this.data.indexOf(row), 1)
-              this.isShow = true
-              setTimeout(() => {
-                this.isShow = false
-              }, 2000)
-            }
-          },
-          label: 'delete'
-        }]
-      },
+      perPage: 3,
+      currentPage: 1,
       titles: [
-        { label: 'Nombre', key: 'name', class: 'text-left' },
-        { label: 'Email', key: 'email', class: 'text-left' },
-        { label: 'Telefono', key: 'phone', class: 'text-left' },
-        { label: 'Ordenes', key: 'orders', class: 'text-left' },
-        { label: 'Fecha creacion', key: 'start_date', class: 'text-left' },
-        { label: 'Acciones', key: 'action', class: 'text-center' }
+        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
+        { label: 'Email', key: 'email', class: 'text-left', sortable: true },
+        { label: 'Telefono', key: 'phone', class: 'text-left', sortable: true },
+        { label: 'Ordenes', key: 'orders', class: 'text-left', sortable: true },
+        { label: 'Fecha creacion', key: 'start_date', class: 'text-left', sortable: true },
+        { label: 'Action', key: 'action', class: 'text-center' }
       ],
       data: [
         {
@@ -99,8 +90,7 @@ export default {
           email: 'nixont@gmail.com',
           phone: '085455678',
           orders: '61',
-          start_date: '2011/04/25',
-          editable: false
+          start_date: '2011/04/25'
         },
         {
           id: 2,
@@ -108,8 +98,7 @@ export default {
           email: 'Wintersg@gmail.com',
           phone: '56578922',
           orders: '63',
-          start_date: '2011/06/19',
-          editable: false
+          start_date: '2011/06/19'
         },
         {
           id: 3,
@@ -117,8 +106,7 @@ export default {
           email: 'coxa@gmail.com',
           phone: '89786546578',
           orders: '69',
-          start_date: '2011/01/20',
-          editable: false
+          start_date: '2011/01/20'
         },
         {
           id: 4,
@@ -126,8 +114,7 @@ export default {
           email: 'kellyc@gmail.com',
           phone: '3456789876',
           orders: '42',
-          start_date: '2011/02/02',
-          editable: false
+          start_date: '2011/02/02'
         },
         {
           id: 5,
@@ -135,8 +122,7 @@ export default {
           email: 'stoua@gmail.com',
           phone: '2345678',
           orders: '39',
-          start_date: '2011/08/11',
-          editable: false
+          start_date: '2011/08/11'
         },
         {
           id: 1,
@@ -144,8 +130,7 @@ export default {
           email: 'tigern@gmail.com',
           phone: '75434900987',
           orders: '61',
-          start_date: '2011/04/25',
-          editable: false
+          start_date: '2011/04/25'
         },
         {
           id: 5,
@@ -153,8 +138,7 @@ export default {
           email: 'airis@gmail.com',
           phone: '765434567',
           orders: '39',
-          start_date: '2011/08/11',
-          editable: false
+          start_date: '2011/08/11'
         },
         {
           id: 1,
@@ -162,10 +146,35 @@ export default {
           email: 'tigernixon@gmail.com',
           phone: '76544567',
           orders: '61',
-          start_date: '2011/04/25',
-          editable: false
+          start_date: '2011/04/25'
         }
       ]
+    }
+  },
+  methods: {
+    add () {
+      this.$router.push('add')
+    },
+    edit (item) {
+      this.$router.push('edit')
+    },
+    submit (item) {
+      // item.editable = false
+    },
+    remove (item) {
+      let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
+      if (mensaje) {
+        this.data.splice(this.data.indexOf(item), 1)
+        this.isShow = true
+        setTimeout(() => {
+          this.isShow = false
+        }, 2000)
+      }
+    }
+  },
+  computed: {
+    rows () {
+      return this.data.length
     }
   }
 }
