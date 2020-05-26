@@ -63,20 +63,7 @@
                         <b-button block variant="primary" @click="addSubproduct">Agregar subproductos</b-button>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
-                      <div class="file-wrapper" @drop="handleFileDrop">
-                        Arrastre aquí sus imagenes<br> o <br> presione para buscar<br>
-                        <input type="file" name="file-input"
-                            multiple="True" @change="handleFileInput">
-                        <ul>
-                          <li
-                            v-for="(file, index) in files"
-                            v-bind:item="file"
-                            v-bind:index="index"
-                            v-bind:key="file.id">
-                            {{ file.name }} ({{ file.size }} b)
-                        </li>
-                        </ul>
-                      </div>
+                      <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
                     </b-form-group>
                   </b-row>
                   <hr />
@@ -93,10 +80,14 @@
 
 <script>
 import { vito } from '../../config/pluginInit'
-
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 export default {
   name: 'InventoryEdit',
   files: [],
+  components: {
+    vueDropzone: vue2Dropzone
+  },
   mounted () {
     vito.index()
   },
@@ -131,6 +122,12 @@ export default {
         price: '',
         category: '',
         'type': ''
+      },
+      dropzoneOptions: {
+        url: 'https://httpbin.org/post',
+        thumbnailWidth: 150,
+        maxFilesize: 0.5,
+        headers: { 'My-Awesome-Header': 'My-Awesome-Header' }
       }
     }
   },
@@ -168,28 +165,3 @@ export default {
 
 }
 </script>
-
-<style lang="stylus" scope>
-  .file-wrapper {
-      text-align: center;
-      width: 100vw;
-      height: 3em;
-      vertical-align: middle;
-      display: table-cell;
-      position: relative;
-      overflow: hidden;
-      border: solid 1px;
-      padding-top: 100px;
-  }
-  .file-wrapper input {
-      position: inherit;
-      top: 0;
-      right: 0;
-      cursor: pointer;
-      opacity: 0.0;
-      // filter: alpha(opacity=0);
-      // font-size: 300px;
-      height: 200px;
-      width 100%;
-  }
-</style>
