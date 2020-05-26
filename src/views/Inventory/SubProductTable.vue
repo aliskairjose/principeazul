@@ -17,12 +17,12 @@
                   :current-page="currentPage"
                   :per-page="perPage"
                 >
-                  <template v-slot:cell(action)="data">
+                  <template v-slot:cell(action)="items">
                     <b-button
                       variant=" iq-bg-success mr-1 mb-1"
                       size="sm"
-                      @click="edit(data.item)"
-                      v-if="!data.item.editable">
+                      @click="edit(items.item)"
+                      v-if="!items.item.editable">
                       <i class="ri-ball-pen-fill m-0"></i>
                     </b-button>
                   </template>

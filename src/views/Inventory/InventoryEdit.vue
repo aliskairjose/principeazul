@@ -141,7 +141,7 @@ export default {
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
         { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Acción', key: 'accion', class: 'text-center' }
+        { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       subProducts: [
         {
