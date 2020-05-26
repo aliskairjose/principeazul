@@ -9,7 +9,7 @@ import Dashboard2 from '@/views/Dashboards/Dashboard2.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import AddClient from '@/views/Clients/AddClient.vue'
 import EditClient from '@/views/Clients/EditClient.vue'
-import Inventory from '@/views/Inventory/Inventory.vue'
+import InventoryList from '@/views/Inventory/InventoryList.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
 
@@ -39,7 +39,7 @@ const paRoutes = (prop, mode = false) => [
     path: 'inventory',
     name: prop + '.inventory',
     meta: { dark: mode, auth: true, name: 'Inventory' },
-    component: Inventory
+    component: InventoryList
   }
 ]
 
@@ -61,6 +61,15 @@ const clientRoutes = (prop, mode = false) => [
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Edit Client' },
     component: EditClient
+  }
+]
+
+const inventoryRoutes = (prop, mode = false) => [
+  {
+    path: 'inventory/list',
+    name: prop + '.list',
+    meta: { dark: mode, auth: true, name: 'Clients' },
+    component: InventoryList
   }
 ]
 
@@ -132,7 +141,7 @@ const routes = [
     name: 'inventory',
     component: Layout1,
     meta: { auth: true },
-    children: paRoutes('inventory')
+    children: inventoryRoutes('inventory')
   },
   {
     path: '/callback',
