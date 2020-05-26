@@ -74,7 +74,8 @@
                   <hr />
                   <b-modal size="lg" id="modal-1" title="Lista de subproductos">
                     <sub-product-table
-                      v-bind:items="subProducts"
+                      :items="subProducts"
+                      :titems="titles"
                       >
                     </sub-product-table>
                   </b-modal>
@@ -145,18 +146,18 @@ export default {
       subProducts: [
         {
           id: 1,
-          foto: 'Trendy Royal',
-          nombre: 'Trendy Royal'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal'
         },
         {
           id: 2,
-          foto: 'Trendy Royal',
-          nombre: 'Trendy Royal'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal'
         },
         {
           id: 3,
-          foto: 'Trendy Royal',
-          nombre: 'Trendy Royal'
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal'
         }
       ],
       dropzoneOptions: {

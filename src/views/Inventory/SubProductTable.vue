@@ -13,6 +13,7 @@
                   bordered
                   hover
                   :items="items"
+                  :fields="titems"
                   :current-page="currentPage"
                   :per-page="perPage"
                 >
@@ -48,7 +49,8 @@ import { vito } from '../../config/pluginInit'
 export default {
   name: 'SubProductTable',
   props: {
-    items: { type: Array }
+    items: { type: Array },
+    titems: { type: Array }
   },
   mounted () {
     vito.index()
