@@ -63,7 +63,12 @@
                         <b-button block variant="primary" @click="addSubproduct">Agregar subproductos</b-button>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
-                      <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+                      <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true>
+                        <div class="dropzone-custom-content">
+                          <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
+                          <div class="subtitle">...o haga clic para seleccionar un archivo de su computadora</div>
+                        </div>
+                        </vue-dropzone>
                     </b-form-group>
                   </b-row>
                   <hr />
