@@ -26,7 +26,7 @@ const paRoutes = (prop, mode = false) => [
   {
     path: 'home',
     name: prop + '.home',
-    meta: { dark: mode, auth: true, name: 'Home' },
+    meta: { dark: mode, auth: true, name: 'Dashborad' },
     component: Dashboard2
   },
   {

@@ -24,7 +24,7 @@
             <b-row>
               <b-col md="4" class="my-1">
                 <b-form-group
-                  label="Filter"
+                  label="Filtro"
                   label-cols-sm="3"
                   label-align-sm="right"
                   label-size="sm"
@@ -35,10 +35,10 @@
                       v-model="filter"
                       type="search"
                       id="filterInput"
-                      placeholder="Type to Search">
+                      placeholder="Escriba para buscar">
                     </b-form-input>
                     <b-input-group-append>
-                      <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
                     </b-input-group-append>
                   </b-input-group>
                 </b-form-group>
@@ -83,7 +83,25 @@
                   </template>
                 </b-table>
               </b-col>
-              <b-col md="12">
+              <b-col md="3">
+                <b-form-group
+                  label="Per page"
+                  label-cols-sm="6"
+                  label-cols-md="4"
+                  label-cols-lg="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="perPageSelect"
+                  class="mb-0">
+                  <b-form-select
+                    v-model="perPage"
+                    id="perPageSelect"
+                    size="sm"
+                    :options="pageOptions"
+                  ></b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col md="9">
                 <b-pagination
                   v-model="currentPage"
                   :total-rows="rows"
@@ -114,7 +132,8 @@ export default {
       sortBy: '',
       filter: null,
       isShow: false,
-      perPage: 3,
+      perPage: 5,
+      pageOptions: [3, 5, 10, 15],
       totalRows: 1,
       currentPage: 1,
       deleteResp: '',
