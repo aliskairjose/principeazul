@@ -47,13 +47,9 @@
 </template>
 
 <script>
-import auth from '../../../../services/auth'
-// import { vito } from '../../../../config/pluginInit'
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'SignIn1Form',
-  // components: { SocialLoginForm },
   props: ['formType', 'email', 'password'],
   data: () => ({
     user: {
@@ -94,16 +90,6 @@ export default {
         localStorage.setItem('access_token', selectedUser.token)
         this.$router.push({ name: 'dashboard.home' })
       }
-    },
-    passportLogin () {
-      auth.login(this.user).then(response => {
-        if (response.status) {
-          localStorage.setItem('user', JSON.stringify(response.data))
-          this.$router.push({ name: 'mini.dashboard.home-1' })
-        } else if (response.data.errors.length > 0) {
-          this.$refs.form.setErrors(response.data.errors)
-        }
-      }).finally(() => { this.loading = false })
     }
   }
 }
