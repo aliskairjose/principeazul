@@ -160,6 +160,11 @@ export default {
           id: 3,
           photo: 'Trendy Royal',
           name: 'Trendy Royal King'
+        },
+        {
+          id: 4,
+          photo: 'Trendy Royal',
+          name: 'Trendy Royal Junior'
         }
       ],
       dropzoneOptions: {

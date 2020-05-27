@@ -7,6 +7,32 @@
           </template>
           <template v-slot:body>
             <b-row>
+              <b-col md="6" class="my-1">
+                <b-form-group
+                  label="Filtro"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="filterInput"
+                  class="mb-0">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      id="filterInput"
+                      placeholder="Escriba para buscar">
+                    </b-form-input>
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col md="6" class="my-1">
+                <b-form-group>
+                  <b-button variant="primary" @click="add">Nuevo producto</b-button>
+                </b-form-group>
+              </b-col>
               <b-col md="12" class="table-responsive">
                 <b-table
                   striped
@@ -14,6 +40,7 @@
                   hover
                   :items="items"
                   :fields="titems"
+                  :filter="filter"
                   :current-page="currentPage"
                   :per-page="perPage"
                 >
@@ -32,6 +59,7 @@
                   v-model="currentPage"
                   :total-rows="rows"
                   :per-page="perPage"
+                  align="right"
                   aria-controls="my-table">
                 </b-pagination>
               </b-col>
@@ -57,7 +85,8 @@ export default {
   data () {
     return {
       perPage: 3,
-      currentPage: 1
+      currentPage: 1,
+      filter: null
     }
   },
   methods: {
