@@ -174,7 +174,6 @@ export default {
       })
         .then(value => {
           if (value) {
-            console.log(item.id)
             this.data.splice(this.data.indexOf(item), 1)
             this.isShow = true
             setTimeout(() => {
