@@ -135,7 +135,7 @@ export default {
       currentPage: 1,
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'FotCamo', key: 'photo', class: 'text-left', sortable: true },
+        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
         { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
         { label: 'Tipo', key: 'type', class: 'text-left', sortable: true },
