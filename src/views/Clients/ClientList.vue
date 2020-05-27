@@ -15,43 +15,94 @@
           <template v-slot:headerTitle>
             <h4 class="card-title">Lista de clientes</h4>
           </template>
-          <template v-slot:headerAction>
-            <b-button variant="primary" @click="add">Nuevo cliente</b-button>
+          <template>
           </template>
           <template v-slot:body>
             <b-row>
+              <b-col md="4" class="my-1">
+                <b-form-group
+                  label="Filtro"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="filterInput"
+                  class="mb-0">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      id="filterInput"
+                      placeholder="Escriba para buscar">
+                    </b-form-input>
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col md="4" class="my-1">
+
+              </b-col>
+              <b-col md="4" class="my-1">
+                <b-form-group>
+                  <b-button variant="primary" @click="add">Nuevo cliente</b-button>
+                </b-form-group>
+              </b-col>
               <b-col md="12" class="table-responsive">
-                <b-table striped bordered hover
+                <b-table
+                  striped
+                  bordered
+                  hover
                   :items="data"
                   :fields="titles"
+                  :filter="filter"
                   :current-page="currentPage"
-                  :per-page="perPage">
+                  :per-page="perPage"
+                   @filtered="onFiltered">
                   <template v-slot:cell(action)="data">
                     <b-button
                       variant=" iq-bg-success mr-1 mb-1"
                       size="sm"
                       @click="edit(data.item)"
-                      v-if="!data.item.editable">
+                      v-if="!data.item.editable"
+                    >
                       <i class="ri-ball-pen-fill m-0"></i>
                     </b-button>
                     <b-button
                       variant=" iq-bg-success mr-1 mb-1"
                       size="sm"
                       @click="submit(data.item)"
-                      v-else>
-                      Ok
-                    </b-button>
+                      v-else
+                    >Ok</b-button>
                     <b-button variant=" iq-bg-danger" size="sm" @click="remove(data.item)">
                       <i class="ri-delete-bin-line m-0"></i>
                     </b-button>
                   </template>
                 </b-table>
               </b-col>
-              <b-col md="12">
+              <b-col sm="5" md="4">
+                <b-form-group
+                  label="Resultados por página"
+                  label-cols-sm="6"
+                  label-cols-md="6"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="perPageSelect"
+                  class="mb-0">
+                  <b-form-select
+                    v-model="perPage"
+                    id="perPageSelect"
+                    size="sm"
+                    :options="pageOptions"
+                  ></b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col sm="7" md="8">
                 <b-pagination
                   v-model="currentPage"
                   :total-rows="rows"
                   :per-page="perPage"
+                  align="right"
                   aria-controls="my-table">
                 </b-pagination>
               </b-col>
@@ -71,8 +122,12 @@ export default {
   },
   data () {
     return {
+      sortBy: '',
+      filter: null,
       isShow: false,
-      perPage: 3,
+      perPage: 5,
+      pageOptions: [5, 10, 15],
+      totalRows: 1,
       currentPage: 1,
       titles: [
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
@@ -182,6 +237,11 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     }
   },
   computed: {

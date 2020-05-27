@@ -15,9 +15,6 @@
           <template v-slot:headerTitle>
             <h4 class="card-title">Lista de inventario</h4>
           </template>
-          <!-- <template v-slot:headerAction>
-            <b-button variant="primary" @click="add">Nuevo producto</b-button>
-          </template> -->
           <template>
           </template>
           <template v-slot:body>
@@ -133,7 +130,7 @@ export default {
       filter: null,
       isShow: false,
       perPage: 5,
-      pageOptions: [3, 5, 10, 15],
+      pageOptions: [5, 10, 15],
       totalRows: 1,
       currentPage: 1,
       titles: [
