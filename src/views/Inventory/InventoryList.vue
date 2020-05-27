@@ -83,12 +83,11 @@
                   </template>
                 </b-table>
               </b-col>
-              <b-col md="3">
+              <b-col sm="5" md="4">
                 <b-form-group
-                  label="Per page"
+                  label="Resultados por página"
                   label-cols-sm="6"
-                  label-cols-md="4"
-                  label-cols-lg="3"
+                  label-cols-md="6"
                   label-align-sm="right"
                   label-size="sm"
                   label-for="perPageSelect"
@@ -101,11 +100,12 @@
                   ></b-form-select>
                 </b-form-group>
               </b-col>
-              <b-col md="9">
+              <b-col sm="7" md="8">
                 <b-pagination
                   v-model="currentPage"
                   :total-rows="rows"
                   :per-page="perPage"
+                  align="right"
                   aria-controls="my-table">
                 </b-pagination>
               </b-col>
@@ -136,7 +136,6 @@ export default {
       pageOptions: [3, 5, 10, 15],
       totalRows: 1,
       currentPage: 1,
-      deleteResp: '',
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
         { label: 'FotCamo', key: 'photo', class: 'text-left', sortable: true },
