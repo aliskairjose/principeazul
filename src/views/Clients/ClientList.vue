@@ -161,14 +161,30 @@ export default {
       // item.editable = false
     },
     remove (item) {
-      let mensaje = confirm('¿Está seguro que desea eliminar este registro?')
-      if (mensaje) {
-        this.data.splice(this.data.indexOf(item), 1)
-        this.isShow = true
-        setTimeout(() => {
-          this.isShow = false
-        }, 2000)
-      }
+      this.$bvModal.msgBoxConfirm('Esta seguro que desea eliminar el registro?.', {
+        title: 'Por favor confirme',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: 'Si',
+        cancelTitle: 'No',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            console.log(item.id)
+            this.data.splice(this.data.indexOf(item), 1)
+            this.isShow = true
+            setTimeout(() => {
+              this.isShow = false
+            }, 2000)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   computed: {

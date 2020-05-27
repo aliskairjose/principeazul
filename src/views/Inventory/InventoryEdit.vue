@@ -76,6 +76,7 @@
                     <sub-product-table
                       :items="subProducts"
                       :titems="titles"
+                      v-on:add-item="addSub"
                       >
                     </sub-product-table>
                   </b-modal>
@@ -97,7 +98,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import SubProductTable from '@/views/Inventory/SubProductTable'
 export default {
   name: 'InventoryEdit',
-  files: [],
+  subs: [],
   components: {
     vueDropzone: vue2Dropzone,
     SubProductTable
@@ -120,6 +121,7 @@ export default {
       isShow: false,
       selectedType: null,
       selectedCategory: null,
+      subs: [],
       types: [
         { value: null, text: 'Seleccione un tipo' },
         { value: '1', text: 'Principal' },
@@ -183,6 +185,11 @@ export default {
       } else {
         this.isShow = false
       }
+    },
+    addSub (item) {
+      // Captura el item del componente hijo SubProductTable
+      this.subs.push(item)
+      console.log(this.subs)
     }
   }
 

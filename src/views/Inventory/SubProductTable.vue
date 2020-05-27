@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     add (item) {
-      console.log(item.name)
+      return this.$emit('add-item', item)
     }
   },
   computed: {
