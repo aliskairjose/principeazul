@@ -41,7 +41,15 @@
                 </b-form-group>
               </b-col>
               <b-col md="4" class="my-1">
-
+                <b-form-group class="mb-0">
+                  <b-form-select
+                    v-model="selectedType"
+                    id="types"
+                    size="sm"
+                    :options="typesOptions"
+                    @change="onChange">
+                    </b-form-select>
+                </b-form-group>
               </b-col>
               <b-col md="4" class="my-1">
                 <b-form-group>
@@ -54,10 +62,12 @@
                   bordered
                   hover
                   :items="data"
-                  :fields="titles"
                   :filter="filter"
-                  :current-page="currentPage"
+                  :fields="titles"
                   :per-page="perPage"
+                  :sort-by.sync="sortBy"
+                  :sort-desc.sync="sortDesc"
+                  :current-page="currentPage"
                    @filtered="onFiltered">
                   <template v-slot:cell(action)="data">
                     <b-button
@@ -130,6 +140,13 @@ export default {
       filter: null,
       isShow: false,
       perPage: 5,
+      selectedType: null,
+      sortDesc: false,
+      typesOptions: [
+        { value: null, text: 'Tipo de Producto' },
+        { value: false, text: 'Principal' },
+        { value: true, text: 'Secundario' }
+      ],
       pageOptions: [5, 10, 15],
       totalRows: 1,
       currentPage: 1,
@@ -147,7 +164,7 @@ export default {
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
           quantity: '191',
-          type: 'Principal'
+          type: 'Secundario'
         },
         {
           id: 2,
@@ -168,7 +185,7 @@ export default {
           photo: 'Trendy Royal',
           name: 'Trendy Royal',
           quantity: '124',
-          type: 'Principal'
+          type: 'Secundario'
         },
         {
           id: 5,
@@ -224,6 +241,10 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    onChange () {
+      this.sortBy = 'type'
+      this.sortDesc = this.selectedType
     }
   },
   computed: {
