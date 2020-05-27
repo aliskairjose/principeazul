@@ -163,8 +163,6 @@ export default {
     remove (item) {
       this.$bvModal.msgBoxConfirm('Esta seguro que desea eliminar el registro?.', {
         title: 'Por favor confirme',
-        size: 'sm',
-        buttonSize: 'sm',
         okVariant: 'danger',
         okTitle: 'Si',
         cancelTitle: 'No',
