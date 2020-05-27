@@ -58,8 +58,10 @@
                   hover
                   :items="data"
                   :fields="titles"
+                  :filter="filter"
                   :current-page="currentPage"
-                  :per-page="perPage">
+                  :per-page="perPage"
+                   @filtered="onFiltered">
                   <template v-slot:cell(action)="data">
                     <b-button
                       variant=" iq-bg-success mr-1 mb-1"
@@ -100,8 +102,12 @@
 import { vito } from '../../config/pluginInit'
 export default {
   name: 'InventoryList',
+  create () {
+  },
   mounted () {
     vito.index()
+    // Set the initial number of items
+    this.totalRows = this.data.length
   },
   data () {
     return {
@@ -109,6 +115,7 @@ export default {
       filter: null,
       isShow: false,
       perPage: 3,
+      totalRows: 1,
       currentPage: 1,
       deleteResp: '',
       titles: [
@@ -197,19 +204,16 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     }
   },
   computed: {
     rows () {
       return this.data.length
-    },
-    sortOptions () {
-      // Create an options list from our fields
-      return this.titles
-        .filter(f => f.sortable)
-        .map(f => {
-          return { text: f.label, value: f.key }
-        })
     }
   }
 }
