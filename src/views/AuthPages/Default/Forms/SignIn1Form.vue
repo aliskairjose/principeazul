@@ -91,10 +91,7 @@ export default {
           this.$refs.form.setErrors(response.data.errors)
         }
       })
-        .catch((error) => {
-          console.log(error)
-          this.isError = true
-        })
+        .catch(() => { this.isError = true })
         .finally(() => { this.loading = false })
     }
   }
