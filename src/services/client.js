@@ -7,8 +7,8 @@ export default {
   getById (id) {
     return axios.get(`/clients/${id}`)
   },
-  create (client){
-    return axios.post('/clients', client, { headers })
+  create (params){
+    return axios.post('/clients', params)
   },
   update (id){
 

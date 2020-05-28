@@ -7,8 +7,8 @@ export default {
   getById (id) {
     return axios.get(`/categories/${id}`)
   },
-  create (client){
-    return axios.post('/cateories', client, { headers })
+  create (params){
+    return axios.post('/cateories', params)
   },
   update (id){
 
