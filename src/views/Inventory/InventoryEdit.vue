@@ -194,7 +194,6 @@ export default {
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
       this.subs.push(item)
-      console.log(this.subs)
     }
   }
 

@@ -45,15 +45,15 @@ const clientRoutes = (prop, mode = false) => [
     component: ClientList
   },
   {
-    path: 'client/edit/:id',
-    name: prop + '.edit',
-    meta: { dark: mode, auth: true, name: 'Editar cliente' },
-    component: ClientEdit
-  },
-  {
     path: 'client/add/',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar cliente' },
+    component: ClientEdit
+  },
+  {
+    path: 'client/edit/:id',
+    name: prop + '.edit',
+    meta: { dark: mode, auth: true, name: 'Editar cliente' },
     component: ClientEdit
   }
 ]
@@ -73,7 +73,7 @@ const inventoryRoutes = (prop, mode = false) => [
   },
   {
     path: 'inventory/edit/:id',
-    name: prop + '.add',
+    name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar producto' },
     component: InventoryEdit
   }

@@ -206,10 +206,10 @@ export default {
   },
   methods: {
     add () {
-      this.$router.push('add')
+      this.$router.push({ name: 'inventory.add' })
     },
     edit (item) {
-      this.$router.push(`edit/${item.id}`)
+      this.$router.push({ name: 'inventory.edit', params: { id: item.id } })
     },
     submit (item) {
       // item.editable = false
