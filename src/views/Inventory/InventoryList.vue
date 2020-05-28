@@ -243,7 +243,11 @@ export default {
       this.currentPage = 1
     },
     onChange () {
-      this.sortBy = 'type'
+      if (this.selectedType !== null) {
+        this.sortBy = 'type'
+      } else {
+        this.sortBy = ''
+      }
       this.sortDesc = this.selectedType
     }
   },
