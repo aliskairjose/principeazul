@@ -1,5 +1,6 @@
 export default {
   webBaseURL: 'http://api.pa.dev.cronapis.com/api',
+  cors: 'https://cors-anywhere.herokuapp.com/',
   firebaseConfig: {
     apiKey: '',
     authDomain: '',

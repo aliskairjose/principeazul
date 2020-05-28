@@ -70,14 +70,19 @@ export default {
     },
     jwtLogin () {
       auth.login(this.user).then(response => {
-        if (response.status) {
-          console.log(response)
-          // localStorage.setItem('user', JSON.stringify(response.data))
-          // this.$router.push({ name: 'dashboard.home' })
+        const resp = response.data
+        if (response) {
+          localStorage.setItem('user', JSON.stringify(resp.data))
+          localStorage.setItem('access_token', resp.access_token)
+          this.$router.push({ name: 'dashboard.home' })
         } else if (response.data.errors.length > 0) {
           this.$refs.form.setErrors(response.data.errors)
         }
-      }).finally(() => { this.loading = false })
+      })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => { this.loading = false })
     }
   }
 }
