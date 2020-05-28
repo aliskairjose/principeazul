@@ -1,6 +1,9 @@
 <template>
   <ValidationObserver ref="form" v-slot="{ handleSubmit }">
     <form class="mt-4" novalidate @submit.prevent="handleSubmit(onSubmit)">
+      <div class="text-center" id="spinner" v-show="loading">
+        <b-spinner variant="primary" type="grow" label="Spinning" style="width: 5rem; height: 5rem;"></b-spinner>
+      </div>
       <ValidationProvider vid="email" name="E-mail" rules="required|email" v-slot="{ errors }">
         <div class="form-group">
           <label for="emailInput">Email</label>
@@ -42,6 +45,12 @@
         </div>
         <button type="submit" class="btn btn-primary float-right">Inicia sesión</button>
       </div>
+      <b-alert :show="isError" variant="danger" class="bg-white mt-2">
+        <div class="iq-alert-icon">
+          <i class="ri-information-line"></i>
+        </div>
+        <div class="iq-alert-text"> <b>Verifique</b> sus credenciales e intente de nuevo!</div>
+      </b-alert>
     </form>
   </ValidationObserver>
 </template>
@@ -52,6 +61,8 @@ import auth from '@/services/auth'
 export default {
   name: 'SignIn1Form',
   data: () => ({
+    loading: false,
+    isError: false,
     user: {
       email: '',
       password: ''
@@ -66,6 +77,7 @@ export default {
   },
   methods: {
     onSubmit () {
+      this.loading = true
       this.jwtLogin(this.user)
     },
     jwtLogin () {
@@ -81,9 +93,18 @@ export default {
       })
         .catch((error) => {
           console.log(error)
+          this.isError = true
         })
         .finally(() => { this.loading = false })
     }
   }
 }
 </script>
+
+<style scoped>
+  #spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 40%;
+  }
+</style>
