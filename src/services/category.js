@@ -2,13 +2,13 @@ import axios from './index'
 
 export default {
   getAll () {
-    return axios.get('/clients?page=1')
+    return axios.get('/categories?page=1')
   },
   getById (id) {
-    return axios.get(`/clients/${id}`)
+    return axios.get(`/categories/${id}`)
   },
   create (client){
-    return axios.post('/clients', client, { headers })
+    return axios.post('/cateories', client, { headers })
   },
   update (id){
 
