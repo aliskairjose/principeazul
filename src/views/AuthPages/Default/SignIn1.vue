@@ -2,7 +2,7 @@
   <div>
     <h1 class="mb-0">Inicia sesión</h1>
     <p>Ingresa con tu cuanta del administrador del principe azul.</p>
-    <sign-in1-form formType="jwt" email="admin@vito.com" password="admin123"></sign-in1-form>
+    <sign-in1-form></sign-in1-form>
   </div>
 </template>
 

@@ -37,8 +37,8 @@
       </ValidationProvider>
       <div class="d-inline-block w-100">
         <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-          <input type="checkbox" class="custom-control-input" :id="formType" />
-          <label class="custom-control-label" :for="formType">Recordarme</label>
+          <input type="checkbox" class="custom-control-input"/>
+          <label class="custom-control-label">Recordarme</label>
         </div>
         <button type="submit" class="btn btn-primary float-right">Inicia sesión</button>
       </div>
@@ -48,9 +48,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import auth from '@/services/auth'
 export default {
   name: 'SignIn1Form',
-  props: ['formType', 'email', 'password'],
   data: () => ({
     user: {
       email: '',
@@ -58,8 +58,6 @@ export default {
     }
   }),
   mounted () {
-    this.user.email = this.$props.email
-    this.user.password = this.$props.password
   },
   computed: {
     ...mapGetters({
@@ -68,28 +66,18 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.jwtLogin()
+      this.jwtLogin(this.user)
     },
     jwtLogin () {
-      let selectedUser = this.stateUsers.find(user => {
-        return (user.email === this.user.email && user.password === this.user.password)
-      }) || null
-      if (selectedUser) {
-        this.$store.dispatch('Setting/authUserAction', {
-          auth: true,
-          authType: 'jwt',
-          user: {
-            id: selectedUser.uid,
-            name: selectedUser.name,
-            mobileNo: null,
-            email: selectedUser.email,
-            profileImage: null
-          }
-        })
-        localStorage.setItem('user', JSON.stringify(selectedUser))
-        localStorage.setItem('access_token', selectedUser.token)
-        this.$router.push({ name: 'dashboard.home' })
-      }
+      auth.login(this.user).then(response => {
+        if (response.status) {
+          console.log(response)
+          // localStorage.setItem('user', JSON.stringify(response.data))
+          // this.$router.push({ name: 'dashboard.home' })
+        } else if (response.data.errors.length > 0) {
+          this.$refs.form.setErrors(response.data.errors)
+        }
+      }).finally(() => { this.loading = false })
     }
   }
 }

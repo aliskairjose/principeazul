@@ -1,14 +1,19 @@
-let status = 'slien'
-
-function setStatus (_status) {
-  status = _status
-}
-
-function getStatus () {
-  return status
-}
+import axios from './index'
 
 export default {
-  setStatus,
-  getStatus
+  getAll () {
+
+  },
+  getById (id) {
+
+  },
+  create (client){
+
+  },
+  update (id){
+
+  },
+  delete (id) {
+
+  }
 }
