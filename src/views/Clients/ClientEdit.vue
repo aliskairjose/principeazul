@@ -86,7 +86,6 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import client from '@/services/client'
-// import { db } from '../../config/firebase'
 export default {
   name: 'ClientEdit',
   title: '',

@@ -96,6 +96,8 @@ import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import SubProductTable from '@/views/Inventory/SubProductTable'
+import product from '@/services/product'
+
 export default {
   name: 'InventoryEdit',
   subs: [],
@@ -115,7 +117,7 @@ export default {
       this.loading = true
       this.title = 'Editar producto'
       this.btnTitle = 'Guardar cambios'
-      client.getById(this.$route.params.id)
+      product.getById(this.$route.params.id)
         .then(response => {
           const data = response.data.data
           this.client = data
@@ -205,7 +207,7 @@ export default {
     },
     onSubmit () {
       this.loading = true
-      client.product(this.product)
+      product.create(this.product)
         .then(response => { console.log(response) })
         .catch((error) => { console.log(error) })
         .finally(() => {
