@@ -2,15 +2,15 @@ import axios from './index'
 
 export default {
   getAll () {
-    return axios.get('/categories?page=1')
+    return axios.get('/categories')
   },
   getById (id) {
     return axios.get(`/categories/${id}`)
   },
-  create (params){
+  create (params) {
     return axios.post('/cateories', params)
   },
-  update (id){
+  update (id) {
 
   },
   delete (id) {

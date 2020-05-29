@@ -2,15 +2,15 @@ import axios from './index'
 
 export default {
   getAll () {
-    return axios.get('/clients?page=1')
+    return axios.get('/clients')
   },
   getById (id) {
     return axios.get(`/clients/${id}`)
   },
-  create (params){
+  create (params) {
     return axios.post('/clients', params)
   },
-  update (id){
+  update (id) {
 
   },
   delete (id) {

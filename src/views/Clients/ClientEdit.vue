@@ -11,10 +11,15 @@
               <template v-slot:body>
                 <div class="new-user-info">
                   <b-row>
+                    <div class="text-center" id="spinner" v-show="loading">
+                      <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+                    </div>
+                  </b-row>
+                  <b-row>
                     <b-form-group class="col-md-6" label="Nombre:" label-for="name">
                       <ValidationProvider name="Nombre" rules="required" v-slot="{ errors }">
                         <b-form-input
-                          v-model="user.name"
+                          v-model="client.name"
                           type="text"
                           placeholder="Nombre"
                           :class="(errors.length > 0 ? ' is-invalid' : '')"
@@ -27,7 +32,7 @@
                     <b-form-group class="col-md-6" label="Cédula / RUC:" label-for="cedula">
                       <ValidationProvider name="Cedula" rules="required" v-slot="{ errors }">
                         <b-form-input
-                          v-model="user.cedula"
+                          v-model="client.dni"
                           type="text"
                           placeholder="Cédula"
                           :class="(errors.length > 0 ? ' is-invalid' : '')"
@@ -39,7 +44,7 @@
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
                       <b-form-input
-                        v-model="user.phone"
+                        v-model="client.phone"
                         type="text"
                         name="phone"
                         id="phone"
@@ -48,12 +53,23 @@
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Email" label-for="email">
                       <b-form-input
-                        v-model="user.email"
+                        v-model="client.email"
                         type="text"
                         name="email"
                         id="email"
                         placeholder="Email"
                       ></b-form-input>
+                    </b-form-group>
+                    <b-form-group class="col-md-12" label="Dirección" label-for="address">
+                      <b-form-textarea
+                        rows="3"
+                        max-rows="6"
+                        v-model="client.address"
+                        type="text"
+                        name="address"
+                        id="address"
+                        placeholder="Dirección"
+                      ></b-form-textarea>
                     </b-form-group>
                   </b-row>
                   <hr />
@@ -69,7 +85,8 @@
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
-import { db } from '../../config/firebase'
+import client from '@/services/client'
+// import { db } from '../../config/firebase'
 export default {
   name: 'ClientEdit',
   title: '',
@@ -86,31 +103,27 @@ export default {
     if (this.getStatus() === 'edit') {
       this.title = 'Editar cliente'
       this.btnTitle = 'Guardar cambios'
+      client.getById(this.$route.params.id)
+        .then(response => {
+          const data = response.data.data
+          this.client = data
+        })
+        .catch((error) => { console.log(error) })
+        .finally(() => { console.log('finally') })
     }
   },
   data () {
     return {
-      user: {
+      client: {
         name: '',
-        cedula: '',
+        last_name: 'Default',
+        dni: '',
         phone: '',
-        email: ''
+        email: '',
+        address: ''
       },
-      roles: [
-        { text: 'Web Designer', value: 'Web Designer' },
-        { text: 'Web Developer', value: 'Web Developer' },
-        { text: 'Tester', value: 'Tester' },
-        { text: 'Php Developer', value: 'Php Developer' },
-        { text: 'Ios Developer', value: 'Ios Developer' }
-      ],
-      countries: [
-        { value: 'Canada', text: 'Canada' },
-        { value: 'Niada', text: 'Niada' },
-        { value: 'USA', text: 'USA' },
-        { value: 'India', text: 'India' },
-        { value: 'Africa', text: 'Africa' }
-      ],
-      users: []
+      loading: false,
+      clients: []
     }
   },
   computed: {
@@ -125,10 +138,14 @@ export default {
       if (!id) return 'add'
     },
     onSubmit () {
-      this.user.name = this.fullName
-      db.collection('users').add(this.user)
-      vito.showSnackbar('success', 'User has been updated successfully.')
-      this.$router.replace('/user/user-list')
+      this.loading = true
+      client.create(this.client)
+        .then(response => { console.log(response) })
+        .catch((error) => { console.log(error) })
+        .finally(() => {
+          this.loading = false
+          this.$router.push({ name: 'client.list' })
+        })
     },
     previewImage: function (event) {
       const input = event.target
@@ -146,3 +163,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 40vw;
+  }
+</style>
