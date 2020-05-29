@@ -14,6 +14,6 @@ export default {
 
   },
   delete (id) {
-
+    return axios.delete(`/clients/${id}`).then(res => res.data)
   }
 }

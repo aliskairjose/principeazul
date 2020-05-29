@@ -16,6 +16,9 @@
             <h4 class="card-title">Lista de clientes</h4>
           </template>
           <template v-slot:body>
+            <div class="text-center is-removing" v-show="isRemoving">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </div>
             <div class="text-center" id="spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
@@ -80,10 +83,10 @@
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
-                        @click="submit(clienst.item)"
+                        @click="submit(clients.item)"
                         v-else
                       >Ok</b-button>
-                      <b-button variant=" iq-bg-danger" size="sm" @click="remove(clienst.item)">
+                      <b-button variant=" iq-bg-danger" size="sm" @click="remove(clients.item)">
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
                     </template>
@@ -129,15 +132,7 @@ import clientService from '@/services/client'
 export default {
   name: 'ClientList',
   created () {
-    clientService.getAll()
-      .then(response => {
-        if (response.data.length > 0) {
-          this.isEmpty = false
-          this.clients = response.data
-        }
-      })
-      .catch(error => { console.log(error) })
-      .finally(() => { this.loading = false })
+    this.loadData()
   },
   mounted () {
     vito.index()
@@ -148,6 +143,7 @@ export default {
       loading: true,
       filter: null,
       isShow: false,
+      isRemoving: false,
       isEmpty: true,
       perPage: 15,
       pageOptions: [5, 10, 15],
@@ -165,6 +161,22 @@ export default {
     }
   },
   methods: {
+    loadData () {
+      clientService.getAll()
+        .then(response => {
+          if (response.data.length > 0) {
+            this.isEmpty = false
+            this.clients = response.data
+          }
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => {
+          this.loading = false
+          setTimeout(() => {
+            this.isShow = false
+          }, 2000)
+        })
+    },
     add () {
       this.$router.push({ name: 'client.add' })
     },
@@ -186,11 +198,16 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.clients.splice(this.clients.indexOf(item), 1)
-            this.isShow = true
-            setTimeout(() => {
-              this.isShow = false
-            }, 2000)
+            this.isRemoving = true
+            clientService.delete(item.id)
+              .then(res => {
+                this.isShow = true
+              })
+              .catch((error) => { console.log(error) })
+              .finally(() => {
+                this.isRemoving = false
+                this.loadData()
+              })
           }
         })
         .catch(err => {
@@ -210,3 +227,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .is-removing {
+    z-index: 1000;
+    position: relative;
+    left: 0;
+  }
+  #spinner {
+    z-index: 1000;
+    position: relative;
+    left: 0;
+  }
+</style>
