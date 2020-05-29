@@ -156,9 +156,17 @@ export default {
       filter: null,
       isShow: false,
       isEmpty: true,
+      isRemoving: false,
       perPage: 15,
       selectedType: null,
       sortDesc: false,
+      product: {
+        name: '',
+        description: '',
+        type: '',
+        price: 0,
+        quantity: 0
+      },
       typesOptions: [
         { value: null, text: 'Tipo de Producto' },
         { value: false, text: 'Principal' },
