@@ -16,6 +16,9 @@
             <h4 class="card-title">Lista de inventario</h4>
           </template>
           <template v-slot:body>
+            <div class="text-center is-removing" v-show="isRemoving">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </div>
             <div class="text-center" id="spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
@@ -135,19 +138,11 @@
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
-import product from '@/services/product'
+import productService from '@/services/product'
 export default {
   name: 'InventoryList',
   created () {
-    product.getAll()
-      .then(response => {
-        if (response.data.length > 0) {
-          this.isEmpty = false
-          this.products = response.data
-        }
-      })
-      .catch(error => { console.log(error) })
-      .finally(() => { this.loading = false })
+    this.loadData()
   },
   mounted () {
     vito.index()
@@ -184,6 +179,17 @@ export default {
     }
   },
   methods: {
+    loadData () {
+      productService.getAll()
+        .then(response => {
+          if (response.data.length > 0) {
+            this.isEmpty = false
+            this.products = response.data
+          }
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.loading = false })
+    },
     add () {
       this.$router.push({ name: 'inventory.add' })
     },
@@ -205,11 +211,16 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.products.splice(this.products.indexOf(item), 1)
-            this.isShow = true
-            setTimeout(() => {
-              this.isShow = false
-            }, 2000)
+            this.isRemoving = true
+            productService.delete(item.id)
+              .then(res => {
+                this.isShow = true
+              })
+              .catch((error) => { console.log(error) })
+              .finally(() => {
+                this.isRemoving = false
+                this.loadData()
+              })
           }
         })
         .catch(err => {
@@ -237,3 +248,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .is-removing {
+    z-index: 1000;
+    position: relative;
+    left: 0;
+  }
+  #spinner {
+    z-index: 1000;
+    position: relative;
+    left: 0;
+  }
+</style>
