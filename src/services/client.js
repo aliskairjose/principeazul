@@ -1,28 +1,32 @@
 import axios from './index'
 
 export default {
-  getAll () {
+  async getAll () {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    return axios.get('/clients').then(res => res.data)
+    const res = await axios.get('/clients')
+    return res.data
   },
-  getById (id) {
+  async getById (id) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    return axios.get(`/clients/${id}`).then(res => res.data)
+    const res = await axios.get(`/clients/${id}`)
+    return res.data
   },
-  create (params) {
+  async create (params) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    return axios.post('/clients', params).then(res => res.data)
+    const res = await axios.post('/clients', params)
+    return res.data
   },
   update (id) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   },
-  delete (id) {
+  async delete (id) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    return axios.delete(`/clients/${id}`).then(res => res.data)
+    const res = await axios.delete(`/clients/${id}`)
+    return res.data
   }
 }

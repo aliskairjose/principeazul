@@ -231,12 +231,12 @@ export default {
 <style scoped>
   .is-removing {
     z-index: 1000;
-    position: relative;
-    left: 0;
+    position: absolute;
+    left: 40%;
   }
   #spinner {
     z-index: 1000;
-    position: relative;
-    left: 0;
+    position: absolute;
+    left: 40%;
   }
 </style>
