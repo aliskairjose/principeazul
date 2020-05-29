@@ -125,15 +125,15 @@
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
-import client from '@/services/client'
+import clientService from '@/services/client'
 export default {
   name: 'ClientList',
   created () {
-    client.getAll()
+    clientService.getAll()
       .then(response => {
-        if (response.data.data.length > 0) {
+        if (response.data.length > 0) {
           this.isEmpty = false
-          this.clients = response.data.data
+          this.clients = response.data
         }
       })
       .catch(error => { console.log(error) })

@@ -141,9 +141,9 @@ export default {
   created () {
     product.getAll()
       .then(response => {
-        if (response.data.data.length > 0) {
+        if (response.data.length > 0) {
           this.isEmpty = false
-          this.products = response.data.data
+          this.products = response.data
         }
       })
       .catch(error => { console.log(error) })

@@ -2,13 +2,13 @@ import axios from './index'
 
 export default {
   getAll () {
-    return axios.get('/clients')
+    return axios.get('/clients').then(res => res.data)
   },
   getById (id) {
-    return axios.get(`/clients/${id}`)
+    return axios.get(`/clients/${id}`).then(res => res.data)
   },
   create (params) {
-    return axios.post('/clients', params)
+    return axios.post('/clients', params).then(res => res.data)
   },
   update (id) {
 

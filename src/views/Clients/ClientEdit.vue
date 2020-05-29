@@ -85,7 +85,7 @@
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
-import client from '@/services/client'
+import clientService from '@/services/client'
 export default {
   name: 'ClientEdit',
   title: '',
@@ -103,10 +103,9 @@ export default {
       this.loading = true
       this.title = 'Editar cliente'
       this.btnTitle = 'Guardar cambios'
-      client.getById(this.$route.params.id)
+      clientService.getById(this.$route.params.id)
         .then(response => {
-          const data = response.data.data
-          this.client = data
+          this.client = response.data
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
@@ -139,13 +138,10 @@ export default {
     },
     onSubmit () {
       this.loading = true
-      client.create(this.client)
-        .then(response => { console.log(response) })
+      clientService.create(this.client)
+        .then(response => { this.$router.push({ name: 'client.list' }) })
         .catch((error) => { console.log(error) })
-        .finally(() => {
-          this.loading = false
-          this.$router.push({ name: 'client.list' })
-        })
+        .finally(() => { this.loading = false })
     },
     previewImage: function (event) {
       const input = event.target
