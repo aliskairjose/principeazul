@@ -13,7 +13,7 @@
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Lista de inventario</h4>
+            <h4 class="card-title">Lista de productos</h4>
           </template>
           <template v-slot:body>
             <div class="text-center is-removing" v-show="isRemoving">
@@ -63,7 +63,7 @@
               <template v-if="isEmpty">
                 <b-col>
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay clientes para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
+                    <div class="iq-alert-text"><b>No hay productos para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
                   </b-alert>
                 </b-col>
               </template>
