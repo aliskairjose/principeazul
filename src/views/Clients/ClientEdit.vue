@@ -101,6 +101,7 @@ export default {
       this.btnTitle = 'Nuevo cliente'
     }
     if (this.getStatus() === 'edit') {
+      this.loading = true
       this.title = 'Editar cliente'
       this.btnTitle = 'Guardar cambios'
       client.getById(this.$route.params.id)
@@ -109,7 +110,7 @@ export default {
           this.client = data
         })
         .catch((error) => { console.log(error) })
-        .finally(() => { console.log('finally') })
+        .finally(() => { this.loading = false })
     }
   },
   data () {

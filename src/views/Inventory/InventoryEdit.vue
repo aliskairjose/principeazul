@@ -112,8 +112,16 @@ export default {
       this.btnTitle = 'Nuevo producto'
     }
     if (this.getStatus() === 'edit') {
+      this.loading = true
       this.title = 'Editar producto'
       this.btnTitle = 'Guardar cambios'
+      client.getById(this.$route.params.id)
+        .then(response => {
+          const data = response.data.data
+          this.client = data
+        })
+        .catch((error) => { console.log(error) })
+        .finally(() => { this.loading = false })
     }
   },
   data () {
@@ -194,6 +202,16 @@ export default {
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
       this.subs.push(item)
+    },
+    onSubmit () {
+      this.loading = true
+      client.product(this.product)
+        .then(response => { console.log(response) })
+        .catch((error) => { console.log(error) })
+        .finally(() => {
+          this.loading = false
+          this.$router.push({ name: 'inventory.list' })
+        })
     }
   }
 
