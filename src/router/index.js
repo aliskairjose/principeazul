@@ -8,8 +8,8 @@ import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
 import Dashboard2 from '@/views/Dashboards/Dashboard2.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import ClientEdit from '@/views/Clients/ClientEdit.vue'
-import InventoryList from '@/views/Inventory/InventoryList.vue'
-import InventoryEdit from '@/views/Inventory/InventoryEdit.vue'
+import ProductList from '@/views/Product/ProductList'
+import ProductEdit from '@/views/Product/ProductEdit'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
 
@@ -58,24 +58,24 @@ const clientRoutes = (prop, mode = false) => [
   }
 ]
 
-const inventoryRoutes = (prop, mode = false) => [
+const productRoutes = (prop, mode = false) => [
   {
-    path: 'inventory/list',
+    path: 'product/list',
     name: prop + '.list',
     meta: { dark: mode, auth: true, name: 'Inventario' },
-    component: InventoryList
+    component: ProductList
   },
   {
-    path: 'inventory/add',
+    path: 'product/add',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar producto' },
-    component: InventoryEdit
+    component: ProductEdit
   },
   {
-    path: 'inventory/edit/:id',
+    path: 'product/edit/:id',
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar producto' },
-    component: InventoryEdit
+    component: ProductEdit
   }
 ]
 
@@ -144,10 +144,10 @@ const routes = [
   },
   {
     path: '/',
-    name: 'inventory',
+    name: 'product',
     component: Layout1,
     meta: { auth: true },
-    children: inventoryRoutes('inventory')
+    children: productRoutes('product')
   },
   {
     path: '/callback',
