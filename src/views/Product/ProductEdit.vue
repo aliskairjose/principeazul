@@ -102,7 +102,7 @@ import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import SubProductTable from '@/views/Inventory/SubProductTable'
-import product from '@/services/product'
+import productService from '@/services/product'
 
 export default {
   name: 'ProductEdit',
@@ -123,10 +123,9 @@ export default {
       this.loading = true
       this.title = 'Editar producto'
       this.btnTitle = 'Guardar cambios'
-      product.getById(this.$route.params.id)
+      productService.getById(this.$route.params.id)
         .then(response => {
-          const data = response.data.data
-          this.client = data
+          this.product = response.data
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
@@ -218,10 +217,18 @@ export default {
     },
     onSubmit () {
       this.loading = true
-      product.create(this.product)
-        .then(response => { this.$router.push({ name: 'product.list' }) })
-        .catch((error) => { console.log(error) })
-        .finally(() => { this.loading = false })
+      if (this.getStatus() === 'add') {
+        productService.create(this.product)
+          .then(response => { this.$router.push({ name: 'product.list' }) })
+          .catch((error) => { console.log(error) })
+          .finally(() => { this.loading = false })
+      }
+      if (this.getStatus() === 'edit') {
+        productService.update(this.$route.params.id, this.product)
+          .then(response => { this.$router.push({ name: 'product.list' }) })
+          .catch((error) => { console.log(error) })
+          .finally(() => { this.loading = false })
+      }
     }
   }
 

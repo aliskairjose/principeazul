@@ -22,7 +22,7 @@ export default {
   async update (id, params) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    const res = await axios.put(`products/${id}`, params)
+    const res = await axios.put(`/products/${id}`, params)
     return res.data
   },
   async delete (id) {

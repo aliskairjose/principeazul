@@ -94,19 +94,16 @@ export default {
   directives: { mask },
   title: '',
   btnTitle: '',
-  status: '',
   mounted () {
     vito.index()
   },
   created () {
     if (this.getStatus() === 'add') {
-      this.status = 'add'
       this.title = 'Agregar nuevo cliente'
       this.btnTitle = 'Nuevo cliente'
     }
     if (this.getStatus() === 'edit') {
       this.loading = true
-      this.status = 'edit'
       this.title = 'Editar cliente'
       this.btnTitle = 'Guardar cambios'
       clientService.getById(this.$route.params.id)
@@ -144,13 +141,13 @@ export default {
     },
     onSubmit () {
       this.loading = true
-      if (this.status === 'add') {
+      if (this.getStatus() === 'add') {
         clientService.create(this.client)
           .then(response => { this.$router.push({ name: 'client.list' }) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
-      if (this.status === 'edit') {
+      if (this.getStatus() === 'edit') {
         clientService.update(this.$route.params.id, this.client)
           .then(response => { this.$router.push({ name: 'client.list' }) })
           .catch((error) => { console.log(error) })
