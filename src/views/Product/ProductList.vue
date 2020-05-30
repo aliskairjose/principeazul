@@ -199,10 +199,10 @@ export default {
         .finally(() => { this.loading = false })
     },
     add () {
-      this.$router.push({ name: 'inventory.add' })
+      this.$router.push({ name: 'product.add' })
     },
     edit (item) {
-      this.$router.push({ name: 'inventory.edit', params: { id: item.id } })
+      this.$router.push({ name: 'product.edit', params: { id: item.id } })
     },
     submit (item) {
       // item.editable = false

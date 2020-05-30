@@ -131,24 +131,24 @@ export default {
       isShow: false,
       selectedType: null,
       selectedCategory: null,
+      product: {
+        name: '',
+        descripcion: '',
+        price: 0,
+        category: '',
+        'type': ''
+      },
       subs: [],
       types: [
         { value: null, text: 'Seleccione un tipo' },
-        { value: '1', text: 'Principal' },
-        { value: '2', text: 'Secundario' }
+        { value: 'principal', text: 'Principal' },
+        { value: 'additional', text: 'Adicional' }
       ],
       categories: [
         { value: null, text: 'Seleccione una categoria' },
         { value: '1', text: 'Categoria 1' },
         { value: '2', text: 'Categoria 2' }
       ],
-      product: {
-        name: '',
-        descripcion: '',
-        price: '',
-        category: '',
-        'type': ''
-      },
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
         { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
@@ -195,7 +195,7 @@ export default {
       // alert('agregar subproducto')
     },
     onChange () {
-      if (this.selectedType === '1') {
+      if (this.selectedType === 'principal') {
         this.isShow = true
       } else {
         this.isShow = false
@@ -206,14 +206,15 @@ export default {
       this.subs.push(item)
     },
     onSubmit () {
-      this.loading = true
-      product.create(this.product)
-        .then(response => { console.log(response) })
-        .catch((error) => { console.log(error) })
-        .finally(() => {
-          this.loading = false
-          this.$router.push({ name: 'inventory.list' })
-        })
+      console.log(this.product)
+      // this.loading = true
+      // product.create(this.product)
+      //   .then(response => { console.log(response) })
+      //   .catch((error) => { console.log(error) })
+      //   .finally(() => {
+      //     this.loading = false
+      //     this.$router.push({ name: 'inventory.list' })
+      //   })
     }
   }
 

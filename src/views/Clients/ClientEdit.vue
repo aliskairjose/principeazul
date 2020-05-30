@@ -45,10 +45,11 @@
                     <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
                       <b-form-input
                         v-model="client.phone"
-                        type="text"
+                        type="tel"
                         name="phone"
                         id="phone"
                         placeholder="Teléfono"
+                        v-mask="['###-####', '####-####']"
                       ></b-form-input>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Email" label-for="email">
@@ -86,8 +87,11 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import clientService from '@/services/client'
+import { mask } from 'vue-the-mask'
+
 export default {
   name: 'ClientEdit',
+  directives: { mask },
   title: '',
   btnTitle: '',
   status: '',
