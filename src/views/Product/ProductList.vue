@@ -60,7 +60,7 @@
                   <b-button variant="primary" @click="add">Nuevo producto</b-button>
                 </b-form-group>
               </b-col>
-              <template v-if="isEmpty">
+              <template v-if="products.length === 0">
                 <b-col>
                   <b-alert :show="true" variant="secondary">
                     <div class="iq-alert-text"><b>No hay productos para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
@@ -155,7 +155,6 @@ export default {
       loading: true,
       filter: null,
       isShow: false,
-      isEmpty: true,
       isRemoving: false,
       perPage: 15,
       selectedType: null,
@@ -190,13 +189,15 @@ export default {
     loadData () {
       productService.getAll()
         .then(response => {
-          if (response.data.length > 0) {
-            this.isEmpty = false
-            this.products = response.data
-          }
+          this.products = response.data
         })
         .catch(error => { console.log(error) })
-        .finally(() => { this.loading = false })
+        .finally(() => {
+          this.loading = false
+          setTimeout(() => {
+            this.isShow = false
+          }, 2000)
+        })
     },
     add () {
       this.$router.push({ name: 'product.add' })

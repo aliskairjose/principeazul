@@ -51,7 +51,7 @@
                   <b-button variant="primary" @click="add">Nuevo cliente</b-button>
                 </b-form-group>
               </b-col>
-              <template v-if="isEmpty">
+              <template v-if="client.length === 0">
                 <b-col>
                   <b-alert :show="true" variant="secondary">
                     <div class="iq-alert-text">
@@ -148,7 +148,6 @@ export default {
       filter: null,
       isShow: false,
       isRemoving: false,
-      isEmpty: true,
       perPage: 15,
       pageOptions: [5, 10, 15],
       totalRows: 1,
@@ -168,10 +167,7 @@ export default {
     loadData () {
       clientService.getAll()
         .then(response => {
-          if (response.data.length > 0) {
-            this.isEmpty = false
-            this.clients = response.data
-          }
+          this.clients = response.data
         })
         .catch(error => { console.log(error) })
         .finally(() => {

@@ -11,6 +11,11 @@
               <template v-slot:body>
                 <div class="new-user-info">
                   <b-row>
+                    <div class="text-center" id="spinner" v-show="loading">
+                      <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+                    </div>
+                  </b-row>
+                  <b-row>
                     <b-form-group class="col-md-6" label="Nombre:" label-for="name">
                       <ValidationProvider name="Nombre" rules="required" v-slot="{ errors }">
                         <b-form-input
@@ -130,6 +135,7 @@ export default {
   data () {
     return {
       isShow: false,
+      loading: false,
       selectedType: null,
       selectedCategory: null,
       product: {
@@ -211,17 +217,21 @@ export default {
       this.subs.push(item)
     },
     onSubmit () {
-      console.log(this.product)
-      // this.loading = true
-      // product.create(this.product)
-      //   .then(response => { console.log(response) })
-      //   .catch((error) => { console.log(error) })
-      //   .finally(() => {
-      //     this.loading = false
-      //     this.$router.push({ name: 'inventory.list' })
-      //   })
+      this.loading = true
+      product.create(this.product)
+        .then(response => { this.$router.push({ name: 'product.list' }) })
+        .catch((error) => { console.log(error) })
+        .finally(() => { this.loading = false })
     }
   }
 
 }
 </script>
+
+<style scoped>
+  #spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 40vw;
+  }
+</style>

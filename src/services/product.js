@@ -19,12 +19,16 @@ export default {
     const res = await axios.post('/products', params)
     return res.data
   },
-  update (id) {
+  async update (id, params) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    const res = await axios.put(`products/${id}`, params)
+    return res.data
   },
-  delete (id) {
+  async delete (id) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    const res = await axios.delete(`/products/${id}`)
+    return res.data
   }
 }
