@@ -82,7 +82,13 @@
                     :current-page="currentPage"
                     @filtered="onFiltered">
                     <template v-slot:cell(image)="products">
-                      <b-img center rounded="circle" :src="products.item.image" id="image" class=""></b-img>
+                      <b-img
+                        center
+                        rounded="circle"
+                        :src="products.item.image ? products.item.image : require(`@/assets/images/no-image.png`)"
+                        id="image"
+                        class="">
+                      </b-img>
                     </template>
                     <template v-slot:cell(action)="products">
                       <b-button
@@ -153,6 +159,7 @@ export default {
   },
   data () {
     return {
+      noImage: '',
       sortBy: '',
       loading: true,
       filter: null,
