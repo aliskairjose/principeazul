@@ -125,7 +125,6 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
-          console.log(response.data)
           this.product = response.data
           this.selectedType = this.product.type
           this.selectedCategory = this.product.category_id
