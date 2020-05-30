@@ -49,14 +49,15 @@
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
                       <b-form-select
                         v-model="selectedCategory"
-                        :options="categories">
+                        :options="categories"
+                        @change="onCategoryChange">
                       </b-form-select>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Tipo" label-for="type">
                       <b-form-select
                         v-model="selectedType"
                         :options="types"
-                        @change="onChange()">
+                        @change="onTypeChange()">
                       </b-form-select>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="isShow">
@@ -133,10 +134,10 @@ export default {
       selectedCategory: null,
       product: {
         name: '',
-        descripcion: '',
+        description: '',
         price: 0,
-        category: '',
-        'type': ''
+        category_id: '',
+        type: ''
       },
       subs: [],
       types: [
@@ -194,12 +195,16 @@ export default {
     addSubproduct () {
       // alert('agregar subproducto')
     },
-    onChange () {
+    onTypeChange () {
+      this.product.type = this.selectedType
       if (this.selectedType === 'principal') {
         this.isShow = true
       } else {
         this.isShow = false
       }
+    },
+    onCategoryChange () {
+      this.product.category_id = this.selectedCategory
     },
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
