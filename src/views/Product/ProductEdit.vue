@@ -69,7 +69,7 @@
                         <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>Agregar subproductos</b-button>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
-                      <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'">
+                      <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'" v-on:vdropzone-success="fileAdded">
                         <div class="dropzone-custom-content">
                           <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
                           <div class="subtitle">...o haga clic para seleccionar un archivo de su computadora</div>
@@ -144,7 +144,8 @@ export default {
         description: '',
         price: 0,
         category_id: 0,
-        type: ''
+        type: '',
+        image: ''
       },
       subs: [],
       types: [
@@ -159,36 +160,36 @@ export default {
       ],
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       subProducts: [
         {
           id: 1,
-          photo: 'Trendy Royal',
+          image: 'Trendy Royal',
           name: 'Trendy Royal Queen'
         },
         {
           id: 2,
-          photo: 'Trendy Royal',
+          image: 'Trendy Royal',
           name: 'Trendy Royal Prince'
         },
         {
           id: 3,
-          photo: 'Trendy Royal',
+          image: 'Trendy Royal',
           name: 'Trendy Royal King'
         },
         {
           id: 4,
-          photo: 'Trendy Royal',
+          image: 'Trendy Royal',
           name: 'Trendy Royal Junior'
         }
       ],
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 150,
-        maxFilesize: 0.5,
+        maxFilesize: 1,
         headers: { 'My-Awesome-Header': 'My-Awesome-Header' }
       }
     }
@@ -212,25 +213,19 @@ export default {
       // Captura el item del componente hijo SubProductTable
       this.subs.push(item)
     },
+    fileAdded (file) {
+      this.product.image = file.dataURL
+    },
     onSubmit () {
-      const formData = new FormData()
-      formData.append('name', 'kervin')
-      for (const key in this.product) {
-        if (this.product.hasOwnProperty(key)) {
-          const element = this.product[key]
-          formData.append(key, element)
-        }
-      }
-
       this.loading = true
       if (this.getStatus() === 'add') {
-        productService.create(formData)
+        productService.create(this.product)
           .then(response => { this.$router.push({ name: 'product.list' }) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
-        productService.update(this.$route.params.id, formData)
+        productService.update(this.$route.params.id, this.product)
           .then(response => { console.log(response) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
