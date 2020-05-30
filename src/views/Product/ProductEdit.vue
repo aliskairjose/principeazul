@@ -53,7 +53,7 @@
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
                       <b-form-select
-                        v-model="selectedCategory"
+                        v-model="product.category_id"
                         :options="categories"
                         @change="onCategoryChange">
                       </b-form-select>
@@ -65,7 +65,7 @@
                         @change="onTypeChange()">
                       </b-form-select>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="isShow">
+                    <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="selectedType === 'principal'">
                         <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>Agregar subproductos</b-button>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
@@ -125,7 +125,10 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
+          console.log(response.data)
           this.product = response.data
+          this.selectedType = this.product.type
+          this.selectedCategory = this.product.category_id
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
@@ -141,7 +144,7 @@ export default {
         name: '',
         description: '',
         price: 0,
-        category_id: '',
+        category_id: 0,
         type: ''
       },
       subs: [],
@@ -152,8 +155,8 @@ export default {
       ],
       categories: [
         { value: null, text: 'Seleccione una categoria' },
-        { value: '1', text: 'Categoria 1' },
-        { value: '2', text: 'Categoria 2' }
+        { value: 1, text: 'Categoria 1' },
+        { value: 2, text: 'Categoria 2' }
       ],
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
@@ -202,11 +205,6 @@ export default {
     },
     onTypeChange () {
       this.product.type = this.selectedType
-      if (this.selectedType === 'principal') {
-        this.isShow = true
-      } else {
-        this.isShow = false
-      }
     },
     onCategoryChange () {
       this.product.category_id = this.selectedCategory
@@ -219,7 +217,7 @@ export default {
       this.loading = true
       if (this.getStatus() === 'add') {
         productService.create(this.product)
-          .then(response => { this.$router.push({ name: 'product.list' }) })
+          .then(response => { console.log(response) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
