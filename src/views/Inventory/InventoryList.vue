@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
-        <b-alert :show="isShow" variant="success" class="bg-white">
+        <b-alert :show="isShow" variant="success" class="bg-white" id="alert">
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
@@ -258,6 +258,11 @@ export default {
 </script>
 
 <style scoped>
+  #alert {
+    z-index: 1000;
+    position: absolute;
+    left: 40%;
+  }
   .is-removing {
     z-index: 1000;
     position: relative;
