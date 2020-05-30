@@ -81,21 +81,23 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(image)="products">
+                      <b-img center rounded="circle" :src="products.item.image" id="image" class=""></b-img>
+                    </template>
                     <template v-slot:cell(action)="products">
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="edit(products.item)"
-                        v-if="!products.item.editable"
-                      >
+                        v-if="!products.item.editable">
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="submit(products.item)"
-                        v-else
-                      >Ok</b-button>
+                        v-else>Ok
+                      </b-button>
                       <b-button variant=" iq-bg-danger" size="sm" @click="remove(products.item)">
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
@@ -164,7 +166,7 @@ export default {
         description: '',
         type: '',
         price: 0,
-        quantity: 0
+        image: ''
       },
       typesOptions: [
         { value: null, text: 'Tipo de Producto' },
@@ -176,7 +178,7 @@ export default {
       currentPage: 1,
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-left' },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
         { label: 'Precio', key: 'price', class: 'text-left', sortable: true },
         { label: 'Tipo', key: 'type', class: 'text-left', sortable: true },
@@ -271,5 +273,9 @@ export default {
     z-index: 1000;
     position: relative;
     left: 0;
+  }
+  #image {
+    width: 64px;
+    height: 64px;
   }
 </style>

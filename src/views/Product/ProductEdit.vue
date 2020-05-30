@@ -81,7 +81,7 @@
                   <b-modal size="lg" id="modal-1" title="Lista de subproductos">
                     <sub-product-table
                       :items="subProducts"
-                      :titems="titles"
+                      :titems="subProductTitle"
                       v-on:add-item="addSub"
                       >
                     </sub-product-table>
@@ -158,7 +158,7 @@ export default {
         { value: 1, text: 'Categoria 1' },
         { value: 2, text: 'Categoria 2' }
       ],
-      titles: [
+      subProductTitle: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
@@ -226,7 +226,7 @@ export default {
       }
       if (this.getStatus() === 'edit') {
         productService.update(this.$route.params.id, this.product)
-          .then(response => { console.log(response) })
+          .then(response => { this.$router.push({ name: 'product.list' }) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
