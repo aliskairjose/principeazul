@@ -53,7 +53,7 @@
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
                       <b-form-select
-                        v-model="product.category_id"
+                        v-model="selectedCategory"
                         :options="categories"
                         @change="onCategoryChange">
                       </b-form-select>
@@ -217,7 +217,7 @@ export default {
       this.loading = true
       if (this.getStatus() === 'add') {
         productService.create(this.product)
-          .then(response => { console.log(response) })
+          .then(response => { this.$router.push({ name: 'product.list' }) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
