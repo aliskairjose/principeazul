@@ -69,7 +69,7 @@
                         <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>Agregar subproductos</b-button>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
-                      <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true>
+                      <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'">
                         <div class="dropzone-custom-content">
                           <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
                           <div class="subtitle">...o haga clic para seleccionar un archivo de su computadora</div>
@@ -213,16 +213,25 @@ export default {
       this.subs.push(item)
     },
     onSubmit () {
+      const formData = new FormData()
+      formData.append('name', 'kervin')
+      for (const key in this.product) {
+        if (this.product.hasOwnProperty(key)) {
+          const element = this.product[key]
+          formData.append(key, element)
+        }
+      }
+
       this.loading = true
       if (this.getStatus() === 'add') {
-        productService.create(this.product)
+        productService.create(formData)
           .then(response => { this.$router.push({ name: 'product.list' }) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
-        productService.update(this.$route.params.id, this.product)
-          .then(response => { this.$router.push({ name: 'product.list' }) })
+        productService.update(this.$route.params.id, formData)
+          .then(response => { console.log(response) })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
