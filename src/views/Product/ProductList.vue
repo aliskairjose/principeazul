@@ -151,11 +151,9 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import productService from '@/services/product'
-import { VMoney } from 'v-money'
 
 export default {
   name: 'ProductList',
-  components: { money: VMoney },
   created () { this.loadData() },
   mounted () {
     vito.index()
@@ -173,7 +171,6 @@ export default {
       perPage: 15,
       selectedType: null,
       sortDesc: false,
-      money: {},
       product: {
         name: '',
         description: '',
