@@ -22,8 +22,8 @@
                           v-model="product.name"
                           type="text"
                           placeholder="Nombre"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
-                        ></b-form-input>
+                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                        </b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
@@ -35,8 +35,8 @@
                           v-model="product.description"
                           type="text"
                           placeholder="Descripción"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
-                        ></b-form-input>
+                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                        </b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>

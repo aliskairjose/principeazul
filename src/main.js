@@ -14,6 +14,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 import money from 'v-money'
+import { extend } from 'vee-validate'
+import * as rules from 'vee-validate/dist/rules'
+import { messages } from 'vee-validate/dist/locale/es.json'
+
+Object.keys(rules).forEach(rule => {
+  extend(rule, {
+    ...rules[rule], // copies rule configuration
+    message: messages[rule] // assign message
+  })
+})
 
 global.Raphael = Raphael
 
