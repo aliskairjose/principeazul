@@ -180,8 +180,8 @@ export default {
       },
       typesOptions: [
         { value: null, text: 'Tipo de Producto' },
-        { value: false, text: 'Principal' },
-        { value: true, text: 'Secundario' }
+        { value: true, text: 'Principal' },
+        { value: false, text: 'Adicional' }
       ],
       pageOptions: [5, 10, 15],
       totalRows: 1,
