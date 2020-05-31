@@ -162,7 +162,6 @@ export default {
   },
   data () {
     return {
-      noImage: '',
       sortBy: '',
       loading: true,
       filter: null,
