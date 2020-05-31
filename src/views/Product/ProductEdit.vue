@@ -140,13 +140,7 @@ export default {
       loading: false,
       selectedType: null,
       selectedCategory: null,
-      money: {
-        decimal: ',',
-        thousands: '.',
-        prefix: 'B/. ',
-        precision: 2,
-        masked: false /* doesn't work with directive */
-      },
+      money: {},
       product: {
         name: '',
         description: '',

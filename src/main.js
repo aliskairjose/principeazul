@@ -19,7 +19,13 @@ global.Raphael = Raphael
 
 Vue.use(AlgoliaComponents)
 Vue.use(Viewer)
-Vue.use(money, { precision: 2 })
+Vue.use(money, {
+  decimal: ',',
+  thousands: '.',
+  prefix: 'B/. ',
+  precision: 2,
+  masked: true
+})
 
 Vue.config.productionTip = false
 

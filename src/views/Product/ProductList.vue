@@ -155,7 +155,7 @@ import { VMoney } from 'v-money'
 
 export default {
   name: 'ProductList',
-  directives: { money: VMoney },
+  components: { money: VMoney },
   created () { this.loadData() },
   mounted () {
     vito.index()
@@ -173,13 +173,7 @@ export default {
       perPage: 15,
       selectedType: null,
       sortDesc: false,
-      money: {
-        decimal: ',',
-        thousands: '.',
-        prefix: 'B/. ',
-        precision: 2,
-        masked: false /* doesn't work with directive */
-      },
+      money: {},
       product: {
         name: '',
         description: '',
