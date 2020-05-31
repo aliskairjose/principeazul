@@ -11,10 +11,13 @@ import './registerServiceWorker'
 import AlgoliaComponents from 'vue-instantsearch'
 import i18n from './i18n'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
 
 global.Raphael = Raphael
 
 Vue.use(AlgoliaComponents)
+Vue.use(Viewer)
 
 Vue.config.productionTip = false
 
