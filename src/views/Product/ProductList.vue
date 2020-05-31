@@ -86,7 +86,7 @@
                     </template>
                     <template v-slot:cell(image)="products">
                       <b-img
-                        v-viewer
+                        v-viewer="{movable: false}"
                         center
                         rounded="circle"
                         :src="products.item.image ? products.item.image : require(`@/assets/images/no-image.png`)"
