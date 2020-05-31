@@ -44,12 +44,13 @@
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
                       <b-form-input
+                        v-money="money"
                         v-model="product.price"
                         type="text"
                         name="price"
                         id="price"
-                        placeholder="Precio"
-                      ></b-form-input>
+                        placeholder="Precio">
+                      </b-form-input>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
                       <b-form-select
@@ -103,6 +104,7 @@ import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import SubProductTable from '@/views/Inventory/SubProductTable'
 import productService from '@/services/product'
+import { VMoney } from 'v-money'
 
 export default {
   name: 'ProductEdit',
@@ -111,9 +113,8 @@ export default {
     vueDropzone: vue2Dropzone,
     SubProductTable
   },
-  mounted () {
-    vito.index()
-  },
+  directives: { money: VMoney },
+  mounted () { vito.index() },
   created () {
     if (this.getStatus() === 'add') {
       this.title = 'Agregar nuevo producto'
@@ -139,6 +140,13 @@ export default {
       loading: false,
       selectedType: null,
       selectedCategory: null,
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'B/. ',
+        precision: 2,
+        masked: false /* doesn't work with directive */
+      },
       product: {
         name: '',
         description: '',

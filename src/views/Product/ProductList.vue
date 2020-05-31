@@ -151,11 +151,12 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import productService from '@/services/product'
+import { VMoney } from 'v-money'
+
 export default {
   name: 'ProductList',
-  created () {
-    this.loadData()
-  },
+  directives: { money: VMoney },
+  created () { this.loadData() },
   mounted () {
     vito.index()
     // Set the initial number of items
@@ -172,6 +173,13 @@ export default {
       perPage: 15,
       selectedType: null,
       sortDesc: false,
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'B/. ',
+        precision: 2,
+        masked: false /* doesn't work with directive */
+      },
       product: {
         name: '',
         description: '',

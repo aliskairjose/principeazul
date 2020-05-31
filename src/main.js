@@ -13,11 +13,13 @@ import i18n from './i18n'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
+import money from 'v-money'
 
 global.Raphael = Raphael
 
 Vue.use(AlgoliaComponents)
 Vue.use(Viewer)
+Vue.use(money, { precision: 2 })
 
 Vue.config.productionTip = false
 
