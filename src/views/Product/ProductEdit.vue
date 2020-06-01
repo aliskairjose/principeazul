@@ -210,6 +210,7 @@ export default {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 150,
         maxFilesize: 1,
+        addRemoveLinks: true,
         headers: { 'My-Awesome-Header': 'My-Awesome-Header' }
       }
     }
