@@ -98,12 +98,12 @@
                   </b-row>
                   <hr />
                   <b-modal size="lg" id="modal-1" title="Lista de subproductos">
-                    <sub-product-table
+                    <SubProductTable
                       :items="subProducts"
                       :titems="subProductTitle"
                       v-on:add-item="addSub"
                       >
-                    </sub-product-table>
+                    </SubProductTable>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
@@ -207,11 +207,12 @@ export default {
         }
       ],
       dropzoneOptions: {
-        url: 'https://httpbin.org/post',
-        thumbnailWidth: 150,
         maxFilesize: 1,
+        clickable: true,
+        thumbnailWidth: 150,
         addRemoveLinks: true,
-        headers: { 'My-Awesome-Header': 'My-Awesome-Header' }
+        acceptedFiles: 'image/*',
+        url: 'https://httpbin.org/post'
       }
     }
   },

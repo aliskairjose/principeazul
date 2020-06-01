@@ -51,7 +51,7 @@
                   <b-button variant="primary" @click="add">Nuevo cliente</b-button>
                 </b-form-group>
               </b-col>
-              <template v-if="client.length === 0">
+              <template v-if="clients.length === 0">
                 <b-col>
                   <b-alert :show="true" variant="secondary">
                     <div class="iq-alert-text">
