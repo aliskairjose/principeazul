@@ -45,7 +45,6 @@
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
                       <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
                         <b-form-input
-                          v-money="money"
                           v-model="product.price"
                           type="text"
                           name="price"
@@ -162,7 +161,7 @@ export default {
       product: {
         name: '',
         description: '',
-        price: '',
+        price: 0,
         category_id: 0,
         type: '',
         image: ''
@@ -242,7 +241,11 @@ export default {
       this.loading = true
       if (this.getStatus() === 'add') {
         productService.create(this.product)
-          .then(response => { this.$router.push({ name: 'product.list' }) })
+          .then(response => {
+            if (response.status) {
+              this.$router.push({ name: 'product.list' })
+            }
+          })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
