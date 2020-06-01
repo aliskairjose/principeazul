@@ -251,7 +251,11 @@ export default {
       }
       if (this.getStatus() === 'edit') {
         productService.update(this.$route.params.id, this.product)
-          .then(response => { this.$router.push({ name: 'product.list' }) })
+          .then(response => {
+            if (response.status) {
+              this.$router.push({ name: 'product.list' })
+            }
+          })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }

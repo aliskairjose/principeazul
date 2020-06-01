@@ -143,13 +143,21 @@ export default {
       this.loading = true
       if (this.getStatus() === 'add') {
         clientService.create(this.client)
-          .then(response => { this.$router.push({ name: 'client.list' }) })
+          .then(response => {
+            if (response.status) {
+              this.$router.push({ name: 'client.list' })
+            }
+          })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
         clientService.update(this.$route.params.id, this.client)
-          .then(response => { this.$router.push({ name: 'client.list' }) })
+          .then(response => {
+            if (response.status) {
+              this.$router.push({ name: 'client.list' })
+            }
+          })
           .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
