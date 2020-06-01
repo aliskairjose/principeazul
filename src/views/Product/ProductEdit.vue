@@ -43,14 +43,20 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
-                      <b-form-input
-                        v-money="money"
-                        v-model="product.price"
-                        type="text"
-                        name="price"
-                        id="price"
-                        placeholder="Precio">
-                      </b-form-input>
+                      <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
+                        <b-form-input
+                          v-money="money"
+                          v-model="product.price"
+                          type="text"
+                          name="price"
+                          id="price"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          placeholder="Precio">
+                        </b-form-input>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Categoría" label-for="category">
                       <b-form-select
@@ -144,7 +150,7 @@ export default {
       product: {
         name: '',
         description: '',
-        price: 0,
+        price: '',
         category_id: 0,
         type: '',
         image: ''

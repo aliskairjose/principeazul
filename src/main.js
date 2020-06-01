@@ -32,7 +32,6 @@ Vue.use(Viewer)
 Vue.use(money, {
   decimal: ',',
   thousands: '.',
-  prefix: 'B/. ',
   precision: 2,
   masked: true
 })
