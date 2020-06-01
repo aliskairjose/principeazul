@@ -174,7 +174,8 @@ export default {
         price: null,
         category_id: 0,
         type: '',
-        image: ''
+        image: '',
+        relatedProducts: []
       },
       subs: [],
       types: [
@@ -191,6 +192,7 @@ export default {
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-left', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       subProducts: [],
@@ -221,7 +223,8 @@ export default {
     },
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
-      this.subs.push(item)
+      this.product.relatedProducts.push(item)
+      console.log(this.product)
     },
     fileAdded (file) {
       this.product.image = file.dataURL
@@ -229,6 +232,7 @@ export default {
     onSubmit () {
       this.loading = true
       this.product.price = parseFloat(this.product.price)
+      console.log(this.product)
       if (this.getStatus() === 'add') {
         productService.create(this.product)
           .then(response => {

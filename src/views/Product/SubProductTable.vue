@@ -56,6 +56,15 @@
                         class="">
                       </b-img>
                     </template>
+                    <template v-slot:cell(quantity)="items">
+                      <b-form-input
+                        v-model="items.item.quantity"
+                        type="number"
+                        name="quantity"
+                        id="quantity"
+                        placeholder="Cantidad">
+                      </b-form-input>
+                    </template>
                     <template v-slot:cell(action)="items">
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
@@ -97,6 +106,7 @@ export default {
   },
   data () {
     return {
+      subItems: [],
       perPage: 5,
       currentPage: 1,
       filter: null
@@ -104,7 +114,11 @@ export default {
   },
   methods: {
     add (item) {
-      return this.$emit('add-item', item)
+      let subItem = {}
+      subItem.additional_product_id = item.id
+      subItem.quantity = item.quantity
+      console.log(subItem)
+      // return this.$emit('add-item', subItem)
     }
   },
   computed: {
