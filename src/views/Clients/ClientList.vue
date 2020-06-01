@@ -149,7 +149,7 @@ export default {
       isShow: false,
       isRemoving: false,
       perPage: 15,
-      pageOptions: [5, 10, 15],
+      pageOptions: [5, 10, 15, 25, 50, 100, 200],
       totalRows: 1,
       currentPage: 1,
       titles: [

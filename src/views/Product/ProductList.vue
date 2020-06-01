@@ -185,7 +185,7 @@ export default {
         { value: true, text: 'Principal' },
         { value: false, text: 'Adicional' }
       ],
-      pageOptions: [5, 10, 15],
+      pageOptions: [5, 10, 15, 25, 50, 100, 200],
       totalRows: 1,
       currentPage: 1,
       titles: [

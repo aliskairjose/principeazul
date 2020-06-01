@@ -85,7 +85,7 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-4" label-for="type" v-show="selectedType === 'principal'">
-                        <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>
+                        <b-button block v-b-modal.modal-lg variant="outline-primary" @click="addSubproduct" v-b-modal.modal-1>
                           Agregar subproductos
                         </b-button>
                     </b-form-group>
