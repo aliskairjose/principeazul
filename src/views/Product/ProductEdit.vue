@@ -58,19 +58,31 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Categoría" label-for="category">
-                      <b-form-select
-                        v-model="selectedCategory"
-                        :options="categories"
-                        @change="onCategoryChange">
-                      </b-form-select>
+                    <b-form-group class="col-md-6" label="Categoría:" label-for="category" lot-scope="{ valid, errors }">
+                      <ValidationProvider name="Categoria" rules="required" v-slot="{ errors }">
+                        <b-form-select
+                          :state="errors[0] ? false : (selectedCategory ? true : null)"
+                          v-model="selectedCategory"
+                          :options="categories"
+                          @change="onCategoryChange">
+                        </b-form-select>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Tipo" label-for="type">
-                      <b-form-select
-                        v-model="selectedType"
-                        :options="types"
-                        @change="onTypeChange()">
-                      </b-form-select>
+                    <b-form-group class="col-md-6" label="Tipo:" label-for="type">
+                      <ValidationProvider name="Tipo" rules="required" v-slot="{ errors }">
+                        <b-form-select
+                          :state="errors[0] ? false : (selectedType ? true : null)"
+                          v-model="selectedType"
+                          :options="types"
+                          @change="onTypeChange()">
+                        </b-form-select>
+                         <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="selectedType === 'principal'">
                         <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>Agregar subproductos</b-button>
