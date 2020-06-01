@@ -45,6 +45,7 @@
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
                       <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
                         <b-form-input
+                          v-money="money"
                           v-model="product.price"
                           type="text"
                           name="price"
