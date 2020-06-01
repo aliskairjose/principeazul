@@ -15,7 +15,7 @@
                       <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
                     </div>
                   </b-row>
-                  <b-row>
+                  <b-row align-v="end">
                     <b-form-group class="col-md-6" label="Nombre:" label-for="name">
                       <ValidationProvider name="Nombre" rules="required" v-slot="{ errors }">
                         <b-form-input
@@ -84,8 +84,15 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Sub Producto" label-for="type" v-show="selectedType === 'principal'">
-                        <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>Agregar subproductos</b-button>
+                    <b-form-group class="col-md-4" label-for="type" v-show="selectedType === 'principal'">
+                        <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>
+                          Agregar subproductos
+                        </b-button>
+                    </b-form-group>
+                    <b-form-group class="col-md-2" label-for="type" v-show="selectedType === 'principal'">
+                      <!-- Agregados: <b-badge variant="light" class="ml-2">{{product.relatedProducts.length}}</b-badge> -->
+                      <h6 class="mb-3"> Agregados <b-badge variant="info">{{product.relatedProducts.length}}</b-badge></h6>
+
                     </b-form-group>
                     <b-form-group class="col-md-12" >
                       <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'" v-on:vdropzone-success="fileAdded">
@@ -265,4 +272,5 @@ export default {
     position: absolute;
     left: 40vw;
   }
+
 </style>
