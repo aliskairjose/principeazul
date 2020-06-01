@@ -84,6 +84,9 @@
                     <template v-slot:cell(type)="products">
                       {{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}
                     </template>
+                    <template v-slot:cell(price)="products">
+                      B/. {{products.item.price}}
+                    </template>
                     <template v-slot:cell(image)="products">
                       <b-img
                         v-viewer="{movable: false}"
