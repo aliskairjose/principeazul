@@ -162,7 +162,7 @@ export default {
       product: {
         name: '',
         description: '',
-        price: 0,
+        price: null,
         category_id: 0,
         type: '',
         image: ''
@@ -240,6 +240,7 @@ export default {
     },
     onSubmit () {
       this.loading = true
+      this.product.price = parseFloat(this.product.price)
       if (this.getStatus() === 'add') {
         productService.create(this.product)
           .then(response => {

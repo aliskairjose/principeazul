@@ -30,8 +30,8 @@ global.Raphael = Raphael
 Vue.use(AlgoliaComponents)
 Vue.use(Viewer)
 Vue.use(money, {
-  decimal: ',',
-  thousands: '.',
+  decimal: '.',
+  thousands: ',',
   precision: 2,
   masked: true
 })
