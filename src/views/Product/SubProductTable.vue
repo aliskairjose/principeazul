@@ -117,8 +117,7 @@ export default {
       let subItem = {}
       subItem.additional_product_id = item.id
       subItem.quantity = item.quantity
-      console.log(subItem)
-      // return this.$emit('add-item', subItem)
+      return this.$emit('add-item', subItem)
     }
   },
   computed: {
