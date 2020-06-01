@@ -101,8 +101,7 @@
                     <SubProductTable
                       :items="subProducts"
                       :titems="subProductTitle"
-                      v-on:add-item="addSub"
-                      >
+                      v-on:add-item="addSub">
                     </SubProductTable>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
@@ -120,7 +119,7 @@
 import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-import SubProductTable from '@/views/Inventory/SubProductTable'
+import SubProductTable from '@/views/Product/SubProductTable'
 import productService from '@/services/product'
 import { VMoney } from 'v-money'
 
@@ -132,8 +131,17 @@ export default {
     SubProductTable
   },
   directives: { money: VMoney },
-  mounted () { vito.index() },
   created () {
+    productService.getAll('type=additional')
+      .then(response => {
+        response.data.map(r => {
+          if (r.type === 'additional') {
+            this.subProducts.push(r)
+          }
+        })
+      })
+      .catch((error) => { console.log(error) })
+
     if (this.getStatus() === 'add') {
       this.title = 'Agregar nuevo producto'
       this.btnTitle = 'Nuevo producto'
@@ -152,6 +160,7 @@ export default {
         .finally(() => { this.loading = false })
     }
   },
+  mounted () { vito.index() },
   data () {
     return {
       isShow: false,
@@ -184,28 +193,7 @@ export default {
         { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
-      subProducts: [
-        {
-          id: 1,
-          image: 'Trendy Royal',
-          name: 'Trendy Royal Queen'
-        },
-        {
-          id: 2,
-          image: 'Trendy Royal',
-          name: 'Trendy Royal Prince'
-        },
-        {
-          id: 3,
-          image: 'Trendy Royal',
-          name: 'Trendy Royal King'
-        },
-        {
-          id: 4,
-          image: 'Trendy Royal',
-          name: 'Trendy Royal Junior'
-        }
-      ],
+      subProducts: [],
       dropzoneOptions: {
         maxFilesize: 1,
         clickable: true,

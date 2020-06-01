@@ -1,10 +1,10 @@
 import axios from './index'
 
 export default {
-  async getAll () {
+  async getAll (param) {
     const token = localStorage.getItem('access_token')
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    const res = await axios.get('/products')
+    const res = await axios.get(`/products?${param}`)
     return res.data
   },
   async getById (id) {
