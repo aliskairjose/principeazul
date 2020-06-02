@@ -90,7 +90,6 @@
                         </b-button>
                     </b-form-group>
                     <b-form-group class="col-md-2" label-for="type" v-show="selectedType === 'principal'">
-                      <!-- Agregados: <b-badge variant="light" class="ml-2">{{product.relatedProducts.length}}</b-badge> -->
                       <h6 class="mb-3"> Agregados <b-badge variant="info">{{product.relatedProducts.length}}</b-badge></h6>
 
                     </b-form-group>
@@ -108,7 +107,8 @@
                     <SubProductTable
                       :items="subProducts"
                       :titems="subProductTitle"
-                      v-on:add-item="addSub">
+                      v-on:add-item="addSub"
+                      v-on:delete-item="deleteSub">
                     </SubProductTable>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
@@ -231,7 +231,10 @@ export default {
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
       this.product.relatedProducts.push(item)
-      console.log(this.product)
+    },
+    deleteSub (id) {
+      let relatedProducts = this.product.relatedProducts.filter(x => x.additional_product_id !== id)
+      this.product.relatedProducts = relatedProducts
     },
     fileAdded (file) {
       this.product.image = file.dataURL
@@ -239,7 +242,6 @@ export default {
     onSubmit () {
       this.loading = true
       this.product.price = parseFloat(this.product.price)
-      console.log(this.product)
       if (this.getStatus() === 'add') {
         productService.create(this.product)
           .then(response => {
@@ -247,7 +249,9 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => { console.log(error) })
+          .catch((error) => {
+            console.log(error)
+          })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
@@ -257,12 +261,13 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => { console.log(error) })
+          .catch((error) => {
+            console.log(error.status)
+          })
           .finally(() => { this.loading = false })
       }
     }
   }
-
 }
 </script>
 

@@ -5,7 +5,7 @@ import Layout1 from '../layouts/Layout1'
 import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
 
 /* Dashboards View */
-import Dashboard2 from '@/views/Dashboards/Dashboard2.vue'
+import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import ClientEdit from '@/views/Clients/ClientEdit.vue'
 import ProductList from '@/views/Product/ProductList'
@@ -27,7 +27,7 @@ const paRoutes = (prop, mode = false) => [
     path: 'home',
     name: prop + '.home',
     meta: { dark: mode, auth: true, name: 'Dashborad' },
-    component: Dashboard2
+    component: Dashboard1
   },
   {
     path: 'orders',
