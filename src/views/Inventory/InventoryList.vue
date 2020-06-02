@@ -132,11 +132,9 @@ export default {
     loadData () {
       inventoryService.getAll(`product_id=${this.product.id}`)
         .then(response => {
-          console.log(response.data)
           response.data.map(r => {
             r.name = this.product.name
             r.provider = ' Cronapis corp SA'
-            console.log(r)
           })
           this.data = response.data
         })
