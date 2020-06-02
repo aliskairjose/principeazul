@@ -74,7 +74,7 @@
       <b-col md="8">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">{{ $t('dashboard1.openInvoice') }}</h4>
+            <h4 class="card-title">Pedidos para hoy</h4>
           </template>
           <template v-slot:headerAction>
             <b-dropdown  id="dropdownMenuButton5" right variant="none" data-toggle="dropdown">
@@ -90,10 +90,10 @@
           </template>
           <template v-slot:body>
             <b-table responsive :items="items"  class="mb-0 table-borderless">
-              <template v-slot:cell(status)="data">
+              <template v-slot:cell(estado)="data">
                 <b-badge pill :variant="data.value.color">{{ data.value.name }}</b-badge>
               </template>
-              <template v-slot:cell(amount)="data1">
+              <template v-slot:cell(monto)="data1">
                 ${{ data1.value }}
               </template>
             </b-table>
@@ -103,7 +103,7 @@
       <b-col md="4">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">{{ $t('dashboard1.monthlyInvoice') }}</h4>
+            <h4 class="card-title">Pedidos completados</h4>
           </template>
           <template v-slot:headerAction>
             <b-dropdown  id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
@@ -119,15 +119,15 @@
           </template>
           <template v-slot:body>
             <ul class="suggestions-lists m-0 p-0">
-              <li v-for="(invoice,index) in monthlyInvocie" :key="index" class="d-flex mb-4 align-items-center">
-                <div :class="'profile-icon iq-bg-' + invoice.color" ><span><i class="ri-check-fill"></i></span></div>
+              <li v-for="(compra,index) in monthlyInvocie" :key="index" class="d-flex mb-4 align-items-center">
+                <div :class="'profile-icon iq-bg-' + compra.color" ><span><i class="ri-check-fill"></i></span></div>
                 <div class="media-support-info ml-3">
-                  <h6>{{ invoice.title }}</h6>
-                  <p class="mb-0"><span :class="'text-' + invoice.color">{{ invoice.paid_month }} paid</span> month out of {{ invoice.total_month }}</p>
+                  <h6>{{ compra.title }}</h6>
+                  <!-- <p class="mb-0"><span :class="'text-' + compra.color">{{ compra.paid_month }} paid</span> month out of {{ compra.total_month }}</p> -->
                 </div>
-                <div class="media-support-amount ml-3">
-                  <h6><span :class="'text-' + invoice.color">$</span><b> {{ invoice.amount }}</b></h6>
-                  <p class="mb-0">per month</p>
+                <div class="media-support-monto ml-3">
+                  <h6><span :class="'text-' + compra.color">$</span><b> {{ compra.monto }}</b></h6>
+                  <!-- <p class="mb-0">per month</p> -->
                 </div>
               </li>
             </ul>
@@ -139,7 +139,7 @@
       <b-col md="8">
        <iq-card class-name="overflow-hidden">
           <template v-slot:headerTitle>
-            <h4 class="card-title">{{ $t('dashboard1.invoiceState') }}</h4>
+            <h4 class="card-title">Ganancias totales</h4>
           </template>
           <template v-slot:headerAction>
             <b-dropdown id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
@@ -160,7 +160,7 @@
       <b-col md="4">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">{{ $t('dashboard1.monthlyInvoice') }}</h4>
+            <h4 class="card-title">Pedidos completados</h4>
           </template>
           <template v-slot:headerAction>
             <b-dropdown  id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
@@ -176,15 +176,15 @@
           </template>
           <template v-slot:body>
             <ul class="suggestions-lists m-0 p-0">
-              <li v-for="(invoice,index) in monthlyInvocie" :key="index" class="d-flex mb-4 align-items-center">
-                <div :class="'profile-icon iq-bg-' + invoice.color" ><span><i class="ri-check-fill"></i></span></div>
+              <li v-for="(compra,index) in monthlyInvocie" :key="index" class="d-flex mb-4 align-items-center">
+                <div :class="'profile-icon iq-bg-' + compra.color" ><span><i class="ri-check-fill"></i></span></div>
                 <div class="media-support-info ml-3">
-                  <h6>{{ invoice.title }}</h6>
-                  <p class="mb-0"><span :class="'text-' + invoice.color">{{ invoice.paid_month }} paid</span> month out of {{ invoice.total_month }}</p>
+                  <h6>{{ compra.title }}</h6>
+                  <!-- <p class="mb-0"><span :class="'text-' + compra.color">{{ compra.paid_month }} paid</span> month out of {{ compra.total_month }}</p> -->
                 </div>
-                <div class="media-support-amount ml-3">
-                  <h6><span :class="'text-' + invoice.color">$</span><b> {{ invoice.amount }}</b></h6>
-                  <p class="mb-0">per month</p>
+                <div class="media-support-monto ml-3">
+                  <h6><span :class="'text-' + compra.color">$</span><b> {{ compra.monto }}</b></h6>
+                  <!-- <p class="mb-0">per month</p> -->
                 </div>
               </li>
             </ul>
@@ -206,25 +206,25 @@ export default {
   data () {
     return {
       items: [
-        { client: 'Ira Membrit', date: '18/10/2019', invoice: '20156', amount: '1500', status: { name: 'paid', color: 'success' }, action: 'Copy' },
-        { client: 'Pete Sariya', date: '26/10/2019', invoice: '7859', amount: '2000', status: { name: 'paid', color: 'success' }, action: 'Send email' },
-        { client: 'Cliff Hanger', date: '18/11/2019', invoice: '6396', amount: '2500', status: { name: 'past due', color: 'danger' }, action: 'Before Date' },
-        { client: 'Terry Aki', date: '14/12/2019', invoice: '7854', amount: '5000', status: { name: 'paid', color: 'success' }, action: 'Copy' },
-        { client: 'Anna Mull', date: '24/12/2019', invoice: '568569', amount: '10000', status: { name: 'paid', color: 'success' }, action: 'Send email' }
+        { cliente: 'Ira Membrit', fecha: '18/10/2019', compra: '20156', monto: '1500', estado: { name: 'paid', color: 'success' } },
+        { cliente: 'Pete Sariya', fecha: '26/10/2019', compra: '7859', monto: '2000', estado: { name: 'paid', color: 'success' } },
+        { cliente: 'Cliff Hanger', fecha: '18/11/2019', compra: '6396', monto: '2500', estado: { name: 'past due', color: 'danger' } },
+        { cliente: 'Terry Aki', fecha: '14/12/2019', compra: '7854', monto: '5000', estado: { name: 'paid', color: 'success' } },
+        { cliente: 'Anna Mull', fecha: '24/12/2019', compra: '568569', monto: '10000', estado: { name: 'paid', color: 'success' } }
       ],
       monthlyInvocie: [
-        { title: 'Camelun ios', color: 'success', amount: '12,434.00', paid_month: '17', total_month: '23' },
-        { title: 'React', color: 'warning', amount: '12,434.00', paid_month: '17', total_month: '23' },
-        { title: 'Camelun ios', color: 'success', amount: '12,434.00', paid_month: '17', total_month: '23' },
-        { title: 'Camelun ios', color: 'danger', amount: '12,434.00', paid_month: '17', total_month: '23' }
+        { title: 'Alfredo Rodriguez', color: 'success', monto: '12,434.00', paid_month: '17', total_month: '23' },
+        { title: 'Pedro Muñoz', color: 'warning', monto: '12,434.00', paid_month: '17', total_month: '23' },
+        { title: 'Alfredo Rodriguez', color: 'success', monto: '12,434.00', paid_month: '17', total_month: '23' },
+        { title: 'Alfredo Rodriguez', color: 'danger', monto: '12,434.00', paid_month: '17', total_month: '23' }
       ],
       paymentHistory: [
-        { title: 'Deposit from ATL', amount: '- 1,470', icon: 'ri-refresh-line', color: 'secondary', date: '5 march, 18:33', currency: 'USD' },
-        { title: 'Deposit PayPal', amount: '+ 2,220', icon: 'ri-paypal-line', color: 'primary', date: '5 march, 18:33', currency: 'USD' },
-        { title: 'Deposit from ATL', amount: '+ 250', icon: 'ri-check-line', color: 'primary', date: '5 march, 18:33', currency: 'USD' },
-        { title: 'Cancelled', amount: '0', icon: 'ri-close-line', color: 'info', date: '5 march, 18:33', currency: 'USD' },
-        { title: 'Refund', amount: '- 500', icon: 'ri-arrow-go-back-fill', color: 'info', date: '5 march, 18:33', currency: 'USD' },
-        { title: 'Deposit from ATL', amount: '- 1,470', icon: 'ri-refresh-line', color: 'secondary', date: '5 march, 18:33', currency: 'USD' }
+        { title: 'Deposit from ATL', monto: '- 1,470', icon: 'ri-refresh-line', color: 'secondary', fecha: '5 march, 18:33', currency: 'USD' },
+        { title: 'Deposit PayPal', monto: '+ 2,220', icon: 'ri-paypal-line', color: 'primary', fecha: '5 march, 18:33', currency: 'USD' },
+        { title: 'Deposit from ATL', monto: '+ 250', icon: 'ri-check-line', color: 'primary', fecha: '5 march, 18:33', currency: 'USD' },
+        { title: 'Cancelled', monto: '0', icon: 'ri-close-line', color: 'info', fecha: '5 march, 18:33', currency: 'USD' },
+        { title: 'Refund', monto: '- 500', icon: 'ri-arrow-go-back-fill', color: 'info', fecha: '5 march, 18:33', currency: 'USD' },
+        { title: 'Deposit from ATL', monto: '- 1,470', icon: 'ri-refresh-line', color: 'secondary', fecha: '5 march, 18:33', currency: 'USD' }
       ],
       chart1: {
         series: [{
