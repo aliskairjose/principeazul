@@ -205,7 +205,11 @@ export default {
         .then(response => {
           this.products = response.data
         })
-        .catch(error => { console.log(error) })
+        .catch(error => {
+          if (error.response.status === 401) {
+            alert(error.response)
+          }
+        })
         .finally(() => {
           this.loading = false
           setTimeout(() => {
