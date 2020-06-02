@@ -23,7 +23,7 @@
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
             <b-row v-else align-h="between">
-              <b-col md="4" class="my-1">
+              <b-col sm="5" md="4" class="my-1">
                 <b-form-group
                   label="Filtro"
                   label-cols-sm="3"
@@ -44,7 +44,7 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="2" class="my-1">
+              <b-col sm="7" md="2" class="my-1">
                 <b-form-group>
                   <b-button variant="primary" @click="add">Nuevo cliente</b-button>
                 </b-form-group>
@@ -69,15 +69,13 @@
                     :filter="filter"
                     :current-page="currentPage"
                     :per-page="perPage"
-                    @filtered="onFiltered"
-                  >
+                    @filtered="onFiltered">
                     <template v-slot:cell(action)="clients">
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="edit(clients.item)"
-                        v-if="!clients.item.editable"
-                      >
+                        v-if="!clients.item.editable">
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
                       <b-button
@@ -100,8 +98,7 @@
                     label-align-sm="right"
                     label-size="sm"
                     label-for="perPageSelect"
-                    class="mb-0"
-                  >
+                    class="mb-0">
                     <b-form-select
                       v-model="perPage"
                       id="perPageSelect"
