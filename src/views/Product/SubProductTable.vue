@@ -69,8 +69,16 @@
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
-                        @click="add(items.item)">
+                        @click="addItem(items.item)"
+                        v-show="!items.item.isAddItem">
                         <i class="ri-add-line  m-0"></i>
+                      </b-button>
+                      <b-button
+                        variant=" iq-bg-danger mr-1 mb-1"
+                        size="sm"
+                        @click="deleteItem(items.item)"
+                        v-show="items.item.isAddItem">
+                        <i class="ri-close-fill m-0"></i>
                       </b-button>
                     </template>
                   </b-table>
@@ -109,15 +117,22 @@ export default {
       subItems: [],
       perPage: 5,
       currentPage: 1,
-      filter: null
+      filter: null,
+      isAddItem: true
     }
   },
   methods: {
-    add (item) {
+    addItem (item) {
       let subItem = {}
+      this.$set(item, 'isAddItem', true)
       subItem.additional_product_id = item.id
       subItem.quantity = item.quantity
+      // this.subItems.push(subItem)
       return this.$emit('add-item', subItem)
+    },
+    deleteItem (item) {
+      this.$set(item, 'isAddItem', false)
+      return this.$emit('delete-item', item.id)
     }
   },
   computed: {
