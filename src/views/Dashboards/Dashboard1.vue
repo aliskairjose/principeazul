@@ -71,40 +71,6 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col md="7">
-        <iq-card class-name="overflow-hidden">
-          <template v-slot:headerTitle>
-            <h4 class="card-title">{{ $t('dashboard1.invoiceState') }}</h4>
-          </template>
-          <template v-slot:headerAction>
-            <b-dropdown id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
-              <template v-slot:button-content>
-                 <i class="ri-more-fill"></i>
-              </template>
-              <b-dropdown-item><i class="ri-eye-fill mr-2"></i>{{ $t('dropdown.view') }}</b-dropdown-item>
-              <b-dropdown-item><i class="ri-delete-bin-6-fill mr-2"></i>{{ $t('dropdown.delete') }}</b-dropdown-item>
-              <b-dropdown-item><i class="ri-pencil-fill mr-2"></i>{{ $t('dropdown.edit') }}</b-dropdown-item>
-              <b-dropdown-item><i class="ri-printer-fill mr-2"></i>{{ $t('dropdown.print') }}</b-dropdown-item>
-              <b-dropdown-item><i class="ri-file-download-fill mr-2"></i>{{ $t('dropdown.download') }}</b-dropdown-item>
-            </b-dropdown>
-          </template>
-            <ApexChart element="home-chart-02" :chartOption="darkChart1" v-if="$route.meta.dark" style="min-height: 350px;"/>
-            <ApexChart element="home-chart-02" :chartOption="chart1" v-else style="min-height: 350px;"/>
-        </iq-card>
-      </b-col>
-      <b-col md="5">
-        <div class="iq-card">
-          <div class="iq-card-body p-0">
-            <img :src="require('../../assets/images/page-img/33.png')" alt="banner-img" class="rounded w-100 img-fluid">
-            <div class="iq-caption">
-              <h1>450</h1>
-              <p>{{ $t('dashboard1.invoice') }}</p>
-            </div>
-          </div>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row>
       <b-col md="8">
         <iq-card>
           <template v-slot:headerTitle>
@@ -171,88 +137,30 @@
     </b-row>
     <b-row>
       <b-col md="8">
-        <b-row>
-          <b-col md="6">
-            <iq-card body-class="p-0">
-              <template v-slot:body>
-                <b-img :src="require('../../assets/images/booking/booking-03.png')" alt="03" fluid class="rounded" />
+       <iq-card class-name="overflow-hidden">
+          <template v-slot:headerTitle>
+            <h4 class="card-title">{{ $t('dashboard1.invoiceState') }}</h4>
+          </template>
+          <template v-slot:headerAction>
+            <b-dropdown id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
+              <template v-slot:button-content>
+                 <i class="ri-more-fill"></i>
               </template>
-            </iq-card>
-          </b-col>
-          <b-col md="6">
-            <iq-card body-class="p-0">
-              <template v-slot:headerTitle>
-                <h4 class="card-title">{{ $t('dashboard1.exchangeRates')}}</h4>
-              </template>
-              <template v-slot:headerAction>
-                <b-dropdown  id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
-                  <template v-slot:button-content>
-                    <span class="text-primary"><i class="ri-more-fill"></i></span>
-                  </template>
-                  <b-dropdown-item><i class="ri-eye-fill mr-2"></i>{{ $t('dropdown.view') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-delete-bin-6-fill mr-2"></i>{{ $t('dropdown.delete') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-pencil-fill mr-2"></i>{{ $t('dropdown.edit') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-printer-fill mr-2"></i>{{ $t('dropdown.print') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-file-download-fill mr-2"></i>{{ $t('dropdown.download') }}</b-dropdown-item>
-                </b-dropdown>
-              </template>
-              <template v-slot:body>
-                <ApexChart element="home-chart-01" :chartOption="darkChart2" v-if="$route.meta.dark"/>
-                <ApexChart element="home-chart-01" :chartOption="chart2" v-else/>
-              </template>
-            </iq-card>
-          </b-col>
-          <b-col md="6">
-            <iq-card body-class="p-0">
-              <template v-slot:headerTitle>
-                <h4 class="card-title">{{ $t('dashboard1.lastCosts') }}</h4>
-              </template>
-              <template v-slot:headerAction>
-                <b-dropdown  id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
-                  <template v-slot:button-content>
-                    <span class="text-primary"><i class="ri-more-fill"></i></span>
-                  </template>
-                  <b-dropdown-item><i class="ri-eye-fill mr-2"></i>{{ $t('dropdown.view') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-delete-bin-6-fill mr-2"></i>{{ $t('dropdown.delete') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-pencil-fill mr-2"></i>{{ $t('dropdown.edit') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-printer-fill mr-2"></i>{{ $t('dropdown.print') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-file-download-fill mr-2"></i>{{ $t('dropdown.download') }}</b-dropdown-item>
-                </b-dropdown>
-              </template>
-              <template v-slot:body>
-                <AmChart element="home-chart-05" type="line-bar" :height="180" />
-              </template>
-            </iq-card>
-          </b-col>
-          <b-col md="6">
-            <iq-card body-class="p-0 position-relative">
-              <template v-slot:headerTitle>
-                <h4 class="card-title">{{ $t('dashboard1.efficiency')}}</h4>
-              </template>
-              <template v-slot:headerAction>
-                <b-dropdown  id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
-                  <template v-slot:button-content>
-                    <span class="text-primary"><i class="ri-more-fill"></i></span>
-                  </template>
-                  <b-dropdown-item><i class="ri-eye-fill mr-2"></i>{{ $t('dropdown.view') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-delete-bin-6-fill mr-2"></i>{{ $t('dropdown.delete') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-pencil-fill mr-2"></i>{{ $t('dropdown.edit') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-printer-fill mr-2"></i>{{ $t('dropdown.print') }}</b-dropdown-item>
-                  <b-dropdown-item><i class="ri-file-download-fill mr-2"></i>{{ $t('dropdown.download') }}</b-dropdown-item>
-                </b-dropdown>
-              </template>
-              <template v-slot:body>
-                <ApexChart element="home-chart-03" :chartOption="darkChart3" v-if="$route.meta.dark"/>
-                <ApexChart element="home-chart-03" :chartOption="chart3" v-else/>
-              </template>
-            </iq-card>
-          </b-col>
-        </b-row>
+              <b-dropdown-item><i class="ri-eye-fill mr-2"></i>{{ $t('dropdown.view') }}</b-dropdown-item>
+              <b-dropdown-item><i class="ri-delete-bin-6-fill mr-2"></i>{{ $t('dropdown.delete') }}</b-dropdown-item>
+              <b-dropdown-item><i class="ri-pencil-fill mr-2"></i>{{ $t('dropdown.edit') }}</b-dropdown-item>
+              <b-dropdown-item><i class="ri-printer-fill mr-2"></i>{{ $t('dropdown.print') }}</b-dropdown-item>
+              <b-dropdown-item><i class="ri-file-download-fill mr-2"></i>{{ $t('dropdown.download') }}</b-dropdown-item>
+            </b-dropdown>
+          </template>
+            <ApexChart element="home-chart-02" :chartOption="darkChart1" v-if="$route.meta.dark" style="min-height: 350px;"/>
+            <ApexChart element="home-chart-02" :chartOption="chart1" v-else style="min-height: 350px;"/>
+        </iq-card>
       </b-col>
       <b-col md="4">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">{{ $t('dashboard1.paymentHistory') }}</h4>
+            <h4 class="card-title">{{ $t('dashboard1.monthlyInvoice') }}</h4>
           </template>
           <template v-slot:headerAction>
             <b-dropdown  id="dropdownMenuButton1" right variant="none" data-toggle="dropdown">
@@ -268,15 +176,15 @@
           </template>
           <template v-slot:body>
             <ul class="suggestions-lists m-0 p-0">
-              <li v-for="( payment,index ) in paymentHistory" :key="index" class="d-flex mb-4 align-items-center">
-                <div :class="'profile-icon bg-' + payment.color"><span><i :class="payment.icon"></i></span></div>
+              <li v-for="(invoice,index) in monthlyInvocie" :key="index" class="d-flex mb-4 align-items-center">
+                <div :class="'profile-icon iq-bg-' + invoice.color" ><span><i class="ri-check-fill"></i></span></div>
                 <div class="media-support-info ml-3">
-                    <h6>{{ payment.title }}</h6>
-                    <p class="mb-0">{{ payment.date }}</p>
+                  <h6>{{ invoice.title }}</h6>
+                  <p class="mb-0"><span :class="'text-' + invoice.color">{{ invoice.paid_month }} paid</span> month out of {{ invoice.total_month }}</p>
                 </div>
                 <div class="media-support-amount ml-3">
-                    <h6 :class="'text-' + payment.color">{{ payment.amount }}</h6>
-                    <p class="mb-0">{{ payment.currency }}</p>
+                  <h6><span :class="'text-' + invoice.color">$</span><b> {{ invoice.amount }}</b></h6>
+                  <p class="mb-0">per month</p>
                 </div>
               </li>
             </ul>
@@ -288,10 +196,10 @@
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
-import AmChart from '../../components/vito/charts/AmChart'
+// import AmChart from '../../components/vito/charts/AmChart'
 export default {
   name: 'Dashboard1',
-  components: { AmChart },
+  // components: { AmChart },
   mounted () {
     vito.index()
   },
