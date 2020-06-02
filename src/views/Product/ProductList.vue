@@ -22,7 +22,7 @@
             <div class="text-center" id="spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
-            <b-row v-else>
+            <b-row v-else align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group
                   label="Filtro"
@@ -44,7 +44,7 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="4" class="my-1">
+              <b-col md="2" class="my-1">
                 <b-form-group class="mb-0">
                   <b-form-select
                     v-model="selectedType"
@@ -55,7 +55,7 @@
                     </b-form-select>
                 </b-form-group>
               </b-col>
-              <b-col md="4" class="my-1">
+              <b-col md="2" class="my-1">
                 <b-form-group>
                   <b-button variant="primary" @click="add">Nuevo producto</b-button>
                 </b-form-group>
@@ -104,10 +104,10 @@
                         @click="edit(products.item)">
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
-                      <b-button variant=" iq-bg-danger" size="sm" @click="remove(products.item)">
+                      <b-button variant=" iq-bg-danger mr-1 mb-1" size="sm" @click="remove(products.item)">
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
-                      <b-button variant=" iq-bg-primary" size="sm" @click="inventory(products.item)">
+                      <b-button variant=" iq-bg-primary mr-1 mb-1" size="sm" @click="inventory(products.item)">
                         <i class="ri-list-unordered m-0"></i>
                       </b-button>
                     </template>
@@ -144,12 +144,12 @@
           </template>
         </iq-card>
       </b-col>
-    </b-row>
-    <b-modal size="lg" id="modal-1" title="Lista de inventario" ref="my-modal">
+      <b-modal size="lg" id="modal-1" title="Lista de inventario" ref="my-modal">
       <InventoryList
-        :id="product">
+        :product="product">
       </InventoryList>
     </b-modal>
+    </b-row>
   </b-container>
 </template>
 <script>
@@ -257,6 +257,7 @@ export default {
         .catch(err => { console.log(err) })
     },
     inventory (item) {
+      this.product = item
       this.$refs['my-modal'].show()
     },
     onFiltered (filteredItems) {

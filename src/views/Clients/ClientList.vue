@@ -22,7 +22,7 @@
             <div class="text-center" id="spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
-            <b-row v-else>
+            <b-row v-else align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group
                   label="Filtro"
@@ -30,8 +30,7 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0"
-                >
+                  class="mb-0">
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
@@ -45,8 +44,7 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="4" class="my-1"></b-col>
-              <b-col md="4" class="my-1">
+              <b-col md="2" class="my-1">
                 <b-form-group>
                   <b-button variant="primary" @click="add">Nuevo cliente</b-button>
                 </b-form-group>
