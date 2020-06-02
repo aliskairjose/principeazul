@@ -144,7 +144,7 @@
           </template>
         </iq-card>
       </b-col>
-      <b-modal size="lg" id="modal-1" title="Lista de inventario" ref="my-modal">
+      <b-modal size="lg" id="modal-1" :title="title" ref="my-modal">
       <InventoryList
         :product="product">
       </InventoryList>
@@ -277,6 +277,9 @@ export default {
   computed: {
     rows () {
       return this.products.length
+    },
+    title () {
+      return `Listado de inventario ${this.product.name}`
     }
   }
 }
