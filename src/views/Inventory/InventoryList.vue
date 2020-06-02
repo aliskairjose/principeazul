@@ -138,16 +138,25 @@
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
-import productService from '@/services/product'
+// import inventoryService from '@/services/inventory'
+
 export default {
+  props: { product: { type: Object } },
   name: 'InventoryList',
   created () {
-    this.loadData()
+    console.log('created', this.product)
   },
   mounted () {
     vito.index()
+    console.log('mounted', this.product)
     // Set the initial number of items
-    this.totalRows = this.products.length
+    // this.totalRows = this.products.length
+    // inventoryService.getAll(`product_id=${this.id}`)
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    //   .then((error) => { console.log(error) })
+    //   .finally(() => { this.loading = false })
   },
   data () {
     return {
@@ -160,117 +169,10 @@ export default {
       perPage: 15,
       selectedType: null,
       sortDesc: false,
-      product: {
-        name: '',
-        description: '',
-        type: '',
-        price: 0,
-        quantity: 0
-      },
-      typesOptions: [
-        { value: null, text: 'Tipo de Producto' },
-        { value: false, text: 'Principal' },
-        { value: true, text: 'Secundario' }
-      ],
       pageOptions: [5, 10, 15],
       totalRows: 1,
-      currentPage: 1,
-      titles: [
-        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'photo', class: 'text-left', sortable: true },
-        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
-        { label: 'Tipo', key: 'type', class: 'text-left', sortable: true },
-        { label: 'Action', key: 'action', class: 'text-center' }
-      ],
-      products: []
-    }
-  },
-  methods: {
-    loadData () {
-      productService.getAll()
-        .then(response => {
-          if (response.data.length > 0) {
-            this.isEmpty = false
-            this.products = response.data
-          }
-        })
-        .catch(error => { console.log(error) })
-        .finally(() => { this.loading = false })
-    },
-    add () {
-      this.$router.push({ name: 'inventory.add' })
-    },
-    edit (item) {
-      this.$router.push({ name: 'inventory.edit', params: { id: item.id } })
-    },
-    submit (item) {
-      // item.editable = false
-    },
-    remove (item) {
-      this.$bvModal.msgBoxConfirm('Esta seguro que desea eliminar el registro?.', {
-        title: 'Por favor confirme',
-        okVariant: 'danger',
-        okTitle: 'Si',
-        cancelTitle: 'No',
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        centered: true
-      })
-        .then(value => {
-          if (value) {
-            this.isRemoving = true
-            productService.delete(item.id)
-              .then(res => {
-                this.isShow = true
-              })
-              .catch((error) => { console.log(error) })
-              .finally(() => {
-                this.isRemoving = false
-                this.loadData()
-              })
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    onFiltered (filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length
-      this.currentPage = 1
-    },
-    onChange () {
-      if (this.selectedType !== null) {
-        this.sortBy = 'type'
-      } else {
-        this.sortBy = ''
-      }
-      this.sortDesc = this.selectedType
-    }
-  },
-  computed: {
-    rows () {
-      return this.products.length
+      currentPage: 1
     }
   }
 }
 </script>
-
-<style scoped>
-  #alert {
-    z-index: 1000;
-    position: absolute;
-    left: 40%;
-  }
-  .is-removing {
-    z-index: 1000;
-    position: relative;
-    left: 0;
-  }
-  #spinner {
-    z-index: 1000;
-    position: relative;
-    left: 0;
-  }
-</style>

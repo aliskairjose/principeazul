@@ -101,18 +101,14 @@
                       <b-button
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
-                        @click="edit(products.item)"
-                        v-if="!products.item.editable">
+                        @click="edit(products.item)">
                         <i class="ri-ball-pen-fill m-0"></i>
-                      </b-button>
-                      <b-button
-                        variant=" iq-bg-success mr-1 mb-1"
-                        size="sm"
-                        @click="submit(products.item)"
-                        v-else>Ok
                       </b-button>
                       <b-button variant=" iq-bg-danger" size="sm" @click="remove(products.item)">
                         <i class="ri-delete-bin-line m-0"></i>
+                      </b-button>
+                      <b-button variant=" iq-bg-primary" size="sm" @click="inventory(products.item)">
+                        <i class="ri-list-unordered m-0"></i>
                       </b-button>
                     </template>
                   </b-table>
@@ -149,14 +145,21 @@
         </iq-card>
       </b-col>
     </b-row>
+    <b-modal size="lg" id="modal-1" title="Lista de inventario" ref="my-modal">
+      <InventoryList
+        :id="product">
+      </InventoryList>
+    </b-modal>
   </b-container>
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
 import productService from '@/services/product'
+import InventoryList from '@/views//Inventory/InventoryList'
 
 export default {
   name: 'ProductList',
+  components: { InventoryList },
   created () { this.loadData() },
   mounted () {
     vito.index()
@@ -173,7 +176,11 @@ export default {
       perPage: 15,
       selectedType: null,
       sortDesc: false,
+      pageOptions: [5, 10, 15, 25, 50, 100, 200],
+      totalRows: 1,
+      currentPage: 1,
       product: {
+        id: 0,
         name: '',
         description: '',
         type: '',
@@ -185,9 +192,6 @@ export default {
         { value: true, text: 'Principal' },
         { value: false, text: 'Adicional' }
       ],
-      pageOptions: [5, 10, 15, 25, 50, 100, 200],
-      totalRows: 1,
-      currentPage: 1,
       titles: [
         { label: 'Id', key: 'id', class: 'text-left', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-left' },
@@ -251,6 +255,9 @@ export default {
           }
         })
         .catch(err => { console.log(err) })
+    },
+    inventory (item) {
+      this.$refs['my-modal'].show()
     },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering

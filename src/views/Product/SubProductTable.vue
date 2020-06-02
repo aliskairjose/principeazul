@@ -127,7 +127,6 @@ export default {
       this.$set(item, 'isAddItem', true)
       subItem.additional_product_id = item.id
       subItem.quantity = item.quantity
-      // this.subItems.push(subItem)
       return this.$emit('add-item', subItem)
     },
     deleteItem (item) {

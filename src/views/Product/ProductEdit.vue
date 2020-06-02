@@ -91,7 +91,6 @@
                     </b-form-group>
                     <b-form-group class="col-md-2" label-for="type" v-show="selectedType === 'principal'">
                       <h6 class="mb-3"> Agregados <b-badge variant="info">{{product.relatedProducts.length}}</b-badge></h6>
-
                     </b-form-group>
                     <b-form-group class="col-md-12" >
                       <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'" v-on:vdropzone-success="fileAdded">
