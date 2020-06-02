@@ -4,10 +4,10 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
-            <div class="text-center" id="spinner" v-if="loading">
+            <div class="text-center" id="spinner" v-show="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
-            <b-row v-else align-h="between">
+            <b-row align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group>
                   <b-input-group size="sm">
@@ -22,7 +22,7 @@
               </b-col>
               <b-col md="4" class="my-1">
                 <b-form-group>
-                  <b-button variant="primary" @click="add">Agregar</b-button>
+                  <b-button variant="primary" @click="add">Añadir</b-button>
                 </b-form-group>
               </b-col>
               <template>
@@ -81,16 +81,14 @@ import inventoryService from '@/services/inventory'
 export default {
   props: { product: { type: Object } },
   name: 'InventoryList',
+  created () { },
   mounted () {
     vito.index()
     // this.totalRows = this.products.length
-    inventoryService.getAll(`product_id=${this.product.id}`)
-      .then(response => {
-        console.log(response)
-        this.data = response.data
-      })
-      .then((error) => { console.log(error) })
-      .finally(() => { this.loading = false })
+    this.loadData()
+  },
+  updated () {
+    console.log('update')
   },
   data () {
     return {
@@ -101,17 +99,17 @@ export default {
       isShow: false,
       isEmpty: true,
       isRemoving: false,
-      perPage: 15,
+      perPage: 5,
       selectedType: null,
       sortDesc: false,
-      pageOptions: [5, 10, 15],
+      pageOptions: [3, 5, 10, 15],
       totalRows: 1,
       currentPage: 1,
       data: [],
       titles: [
-        { label: 'Id', key: 'id', class: 'text-left' },
-        { label: 'Nombre', key: 'name', class: 'text-left' },
-        { label: 'Cantidad', key: 'price', class: 'text-left' }
+        { label: 'Producto', key: 'name', class: 'text-left' },
+        { label: 'Cantidad', key: 'quantity', class: 'text-left' },
+        { label: 'Proveedor', key: 'provider', class: 'text-left' }
       ]
     }
   },
@@ -123,8 +121,36 @@ export default {
       inv.provider_id = 1
       inv.type = 'purchase'
 
-      console.log(inv)
+      this.loading = true
+      inventoryService.create(inv)
+        .then(response => {
+          this.loadData()
+        })
+        .catch((error) => { console.log(error) })
+        .finally(() => { console.log('finally') })
+    },
+    loadData () {
+      inventoryService.getAll(`product_id=${this.product.id}`)
+        .then(response => {
+          console.log(response.data)
+          response.data.map(r => {
+            r.name = this.product.name
+            console.log(r)
+          })
+          this.data = response.data
+        })
+        .then((error) => { console.log(error) })
+        .finally(() => { this.loading = false })
     }
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+  #spinner {
+    z-index: 1000;
+    position: relative;
+    left: 0;
+
+  }
+</style>
