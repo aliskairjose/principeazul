@@ -250,7 +250,9 @@ export default {
             }
           })
           .catch((error) => {
-            console.log(error)
+            if (error.response.status === 401) {
+              this.$router.push({ name: 'auth1.sign-in1' })
+            }
           })
           .finally(() => { this.loading = false })
       }
@@ -262,7 +264,9 @@ export default {
             }
           })
           .catch((error) => {
-            console.log(error.status)
+            if (error.response.status === 401) {
+              this.$router.push({ name: 'auth1.sign-in1' })
+            }
           })
           .finally(() => { this.loading = false })
       }
