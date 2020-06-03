@@ -181,11 +181,10 @@
     </div>
     <FooterStyle1>
       <template v-slot:left>
-        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-        <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+
       </template>
       <template v-slot:right>
-        Copyright 2020 <a href="#">Vito</a> All Rights Reserved.
+        Copyright 2020 <a href="#">Principe Azul</a> All Rights Reserved.
       </template>
     </FooterStyle1>
   </div>

@@ -15,18 +15,8 @@
               <Slick :option="slickOptions">
                 <div class="item">
                   <img :src="require('../../assets/images/login/login-1.png')" class="img-fluid mb-4" alt="logo">
-                  <h4 class="mb-1 text-white">Manage your orders</h4>
-                  <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-                </div>
-                <div class="item">
-                  <img :src="require('../../assets/images/login/login-1.png')" class="img-fluid mb-4" alt="logo">
-                  <h4 class="mb-1 text-white">Manage your orders</h4>
-                  <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-                </div>
-                <div class="item">
-                  <img :src="require('../../assets/images/login/login-1.png')" class="img-fluid mb-4" alt="logo">
-                  <h4 class="mb-1 text-white">Manage your orders</h4>
-                  <p>It is a long established fact that a reader will be distracted by the readable content.</p>
+                  <h4 class="mb-1 text-white">Sistema del principe azul</h4>
+                  <p>Manejo de ordenes, inventario y clientes</p>
                 </div>
               </Slick>
             </div>

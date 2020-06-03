@@ -416,8 +416,8 @@ div#lottie-beil svg path, div#lottie-mail svg path, div#lottie-fullscreen svg pa
 body.sidebar-main .iq-top-navbar { width: calc(100% - 140px); }
 body.sidebar-main .iq-top-navbar.fixed-header { width: calc(100% - 80px); }
 body.sidebar-main .content-page, body.sidebar-main .iq-footer { margin-left: 80px; }
-body.sidebar-main .iq-sidebar-logo { width: 80px; }
-body.sidebar-main .iq-sidebar 
+body.sidebar-main .iq-sidebar-logo { width: 100%; }
+body.sidebar-main .iq-sidebar
  a span, body.sidebar-main .iq-sidebar-logo a span, body.sidebar-main .iq-sidebar-menu .iq-menu li a .badge { opacity: 0; display: none; transition: all 0.45s ease 0s; }
 body.sidebar-main .iq-sidebar-menu .iq-menu .iq-menu-title span { display: none; }
 body.sidebar-main .iq-sidebar-menu .iq-menu .iq-menu-title i { font-size: 20px; display: block; }
@@ -1056,3 +1056,4 @@ ul#topbar-data-icon {margin: -60px 10px 0;}
 .topbar-menu-icon li a {background: #ffffff; padding: 5px 10px; margin: 0 0 0 15px; border-radius: 10px;}
 .searchbox-datalink {opacity: 0; visibility: hidden; position: absolute; top: 100%; left: 0; background: #fff; width: 100%; max-height: 300px; overflow-y: scroll; border-radius: 15px; box-shadow: 0px 0px 12px 0px rgba(120, 146, 141, 0.06); }
 .searchbox-datalink.show-data{opacity: 1; visibility: visible; animation: fade-in-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;    transform: translateY(100%);}
+.iq-sidebar-logo.d-flex.justify-content-between > a > span { font-size: 18px; }
