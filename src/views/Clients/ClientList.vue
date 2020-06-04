@@ -205,9 +205,7 @@ export default {
               })
           }
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((error) => { console.log(error) })
     },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
