@@ -2,7 +2,12 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
-        <b-alert :show="isShow" variant="success" class="bg-white" id="alert" mt-2>
+        <b-alert
+          :show="isShow"
+          variant="success"
+          class="bg-white"
+          id="alert"
+          mt-2>
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
@@ -13,7 +18,7 @@
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Lista de clientes</h4>
+            <h4 class="card-title mt-3">Lista de clientes</h4>
           </template>
           <template v-slot:body>
             <div class="text-center is-removing" v-show="isRemoving">

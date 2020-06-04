@@ -13,7 +13,7 @@
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Lista de productos</h4>
+            <h4 class="card-title mt-3">Lista de productos</h4>
           </template>
           <template v-slot:body>
             <div class="text-center is-removing" v-show="isRemoving">

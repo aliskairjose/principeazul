@@ -8,8 +8,8 @@ import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import ClientEdit from '@/views/Clients/ClientEdit.vue'
-import ProductList from '@/views/Product/ProductList'
-import ProductEdit from '@/views/Product/ProductEdit'
+import ProductList from '@/views/Product/ProductList.vue'
+import ProductEdit from '@/views/Product/ProductEdit.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
 
@@ -28,10 +28,13 @@ const paRoutes = (prop, mode = false) => [
     name: prop + '.home',
     meta: { dark: mode, auth: true, name: 'Dashborad' },
     component: Dashboard1
-  },
+  }
+]
+
+const orderRoutes = (prop, mode = false) => [
   {
     path: 'orders',
-    name: prop + '.order',
+    name: prop + '.index',
     meta: { dark: mode, auth: true, name: 'Ordenes' },
     component: Order
   }
@@ -130,10 +133,10 @@ const routes = [
   },
   {
     path: '/',
-    name: 'order',
+    name: 'orders',
     component: Layout1,
     meta: { auth: true },
-    children: paRoutes('orders')
+    children: orderRoutes('orders')
   },
   {
     path: '/',
