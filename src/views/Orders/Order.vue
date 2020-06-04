@@ -9,13 +9,12 @@
           <template v-slot:body>
             <form-wizard
               @on-complete="onComplete"
-              title="This is a new title"
-              subtitle="And a new subtitle"
+              title="Crear orden"
               shape="tab"
               back-button-text="Go Back"
-              :next-button-text="btnTitle"
-              finish-button-text="We're there"
-              color="#9b59b6">
+              next-button-text="Añadir producto"
+              finish-button-text="Finalizar orden"
+              color="#0630E4">
               <tab-content title="Datos de la orden" icon="ti-pencil-alt">
                 <b-row>
                   <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
@@ -67,7 +66,7 @@
                       <b-form-input
                         v-model="order.observacines"
                         type="text"
-                        placeholder="observaciones"
+                        placeholder="Observaciones"
                         :class="(errors.length > 0 ? ' is-invalid' : '')"
                       ></b-form-input>
                       <div class="invalid-feedback">
@@ -78,7 +77,18 @@
                 </b-row>
               </tab-content>
               <tab-content title="Productos" icon="ti-package">Productos</tab-content>
-              <tab-content title="Pago" icon="ti-credit-card">Pago</tab-content>
+              <tab-content title="Pago" icon="ti-credit-card">
+                <b-row align-h="center">
+                  <b-form-group class="col-md-4">
+                    <b-form-radio v-model="radio1" name="efectivo">Efectivo</b-form-radio>
+                    <b-form-radio v-model="radio1" name="deposito">Depósito</b-form-radio>
+                    <b-form-radio v-model="radio1" name="tdc">Tarjeta de crédito</b-form-radio>
+                  </b-form-group>
+                  <b-col class="col-md-4">
+                    {{price}}
+                  </b-col>
+                </b-row>
+              </tab-content>
             </form-wizard>
           </template>
         </iq-card>
@@ -102,7 +112,6 @@ export default {
   },
   data () {
     return {
-      btnTitle: 'Añadir producto',
       selectedType: null,
       order: {
         client: '',
@@ -112,9 +121,11 @@ export default {
       },
       purchaseType: [
         { value: null, text: 'Seleccione tipo de compra' },
-        { value: '1', text: 'Tipo 1' },
-        { value: '2', text: 'Tipo 2' }
-      ]
+        { value: '1', text: 'Delivery' },
+        { value: '2', text: 'Compra en tienda' },
+        { value: '3', text: 'Compra web' }
+      ],
+      price: 100
     }
   },
   methods: {
