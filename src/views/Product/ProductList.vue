@@ -247,7 +247,14 @@ export default {
               .then(res => {
                 this.isShow = true
               })
-              .catch((error) => { console.log(error) })
+              .catch((error) => {
+                if (error.response.status === 401) {
+                  // redirect to sign
+                  localStorage.removeItem('user')
+                  localStorage.removeItem('access_token')
+                  this.$router.push({ name: 'auth1.sign-in1' })
+                }
+              })
               .finally(() => {
                 this.isRemoving = false
                 this.loadData()
