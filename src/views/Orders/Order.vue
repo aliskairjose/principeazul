@@ -10,10 +10,6 @@
             <form-wizard
               @on-complete="onComplete"
               title="Crear orden"
-              shape="tab"
-              back-button-text="Go Back"
-              next-button-text="Añadir producto"
-              finish-button-text="Finalizar orden"
               color="#0630E4">
               <tab-content title="Datos de la orden" icon="ti-pencil-alt">
                 <b-row>
@@ -32,29 +28,26 @@
                   </b-form-group>
                   <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
                     <ValidationProvider name="Fecha de entrega" rules="required" v-slot="{ errors }">
-                      <b-form-input
-                        v-model="order.date"
-                        type="date"
-                        placeholder="Fecha de entrega"
-                        :class="(errors.length > 0 ? ' is-invalid' : '')"
+                      <b-form-input v-model="order.date"
+                                    type="date"
+                                    placeholder="Fecha de entrega"
+                                    :class="(errors.length > 0 ? ' is-invalid' : '')"
                       ></b-form-input>
                       <div class="invalid-feedback">
                         <span>{{ errors[0] }}</span>
                       </div>
                     </ValidationProvider>
                   </b-form-group>
-                  <b-form-group
-                    class="col-md-6"
-                    label="Categoría:"
-                    label-for="category"
-                    lot-scope="{ valid, errors }"
+                  <b-form-group class="col-md-6"
+                                label="Categoría:"
+                                label-for="category"
+                                lot-scope="{ valid, errors }"
                   >
                     <ValidationProvider name="Tipo de compra" rules="required" v-slot="{ errors }">
-                      <b-form-select
-                        :state="errors[0] ? false : (selectedType ? true : null)"
-                        v-model="selectedType"
-                        :options="purchaseType"
-                        @change="onChange"
+                      <b-form-select v-model="selectedType"
+                                    :state="errors[0] ? false : (selectedType ? true : null)"
+                                    :options="purchaseType"
+                                    @change="onChange"
                       ></b-form-select>
                       <div class="invalid-feedback">
                         <span>{{ errors[0] }}</span>

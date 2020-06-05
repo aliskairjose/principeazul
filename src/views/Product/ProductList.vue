@@ -81,6 +81,9 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(name)="products">
+                      {{products.item.name.toUpperCase() }}
+                    </template>
                     <template v-slot:cell(type)="products">
                       {{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}
                     </template>
