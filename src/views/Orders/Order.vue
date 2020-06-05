@@ -93,12 +93,14 @@
                     </b-img>
                   </b-col>
                   <b-col class="col-md-7">
-                    <h3>{{p.name}}</h3>
-                    <p class="h5"> {{ p.price }} $</p>
+                    <h3 class="text-capitalize">{{p.name}}</h3>
+                    <p class="h5" id="price"> {{ p.price }} $</p>
                     <h5>{{ p.description }} </h5>
+                    <p class="h6 mt-3">Extras</p>
                     <p>{{p.extras}}</p>
-                    <b-button variant="outline-success" class="mb-3 mr-1"><i class="ri-heart-line"></i>Success</b-button>
-
+                    <b-button variant="outline-success" class="mb-3 mr-1" @click="addExtras(p)">
+                      Añadir <i class="ri-add-line"></i>
+                    </b-button>
                   </b-col>
                   <b-col class="col-md-2">
                     <b-button size="lg" variant="link" class="mb-3 mr-1">
@@ -115,7 +117,7 @@
                       pill
                       variant="outline-link"
                       class="mb-3 mr-1">
-                      <i class="ri-add-line"></i>Añadir otro producto
+                      <i class="ri-add-line"></i>{{ buttonTitle }}
                     </b-button>
                   </b-col>
                 </b-row>
@@ -218,12 +220,23 @@ export default {
       price: 100
     }
   },
+  computed: {
+    buttonTitle () {
+      if (this.orderProducts.length > 0) {
+        return 'Añadir otro producto'
+      }
+      return 'Añadir producto'
+    }
+  },
   methods: {
     onComplete () {
       alert('Yay. Done!')
     },
     onChange () {
       this.order.category = this.selectedType
+    },
+    addExtras (item) {
+      console.log('addExtras', item)
     },
     getClient () {
       this.loading = true
@@ -276,6 +289,9 @@ export default {
   #image {
     width: 132px;
     height: auto;
+  }
+  #price {
+    font-weight: 300
   }
 
 </style>

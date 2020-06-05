@@ -82,7 +82,7 @@
                     :current-page="currentPage"
                     @filtered="onFiltered">
                     <template v-slot:cell(name)="products">
-                      {{products.item.name.toUpperCase() }}
+                      <label for="" class="text-capitalize">{{products.item.name}}</label>
                     </template>
                     <template v-slot:cell(type)="products">
                       {{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}

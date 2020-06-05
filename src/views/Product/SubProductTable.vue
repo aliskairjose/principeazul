@@ -46,6 +46,9 @@
                     :filter="filter"
                     :current-page="currentPage"
                     :per-page="perPage">
+                    <template v-slot:cell(name)="items">
+                      <label for="" class="text-capitalize">{{items.item.name}}</label>
+                    </template>
                     <template v-slot:cell(image)="items">
                       <b-img
                         v-viewer="{movable: false}"
