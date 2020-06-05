@@ -92,14 +92,16 @@
                       class="">
                     </b-img>
                   </b-col>
-                  <b-col class="col-md-6">
+                  <b-col class="col-md-7">
                     <h3>{{p.name}}</h3>
                     <p class="h5"> {{ p.price }} $</p>
                     <h5>{{ p.description }} </h5>
                     <p>{{p.extras}}</p>
                   </b-col>
-                  <b-col class="col-md-3">
-                    buscador
+                  <b-col class="col-md-2">
+                    <b-button size="lg" variant="link" class="mb-3 mr-1">
+                      <i class="ri-search-line ri-xl pr-0"></i>
+                    </b-button>
                   </b-col>
                 </b-row>
                 </div>
