@@ -12,7 +12,23 @@
                 <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
               </div>
             </b-row>
-            <form-wizard @on-complete="onComplete" title="Crear orden" color="#0630E4">
+            <form-wizard
+              ref="wizard"
+              @on-complete="onComplete"
+              @on-change="tabChange"
+              title="Crear orden"
+              :subtitle="validateMsg"
+              :back-button-text="backBtn"
+              :next-button-text="nextBtn"
+              color="#0630E4">
+              <template slot="step" scope="props">
+                <wizard-step :tab="props.tab"
+                :transition="props.transition"
+                :key="props.tab.title"
+                :index="props.index">
+                </wizard-step>
+              </template>
+              <!-- Tab 1 -->
               <tab-content title="Datos de la orden" icon="ti-pencil-alt">
                 <b-row id="row">
                   <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
@@ -79,7 +95,8 @@
                   </b-form-group>
                 </b-row>
               </tab-content>
-              <tab-content title="Productos" icon="ti-package">
+              <!-- Tab 2 -->
+              <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
                 <div v-for="p in orderProducts" :key="p.id">
                   <b-row id="row">
                   <b-col class="col-md-3">
@@ -122,6 +139,7 @@
                   </b-col>
                 </b-row>
               </tab-content>
+              <!-- Tab 3 -->
               <tab-content title="Pago" icon="ti-credit-card">
                 <b-row align-h="center">
                   <b-form-group class="col-md-4">
@@ -187,6 +205,8 @@ export default {
   },
   data () {
     return {
+      tabIndex: 0,
+      validateMsg: '',
       loading: false,
       hasProduct: false,
       radio1: null,
@@ -226,11 +246,35 @@ export default {
         return 'Añadir otro producto'
       }
       return 'Añadir producto'
+    },
+    nextBtn () {
+      if (this.tabIndex === 0) {
+        return 'Añadir productos'
+      }
+      return 'Método de pago'
+    },
+    backBtn () {
+      if (this.tabIndex === 1) {
+        return 'Añadir productos'
+      }
+      return 'Método de pago'
     }
   },
   methods: {
+    validateProducts () {
+      if (this.orderProducts.length === 0) {
+        this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
+        return false
+      }
+      this.validateMsg = ''
+      return true
+    },
     onComplete () {
       alert('Yay. Done!')
+    },
+    tabChange (prevIndex, nextIndex) {
+      console.log(prevIndex, nextIndex)
+      this.tabIndex = nextIndex
     },
     onChange () {
       this.order.category = this.selectedType
