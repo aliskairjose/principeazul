@@ -123,11 +123,8 @@ export default {
   },
   methods: {
     addItem (item) {
-      let subItem = {}
       this.$set(item, 'isAddItem', true)
-      subItem.additional_product_id = item.id
-      subItem.quantity = item.quantity
-      return this.$emit('add-item', subItem)
+      return this.$emit('add-item', item)
     },
     deleteItem (item) {
       this.$set(item, 'isAddItem', false)

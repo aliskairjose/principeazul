@@ -88,7 +88,7 @@
                       {{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}
                     </template>
                     <template v-slot:cell(price)="products">
-                      B/. {{products.item.price}}
+                      {{products.item.price}} $
                     </template>
                     <template v-slot:cell(image)="products">
                       <b-img
