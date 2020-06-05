@@ -22,13 +22,6 @@
               :next-button-text="nextBtn"
               finish-button-text="Finalizar orden"
               color="#0630E4">
-              <template slot="step" scope="props">
-                <wizard-step :tab="props.tab"
-                :transition="props.transition"
-                :key="props.tab.title"
-                :index="props.index">
-                </wizard-step>
-              </template>
               <!-- Tab 1 -->
               <tab-content title="Datos de la orden" icon="ti-pencil-alt">
                 <b-row id="row">
