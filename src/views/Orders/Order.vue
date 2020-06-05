@@ -97,6 +97,8 @@
                     <p class="h5"> {{ p.price }} $</p>
                     <h5>{{ p.description }} </h5>
                     <p>{{p.extras}}</p>
+                    <b-button variant="outline-success" class="mb-3 mr-1"><i class="ri-heart-line"></i>Success</b-button>
+
                   </b-col>
                   <b-col class="col-md-2">
                     <b-button size="lg" variant="link" class="mb-3 mr-1">
