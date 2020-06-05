@@ -90,7 +90,7 @@
                         </b-button>
                     </b-form-group>
                     <b-form-group class="col-md-2" label-for="type" v-show="selectedType === 'principal'">
-                      <h6 class="mb-3"> Agregados <b-badge variant="info">{{product.additionals.length}}</b-badge></h6>
+                      <h6 class="mb-3"> Agregados <b-badge variant="info">{{subs}}</b-badge></h6>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
                       <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'" v-on:vdropzone-success="fileAdded">
@@ -102,7 +102,16 @@
                     </b-form-group>
                   </b-row>
                   <hr />
-                  <b-modal size="lg" id="modal-1" title="Lista de subproductos">
+                  <b-modal
+                    size="lg"
+                    id="modal-1"
+                    title="Lista de subproductos"
+                    cancel-title="Cancelar"
+                    no-close-on-esc
+                    no-close-on-backdrop
+                    hide-header-close
+                    @ok="handleOk"
+                    @cancel="handleCancel">
                     <SubProductTable
                       :items="subProducts"
                       :titems="subProductTitle"
@@ -131,7 +140,6 @@ import { VMoney } from 'v-money'
 
 export default {
   name: 'ProductEdit',
-  subs: [],
   components: {
     vueDropzone: vue2Dropzone,
     SubProductTable
@@ -158,7 +166,6 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
-          console.log(response.data)
           this.product = response.data
           this.selectedType = this.product.type
           this.selectedCategory = this.product.category_id
@@ -174,6 +181,7 @@ export default {
       loading: false,
       selectedType: null,
       selectedCategory: null,
+      subs: 0,
       money: {},
       product: {
         name: '',
@@ -184,7 +192,6 @@ export default {
         image: '',
         additionals: []
       },
-      subs: [],
       types: [
         { value: null, text: 'Seleccione un tipo' },
         { value: 'principal', text: 'Principal' },
@@ -230,7 +237,20 @@ export default {
     },
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
-      this.product.additionals.push(item)
+      let subItem = {}
+      subItem.additional_product_id = item.id
+      subItem.quantity = item.quantity
+      this.product.additionals.push(subItem)
+      this.subs = this.product.additionals.length
+      console.log(this.product.additionals)
+    },
+    handleOk () {
+      console.log('handleOk')
+    },
+    handleCancel () {
+      this.product.additionals.length = 0
+      this.subs = 0
+      console.log(this.product.additionals)
     },
     deleteSub (id) {
       let additionals = this.product.additionals.filter(x => x.additional_product_id !== id)
@@ -249,11 +269,7 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => {
-            if (error.response.status === 401) {
-              this.$router.push({ name: 'auth1.sign-in1' })
-            }
-          })
+          .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
@@ -263,11 +279,7 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => {
-            if (error.response.status === 401) {
-              this.$router.push({ name: 'auth1.sign-in1' })
-            }
-          })
+          .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
     }
