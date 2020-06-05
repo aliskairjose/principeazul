@@ -20,6 +20,7 @@
               :subtitle="validateMsg"
               :back-button-text="backBtn"
               :next-button-text="nextBtn"
+              finish-button-text="Finalizar orden"
               color="#0630E4">
               <template slot="step" scope="props">
                 <wizard-step :tab="props.tab"
