@@ -88,7 +88,24 @@
                     </template>
                   </b-table>
                 </b-col>
-                <b-col md="12">
+                <b-col md="6">
+                  <b-form-group
+                    label="Resultados por página"
+                    label-cols-sm="6"
+                    label-cols-md="6"
+                    label-align-sm="right"
+                    label-size="sm"
+                    label-for="perPageSelect"
+                    class="mb-0">
+                    <b-form-select
+                      v-model="perPage"
+                      id="perPageSelect"
+                      size="sm"
+                      :options="pageOptions"
+                    ></b-form-select>
+                  </b-form-group>
+                </b-col>
+                <b-col md="6">
                   <b-pagination
                     v-model="currentPage"
                     :total-rows="rows"
@@ -121,9 +138,10 @@ export default {
     return {
       subItems: [],
       perPage: 5,
+      totalRows: 1,
       currentPage: 1,
-      filter: null,
-      isAddItem: true
+      pageOptions: [5, 10, 15, 25, 50, 100, 200],
+      filter: null
     }
   },
   methods: {
