@@ -70,6 +70,7 @@
                     </template>
                     <template v-slot:cell(action)="items">
                       <b-button
+                        v-b-tooltip.top="'Agregar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="addItem(items.item)"
@@ -77,6 +78,7 @@
                         <i class="ri-add-line  m-0"></i>
                       </b-button>
                       <b-button
+                        v-b-tooltip.top="'Eliminar'"
                         variant=" iq-bg-danger mr-1 mb-1"
                         size="sm"
                         @click="deleteItem(items.item)"
@@ -107,7 +109,7 @@
 <script>
 import { vito } from '../../config/pluginInit'
 export default {
-  name: 'SubProductTable',
+  name: 'ProductModal',
   props: {
     items: { type: Array },
     titems: { type: Array }

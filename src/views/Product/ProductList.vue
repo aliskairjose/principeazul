@@ -102,15 +102,24 @@
                     </template>
                     <template v-slot:cell(action)="products">
                       <b-button
+                        v-b-tooltip.top="'Editar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="edit(products.item)">
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
-                      <b-button variant=" iq-bg-danger mr-1 mb-1" size="sm" @click="remove(products.item)">
+                      <b-button
+                        v-b-tooltip.top="'Eliminar'"
+                        variant=" iq-bg-danger mr-1 mb-1"
+                        size="sm"
+                        @click="remove(products.item)">
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
-                      <b-button variant=" iq-bg-primary mr-1 mb-1" size="sm" @click="inventory(products.item)">
+                      <b-button
+                        v-b-tooltip.top="'Inventario'"
+                        variant=" iq-bg-primary mr-1 mb-1"
+                        size="sm"
+                        @click="inventory(products.item)">
                         <i class="ri-list-unordered m-0"></i>
                       </b-button>
                     </template>
@@ -196,11 +205,11 @@ export default {
         { value: false, text: 'Adicional' }
       ],
       titles: [
-        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'image', class: 'text-left' },
-        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Precio', key: 'price', class: 'text-left', sortable: true },
-        { label: 'Tipo', key: 'type', class: 'text-left', sortable: true },
+        { label: 'Id', key: 'id', class: 'text-center', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-center' },
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Precio', key: 'price', class: 'text-center', sortable: true },
+        { label: 'Tipo', key: 'type', class: 'text-center', sortable: true },
         { label: 'Action', key: 'action', class: 'text-center' }
       ],
       products: []

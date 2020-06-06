@@ -112,12 +112,12 @@
                     hide-header-close
                     @ok="handleOk"
                     @cancel="handleCancel">
-                    <SubProductTable
+                    <product-modal
                       :items="subProducts"
                       :titems="subProductTitle"
                       v-on:add-item="addSub"
                       v-on:delete-item="deleteSub">
-                    </SubProductTable>
+                    </product-modal>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
@@ -134,15 +134,15 @@
 import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-import SubProductTable from '@/views/Product/SubProductTable'
 import productService from '@/services/product'
 import { VMoney } from 'v-money'
+import ProductModal from '@/views/Product/ProductModal'
 
 export default {
   name: 'ProductEdit',
   components: {
     vueDropzone: vue2Dropzone,
-    SubProductTable
+    ProductModal
   },
   directives: { money: VMoney },
   created () {
@@ -203,10 +203,10 @@ export default {
         { value: 2, text: 'Categoria 2' }
       ],
       subProductTitle: [
-        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'image', class: 'text-left', sortable: true },
-        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
+        { label: 'Id', key: 'id', class: 'text-center', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       subProducts: [],

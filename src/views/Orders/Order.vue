@@ -135,7 +135,7 @@
               </tab-content>
               <!-- Tab 3 -->
               <tab-content title="Pago" icon="ti-credit-card">
-                <b-row align-h="center">
+                <b-row align-h="center" id="row">
                   <b-form-group class="col-md-4">
                     <b-form-radio v-model="radio1" name="efectivo">Efectivo</b-form-radio>
                     <b-form-radio v-model="radio1" name="deposito">Depósito</b-form-radio>
@@ -159,13 +159,13 @@
       hide-header-close
       @ok="handleOk"
       @cancel="handleCancel">
-      <SubProductTable
+      <product-modal
         :items="products"
         :titems="titles"
         cancel-title="Cancelar"
         v-on:add-item="addProduct"
         v-on:delete-item="delProduct">
-      </SubProductTable>
+      </product-modal>
     </b-modal>
   </b-container>
 </template>
@@ -175,14 +175,14 @@ import { FormWizard, TabContent } from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import clientService from '@/services/client'
 import productService from '@/services/product'
-import SubProductTable from '@/views/Product/SubProductTable'
+import ProductModal from '@/views/Product/ProductModal'
 
 export default {
   name: 'Order',
   components: {
     FormWizard,
     TabContent,
-    SubProductTable
+    ProductModal
   },
   mounted () {
     vito.index()
@@ -225,10 +225,10 @@ export default {
       tempProd: [],
       orderProducts: [],
       titles: [
-        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'image', class: 'text-left', sortable: true },
-        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
+        { label: 'Id', key: 'id', class: 'text-center', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       price: 100
@@ -267,7 +267,6 @@ export default {
       alert('Yay. Done!')
     },
     tabChange (prevIndex, nextIndex) {
-      console.log(prevIndex, nextIndex)
       this.tabIndex = nextIndex
     },
     onChange () {
@@ -322,7 +321,7 @@ export default {
   #spinner {
     z-index: 1000;
     position: absolute;
-    left: 40vw;
+    center: 40vw;
   }
   #image {
     width: 132px;
