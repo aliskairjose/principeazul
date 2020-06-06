@@ -300,14 +300,21 @@ export default {
       console.log('addExtras', item)
     },
     getClient () {
-      this.loading = true
-      clientService.getAll()
-        .then(response => {
-          this.clients = response.data
-          this.$refs['lista-clientes'].show()
+      if (this.clients.length === 0) {
+        this.loading = true
+        clientService.getAll()
+          .then(response => {
+            this.clients = response.data
+            this.$refs['lista-clientes'].show()
+          })
+          .catch((error) => { console.log(error) })
+          .finally(() => { this.loading = false })
+      } else {
+        this.clients.map(r => {
+          if (r.isAddItem) { r.isAddItem = false }
         })
-        .catch((error) => { console.log(error) })
-        .finally(() => { this.loading = false })
+        this.$refs['lista-clientes'].show()
+      }
     },
     addClient (item) {
       this.client = item
