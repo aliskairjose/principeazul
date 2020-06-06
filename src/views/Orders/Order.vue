@@ -29,6 +29,7 @@
                     <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
                       <b-form-input
                         autocomplete="off"
+                        readonly
                         v-model="client.name"
                         @click="getClient"
                         type="text"
