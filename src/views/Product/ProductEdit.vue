@@ -242,7 +242,6 @@ export default {
       subItem.quantity = item.quantity
       this.product.additionals.push(subItem)
       this.subs = this.product.additionals.length
-      console.log(this.product.additionals)
     },
     handleOk () {
       console.log('handleOk')
@@ -255,6 +254,7 @@ export default {
     deleteSub (id) {
       let additionals = this.product.additionals.filter(x => x.additional_product_id !== id)
       this.product.additionals = additionals
+      this.subs = this.product.additionals.length
     },
     fileAdded (file) {
       this.product.image = file.dataURL
