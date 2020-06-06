@@ -75,6 +75,9 @@
                     :current-page="currentPage"
                     :per-page="perPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(date)="clients">
+                      {{ clients.item.date }}
+                    </template>
                     <template v-slot:cell(action)="clients">
                       <b-button
                         v-b-tooltip.top="'Editar'"
@@ -153,10 +156,10 @@ export default {
       titles: [
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         { label: 'Email', key: 'email', class: 'text-center', sortable: true },
-        { label: 'Telefono', key: 'phone', class: 'text-center', sortable: true },
+        { label: 'Teléfono', key: 'phone', class: 'text-center', sortable: true },
         { label: 'Ordenes', key: 'orders', class: 'text-center', sortable: true },
-        { label: 'Fecha creacion', key: 'created_at', class: 'text-center', sortable: true },
-        { label: 'Action', key: 'action', class: 'text-center' }
+        { label: 'Fecha creación', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       clients: []
     }

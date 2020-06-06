@@ -210,7 +210,7 @@ export default {
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         { label: 'Precio', key: 'price', class: 'text-center', sortable: true },
         { label: 'Tipo', key: 'type', class: 'text-center', sortable: true },
-        { label: 'Action', key: 'action', class: 'text-center' }
+        { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       products: []
     }

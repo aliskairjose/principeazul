@@ -29,7 +29,7 @@
                     <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
                       <b-form-input
                         autocomplete="off"
-                        v-model="order.client"
+                        v-model="client.name"
                         @click="getClient"
                         type="text"
                         placeholder="Cliente"
@@ -123,8 +123,7 @@
                 <b-row align-h="center">
                   <b-col class="col-md-8 text-center">
                     <b-button
-                      v-b-modal.modal-lg
-                      v-b-modal.modal-1
+                      @click="showProductModal"
                       pill
                       variant="outline-link"
                       class="mb-3 mr-1">
@@ -150,8 +149,9 @@
       </b-col>
     </b-row>
     <b-modal
+      ref="lista-productos"
       size="lg"
-      id="modal-1"
+      id="lista-productos"
       title="Lista de productos"
       cancel-title="Cancelar"
       no-close-on-esc
@@ -159,13 +159,32 @@
       hide-header-close
       @ok="handleOk"
       @cancel="handleCancel">
-      <product-modal
+      <modal-table
         :items="products"
-        :titems="titles"
+        :titems="pTitles"
         cancel-title="Cancelar"
         v-on:add-item="addProduct"
         v-on:delete-item="delProduct">
-      </product-modal>
+      </modal-table>
+    </b-modal>
+    <b-modal
+      ref="lista-clientes"
+      size="lg"
+      id="lista-clientes"
+      title="Lista de clientes"
+      cancel-title="Cancelar"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-header-close
+      @ok="handleOk"
+      @cancel="handleCancel">
+      <modal-table
+        :items="clients"
+        :titems="cTitles"
+        cancel-title="Cancelar"
+        v-on:add-item="addClient"
+        v-on:delete-item="delClient">
+      </modal-table>
     </b-modal>
   </b-container>
 </template>
@@ -175,14 +194,14 @@ import { FormWizard, TabContent } from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import clientService from '@/services/client'
 import productService from '@/services/product'
-import ProductModal from '@/views/Product/ProductModal'
+import ModalTable from '@/components/Modals/ModalTable'
 
 export default {
   name: 'Order',
   components: {
     FormWizard,
     TabContent,
-    ProductModal
+    ModalTable
   },
   mounted () {
     vito.index()
@@ -205,10 +224,7 @@ export default {
       hasProduct: false,
       radio1: null,
       selectedType: null,
-      client: {
-        id: null,
-        name: ''
-      },
+      client: { },
       order: {
         client: '',
         date: '',
@@ -221,10 +237,16 @@ export default {
         { value: '2', text: 'Compra en tienda' },
         { value: '3', text: 'Compra web' }
       ],
-      products: [],
       tempProd: [],
       orderProducts: [],
-      titles: [
+      clients: [],
+      cTitles: [
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Teléfono', key: 'phone', class: 'text-center', sortable: true },
+        { label: 'Acción', key: 'action', class: 'text-center' }
+      ],
+      products: [],
+      pTitles: [
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
@@ -255,6 +277,9 @@ export default {
     }
   },
   methods: {
+    showProductModal () {
+      this.$refs['lista-productos'].show()
+    },
     validateProducts () {
       if (this.orderProducts.length === 0) {
         this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
@@ -279,10 +304,18 @@ export default {
       this.loading = true
       clientService.getAll()
         .then(response => {
-          console.log(response.data)
+          this.clients = response.data
+          this.$refs['lista-clientes'].show()
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
+    },
+    addClient (item) {
+      this.client = item
+      this.$refs['lista-clientes'].hide()
+    },
+    delClient () {
+
     },
     addProduct (item) {
       this.tempProd.push(item)
@@ -321,7 +354,7 @@ export default {
   #spinner {
     z-index: 1000;
     position: absolute;
-    center: 40vw;
+    left: 40vw;
   }
   #image {
     width: 132px;

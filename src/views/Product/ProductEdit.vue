@@ -112,12 +112,12 @@
                     hide-header-close
                     @ok="handleOk"
                     @cancel="handleCancel">
-                    <product-modal
+                    <modal-table
                       :items="subProducts"
                       :titems="subProductTitle"
                       v-on:add-item="addSub"
                       v-on:delete-item="deleteSub">
-                    </product-modal>
+                    </modal-table>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
@@ -136,13 +136,13 @@ import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import productService from '@/services/product'
 import { VMoney } from 'v-money'
-import ProductModal from '@/views/Product/ProductModal'
+import ModalTable from '@/components/Modals/ModalTable'
 
 export default {
   name: 'ProductEdit',
   components: {
     vueDropzone: vue2Dropzone,
-    ProductModal
+    ModalTable
   },
   directives: { money: VMoney },
   created () {
