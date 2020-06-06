@@ -163,17 +163,17 @@
       <modal-table
         :items="products"
         :titems="pTitles"
-        cancel-title="Cancelar"
         v-on:add-item="addProduct"
         v-on:delete-item="delProduct">
       </modal-table>
     </b-modal>
     <b-modal
+      ok-only
       ref="lista-clientes"
       size="lg"
       id="lista-clientes"
       title="Lista de clientes"
-      cancel-title="Cancelar"
+      ok-title="Cerrar"
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
@@ -182,9 +182,7 @@
       <modal-table
         :items="clients"
         :titems="cTitles"
-        cancel-title="Cancelar"
-        v-on:add-item="addClient"
-        v-on:delete-item="delClient">
+        v-on:add-item="addClient">
       </modal-table>
     </b-modal>
   </b-container>
@@ -314,9 +312,6 @@ export default {
     addClient (item) {
       this.client = item
       this.$refs['lista-clientes'].hide()
-    },
-    delClient () {
-
     },
     addProduct (item) {
       this.tempProd.push(item)
