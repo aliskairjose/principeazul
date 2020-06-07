@@ -23,72 +23,76 @@
               finish-button-text="Finalizar orden"
               color="#0630E4">
               <!-- Tab 1 -->
-              <tab-content title="Datos de la orden" icon="ti-pencil-alt">
-                <b-row id="row">
-                  <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
-                    <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
-                      <b-form-input
-                        autocomplete="off"
-                        readonly
-                        v-model="client.name"
-                        @click="getClient"
-                        type="text"
-                        placeholder="Cliente"
-                        :class="(errors.length > 0 ? ' is-invalid' : '')"
-                      ></b-form-input>
-                      <div class="invalid-feedback">
-                        <span>{{ errors[0] }}</span>
-                      </div>
-                    </ValidationProvider>
-                  </b-form-group>
-                  <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
-                    <ValidationProvider
-                      name="Fecha de entrega"
-                      rules="required"
-                      v-slot="{ errors }"
-                    >
-                      <b-form-input
-                        v-model="order.date"
-                        type="date"
-                        placeholder="Fecha de entrega"
-                        :class="(errors.length > 0 ? ' is-invalid' : '')"
-                      ></b-form-input>
-                      <div class="invalid-feedback">
-                        <span>{{ errors[0] }}</span>
-                      </div>
-                    </ValidationProvider>
-                  </b-form-group>
-                  <b-form-group
-                    class="col-md-6"
-                    label="Categoría:"
-                    label-for="category"
-                    lot-scope="{ valid, errors }">
-                    <ValidationProvider name="Tipo de compra" rules="required" v-slot="{ errors }">
-                      <b-form-select
-                        v-model="selectedType"
-                        :state="errors[0] ? false : (selectedType ? true : null)"
-                        :options="purchaseType"
-                        @change="onChange"
-                      ></b-form-select>
-                      <div class="invalid-feedback">
-                        <span>{{ errors[0] }}</span>
-                      </div>
-                    </ValidationProvider>
-                  </b-form-group>
-                  <b-form-group class="col-md-6" label="Observaciones:" label-for="name">
-                    <ValidationProvider name="Observaciones" rules="required" v-slot="{ errors }">
-                      <b-form-input
-                        v-model="order.observacines"
-                        type="text"
-                        placeholder="Observaciones"
-                        :class="(errors.length > 0 ? ' is-invalid' : '')"
-                      ></b-form-input>
-                      <div class="invalid-feedback">
-                        <span>{{ errors[0] }}</span>
-                      </div>
-                    </ValidationProvider>
-                  </b-form-group>
-                </b-row>
+              <tab-content title="Datos de la orden" icon="ti-pencil-alt" :before-change="validateOrder">
+                <ValidationObserver ref="form">
+                  <form @submit.prevent="onSubmit">
+                    <b-row id="row">
+                      <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
+                        <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
+                          <b-form-input
+                            autocomplete="off"
+                            readonly
+                            v-model="client.name"
+                            @click="getClient"
+                            type="text"
+                            placeholder="Cliente"
+                            :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          ></b-form-input>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
+                      </b-form-group>
+                      <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
+                        <ValidationProvider
+                          name="Fecha de entrega"
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <b-form-input
+                            v-model="order.date"
+                            type="date"
+                            placeholder="Fecha de entrega"
+                            :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          ></b-form-input>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
+                      </b-form-group>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Categoría:"
+                        label-for="category"
+                        lot-scope="{ valid, errors }">
+                        <ValidationProvider name="Tipo de compra" rules="required" v-slot="{ errors }">
+                          <b-form-select
+                            v-model="selectedType"
+                            :state="errors[0] ? false : (selectedType ? true : null)"
+                            :options="purchaseType"
+                            @change="onChange"
+                          ></b-form-select>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
+                      </b-form-group>
+                      <b-form-group class="col-md-6" label="Observaciones:" label-for="name">
+                        <ValidationProvider name="Observaciones" rules="required" v-slot="{ errors }">
+                          <b-form-input
+                            v-model="order.observacines"
+                            type="text"
+                            placeholder="Observaciones"
+                            :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          ></b-form-input>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
+                      </b-form-group>
+                    </b-row>
+                  </form>
+                </ValidationObserver>
               </tab-content>
               <!-- Tab 2 -->
               <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
@@ -223,6 +227,7 @@ export default {
       hasProduct: false,
       radio1: null,
       selectedType: null,
+
       client: { },
       order: {
         client: '',
@@ -276,6 +281,11 @@ export default {
     }
   },
   methods: {
+    validateOrder () {
+      return this.$refs.form.validate().then(success => {
+        return success
+      })
+    },
     showProductModal () {
       this.$refs['lista-productos'].show()
     },
