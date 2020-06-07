@@ -21,7 +21,8 @@
               :back-button-text="backBtn"
               :next-button-text="nextBtn"
               finish-button-text="Finalizar orden"
-              color="#0630E4">
+              color="#0630E4"
+              error-color="#f35448">
               <!-- Tab 1 -->
               <tab-content title="Datos de la orden" icon="ti-pencil-alt" :before-change="validateOrder">
                 <ValidationObserver ref="form">
