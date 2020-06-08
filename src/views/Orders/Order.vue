@@ -45,6 +45,7 @@
                             v-model="client.name"
                             @click="getClient"
                             type="text"
+                            :value="client.id"
                             placeholder="Cliente"
                             :class="(errors.length > 0 ? ' is-invalid' : '')"
                           ></b-form-input>
@@ -57,19 +58,17 @@
                         class="col-md-6"
                         label="Modo de entrega:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }"
-                      >
+                        lot-scope="{ valid, errors }">
                         <ValidationProvider
                           name="Modo de entrega"
                           rules="required"
-                          v-slot="{ errors }"
-                        >
+                          v-slot="{ errors }">
                           <b-form-select
                             v-model="selectedDelivery"
                             :state="errors[0] ? false : (selectedDelivery ? true : null)"
                             :options="deliveryType"
-                            @change="onDeliveryChange"
-                          ></b-form-select>
+                            @change="onDeliveryChange">
+                          </b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -79,18 +78,16 @@
                         class="col-md-6"
                         label="Tipo de compra:"
                         label-for="shopType"
-                        lot-scope="{ valid, errors }"
-                      >
+                        lot-scope="{ valid, errors }">
                         <ValidationProvider
                           name="Tipo de compra"
                           rules="required"
-                          v-slot="{ errors }"
-                        >
+                          v-slot="{ errors }">
                           <b-form-select
                             v-model="selectedType"
                             :state="errors[0] ? false : (selectedType ? true : null)"
                             :options="purchaseType"
-                            @change="onChange"
+                            @change="onPurchaseChange"
                           ></b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
@@ -99,7 +96,7 @@
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
                         <b-form-input
-                          v-model="order.date"
+                          v-model="order.delivery_date"
                           type="date"
                           placeholder="Fecha de entrega"
                         ></b-form-input>
@@ -109,21 +106,21 @@
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
                         <b-form-input
-                          v-model="order.observacines"
+                          v-model="order.delivery_address"
                           type="text"
-                          placeholder="Dirección de entrega"
-                        ></b-form-input>
+                          placeholder="Dirección de entrega">
+                        </b-form-input>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Destinatario:" label-for="name">
                         <b-form-input
-                          v-model="order.observacines"
+                          v-model="order.addressee"
                           type="text"
                           placeholder="Destinatario"
                         ></b-form-input>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Firma del regalo:" label-for="name">
                         <b-form-input
-                          v-model="order.observacines"
+                          v-model="order.signature"
                           type="text"
                           placeholder="Firma del regalo"
                         ></b-form-input>
@@ -131,10 +128,9 @@
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="name"
-                      >
+                        label-for="dedication">
                         <b-form-input
-                          v-model="order.observacines"
+                          v-model="order.dedication"
                           type="text"
                           placeholder="Dedicatoria del regalo"
                         ></b-form-input>
@@ -158,7 +154,7 @@
                       ></b-img>
                     </b-col>
                     <b-col class="col-md-7">
-                      <h3 class="text-capitalize">{{p.name}}</h3>
+                      <h3 class="text-capitalize">{{ p.name }}</h3>
                       <p class="h5" id="price">{{ p.price }} $</p>
                       <h5>{{ p.note }}</h5>
                       <p class="h6 mt-3">Extras</p>
@@ -177,7 +173,7 @@
                     </b-col>
                     <b-col class="col-md-2">
                       <b-button
-                        v-b-tooltip.top="'Eliminar producto'"
+                        v-b-tooltip.right="'Eliminar producto'"
                         size="lg"
                         variant="link"
                         @click="deleteProduct(p.id)">
@@ -185,7 +181,7 @@
                       </b-button>
                       <br>
                       <b-button
-                        v-b-tooltip.top="'Agregar notas'"
+                        v-b-tooltip.right="'Agregar notas'"
                         size="lg"
                         variant="utline-link"
                         @click="showModalNote(index)">
@@ -307,6 +303,23 @@ export default {
   },
   mounted () {
     vito.index()
+    this.loading = true
+    productService.getAll()
+      .then(response => {
+        const data = response.data
+        data.map(r => {
+          if (r.type === 'principal') {
+            r.extras = []
+            r.note = ''
+            this.principals.push(r)
+          }
+          if (r.type === 'additional') {
+            this.additionals.push(r)
+          }
+        })
+      })
+      .catch(error => { console.log(error) })
+      .finally(() => { this.loading = false })
   },
   data () {
     return {
@@ -315,27 +328,44 @@ export default {
       tabIndex: 0,
       validateMsg: '',
       loading: false,
-      hasProduct: false,
       radio1: null,
       selectedType: null,
       selectedDelivery: null,
       client: { },
       order: {
-        client: '',
-        date: '',
-        category: '',
-        observaciones: ''
+        client_id: '',
+        delivery_date: '',
+        type: '',
+        mode: '',
+        delivery_address: '',
+        addressee: '',
+        dedication: '',
+        signature: '',
+        products: []
+      },
+      product: {
+        product_id: '',
+        quantity: 0,
+        note: '',
+        additionals: []
+      },
+      additional: {
+        quantity: '',
+        product_id: '',
+        type: ''
       },
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
-        { value: '1', text: 'Local' },
-        { value: '2', text: 'Delivery' }
+        { value: 'local', text: 'Local' },
+        { value: 'delivery', text: 'Delivery' }
       ],
       purchaseType: [
         { value: null, text: 'Seleccione tipo de compra' },
-        { value: '1', text: 'Delivery' },
-        { value: '2', text: 'Compra en tienda' },
-        { value: '3', text: 'Compra web' }
+        { value: 'local', text: 'Local' },
+        { value: 'delivery', text: 'Delivery' },
+        { value: 'web', text: 'Web' },
+        { value: 'redes', text: 'Redes' },
+        { value: 'otros', text: 'Otros' }
       ],
       tempProd: [],
       tempExtra: [],
@@ -399,25 +429,6 @@ export default {
     deleteExtra (index, id) {
       this.orderProducts[index].extras = this.orderProducts[index].extras.filter(x => x.id !== id)
     },
-    productList (modal, type) {
-      this.loading = true
-      productService.getAll(`type=${type}`)
-        .then(response => {
-          response.data.map(r => {
-            if (r.type === 'principal') {
-              r.extras = []
-              r.note = ''
-              this.principals.push(r)
-            }
-            if (r.type === 'additional') {
-              this.additionals.push(r)
-            }
-            this.$refs[modal].show()
-          })
-        })
-        .catch((error) => { console.log(error) })
-        .finally(() => { this.loading = false })
-    },
     validateOrder () {
       return true
       // return this.$refs.form.validate().then(success => {
@@ -426,20 +437,7 @@ export default {
     },
     showModal (modal, index) {
       this.index = index
-      if (modal === 'lista-productos') {
-        if (this.principals.length === 0) {
-          this.productList(modal, 'principal')
-        } else {
-          this.$refs[modal].show()
-        }
-      }
-      if (modal === 'extras') {
-        if (this.additionals.length === 0) {
-          this.productList(modal, 'additional')
-        } else {
-          this.$refs[modal].show()
-        }
-      }
+      this.$refs[modal].show()
     },
     validateProducts () {
       if (this.orderProducts.length === 0) {
@@ -450,7 +448,7 @@ export default {
       return true
     },
     onDeliveryChange () {
-
+      this.client.mode = this.selectedDelivery
     },
     onComplete () {
       alert('Yay. Done!')
@@ -458,8 +456,8 @@ export default {
     tabChange (prevIndex, nextIndex) {
       this.tabIndex = nextIndex
     },
-    onChange () {
-      this.order.category = this.selectedType
+    onPurchaseChange () {
+      this.order.type = this.selectedType
     },
     getClient () {
       if (this.clients.length === 0) {
@@ -480,13 +478,14 @@ export default {
     },
     addClient (item) {
       this.client = item
+      this.order.client_id = item.id
       this.$refs['lista-clientes'].hide()
     },
     addItem (item) {
       if (item.type === 'principal') {
         this.tempProd.push(item)
       } else {
-        this.tempExtra.push(item)
+        this.tempExtra.push(this.additional)
       }
     },
     delItem (id) {
@@ -505,6 +504,7 @@ export default {
       this.tempExtra.length = 0
     },
     handleCancelExtra () {
+
     },
     handleOk () {
       if (this.tempProd.length > 0) {
@@ -518,8 +518,10 @@ export default {
       this.tempProd.length = 0
     },
     handleCancel () {
-      if (!this.hasProduct) {
-        this.orderProducts.length = 0
+      if (this.orderProducts.length === 0) {
+        this.principals.map(r => { r.isAddItem = false })
+      } else {
+
       }
     }
   }
