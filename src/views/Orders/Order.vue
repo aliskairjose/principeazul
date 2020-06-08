@@ -146,7 +146,7 @@
               <!-- Tab Productos -->
               <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
                 <div v-for="(p, index) in orderProducts" :key="p.id">
-                  <b-row id="row">
+                  <b-row id="row" class="mb-2">
                     <b-col class="col-md-3">
                       <b-img
                         v-viewer="{movable: false}"
@@ -165,7 +165,7 @@
                         <b-button
                           v-for="item in p.extras" :key="item.id"
                           variant="outline-primary"
-                          class="mb-3 mr-1"
+                          class="mb-3 mr-1 text-capitalize"
                           @click="deleteExtra(index, item.id)">
                             {{ item.name }}
                           <i class="ri-indeterminate-circle-line"></i>
@@ -180,18 +180,16 @@
                         v-b-tooltip.top="'Eliminar producto'"
                         size="lg"
                         variant="link"
-                        class="mb-3 mr-1"
                         @click="deleteProduct(p.id)">
-                        <i class="ri-delete-back-2-fill ri-xl pr-0"></i>
+                        <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
                       </b-button>
                       <br>
                       <b-button
                         v-b-tooltip.top="'Agregar notas'"
                         size="lg"
-                        variant="link"
-                        class="mb-3 mr-1"
+                        variant="utline-link"
                         @click="showModalNote(index)">
-                        <i class="ri-file-4-fill ri-xl pr-0"></i>
+                        <i class="ri-file-4-fill ri-2x pr-0"></i>
                       </b-button>
                     </b-col>
                   </b-row>
@@ -504,6 +502,7 @@ export default {
           }
         }
       }
+      this.tempExtra.length = 0
     },
     handleCancelExtra () {
     },
