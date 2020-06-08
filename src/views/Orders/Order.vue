@@ -9,7 +9,12 @@
           <template v-slot:body>
             <b-row>
               <div class="text-center" id="spinner" v-show="loading">
-                <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+                <b-spinner
+                  variant="primary"
+                  type="grow"
+                  label="Spinning"
+                  style="width: 3rem; height: 3rem;"
+                ></b-spinner>
               </div>
             </b-row>
             <form-wizard
@@ -22,9 +27,13 @@
               :next-button-text="nextBtn"
               finish-button-text="Finalizar orden"
               color="#0630E4"
-              error-color="#f35448">
-              <!-- Tab 1 -->
-              <tab-content title="Datos de la orden" icon="ti-pencil-alt" :before-change="validateOrder">
+              error-color="#f35448"
+            >
+              <!-- Tab Ordenes -->
+              <tab-content
+                title="Datos de la orden"
+                icon="ti-pencil-alt"
+                :before-change="validateOrder">
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -44,18 +53,23 @@
                           </div>
                         </ValidationProvider>
                       </b-form-group>
-                      <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Modo de entrega:"
+                        label-for="delivery"
+                        lot-scope="{ valid, errors }"
+                      >
                         <ValidationProvider
-                          name="Fecha de entrega"
+                          name="Modo de entrega"
                           rules="required"
                           v-slot="{ errors }"
                         >
-                          <b-form-input
-                            v-model="order.date"
-                            type="date"
-                            placeholder="Fecha de entrega"
-                            :class="(errors.length > 0 ? ' is-invalid' : '')"
-                          ></b-form-input>
+                          <b-form-select
+                            v-model="selectedDelivery"
+                            :state="errors[0] ? false : (selectedDelivery ? true : null)"
+                            :options="deliveryType"
+                            @change="onDeliveryChange"
+                          ></b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -63,10 +77,15 @@
                       </b-form-group>
                       <b-form-group
                         class="col-md-6"
-                        label="Categoría:"
-                        label-for="category"
-                        lot-scope="{ valid, errors }">
-                        <ValidationProvider name="Tipo de compra" rules="required" v-slot="{ errors }">
+                        label="Tipo de compra:"
+                        label-for="shopType"
+                        lot-scope="{ valid, errors }"
+                      >
+                        <ValidationProvider
+                          name="Tipo de compra"
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
                           <b-form-select
                             v-model="selectedType"
                             :state="errors[0] ? false : (selectedType ? true : null)"
@@ -78,67 +97,120 @@
                           </div>
                         </ValidationProvider>
                       </b-form-group>
-                      <b-form-group class="col-md-6" label="Observaciones:" label-for="name">
-                        <ValidationProvider name="Observaciones" rules="required" v-slot="{ errors }">
-                          <b-form-input
-                            v-model="order.observacines"
-                            type="text"
-                            placeholder="Observaciones"
-                            :class="(errors.length > 0 ? ' is-invalid' : '')"
-                          ></b-form-input>
-                          <div class="invalid-feedback">
-                            <span>{{ errors[0] }}</span>
-                          </div>
-                        </ValidationProvider>
+                      <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
+                        <b-form-input
+                          v-model="order.date"
+                          type="date"
+                          placeholder="Fecha de entrega"
+                        ></b-form-input>
+                      </b-form-group>
+                      <b-form-group class="col-md-12">
+                        <hr />
+                      </b-form-group>
+                      <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
+                        <b-form-input
+                          v-model="order.observacines"
+                          type="text"
+                          placeholder="Dirección de entrega"
+                        ></b-form-input>
+                      </b-form-group>
+                      <b-form-group class="col-md-6" label="Destinatario:" label-for="name">
+                        <b-form-input
+                          v-model="order.observacines"
+                          type="text"
+                          placeholder="Destinatario"
+                        ></b-form-input>
+                      </b-form-group>
+                      <b-form-group class="col-md-6" label="Firma del regalo:" label-for="name">
+                        <b-form-input
+                          v-model="order.observacines"
+                          type="text"
+                          placeholder="Firma del regalo"
+                        ></b-form-input>
+                      </b-form-group>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Dedicatoria del regalo:"
+                        label-for="name"
+                      >
+                        <b-form-input
+                          v-model="order.observacines"
+                          type="text"
+                          placeholder="Dedicatoria del regalo"
+                        ></b-form-input>
                       </b-form-group>
                     </b-row>
                   </form>
                 </ValidationObserver>
               </tab-content>
-              <!-- Tab 2 -->
+              <!-- Tab Productos -->
               <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
-                <div v-for="p in orderProducts" :key="p.id">
+                <div v-for="(p, index) in orderProducts" :key="p.id">
                   <b-row id="row">
-                  <b-col class="col-md-3">
-                    <b-img
-                      v-viewer="{movable: false}"
-                      center
-                      rounded="circle"
-                      :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
-                      id="image"
-                      class="">
-                    </b-img>
-                  </b-col>
-                  <b-col class="col-md-7">
-                    <h3 class="text-capitalize">{{p.name}}</h3>
-                    <p class="h5" id="price"> {{ p.price }} $</p>
-                    <h5>{{ p.description }} </h5>
-                    <p class="h6 mt-3">Extras</p>
-                    <p>{{p.extras}}</p>
-                    <b-button variant="outline-success" class="mb-3 mr-1" @click="addExtras(p)">
-                      Añadir <i class="ri-add-line"></i>
-                    </b-button>
-                  </b-col>
-                  <b-col class="col-md-2">
-                    <b-button size="lg" variant="link" class="mb-3 mr-1">
-                      <i class="ri-search-line ri-xl pr-0"></i>
-                    </b-button>
-                  </b-col>
-                </b-row>
+                    <b-col class="col-md-3">
+                      <b-img
+                        v-viewer="{movable: false}"
+                        center
+                        rounded="circle"
+                        :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
+                        id="image"
+                        class
+                      ></b-img>
+                    </b-col>
+                    <b-col class="col-md-7">
+                      <h3 class="text-capitalize">{{p.name}}</h3>
+                      <p class="h5" id="price">{{ p.price }} $</p>
+                      <h5>{{ p.note }}</h5>
+                      <p class="h6 mt-3">Extras</p>
+                        <b-button
+                          v-for="item in p.extras" :key="item.id"
+                          variant="outline-primary"
+                          class="mb-3 mr-1"
+                          @click="deleteExtra(index, item.id)">
+                            {{ item.name }}
+                          <i class="ri-indeterminate-circle-line"></i>
+                        </b-button>
+                      <b-button variant="outline-success" class="mb-3 mr-1" @click="showModal('extras', index)">
+                        Añadir
+                        <i class="ri-add-line"></i>
+                      </b-button>
+                    </b-col>
+                    <b-col class="col-md-2">
+                      <b-button
+                        v-b-tooltip.top="'Eliminar producto'"
+                        size="lg"
+                        variant="link"
+                        class="mb-3 mr-1"
+                        @click="deleteProduct(p.id)">
+                        <i class="ri-delete-back-2-fill ri-xl pr-0"></i>
+                      </b-button>
+                      <br>
+                      <b-button
+                        v-b-tooltip.top="'Agregar notas'"
+                        size="lg"
+                        variant="link"
+                        class="mb-3 mr-1"
+                        @click="showModalNote(index)">
+                        <i class="ri-file-4-fill ri-xl pr-0"></i>
+                      </b-button>
+                    </b-col>
+                  </b-row>
                 </div>
                 <b-row align-h="center">
                   <b-col class="col-md-8 text-center">
                     <b-button
-                      @click="showProductModal"
+                      @click="showModal('lista-productos')"
                       pill
                       variant="outline-link"
-                      class="mb-3 mr-1">
-                      <i class="ri-add-line"></i>{{ buttonTitle }}
+                      class="mb-3 mr-1"
+                    >
+                      <i class="ri-add-line"></i>
+                      {{ buttonTitle }}
                     </b-button>
                   </b-col>
                 </b-row>
               </tab-content>
-              <!-- Tab 3 -->
+              <!-- Tab Pago -->
               <tab-content title="Pago" icon="ti-credit-card">
                 <b-row align-h="center" id="row">
                   <b-form-group class="col-md-4">
@@ -155,6 +227,20 @@
       </b-col>
     </b-row>
     <b-modal
+      ref="modal-note"
+      ok-only
+      id="modal-note"
+      title="Añadir nota"
+      @ok="addNote">
+      <b-form-group class="col-md-12" label="Nota de regalo:" label-for="cliente">
+        <b-form-input
+          autocomplete="off"
+          v-model="note"
+          type="text">
+        </b-form-input>
+      </b-form-group>
+    </b-modal>
+    <b-modal
       ref="lista-productos"
       size="lg"
       id="lista-productos"
@@ -166,11 +252,29 @@
       @ok="handleOk"
       @cancel="handleCancel">
       <modal-table
-        :items="products"
+        :items="principals"
         :titems="pTitles"
-        v-on:add-item="addProduct"
-        v-on:delete-item="delProduct">
-      </modal-table>
+        v-on:add-item="addItem"
+        v-on:delete-item="delItem"
+      ></modal-table>
+    </b-modal>
+    <b-modal
+      ref="extras"
+      size="lg"
+      id="extras"
+      title="Lista de extras"
+      cancel-title="Cancelar"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-header-close
+      @ok="handleOkExtra"
+      @cancel="handleCancelExtra">
+      <modal-table
+        :items="additionals"
+        :titems="pTitles"
+        v-on:add-item="addItem"
+        v-on:delete-item="delItem"
+      ></modal-table>
     </b-modal>
     <b-modal
       ok-only
@@ -184,11 +288,7 @@
       hide-header-close
       @ok="handleOk"
       @cancel="handleCancel">
-      <modal-table
-        :items="clients"
-        :titems="cTitles"
-        v-on:add-item="addClient">
-      </modal-table>
+      <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
   </b-container>
 </template>
@@ -209,26 +309,18 @@ export default {
   },
   mounted () {
     vito.index()
-    this.loading = true
-    productService.getAll('type=principal')
-      .then(response => {
-        response.data.map(r => {
-          r.extra = []
-          this.products.push(r)
-        })
-      })
-      .catch((error) => { console.log(error) })
-      .finally(() => { this.loading = false })
   },
   data () {
     return {
+      note: '',
+      index: null,
       tabIndex: 0,
       validateMsg: '',
       loading: false,
       hasProduct: false,
       radio1: null,
       selectedType: null,
-
+      selectedDelivery: null,
       client: { },
       order: {
         client: '',
@@ -236,6 +328,11 @@ export default {
         category: '',
         observaciones: ''
       },
+      deliveryType: [
+        { value: null, text: 'Seleccione modo de entrega' },
+        { value: '1', text: 'Local' },
+        { value: '2', text: 'Delivery' }
+      ],
       purchaseType: [
         { value: null, text: 'Seleccione tipo de compra' },
         { value: '1', text: 'Delivery' },
@@ -243,6 +340,7 @@ export default {
         { value: '3', text: 'Compra web' }
       ],
       tempProd: [],
+      tempExtra: [],
       orderProducts: [],
       clients: [],
       cTitles: [
@@ -250,7 +348,8 @@ export default {
         { label: 'Teléfono', key: 'phone', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
-      products: [],
+      principals: [],
+      additionals: [],
       pTitles: [
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
@@ -282,13 +381,67 @@ export default {
     }
   },
   methods: {
-    validateOrder () {
-      return this.$refs.form.validate().then(success => {
-        return success
+    addNote () {
+      this.orderProducts[this.index].note = this.note
+      this.note = ''
+    },
+    showModalNote (index) {
+      this.index = index
+      this.$refs['modal-note'].show()
+    },
+    deleteProduct (id) {
+      this.orderProducts = this.orderProducts.filter(x => x.id !== id)
+      this.principals.map(r => {
+        if (r.isAddItem) {
+          r.isAddItem = false
+          r.extras.length = 0
+        }
       })
     },
-    showProductModal () {
-      this.$refs['lista-productos'].show()
+    deleteExtra (index, id) {
+      this.orderProducts[index].extras = this.orderProducts[index].extras.filter(x => x.id !== id)
+    },
+    productList (modal, type) {
+      this.loading = true
+      productService.getAll(`type=${type}`)
+        .then(response => {
+          response.data.map(r => {
+            if (r.type === 'principal') {
+              r.extras = []
+              r.note = ''
+              this.principals.push(r)
+            }
+            if (r.type === 'additional') {
+              this.additionals.push(r)
+            }
+            this.$refs[modal].show()
+          })
+        })
+        .catch((error) => { console.log(error) })
+        .finally(() => { this.loading = false })
+    },
+    validateOrder () {
+      return true
+      // return this.$refs.form.validate().then(success => {
+      //   return success
+      // })
+    },
+    showModal (modal, index) {
+      this.index = index
+      if (modal === 'lista-productos') {
+        if (this.principals.length === 0) {
+          this.productList(modal, 'principal')
+        } else {
+          this.$refs[modal].show()
+        }
+      }
+      if (modal === 'extras') {
+        if (this.additionals.length === 0) {
+          this.productList(modal, 'additional')
+        } else {
+          this.$refs[modal].show()
+        }
+      }
     },
     validateProducts () {
       if (this.orderProducts.length === 0) {
@@ -298,6 +451,9 @@ export default {
       this.validateMsg = ''
       return true
     },
+    onDeliveryChange () {
+
+    },
     onComplete () {
       alert('Yay. Done!')
     },
@@ -306,9 +462,6 @@ export default {
     },
     onChange () {
       this.order.category = this.selectedType
-    },
-    addExtras (item) {
-      console.log('addExtras', item)
     },
     getClient () {
       if (this.clients.length === 0) {
@@ -331,12 +484,28 @@ export default {
       this.client = item
       this.$refs['lista-clientes'].hide()
     },
-    addProduct (item) {
-      this.tempProd.push(item)
+    addItem (item) {
+      if (item.type === 'principal') {
+        this.tempProd.push(item)
+      } else {
+        this.tempExtra.push(item)
+      }
     },
-    delProduct (id) {
+    delItem (id) {
       let prods = this.tempProd.filter(x => x.id !== id)
       this.tempProd = prods
+    },
+    handleOkExtra () {
+      if (this.tempExtra.length > 0) {
+        for (const key in this.tempExtra) {
+          if (this.tempExtra.hasOwnProperty(key)) {
+            const element = this.tempExtra[key]
+            this.orderProducts[this.index].extras.push(element)
+          }
+        }
+      }
+    },
+    handleCancelExtra () {
     },
     handleOk () {
       if (this.tempProd.length > 0) {
@@ -358,24 +527,26 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-  @import url('https://rawgit.com/lykmapipo/themify-icons/master/css/themify-icons.css');
+@import url('https://rawgit.com/lykmapipo/themify-icons/master/css/themify-icons.css');
 
-  #row {
-    border: 1px solid black
-    border-radius: 7px
-    padding: 20px
-  }
-  #spinner {
-    z-index: 1000;
-    position: absolute;
-    left: 40vw;
-  }
-  #image {
-    width: 132px;
-    height: auto;
-  }
-  #price {
-    font-weight: 300
-  }
+#row {
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 20px;
+}
 
+#spinner {
+  z-index: 1000;
+  position: absolute;
+  left: 40vw;
+}
+
+#image {
+  width: 132px;
+  height: auto;
+}
+
+#price {
+  font-weight: 300;
+}
 </style>
