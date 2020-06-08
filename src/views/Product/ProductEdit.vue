@@ -211,7 +211,7 @@ export default {
       ],
       subProducts: [],
       dropzoneOptions: {
-        maxFilesize: 1,
+        maxFilesize: 10,
         clickable: true,
         thumbnailWidth: 150,
         addRemoveLinks: true,
