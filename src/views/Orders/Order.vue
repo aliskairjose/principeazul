@@ -64,10 +64,9 @@
                           rules="required"
                           v-slot="{ errors }">
                           <b-form-select
-                            v-model="selectedDelivery"
-                            :state="errors[0] ? false : (selectedDelivery ? true : null)"
-                            :options="deliveryType"
-                            @change="onDeliveryChange">
+                            v-model="order.mode"
+                            :state="errors[0] ? false : (order.mode ? true : null)"
+                            :options="deliveryType">
                           </b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
@@ -84,10 +83,9 @@
                           rules="required"
                           v-slot="{ errors }">
                           <b-form-select
-                            v-model="selectedType"
-                            :state="errors[0] ? false : (selectedType ? true : null)"
+                            v-model="order.type"
+                            :state="errors[0] ? false : (order.type ? true : null)"
                             :options="purchaseType"
-                            @change="onPurchaseChange"
                           ></b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
@@ -142,53 +140,53 @@
               <!-- Tab Productos -->
               <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
                 <div v-for="(p, index) in orderProducts" :key="p.id">
-                  <b-row id="row" class="mb-2">
-                    <b-col class="col-md-3">
-                      <b-img
-                        v-viewer="{movable: false}"
-                        center
-                        rounded="circle"
-                        :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
-                        id="image"
-                        class
-                      ></b-img>
-                    </b-col>
-                    <b-col class="col-md-7">
-                      <h3 class="text-capitalize">{{ p.name }}</h3>
-                      <p class="h5" id="price">{{ p.price }} $</p>
-                      <h5>{{ p.note }}</h5>
-                      <p class="h6 mt-3">Extras</p>
-                        <b-button
-                          v-for="item in p.extras" :key="item.id"
-                          variant="outline-primary"
-                          class="mb-3 mr-1 text-capitalize"
-                          @click="deleteExtra(index, item.id)">
-                            {{ item.name }}
-                          <i class="ri-indeterminate-circle-line"></i>
+                    <b-row id="row" class="mb-2">
+                      <b-col class="col-md-3">
+                        <b-img
+                          v-viewer="{movable: false}"
+                          center
+                          rounded="circle"
+                          :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
+                          id="image"
+                          class
+                        ></b-img>
+                      </b-col>
+                      <b-col class="col-md-7">
+                        <h3 class="text-capitalize">{{ p.name }}</h3>
+                        <p class="h5" id="price">{{ p.price }} $</p>
+                        <h5>{{ p.note }}</h5>
+                        <p class="h6 mt-3">Extras</p>
+                          <b-button
+                            v-for="item in p.extras" :key="item.id"
+                            variant="outline-primary"
+                            class="mb-3 mr-1 text-capitalize"
+                            @click="deleteExtra(index, item.id)">
+                              {{ item.name }}
+                            <i class="ri-indeterminate-circle-line"></i>
+                          </b-button>
+                        <b-button variant="outline-success" class="mb-3 mr-1" @click="showModal('extras', index)">
+                          Añadir
+                          <i class="ri-add-line"></i>
                         </b-button>
-                      <b-button variant="outline-success" class="mb-3 mr-1" @click="showModal('extras', index)">
-                        Añadir
-                        <i class="ri-add-line"></i>
-                      </b-button>
-                    </b-col>
-                    <b-col class="col-md-2">
-                      <b-button
-                        v-b-tooltip.right="'Eliminar producto'"
-                        size="lg"
-                        variant="link"
-                        @click="deleteProduct(p.id)">
-                        <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
-                      </b-button>
-                      <br>
-                      <b-button
-                        v-b-tooltip.right="'Agregar notas'"
-                        size="lg"
-                        variant="utline-link"
-                        @click="showModalNote(index)">
-                        <i class="ri-file-4-fill ri-2x pr-0"></i>
-                      </b-button>
-                    </b-col>
-                  </b-row>
+                      </b-col>
+                      <b-col class="col-md-2">
+                        <b-button
+                          v-b-tooltip.right="'Eliminar producto'"
+                          size="lg"
+                          variant="link"
+                          @click="deleteProduct(p.id)">
+                          <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
+                        </b-button>
+                        <br>
+                        <b-button
+                          v-b-tooltip.right="'Agregar notas'"
+                          size="lg"
+                          variant="utline-link"
+                          @click="showModalNote(index)">
+                          <i class="ri-file-4-fill ri-2x pr-0"></i>
+                        </b-button>
+                      </b-col>
+                    </b-row>
                 </div>
                 <b-row align-h="center">
                   <b-col class="col-md-8 text-center">
@@ -335,8 +333,8 @@ export default {
       order: {
         client_id: '',
         delivery_date: '',
-        type: '',
-        mode: '',
+        type: null,
+        mode: null,
         delivery_address: '',
         addressee: '',
         dedication: '',
@@ -347,6 +345,8 @@ export default {
         product_id: '',
         quantity: 0,
         note: '',
+        price: null,
+        image: '',
         additionals: []
       },
       additional: {
@@ -354,6 +354,7 @@ export default {
         product_id: '',
         type: ''
       },
+      orderProducts: [],
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
         { value: 'local', text: 'Local' },
@@ -369,7 +370,6 @@ export default {
       ],
       tempProd: [],
       tempExtra: [],
-      orderProducts: [],
       clients: [],
       cTitles: [
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
@@ -445,19 +445,15 @@ export default {
         return false
       }
       this.validateMsg = ''
+      this.order.products = this.orderProducts
+      console.log(this.order)
       return true
-    },
-    onDeliveryChange () {
-      this.client.mode = this.selectedDelivery
     },
     onComplete () {
       alert('Yay. Done!')
     },
     tabChange (prevIndex, nextIndex) {
       this.tabIndex = nextIndex
-    },
-    onPurchaseChange () {
-      this.order.type = this.selectedType
     },
     getClient () {
       if (this.clients.length === 0) {
@@ -483,9 +479,18 @@ export default {
     },
     addItem (item) {
       if (item.type === 'principal') {
+        this.product.product_id = item.id
+        this.product.name = item.name
+        this.product.note = item.note
+        this.product.image = item.image
+        this.product.price = item.price
         this.tempProd.push(item)
       } else {
-        this.tempExtra.push(this.additional)
+        // this.additional.product_id = item.id
+        // this.additional.name = item.name
+        // this.additional.quantity = '1'
+        // this.additional.type = 'extra'
+        this.tempExtra.push(item)
       }
     },
     delItem (id) {
