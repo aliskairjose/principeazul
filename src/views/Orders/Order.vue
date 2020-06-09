@@ -157,10 +157,10 @@
                         <h5>{{ p.note }}</h5>
                         <p class="h6 mt-3">Extras</p>
                           <b-button
-                            v-for="item in p.extras" :key="item.id"
+                            v-for="item in p.additionals" :key="item.product_id"
                             variant="outline-primary"
                             class="mb-3 mr-1 text-capitalize"
-                            @click="deleteExtra(index, item.id)">
+                            @click="deleteExtra(index, item.product_id)">
                               {{ item.name }}
                             <i class="ri-indeterminate-circle-line"></i>
                           </b-button>
@@ -174,7 +174,7 @@
                           v-b-tooltip.right="'Eliminar producto'"
                           size="lg"
                           variant="link"
-                          @click="deleteProduct(p.id)">
+                          @click="deleteProduct(p.product_id)">
                           <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
                         </b-button>
                         <br>
@@ -210,7 +210,7 @@
                     <b-form-radio v-model="radio1" name="deposito">Depósito</b-form-radio>
                     <b-form-radio v-model="radio1" name="tdc">Tarjeta de crédito</b-form-radio>
                   </b-form-group>
-                  <b-col class="col-md-4">{{price}}</b-col>
+                  <!-- <b-col class="col-md-4">{{price}}</b-col> -->
                 </b-row>
               </tab-content>
             </form-wizard>
@@ -351,6 +351,7 @@ export default {
       },
       additional: {
         quantity: '',
+        name: '',
         product_id: '',
         type: ''
       },
@@ -384,8 +385,7 @@ export default {
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
-      ],
-      price: 100
+      ]
     }
   },
   computed: {
@@ -418,7 +418,7 @@ export default {
       this.$refs['modal-note'].show()
     },
     deleteProduct (id) {
-      this.orderProducts = this.orderProducts.filter(x => x.id !== id)
+      this.orderProducts = this.orderProducts.filter(x => x.product_id !== id)
       this.principals.map(r => {
         if (r.isAddItem) {
           r.isAddItem = false
@@ -478,19 +478,22 @@ export default {
       this.$refs['lista-clientes'].hide()
     },
     addItem (item) {
+      this.product = {}
+      this.additional = {}
       if (item.type === 'principal') {
         this.product.product_id = item.id
         this.product.name = item.name
         this.product.note = item.note
         this.product.image = item.image
         this.product.price = item.price
-        this.tempProd.push(item)
+        this.product.additionals = []
+        this.tempProd.push(this.product)
       } else {
-        // this.additional.product_id = item.id
-        // this.additional.name = item.name
-        // this.additional.quantity = '1'
-        // this.additional.type = 'extra'
-        this.tempExtra.push(item)
+        this.additional.product_id = item.id
+        this.additional.name = item.name
+        this.additional.quantity = '1'
+        this.additional.type = 'extra'
+        this.tempExtra.push(this.additional)
       }
     },
     delItem (id) {
@@ -502,7 +505,8 @@ export default {
         for (const key in this.tempExtra) {
           if (this.tempExtra.hasOwnProperty(key)) {
             const element = this.tempExtra[key]
-            this.orderProducts[this.index].extras.push(element)
+            this.orderProducts[this.index].additionals.push(element)
+            console.log(this.orderProducts[this.index])
           }
         }
       }
