@@ -205,12 +205,25 @@
               <!-- Tab Pago -->
               <tab-content title="Pago" icon="ti-credit-card">
                 <b-row align-h="center" id="row">
-                  <b-form-group class="col-md-4">
-                    <b-form-radio v-model="radio1" name="efectivo">Efectivo</b-form-radio>
-                    <b-form-radio v-model="radio1" name="deposito">Depósito</b-form-radio>
-                    <b-form-radio v-model="radio1" name="tdc">Tarjeta de crédito</b-form-radio>
-                  </b-form-group>
-                  <!-- <b-col class="col-md-4">{{price}}</b-col> -->
+                  <div class="col-md-6">
+                    <b-form inline class="mb-2">
+                      <b-form-checkbox v-model="efectivoCB" name="efectivo" class="mb-2 mr-sm-2 mb-sm-0">Efectivo</b-form-checkbox>
+                      <b-form-input v-money="money" v-if="efectivoCB" v-model="efectivo"></b-form-input>
+                    </b-form>
+                    <b-form inline class="mb-2">
+                      <b-form-checkbox v-model="depositoCB" name="deposito" class="mb-2 mr-sm-2 mb-sm-0">Depósito</b-form-checkbox>
+                      <b-form-input v-money="money" v-if="depositoCB" v-model="deposito"></b-form-input>
+                    </b-form>
+                    <b-form inline>
+                      <b-form-checkbox v-model="tarjetaCB" name="tarjeta" class="mb-2 mr-sm-2 mb-sm-0">Tarjeta de crédito</b-form-checkbox>
+                      <b-form-input v-money="money" v-if="tarjetaCB" v-model="tarjeta"></b-form-input>
+                    </b-form>
+                  </div>
+                  <div class="col-md-3 text-right">
+                    Total a pagar: {{finalPrice}}$ <br>
+                    Pagado: {{payOut}}$  <br>
+                    Restante: {{restPrice}}$
+                  </div>
                 </b-row>
               </tab-content>
             </form-wizard>
@@ -291,9 +304,11 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import clientService from '@/services/client'
 import productService from '@/services/product'
 import ModalTable from '@/components/Modals/ModalTable'
+import { VMoney } from 'v-money'
 
 export default {
   name: 'Order',
+  directives: { money: VMoney },
   components: {
     FormWizard,
     TabContent,
@@ -321,12 +336,19 @@ export default {
   },
   data () {
     return {
+      money: {},
+      depositoCB: '',
+      efectivoCB: '',
+      tarjetaCB: '',
+      deposito: 0,
+      efectivo: 0,
+      tarjeta: 0,
       note: '',
       index: null,
       tabIndex: 0,
       validateMsg: '',
       loading: false,
-      radio1: null,
+      checkbox1: null,
       selectedType: null,
       selectedDelivery: null,
       client: { },
@@ -339,7 +361,8 @@ export default {
         addressee: '',
         dedication: '',
         signature: '',
-        products: []
+        products: [],
+        paymentMethods: []
       },
       product: {
         product_id: '',
@@ -355,7 +378,18 @@ export default {
         product_id: '',
         type: ''
       },
+      paymentMethods: [],
+      paymentMethod: {
+        payment_method: '',
+        amount: ''
+      },
       orderProducts: [],
+      paymentSelected: [],
+      paymentOptions: [
+        { text: 'Efectivo', value: 'Efectivo' },
+        { text: 'Depósito', value: 'Depósito' },
+        { text: 'Tarjeta de crédito', value: 'Tarjeta de crédito' }
+      ],
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
         { value: 'local', text: 'Local' },
@@ -389,6 +423,28 @@ export default {
     }
   },
   computed: {
+    finalPrice () {
+      // Total a pagar
+      let price = 0
+      let products = this.order.products
+      for (const key in products) {
+        if (products.hasOwnProperty(key)) {
+          const element = products[key]
+          price += element.price
+        }
+      }
+      return price
+    },
+    payOut () {
+      // Monto pagado
+      let amount = this.deposito + this.tarjeta + this.efectivo
+      return parseFloat(amount).toFixed(2)
+    },
+    restPrice () {
+      // Monto restante
+      let amount = this.finalPrice - (this.deposito + this.tarjeta + this.efectivo)
+      return parseFloat(amount).toFixed(2)
+    },
     buttonTitle () {
       if (this.orderProducts.length > 0) {
         return 'Añadir otro producto'
@@ -429,25 +485,9 @@ export default {
     deleteExtra (index, id) {
       this.orderProducts[index].extras = this.orderProducts[index].extras.filter(x => x.id !== id)
     },
-    validateOrder () {
-      return true
-      // return this.$refs.form.validate().then(success => {
-      //   return success
-      // })
-    },
     showModal (modal, index) {
       this.index = index
       this.$refs[modal].show()
-    },
-    validateProducts () {
-      if (this.orderProducts.length === 0) {
-        this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
-        return false
-      }
-      this.validateMsg = ''
-      this.order.products = this.orderProducts
-      console.log(this.order)
-      return true
     },
     onComplete () {
       alert('Yay. Done!')
@@ -532,6 +572,22 @@ export default {
       } else {
 
       }
+    },
+    validateOrder () {
+      return true
+      // return this.$refs.form.validate().then(success => {
+      //   return success
+      // })
+    },
+    validateProducts () {
+      // return true
+      if (this.orderProducts.length === 0) {
+        this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
+        return false
+      }
+      this.validateMsg = ''
+      this.order.products = this.orderProducts
+      return true
     }
   }
 }
