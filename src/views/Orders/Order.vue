@@ -203,7 +203,7 @@
                 </b-row>
               </tab-content>
               <!-- Tab Pago -->
-              <tab-content title="Pago" icon="ti-credit-card">
+              <tab-content title="Pago" icon="ti-credit-card" :before-change="validatePayment">
                 <b-row align-h="center" id="row">
                   <div class="col-md-6">
                     <div v-for="item in paymentMethods" :key="item.id">
@@ -452,7 +452,8 @@ export default {
       return amount
     },
     rest () {
-      return this.finalPrice - this.payOut
+      const amount = this.finalPrice - this.payOut
+      return parseFloat(amount).toFixed(2)
     },
     buttonTitle () {
       if (this.orderProducts.length > 0) {
@@ -655,6 +656,9 @@ export default {
         }
       }
       return true
+    },
+    validatePayment () {
+      return false
     }
   }
 }
