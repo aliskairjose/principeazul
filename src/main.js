@@ -27,7 +27,6 @@ Object.keys(rules).forEach(rule => {
 })
 
 global.Raphael = Raphael
-
 Vue.use(interceptors)
 Vue.use(AlgoliaComponents)
 Vue.use(Viewer)

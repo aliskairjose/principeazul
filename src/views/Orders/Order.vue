@@ -206,23 +206,33 @@
               <tab-content title="Pago" icon="ti-credit-card">
                 <b-row align-h="center" id="row">
                   <div class="col-md-6">
-                    <b-form inline class="mb-2">
+                    <div v-for="item in paymentMethods" :key="item.id">
+                      <b-form inline class="mb-2">
+                        <b-form-checkbox v-model="item.chekBox" :name="item.payment_method" class="mb-2 mr-sm-2 mb-sm-0">
+                          {{item.payment_method}}
+                        </b-form-checkbox>
+                        <b-form-input v-money="money" v-if="item.chekBox" v-model="item.amount"></b-form-input>
+                      </b-form>
+                    </div>
+
+                    <!-- <b-form inline class="mb-2">
                       <b-form-checkbox v-model="efectivoCB" name="efectivo" class="mb-2 mr-sm-2 mb-sm-0">Efectivo</b-form-checkbox>
-                      <b-form-input v-money="money" v-if="efectivoCB" v-model="efectivo"></b-form-input>
+                      <b-form-input v-money="money" v-if="efectivoCB" v-model="paymentMethods[0].amount"></b-form-input>
                     </b-form>
                     <b-form inline class="mb-2">
                       <b-form-checkbox v-model="depositoCB" name="deposito" class="mb-2 mr-sm-2 mb-sm-0">Depósito</b-form-checkbox>
-                      <b-form-input v-money="money" v-if="depositoCB" v-model="deposito"></b-form-input>
+                      <b-form-input v-money="money" v-if="depositoCB" v-model="paymentMethods[1].amount"></b-form-input>
                     </b-form>
                     <b-form inline>
                       <b-form-checkbox v-model="tarjetaCB" name="tarjeta" class="mb-2 mr-sm-2 mb-sm-0">Tarjeta de crédito</b-form-checkbox>
-                      <b-form-input v-money="money" v-if="tarjetaCB" v-model="tarjeta"></b-form-input>
-                    </b-form>
+                      <b-form-input v-money="money" v-if="tarjetaCB" v-model="paymentMethods[2].amount"></b-form-input>
+                    </b-form> -->
                   </div>
                   <div class="col-md-3 text-right">
                     Total a pagar: {{finalPrice}}$ <br>
-                    Pagado: {{payOut}}$  <br>
-                    Restante: {{restPrice}}$
+                    Pagado: {{ payOut }} $  <br>
+                    Restante: 0$
+
                   </div>
                 </b-row>
               </tab-content>
@@ -337,12 +347,6 @@ export default {
   data () {
     return {
       money: {},
-      depositoCB: '',
-      efectivoCB: '',
-      tarjetaCB: '',
-      deposito: 0,
-      efectivo: 0,
-      tarjeta: 0,
       note: '',
       index: null,
       tabIndex: 0,
@@ -378,11 +382,23 @@ export default {
         product_id: '',
         type: ''
       },
-      paymentMethods: [],
-      paymentMethod: {
-        payment_method: '',
-        amount: ''
-      },
+      paymentMethods: [
+        {
+          payment_method: 'Efectivo',
+          amount: 0,
+          chekBox: ''
+        },
+        {
+          payment_method: 'Depósito',
+          amount: 0,
+          chekBox: ''
+        },
+        {
+          payment_method: 'Tarjeta de crédito',
+          amount: 0,
+          chekBox: ''
+        }
+      ],
       orderProducts: [],
       paymentSelected: [],
       paymentOptions: [
@@ -436,13 +452,15 @@ export default {
       return price
     },
     payOut () {
-      // Monto pagado
-      let amount = this.deposito + this.tarjeta + this.efectivo
-      return parseFloat(amount).toFixed(2)
-    },
-    restPrice () {
-      // Monto restante
-      let amount = this.finalPrice - (this.deposito + this.tarjeta + this.efectivo)
+      let amount = 0
+      let payment = this.paymentMethods
+      for (const key in payment) {
+        if (payment.hasOwnProperty(key)) {
+          const element = payment[key]
+          console.log(key, element.amount, typeof element.amount)
+          amount += parseFloat(element.amount).toFixed(2)
+        }
+      }
       return parseFloat(amount).toFixed(2)
     },
     buttonTitle () {
