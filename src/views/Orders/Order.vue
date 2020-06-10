@@ -486,7 +486,7 @@ export default {
     },
     showModal (modal, index) {
       this.index = index
-      // this.updateAdditonals()
+      this.updateAdditonals()
       this.$refs[modal].show()
     },
     showModalNote (index) {
@@ -572,6 +572,13 @@ export default {
     handleCancelExtra () {
       if (this.orderProducts[this.index].additionals.length === 0) {
         this.additionals.map(r => { r.isAddItem = false })
+      }
+      if (this.tempExtra.length > 0) {
+        this.additionals.map(r => {
+          this.orderProducts[this.index].additionals.map(x => {
+            if (r.id === x.id) { r.isAddItem = false }
+          })
+        })
       }
       this.tempExtra.length = 0
     },
