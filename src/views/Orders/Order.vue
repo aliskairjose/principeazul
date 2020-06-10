@@ -473,14 +473,10 @@ export default {
       this.orderProducts[this.index].note = this.note
       this.note = ''
     },
-    showModalNote (index) {
-      this.index = index
-      this.$refs['modal-note'].show()
-    },
     deleteProduct (id) {
       this.orderProducts = this.orderProducts.filter(x => x.product_id !== id)
       this.principals.map(r => {
-        if (r.isAddItem) {
+        if (r.id === id) {
           r.isAddItem = false
           r.extras.length = 0
         }
@@ -492,6 +488,10 @@ export default {
     showModal (modal, index) {
       this.index = index
       this.$refs[modal].show()
+    },
+    showModalNote (index) {
+      this.index = index
+      this.$refs['modal-note'].show()
     },
     onComplete () {
       alert('Yay. Done!')
