@@ -216,9 +216,9 @@
                     </div>
                   </div>
                   <div class="col-md-3 text-right">
-                    <label for="" class="dark-gray">Total a pagar: {{finalPrice}}$</label> <br>
-                    <label for="" :class="payOut > finalPrice ? 'error' : 'dark-gray' ">Pagado:  {{ payOut }}$</label> <br>
-                    <label for="" :class="rest > 0 ? 'success' : 'error' ">Restante: {{ rest }}$</label>
+                    Total a pagar: <label for="" class="success">{{finalPrice}}$</label> <br>
+                    Pagado: <label for="" :class="payOut > finalPrice ? 'error' : 'success' "> {{ payOut }}$</label> <br>
+                    Restante: <label for="" :class="rest > 0 ? 'success' : 'error' ">{{ rest }}$</label>
                   </div>
                 </b-row>
               </tab-content>
@@ -693,9 +693,6 @@ export default {
   color: var(--pa-danger)
 }
 .success {
-  color: var(--pa-success)
-}
-.dark-gray {
-  color: var(--iq-secondary-dark)
+  color: var(--pa-light-blue)
 }
 </style>
