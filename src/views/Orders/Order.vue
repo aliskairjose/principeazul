@@ -321,9 +321,11 @@ export default {
           if (r.type === 'principal') {
             r.additionals = []
             r.note = ''
+            r.isAddItem = false
             this.principals.push(r)
           }
           if (r.type === 'additional') {
+            r.isAddItem = false
             this.additionals.push(r)
           }
         })
@@ -527,6 +529,7 @@ export default {
       } else {
         this.tempExtra.push(item)
       }
+      console.log(this.tempProd)
     },
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
@@ -574,26 +577,35 @@ export default {
         this.additionals.map(r => { r.isAddItem = false })
       }
       if (this.tempExtra.length > 0) {
-        this.additionals.map(r => {
-          this.orderProducts[this.index].additionals.map(x => {
-            if (r.id === x.id) { r.isAddItem = false }
-          })
-        })
+        let object = []
+        object = this.orderProducts[this.index].additionals
+        for (const key in object) {
+          if (object.hasOwnProperty(key)) {
+            const element = object[key]
+            this.additionals.map(r => {
+              if (r.id === element.id) { r.isAddItem = false }
+            })
+          }
+        }
       }
       this.tempExtra.length = 0
     },
     updateAdditonals () {
       if (this.orderProducts[this.index] !== undefined) {
-        console.log(this.orderProducts[this.index].additionals)
-        this.additionals.map(r => {
-          this.orderProducts[this.index].additionals.map(x => {
-            if (x.id === r.id) {
-              r.isAddItem = true
-            } else {
-              r.isAddItem = false
-            }
-          })
-        })
+        let object = []
+        object = this.orderProducts[this.index].additionals
+        for (const key in object) {
+          if (object.hasOwnProperty(key)) {
+            const element = object[key]
+            this.additionals.map(r => {
+              if (r.id === element.id) {
+                r.isAddItem = true
+              } else {
+                r.isAddItem = false
+              }
+            })
+          }
+        }
       }
     },
     resetAdditionals () {
