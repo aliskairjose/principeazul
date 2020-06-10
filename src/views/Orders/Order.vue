@@ -217,8 +217,8 @@
                   </div>
                   <div class="col-md-3 text-right">
                     Total a pagar: {{finalPrice}}$ <br>
-                    Pagado: {{ payOut }} $  <br>
-                    Restante: 0$
+                    Pagado:  {{ payOut }}$  <br>
+                    Restante: {{ rest }}$
 
                   </div>
                 </b-row>
@@ -441,15 +441,18 @@ export default {
       return price
     },
     payOut () {
+      const object = this.paymentMethods
       let amount = 0
-      let payment = this.paymentMethods
-      for (const key in payment) {
-        if (payment.hasOwnProperty(key)) {
-          const element = payment[key]
-          amount += parseFloat(element.amount).toFixed(2)
+      for (const key in object) {
+        if (object.hasOwnProperty(key)) {
+          const element = object[key]
+          amount += parseFloat(element.amount)
         }
       }
-      return parseFloat(amount).toFixed(2)
+      return amount
+    },
+    rest () {
+      return this.finalPrice - this.payOut
     },
     buttonTitle () {
       if (this.orderProducts.length > 0) {
@@ -529,7 +532,6 @@ export default {
       } else {
         this.tempExtra.push(item)
       }
-      console.log(this.tempProd)
     },
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
@@ -641,7 +643,6 @@ export default {
           for (const key in element.additionals) {
             if (element.additionals.hasOwnProperty(key)) {
               const item = element.additionals[key]
-              console.log('extra id: ', item.id)
               this.additional = {}
               this.additional.product_id = item.id
               this.additional.name = item.name
@@ -653,7 +654,6 @@ export default {
           this.order.products.push(this.product)
         }
       }
-      console.log('Orden: ', this.order)
       return true
     }
   }
