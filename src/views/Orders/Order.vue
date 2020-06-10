@@ -214,19 +214,6 @@
                         <b-form-input v-money="money" v-if="item.chekBox" v-model="item.amount"></b-form-input>
                       </b-form>
                     </div>
-
-                    <!-- <b-form inline class="mb-2">
-                      <b-form-checkbox v-model="efectivoCB" name="efectivo" class="mb-2 mr-sm-2 mb-sm-0">Efectivo</b-form-checkbox>
-                      <b-form-input v-money="money" v-if="efectivoCB" v-model="paymentMethods[0].amount"></b-form-input>
-                    </b-form>
-                    <b-form inline class="mb-2">
-                      <b-form-checkbox v-model="depositoCB" name="deposito" class="mb-2 mr-sm-2 mb-sm-0">Depósito</b-form-checkbox>
-                      <b-form-input v-money="money" v-if="depositoCB" v-model="paymentMethods[1].amount"></b-form-input>
-                    </b-form>
-                    <b-form inline>
-                      <b-form-checkbox v-model="tarjetaCB" name="tarjeta" class="mb-2 mr-sm-2 mb-sm-0">Tarjeta de crédito</b-form-checkbox>
-                      <b-form-input v-money="money" v-if="tarjetaCB" v-model="paymentMethods[2].amount"></b-form-input>
-                    </b-form> -->
                   </div>
                   <div class="col-md-3 text-right">
                     Total a pagar: {{finalPrice}}$ <br>
@@ -457,7 +444,6 @@ export default {
       for (const key in payment) {
         if (payment.hasOwnProperty(key)) {
           const element = payment[key]
-          console.log(key, element.amount, typeof element.amount)
           amount += parseFloat(element.amount).toFixed(2)
         }
       }
@@ -555,7 +541,7 @@ export default {
       }
     },
     delItem (id) {
-      let prods = this.tempProd.filter(x => x.id !== id)
+      let prods = this.tempProd.filter(x => x.product_id !== id)
       this.tempProd = prods
     },
     handleOkExtra () {
@@ -564,7 +550,6 @@ export default {
           if (this.tempExtra.hasOwnProperty(key)) {
             const element = this.tempExtra[key]
             this.orderProducts[this.index].additionals.push(element)
-            console.log(this.orderProducts[this.index])
           }
         }
       }
