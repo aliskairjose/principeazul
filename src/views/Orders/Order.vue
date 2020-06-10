@@ -216,9 +216,9 @@
                     </div>
                   </div>
                   <div class="col-md-3 text-right">
-                    Total a pagar: {{finalPrice}}$ <br>
-                    Pagado:  {{ payOut }}$  <br>
-                    <label for="" :class="rest > 0 ? 'ok' : 'error' ">Restante: {{ rest }}$</label>
+                    <label for="" class="dark-gray">Total a pagar: {{finalPrice}}$</label> <br>
+                    <label for="" :class="payOut > finalPrice ? 'error' : 'dark-gray' ">Pagado:  {{ payOut }}$</label> <br>
+                    <label for="" :class="rest > 0 ? 'success' : 'error' ">Restante: {{ rest }}$</label>
                   </div>
                 </b-row>
               </tab-content>
@@ -690,10 +690,12 @@ export default {
 }
 
 .error {
-  color: red
+  color: var(--pa-danger)
 }
-.ok {
-  color: green
+.success {
+  color: var(--pa-success)
 }
-
+.dark-gray {
+  color: var(--iq-secondary-dark)
+}
 </style>
