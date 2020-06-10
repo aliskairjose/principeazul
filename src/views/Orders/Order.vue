@@ -218,8 +218,7 @@
                   <div class="col-md-3 text-right">
                     Total a pagar: {{finalPrice}}$ <br>
                     Pagado:  {{ payOut }}$  <br>
-                    Restante: {{ rest }}$
-
+                    <label for="" :class="rest > 0 ? 'ok' : 'error' ">Restante: {{ rest }}$</label>
                   </div>
                 </b-row>
               </tab-content>
@@ -657,8 +656,11 @@ export default {
       return true
     },
     validatePayment () {
+      if (this.rest < 0) {
+        return false
+      }
       this.order.paymentMethods = this.paymentMethods
-      return false
+      return true
     }
   }
 }
@@ -686,4 +688,12 @@ export default {
 #price {
   font-weight: 300;
 }
+
+.error {
+  color: red
+}
+.ok {
+  color: green
+}
+
 </style>
