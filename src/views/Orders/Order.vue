@@ -486,6 +486,7 @@ export default {
     },
     showModal (modal, index) {
       this.index = index
+      // this.updateAdditonals()
       this.$refs[modal].show()
     },
     showModalNote (index) {
@@ -530,6 +531,30 @@ export default {
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
+    handleOk () {
+      if (this.tempProd.length > 0) {
+        for (const key in this.tempProd) {
+          if (this.tempProd.hasOwnProperty(key)) {
+            const element = this.tempProd[key]
+            this.orderProducts.push(element)
+          }
+        }
+      }
+      this.tempProd.length = 0
+    },
+    handleCancel () {
+      if (this.orderProducts.length === 0) {
+        this.principals.map(r => { r.isAddItem = false })
+      }
+      if (this.tempProd.length > 0) {
+        this.principals.map(r => {
+          this.tempProd.map(x => {
+            if (r.id === x.id) { r.isAddItem = false }
+          })
+        })
+      }
+      this.tempProd.length = 0
+    },
     handleOkExtra () {
       if (this.tempExtra.length > 0) {
         for (const key in this.tempExtra) {
@@ -545,31 +570,28 @@ export default {
       this.resetAdditionals()
     },
     handleCancelExtra () {
-
-    },
-    handleOk () {
-      if (this.tempProd.length > 0) {
-        for (const key in this.tempProd) {
-          if (this.tempProd.hasOwnProperty(key)) {
-            const element = this.tempProd[key]
-            this.orderProducts.push(element)
-          }
-        }
+      if (this.orderProducts[this.index].additionals.length === 0) {
+        this.additionals.map(r => { r.isAddItem = false })
       }
-      this.tempProd.length = 0
+      this.tempExtra.length = 0
     },
-    handleCancel () {
-      if (this.orderProducts.length === 0) {
-        this.principals.map(r => { r.isAddItem = false })
-      } else {
-
+    updateAdditonals () {
+      if (this.orderProducts[this.index] !== undefined) {
+        console.log(this.orderProducts[this.index].additionals)
+        this.additionals.map(r => {
+          this.orderProducts[this.index].additionals.map(x => {
+            if (x.id === r.id) {
+              r.isAddItem = true
+            } else {
+              r.isAddItem = false
+            }
+          })
+        })
       }
     },
     resetAdditionals () {
       this.additionals.map(r => {
-        if (r.isAddItem) {
-          r.isAddItem = false
-        }
+        if (r.isAddItem) { r.isAddItem = false }
       })
     },
     validateOrder () {

@@ -74,7 +74,7 @@
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="addItem(items.item)"
-                        v-show="!items.item.isAddItem">
+                        v-if="!items.item.isAddItem">
                         <i class="ri-add-line  m-0"></i>
                       </b-button>
                       <b-button
