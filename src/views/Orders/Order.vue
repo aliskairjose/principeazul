@@ -580,7 +580,6 @@ export default {
       }
       this.order.products.length = 0
       this.validateMsg = ''
-      // this.order.products = this.orderProducts
       for (const key in this.orderProducts) {
         if (this.orderProducts.hasOwnProperty(key)) {
           const element = this.orderProducts[key]
@@ -596,7 +595,6 @@ export default {
           for (const key in element.additionals) {
             if (element.additionals.hasOwnProperty(key)) {
               const item = element.additionals[key]
-              console.log(item)
               this.additional.product_id = item.id
               this.additional.name = item.name
               this.additional.quantity = '1'
