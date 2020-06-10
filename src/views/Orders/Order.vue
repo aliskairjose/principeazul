@@ -157,10 +157,10 @@
                         <h5>{{ p.note }}</h5>
                         <p class="h6 mt-3">Extras</p>
                           <b-button
-                            v-for="item in p.additionals" :key="item.product_id"
+                            v-for="item in p.additionals" :key="item.id"
                             variant="outline-primary"
                             class="mb-3 mr-1 text-capitalize"
-                            @click="deleteExtra(index, item.product_id)">
+                            @click="deleteExtra(index, item.id)">
                               {{ item.name }}
                             <i class="ri-indeterminate-circle-line"></i>
                           </b-button>
@@ -174,7 +174,7 @@
                           v-b-tooltip.right="'Eliminar producto'"
                           size="lg"
                           variant="link"
-                          @click="deleteProduct(p.product_id)">
+                          @click="deleteProduct(p.id)">
                           <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
                         </b-button>
                         <br>
@@ -319,7 +319,7 @@ export default {
         const data = response.data
         data.map(r => {
           if (r.type === 'principal') {
-            r.extras = []
+            r.additionals = []
             r.note = ''
             this.principals.push(r)
           }
@@ -471,19 +471,18 @@ export default {
   methods: {
     addNote () {
       this.orderProducts[this.index].note = this.note
-      this.note = ''
     },
     deleteProduct (id) {
-      this.orderProducts = this.orderProducts.filter(x => x.product_id !== id)
+      this.orderProducts = this.orderProducts.filter(x => x.id !== id)
       this.principals.map(r => {
         if (r.id === id) {
           r.isAddItem = false
-          r.extras.length = 0
+          r.additionals.length = 0
         }
       })
     },
     deleteExtra (index, id) {
-      this.orderProducts[index].extras = this.orderProducts[index].extras.filter(x => x.id !== id)
+      this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
     },
     showModal (modal, index) {
       this.index = index
@@ -525,24 +524,13 @@ export default {
       this.product = {}
       this.additional = {}
       if (item.type === 'principal') {
-        this.product.product_id = item.id
-        this.product.name = item.name
-        this.product.note = item.note
-        this.product.image = item.image
-        this.product.price = item.price
-        this.product.additionals = []
-        this.tempProd.push(this.product)
+        this.tempProd.push(item)
       } else {
-        this.additional.product_id = item.id
-        this.additional.name = item.name
-        this.additional.quantity = '1'
-        this.additional.type = 'extra'
-        this.tempExtra.push(this.additional)
+        this.tempExtra.push(item)
       }
     },
     delItem (id) {
-      let prods = this.tempProd.filter(x => x.product_id !== id)
-      this.tempProd = prods
+      this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     handleOkExtra () {
       if (this.tempExtra.length > 0) {
@@ -552,6 +540,8 @@ export default {
             this.orderProducts[this.index].additionals.push(element)
           }
         }
+      } else {
+        this.orderProducts[this.index].additionals.length = 0
       }
       this.tempExtra.length = 0
     },
@@ -588,8 +578,36 @@ export default {
         this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
         return false
       }
+      this.order.products.length = 0
       this.validateMsg = ''
-      this.order.products = this.orderProducts
+      // this.order.products = this.orderProducts
+      for (const key in this.orderProducts) {
+        if (this.orderProducts.hasOwnProperty(key)) {
+          const element = this.orderProducts[key]
+          this.product.product_id = element.id
+          this.product.name = element.name
+          this.product.note = element.note
+          this.product.image = element.image
+          this.product.price = element.price
+          this.product.additionals = []
+
+          console.log(element.additionals)
+
+          for (const key in element.additionals) {
+            if (element.additionals.hasOwnProperty(key)) {
+              const item = element.additionals[key]
+              console.log(item)
+              this.additional.product_id = item.id
+              this.additional.name = item.name
+              this.additional.quantity = '1'
+              this.additional.type = 'extra'
+              this.product.additionals.push(this.additional)
+            }
+          }
+          this.order.products.push(this.product)
+        }
+      }
+      console.log(this.order)
       return true
     }
   }
