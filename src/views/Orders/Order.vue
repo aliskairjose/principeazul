@@ -583,6 +583,7 @@ export default {
       for (const key in this.orderProducts) {
         if (this.orderProducts.hasOwnProperty(key)) {
           const element = this.orderProducts[key]
+          this.product = {}
           this.product.product_id = element.id
           this.product.name = element.name
           this.product.note = element.note
@@ -590,11 +591,11 @@ export default {
           this.product.price = element.price
           this.product.additionals = []
 
-          console.log(element.additionals)
-
           for (const key in element.additionals) {
             if (element.additionals.hasOwnProperty(key)) {
               const item = element.additionals[key]
+              console.log('extra id: ', item.id)
+              this.additional = {}
               this.additional.product_id = item.id
               this.additional.name = item.name
               this.additional.quantity = '1'
@@ -605,7 +606,7 @@ export default {
           this.order.products.push(this.product)
         }
       }
-      console.log(this.order)
+      console.log('Orden: ', this.order)
       return true
     }
   }
