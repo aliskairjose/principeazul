@@ -521,8 +521,6 @@ export default {
       this.$refs['lista-clientes'].hide()
     },
     addItem (item) {
-      this.product = {}
-      this.additional = {}
       if (item.type === 'principal') {
         this.tempProd.push(item)
       } else {
@@ -544,6 +542,7 @@ export default {
         this.orderProducts[this.index].additionals.length = 0
       }
       this.tempExtra.length = 0
+      this.resetAdditionals()
     },
     handleCancelExtra () {
 
@@ -565,6 +564,13 @@ export default {
       } else {
 
       }
+    },
+    resetAdditionals () {
+      this.additionals.map(r => {
+        if (r.isAddItem) {
+          r.isAddItem = false
+        }
+      })
     },
     validateOrder () {
       return true
