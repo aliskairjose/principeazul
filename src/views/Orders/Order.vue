@@ -617,10 +617,9 @@ export default {
       })
     },
     validateOrder () {
-      return true
-      // return this.$refs.form.validate().then(success => {
-      //   return success
-      // })
+      return this.$refs.form.validate().then(success => {
+        return success
+      })
     },
     validateProducts () {
       // return true
@@ -658,6 +657,7 @@ export default {
       return true
     },
     validatePayment () {
+      this.order.paymentMethods = this.paymentMethods
       return false
     }
   }
