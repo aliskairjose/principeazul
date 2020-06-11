@@ -439,17 +439,17 @@ export default {
         {
           payment_method: 'Efectivo',
           amount: 0,
-          chekBox: ''
+          chekBox: false
         },
         {
           payment_method: 'Depósito',
           amount: 0,
-          chekBox: ''
+          chekBox: false
         },
         {
           payment_method: 'Tarjeta de crédito',
           amount: 0,
-          chekBox: ''
+          chekBox: false
         }
       ],
       orderProducts: [],
@@ -510,6 +510,7 @@ export default {
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
           const element = object[key]
+          if (!element.chekBox) { element.amount = 0 }
           amount += parseFloat(element.amount)
         }
       }
