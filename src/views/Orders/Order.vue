@@ -33,7 +33,8 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder">
+                :before-change="validateOrder"
+              >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -58,16 +59,18 @@
                         class="col-md-6"
                         label="Modo de entrega:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }">
+                        lot-scope="{ valid, errors }"
+                      >
                         <ValidationProvider
                           name="Modo de entrega"
                           rules="required"
-                          v-slot="{ errors }">
+                          v-slot="{ errors }"
+                        >
                           <b-form-select
                             v-model="order.mode"
                             :state="errors[0] ? false : (order.mode ? true : null)"
-                            :options="deliveryType">
-                          </b-form-select>
+                            :options="deliveryType"
+                          ></b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -77,11 +80,13 @@
                         class="col-md-6"
                         label="Tipo de compra:"
                         label-for="shopType"
-                        lot-scope="{ valid, errors }">
+                        lot-scope="{ valid, errors }"
+                      >
                         <ValidationProvider
                           name="Tipo de compra"
                           rules="required"
-                          v-slot="{ errors }">
+                          v-slot="{ errors }"
+                        >
                           <b-form-select
                             v-model="order.type"
                             :state="errors[0] ? false : (order.type ? true : null)"
@@ -106,8 +111,8 @@
                         <b-form-input
                           v-model="order.delivery_address"
                           type="text"
-                          placeholder="Dirección de entrega">
-                        </b-form-input>
+                          placeholder="Dirección de entrega"
+                        ></b-form-input>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Destinatario:" label-for="name">
                         <b-form-input
@@ -126,7 +131,8 @@
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="dedication">
+                        label-for="dedication"
+                      >
                         <b-form-input
                           v-model="order.dedication"
                           type="text"
@@ -140,53 +146,61 @@
               <!-- Tab Productos -->
               <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
                 <div v-for="(p, index) in orderProducts" :key="p.id">
-                    <b-row id="row" class="mb-2">
-                      <b-col class="col-md-3">
-                        <b-img
-                          v-viewer="{movable: false}"
-                          center
-                          rounded="circle"
-                          :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
-                          id="image"
-                          class
-                        ></b-img>
-                      </b-col>
-                      <b-col class="col-md-7">
-                        <h3 class="text-capitalize">{{ p.name }}</h3>
-                        <p class="h5" id="price">{{ p.price }} $</p>
-                        <h5>{{ p.note }}</h5>
-                        <p class="h6 mt-3">Extras</p>
-                          <b-button
-                            v-for="item in p.additionals" :key="item.id"
-                            variant="outline-primary"
-                            class="mb-3 mr-1 text-capitalize"
-                            @click="deleteExtra(index, item.id)">
-                              {{ item.name }}
-                            <i class="ri-indeterminate-circle-line"></i>
-                          </b-button>
-                        <b-button variant="outline-success" class="mb-3 mr-1" @click="showModal('extras', index)">
-                          Añadir
-                          <i class="ri-add-line"></i>
-                        </b-button>
-                      </b-col>
-                      <b-col class="col-md-2">
-                        <b-button
-                          v-b-tooltip.right="'Eliminar producto'"
-                          size="lg"
-                          variant="link"
-                          @click="deleteProduct(p.id)">
-                          <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
-                        </b-button>
-                        <br>
-                        <b-button
-                          v-b-tooltip.right="'Agregar notas'"
-                          size="lg"
-                          variant="utline-link"
-                          @click="showModalNote(index)">
-                          <i class="ri-file-4-fill ri-2x pr-0"></i>
-                        </b-button>
-                      </b-col>
-                    </b-row>
+                  <b-row id="row" class="mb-2">
+                    <b-col class="col-md-3">
+                      <b-img
+                        v-viewer="{movable: false}"
+                        center
+                        rounded="circle"
+                        :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
+                        id="image"
+                        class
+                      ></b-img>
+                    </b-col>
+                    <b-col class="col-md-7">
+                      <h3 class="text-capitalize">{{ p.name }}</h3>
+                      <p class="h5" id="price">{{ p.price }} $</p>
+                      <h5>{{ p.note }}</h5>
+                      <p class="h6 mt-3">Extras</p>
+                      <b-button
+                        v-for="item in p.additionals"
+                        :key="item.id"
+                        variant="outline-primary"
+                        class="mb-3 mr-1 text-capitalize"
+                        @click="deleteExtra(index, item.id)"
+                      >
+                        {{ item.name }}
+                        <i class="ri-indeterminate-circle-line"></i>
+                      </b-button>
+                      <b-button
+                        variant="outline-success"
+                        class="mb-3 mr-1"
+                        @click="showModal('extras', index)"
+                      >
+                        Añadir
+                        <i class="ri-add-line"></i>
+                      </b-button>
+                    </b-col>
+                    <b-col class="col-md-2">
+                      <b-button
+                        v-b-tooltip.right="'Eliminar producto'"
+                        size="lg"
+                        variant="link"
+                        @click="deleteProduct(p.id)"
+                      >
+                        <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
+                      </b-button>
+                      <br />
+                      <b-button
+                        v-b-tooltip.right="'Agregar notas'"
+                        size="lg"
+                        variant="utline-link"
+                        @click="showModalNote(index)"
+                      >
+                        <i class="ri-file-4-fill ri-2x pr-0"></i>
+                      </b-button>
+                    </b-col>
+                  </b-row>
                 </div>
                 <b-row align-h="center">
                   <b-col class="col-md-8 text-center">
@@ -208,17 +222,22 @@
                   <div class="col-md-6">
                     <div v-for="item in payments" :key="item.id">
                       <b-form inline class="mb-2">
-                        <b-form-checkbox v-model="item.chekBox" :name="item.payment_method" class="mb-2 mr-sm-2 mb-sm-0">
-                          {{item.payment_method}}
-                        </b-form-checkbox>
+                        <b-form-checkbox
+                          v-model="item.chekBox"
+                          :name="item.payment_method"
+                          class="mb-2 mr-sm-2 mb-sm-0"
+                        >{{item.payment_method}}</b-form-checkbox>
                         <b-form-input v-money="money" v-if="item.chekBox" v-model="item.amount"></b-form-input>
                       </b-form>
                     </div>
                   </div>
                   <div class="col-md-3 text-right">
-                    Total a pagar: <label for="" class="success">{{finalPrice}}$</label> <br>
-                    Pagado: <label for="" :class="payOut > finalPrice ? 'error' : 'success' "> {{ payOut }}$</label> <br>
-                    Restante: <label for="" :class="rest > 0 ? 'success' : 'error' ">{{ rest }}$</label>
+                    Total a pagar:
+                    <label for class="success">{{finalPrice}}$</label>
+                    <br />Pagado:
+                    <label for :class="payOut > finalPrice ? 'error' : 'success' ">{{ payOut }}$</label>
+                    <br />Restante:
+                    <label for :class="rest > 0 ? 'success' : 'error' ">{{ rest }}$</label>
                   </div>
                 </b-row>
               </tab-content>
@@ -227,18 +246,9 @@
         </iq-card>
       </b-col>
     </b-row>
-    <b-modal
-      ref="modal-note"
-      ok-only
-      id="modal-note"
-      title="Añadir nota"
-      @ok="addNote">
+    <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de regalo:" label-for="cliente">
-        <b-form-input
-          autocomplete="off"
-          v-model="note"
-          type="text">
-        </b-form-input>
+        <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input>
       </b-form-group>
     </b-modal>
     <b-modal
@@ -251,7 +261,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table
         :items="principals"
         :titems="pTitles"
@@ -269,7 +280,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra">
+      @cancel="handleCancelExtra"
+    >
       <modal-table
         :items="additionals"
         :titems="pTitles"
@@ -288,7 +300,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
     <!-- Final Order Modal -->
@@ -301,20 +314,19 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder">
+      @ok="finishOrder"
+    >
       <div class="p-3">
-        <p class=" h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
+        <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
-        <p class="h5 text-secondary">Alfredo Rodriguez - 65365905</p>
-        <!-- <p class="h5 text-secondary">{{ order.client_name }} - {{ order.client_phone }}</p> -->
-        <label for="" class="mb-4">Compra {{orderResponse.type}}</label>
+        <p class="h5 text-secondary">{{ order.client_name }} - {{ order.client_dni }}</p>
 
         <b-row class="mb-0" v-for="item in orderResponse.products" :key="item.id">
           <b-col class="col-md-10">
-            <label for="" class="text-dark">{{ item.name }}</label>
+            <label for class="text-dark text-capitalize">{{ item.name }}</label>
           </b-col>
           <b-col class="col-md-2">
-            <label for="" class="text-primary">1</label>
+            <label for class="text-primary">1</label>
           </b-col>
         </b-row>
 
@@ -322,19 +334,21 @@
 
         <b-row v-for="item in orderResponse.payments" :key="item.id">
           <b-col class="col-md-10">
-            <label for="" class="text-dark" v-if="item.amount > 0">{{ item.payment_method }}</label>
+            <label for class="text-dark" v-if="item.amount > 0">{{ item.payment_method }}</label>
           </b-col>
           <b-col class="col-md-2">
-            <label for="" class="text-primary" v-if="item.amount > 0">{{ item.amount }}$</label>
+            <label for class="text-primary" v-if="item.amount > 0">{{ item.amount }}$</label>
           </b-col>
         </b-row>
 
         <b-row class="mt-4"></b-row>
 
-        <label for="" class="text-primary">Formulario de datos</label>
-        <b-form-checkbox v-model="sendForm" name="sendForm" class="mb-2 mr-sm-2 mb-sm-0">
-          Enviar formulario por email
-        </b-form-checkbox>
+        <label for class="text-primary">Formulario de datos</label>
+        <b-form-checkbox
+          v-model="sendForm"
+          name="sendForm"
+          class="mb-2 mr-sm-2 mb-sm-0"
+        >Enviar formulario por email</b-form-checkbox>
       </div>
     </b-modal>
   </b-container>
@@ -377,7 +391,6 @@ export default {
           }
         })
       })
-      .catch(error => { console.log(error) })
       .finally(() => { this.loading = false })
   },
   data () {
@@ -397,7 +410,7 @@ export default {
       order: {
         client_id: '',
         client_name: '',
-        client_phone: '',
+        client_dni: '',
         delivery_date: '',
         type: null,
         mode: null,
@@ -529,7 +542,7 @@ export default {
     addClient (item) {
       this.client = item
       this.order.client_id = item.id
-      this.order.client_phone = item.phone
+      this.order.client_dni = item.dni
       this.order.client_name = item.name
       this.$refs['lista-clientes'].hide()
     },
@@ -685,8 +698,7 @@ export default {
       })
     },
     validateProducts () {
-      return true
-      /*  if (this.orderProducts.length === 0) {
+      if (this.orderProducts.length === 0) {
         this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
         return false
       }
@@ -718,7 +730,7 @@ export default {
           this.order.products.push(this.product)
         }
       }
-      return true */
+      return true
     },
     validatePayment () {
       if (this.rest < 0) {
@@ -755,9 +767,10 @@ export default {
 }
 
 .error {
-  color: var(--pa-danger)
+  color: var(--pa-danger);
 }
+
 .success {
-  color: var(--pa-light-blue)
+  color: var(--pa-light-blue);
 }
 </style>
