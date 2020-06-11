@@ -206,7 +206,7 @@
               <tab-content title="Pago" icon="ti-credit-card" :before-change="validatePayment">
                 <b-row align-h="center" id="row">
                   <div class="col-md-6">
-                    <div v-for="item in paymentMethods" :key="item.id">
+                    <div v-for="item in payments" :key="item.id">
                       <b-form inline class="mb-2">
                         <b-form-checkbox v-model="item.chekBox" :name="item.payment_method" class="mb-2 mr-sm-2 mb-sm-0">
                           {{item.payment_method}}
@@ -291,6 +291,52 @@
       @cancel="handleCancel">
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
+    <!-- Final Order Modal -->
+    <b-modal
+      ok-only
+      ref="modal-order"
+      size="md"
+      id="final-order"
+      ok-title="Finalizar orden"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-header-close
+      @ok="finishOrder">
+      <div class="p-3">
+        <p class=" h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
+
+        <p class="h5 text-secondary">Alfredo Rodriguez - 65365905</p>
+        <!-- <p class="h5 text-secondary">{{ order.client_name }} - {{ order.client_phone }}</p> -->
+        <label for="" class="mb-4">Compra {{orderResponse.type}}</label>
+
+        <b-row class="mb-0" v-for="item in orderResponse.products" :key="item.id">
+          <b-col class="col-md-10">
+            <label for="" class="text-dark">{{ item.name }}</label>
+          </b-col>
+          <b-col class="col-md-2">
+            <label for="" class="text-primary">1</label>
+          </b-col>
+        </b-row>
+
+        <b-row class="mt-4"></b-row>
+
+        <b-row v-for="item in orderResponse.payments" :key="item.id">
+          <b-col class="col-md-10">
+            <label for="" class="text-dark" v-if="item.amount > 0">{{ item.payment_method }}</label>
+          </b-col>
+          <b-col class="col-md-2">
+            <label for="" class="text-primary" v-if="item.amount > 0">{{ item.amount }}$</label>
+          </b-col>
+        </b-row>
+
+        <b-row class="mt-4"></b-row>
+
+        <label for="" class="text-primary">Formulario de datos</label>
+        <b-form-checkbox v-model="sendForm" name="sendForm" class="mb-2 mr-sm-2 mb-sm-0">
+          Enviar formulario por email
+        </b-form-checkbox>
+      </div>
+    </b-modal>
   </b-container>
 </template>
 <script>
@@ -299,8 +345,10 @@ import { FormWizard, TabContent } from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import clientService from '@/services/client'
 import productService from '@/services/product'
+import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
 import { VMoney } from 'v-money'
+import OrderResponse from '../../FackApi/json/OrderResponse'
 
 export default {
   name: 'Order',
@@ -334,6 +382,8 @@ export default {
   },
   data () {
     return {
+      sendForm: false,
+      orderResponse: OrderResponse,
       money: {},
       note: '',
       index: null,
@@ -346,6 +396,8 @@ export default {
       client: { },
       order: {
         client_id: '',
+        client_name: '',
+        client_phone: '',
         delivery_date: '',
         type: null,
         mode: null,
@@ -354,11 +406,11 @@ export default {
         dedication: '',
         signature: '',
         products: [],
-        paymentMethods: []
+        payments: []
       },
       product: {
         product_id: '',
-        quantity: 0,
+        quantity: 1,
         note: '',
         price: null,
         image: '',
@@ -370,7 +422,7 @@ export default {
         product_id: '',
         type: ''
       },
-      paymentMethods: [
+      payments: [
         {
           payment_method: 'Efectivo',
           amount: 0,
@@ -440,7 +492,7 @@ export default {
       return price
     },
     payOut () {
-      const object = this.paymentMethods
+      const object = this.payments
       let amount = 0
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
@@ -474,8 +526,25 @@ export default {
     }
   },
   methods: {
+    addClient (item) {
+      this.client = item
+      this.order.client_id = item.id
+      this.order.client_phone = item.phone
+      this.order.client_name = item.name
+      this.$refs['lista-clientes'].hide()
+    },
+    addItem (item) {
+      if (item.type === 'principal') {
+        this.tempProd.push(item)
+      } else {
+        this.tempExtra.push(item)
+      }
+    },
     addNote () {
       this.orderProducts[this.index].note = this.note
+    },
+    delItem (id) {
+      this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     deleteProduct (id) {
       this.orderProducts = this.orderProducts.filter(x => x.id !== id)
@@ -488,21 +557,6 @@ export default {
     },
     deleteExtra (index, id) {
       this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
-    },
-    showModal (modal, index) {
-      this.index = index
-      this.updateAdditonals()
-      this.$refs[modal].show()
-    },
-    showModalNote (index) {
-      this.index = index
-      this.$refs['modal-note'].show()
-    },
-    onComplete () {
-      alert('Yay. Done!')
-    },
-    tabChange (prevIndex, nextIndex) {
-      this.tabIndex = nextIndex
     },
     getClient () {
       if (this.clients.length === 0) {
@@ -520,21 +574,6 @@ export default {
         })
         this.$refs['lista-clientes'].show()
       }
-    },
-    addClient (item) {
-      this.client = item
-      this.order.client_id = item.id
-      this.$refs['lista-clientes'].hide()
-    },
-    addItem (item) {
-      if (item.type === 'principal') {
-        this.tempProd.push(item)
-      } else {
-        this.tempExtra.push(item)
-      }
-    },
-    delItem (id) {
-      this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     handleOk () {
       if (this.tempProd.length > 0) {
@@ -592,14 +631,41 @@ export default {
       }
       this.tempExtra.length = 0
     },
+    resetAdditionals () {
+      this.additionals.map(r => {
+        if (r.isAddItem) { r.isAddItem = false }
+      })
+    },
+    showModalNote (index) {
+      this.index = index
+      this.$refs['modal-note'].show()
+    },
+    onComplete () {
+      this.loading = true
+      orderService.create(this.order)
+        .then(response => {
+          this.orderResponse = response.data
+          this.$refs['modal-order'].show()
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.loading = false })
+    },
+    showModal (modal, index) {
+      this.index = index
+      this.updateAdditonals()
+      this.$refs[modal].show()
+    },
+    tabChange (prevIndex, nextIndex) {
+      this.tabIndex = nextIndex
+    },
     updateAdditonals () {
       if (this.orderProducts[this.index] !== undefined) {
-        let object = []
-        object = this.orderProducts[this.index].additionals
+        let extras = this.additionals
+        let object = this.orderProducts[this.index].additionals
         for (const key in object) {
           if (object.hasOwnProperty(key)) {
             const element = object[key]
-            this.additionals.map(r => {
+            extras.map(r => {
               if (r.id === element.id) {
                 r.isAddItem = true
               } else {
@@ -608,12 +674,10 @@ export default {
             })
           }
         }
+        this.additionals = extras.slice()
+        extras.length = 0
+        object.length = 0
       }
-    },
-    resetAdditionals () {
-      this.additionals.map(r => {
-        if (r.isAddItem) { r.isAddItem = false }
-      })
     },
     validateOrder () {
       return this.$refs.form.validate().then(success => {
@@ -621,8 +685,8 @@ export default {
       })
     },
     validateProducts () {
-      // return true
-      if (this.orderProducts.length === 0) {
+      return true
+      /*  if (this.orderProducts.length === 0) {
         this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
         return false
       }
@@ -637,6 +701,7 @@ export default {
           this.product.note = element.note
           this.product.image = element.image
           this.product.price = element.price
+          this.product.quantity = 1
           this.product.additionals = []
 
           for (const key in element.additionals) {
@@ -653,13 +718,13 @@ export default {
           this.order.products.push(this.product)
         }
       }
-      return true
+      return true */
     },
     validatePayment () {
       if (this.rest < 0) {
         return false
       }
-      this.order.paymentMethods = this.paymentMethods
+      this.order.payments = this.payments
       return true
     }
   }

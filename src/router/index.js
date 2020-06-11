@@ -211,8 +211,6 @@ router.beforeEach((to, from, next) => {
       return next('/auth/sign-in1')
     } else if (to.name === 'dashboard' || to.name === 'mini.dashboard') {
       return next('/home')
-    } else if (to.name === 'dark.dashboard' || to.name === 'dark.mini.dashboard') {
-      return next('/home')
     }
   }
   next()

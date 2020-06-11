@@ -249,7 +249,6 @@ export default {
     handleCancel () {
       this.product.additionals.length = 0
       this.subs = 0
-      console.log(this.product.additionals)
     },
     deleteSub (id) {
       let additionals = this.product.additionals.filter(x => x.additional_product_id !== id)
