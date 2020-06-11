@@ -2,6 +2,7 @@ import axios from '@/services/index'
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
+  console.log(token)
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   }
