@@ -20,6 +20,7 @@ pipelines:
                 - NODE_OPTIONS=--max_old_space_size=32768
                 - npm i -g --unsafe-perm --no-interactive increase-memory-limit @vue/cli
                 - npm i
+                - npm i --save vue-class-component
                 - npm run build
               artifacts:
-                - apks/**
+                - dist/**
