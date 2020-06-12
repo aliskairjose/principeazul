@@ -11,27 +11,26 @@ options:
 pipelines:
   branches:
     master:
-      - parallel:
-          - step:
-              name: Build
-              caches:
-                - node
-              script:
-                - NODE_OPTIONS=--max_old_space_size=32768
-                - npm i -g --unsafe-perm --no-interactive increase-memory-limit @vue/cli
-                - npm i
-                - npm i --save vue-class-component
-                - npm run build
-                - ls
-              artifacts:
-                - dist/**
-          - step:
-              name: Build
-              deployment: production
-              script:
-                - pipe: atlassian/scp-deploy:0.3.3
-                  variables:
-                    USER: $USER
-                    SERVER: $SERVER
-                    REMOTE_PATH: '/opt'
-                    LOCAL_PATH: 'build/*'
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - NODE_OPTIONS=--max_old_space_size=32768
+            - npm i -g --unsafe-perm --no-interactive increase-memory-limit @vue/cli
+            - npm i
+            - npm i --save vue-class-component
+            - npm run build
+            - ls
+          artifacts:
+            - dist/**
+      - step:
+          name: Build
+          deployment: production
+          script:
+            - pipe: atlassian/scp-deploy:0.3.3
+              variables:
+                USER: $USER
+                SERVER: $SERVER
+                REMOTE_PATH: '/opt'
+                LOCAL_PATH: 'build/*'
