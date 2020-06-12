@@ -33,4 +33,4 @@ pipelines:
                 USER: $USER
                 SERVER: $SERVER
                 REMOTE_PATH: '/opt'
-                LOCAL_PATH: 'build/*'
+                LOCAL_PATH: 'dist/*'
