@@ -1,0 +1,25 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:latest
+
+options:
+  max-time: 60
+
+pipelines:
+  branches:
+    master:
+      - parallel:
+          - step:
+              name: Build
+              caches:
+                - node
+              script:
+                - NODE_OPTIONS=--max_old_space_size=32768
+                - npm i -g --unsafe-perm --no-interactive increase-memory-limit @vue/cli
+                - npm i
+                - npm run build
+              artifacts:
+                - apks/**
