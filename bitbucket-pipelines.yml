@@ -21,7 +21,6 @@ pipelines:
             - npm i
             - npm i --save vue-class-component
             - npm run build
-            - ls
           artifacts:
             - dist/**
       - step:
