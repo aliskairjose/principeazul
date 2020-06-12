@@ -32,5 +32,5 @@ pipelines:
               variables:
                 USER: $USER
                 SERVER: $SERVER
-                REMOTE_PATH: '/opt'
+                REMOTE_PATH: $PATH
                 LOCAL_PATH: 'dist/*'
