@@ -2,7 +2,12 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
-        <b-alert :show="isShow" variant="success" class="bg-white" id="alert" mt-2>
+        <b-alert
+          :show="isShow"
+          variant="success"
+          class="bg-white"
+          id="alert"
+          mt-2>
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
@@ -13,7 +18,7 @@
         </b-alert>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Lista de clientes</h4>
+            <h4 class="card-title mt-3">Lista de clientes</h4>
           </template>
           <template v-slot:body>
             <div class="text-center is-removing" v-show="isRemoving">
@@ -70,21 +75,22 @@
                     :current-page="currentPage"
                     :per-page="perPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(date)="clients">
+                      {{ clients.item.date }}
+                    </template>
                     <template v-slot:cell(action)="clients">
                       <b-button
+                        v-b-tooltip.top="'Editar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
-                        @click="edit(clients.item)"
-                        v-if="!clients.item.editable">
+                        @click="edit(clients.item)">
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
                       <b-button
-                        variant=" iq-bg-success mr-1 mb-1"
+                        v-b-tooltip.top="'Eliminar'"
+                        variant=" iq-bg-danger"
                         size="sm"
-                        @click="submit(clients.item)"
-                        v-else
-                      >Ok</b-button>
-                      <b-button variant=" iq-bg-danger" size="sm" @click="remove(clients.item)">
+                        @click="remove(clients.item)">
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
                     </template>
@@ -148,12 +154,12 @@ export default {
       totalRows: 1,
       currentPage: 1,
       titles: [
-        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Email', key: 'email', class: 'text-left', sortable: true },
-        { label: 'Telefono', key: 'phone', class: 'text-left', sortable: true },
-        { label: 'Ordenes', key: 'orders', class: 'text-left', sortable: true },
-        { label: 'Fecha creacion', key: 'created_at', class: 'text-left', sortable: true },
-        { label: 'Action', key: 'action', class: 'text-center' }
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Email', key: 'email', class: 'text-center', sortable: true },
+        { label: 'Teléfono', key: 'phone', class: 'text-center', sortable: true },
+        { label: 'Ordenes', key: 'orders', class: 'text-center', sortable: true },
+        { label: 'Fecha creación', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       clients: []
     }

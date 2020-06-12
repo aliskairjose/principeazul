@@ -6,7 +6,7 @@
           <b-col lg="12">
             <iq-card>
               <template v-slot:headerTitle>
-                <h4 class="card-title">{{title}}</h4>
+                <h4 class="card-title mt-3">{{title}}</h4>
               </template>
               <template v-slot:body>
                 <div class="new-user-info">
@@ -90,7 +90,7 @@
                         </b-button>
                     </b-form-group>
                     <b-form-group class="col-md-2" label-for="type" v-show="selectedType === 'principal'">
-                      <h6 class="mb-3"> Agregados <b-badge variant="info">{{product.additionals.length}}</b-badge></h6>
+                      <h6 class="mb-3"> Agregados <b-badge variant="info">{{subs}}</b-badge></h6>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
                       <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'" v-on:vdropzone-success="fileAdded">
@@ -102,13 +102,22 @@
                     </b-form-group>
                   </b-row>
                   <hr />
-                  <b-modal size="lg" id="modal-1" title="Lista de subproductos">
-                    <SubProductTable
+                  <b-modal
+                    size="lg"
+                    id="modal-1"
+                    title="Lista de subproductos"
+                    cancel-title="Cancelar"
+                    no-close-on-esc
+                    no-close-on-backdrop
+                    hide-header-close
+                    @ok="handleOk"
+                    @cancel="handleCancel">
+                    <modal-table
                       :items="subProducts"
                       :titems="subProductTitle"
                       v-on:add-item="addSub"
                       v-on:delete-item="deleteSub">
-                    </SubProductTable>
+                    </modal-table>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
@@ -125,16 +134,15 @@
 import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-import SubProductTable from '@/views/Product/SubProductTable'
 import productService from '@/services/product'
 import { VMoney } from 'v-money'
+import ModalTable from '@/components/Modals/ModalTable'
 
 export default {
   name: 'ProductEdit',
-  subs: [],
   components: {
     vueDropzone: vue2Dropzone,
-    SubProductTable
+    ModalTable
   },
   directives: { money: VMoney },
   created () {
@@ -173,6 +181,7 @@ export default {
       loading: false,
       selectedType: null,
       selectedCategory: null,
+      subs: 0,
       money: {},
       product: {
         name: '',
@@ -183,7 +192,6 @@ export default {
         image: '',
         additionals: []
       },
-      subs: [],
       types: [
         { value: null, text: 'Seleccione un tipo' },
         { value: 'principal', text: 'Principal' },
@@ -195,15 +203,15 @@ export default {
         { value: 2, text: 'Categoria 2' }
       ],
       subProductTitle: [
-        { label: 'Id', key: 'id', class: 'text-left', sortable: true },
-        { label: 'Foto', key: 'image', class: 'text-left', sortable: true },
-        { label: 'Nombre', key: 'name', class: 'text-left', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-left', sortable: true },
+        { label: 'Id', key: 'id', class: 'text-center', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       subProducts: [],
       dropzoneOptions: {
-        maxFilesize: 1,
+        maxFilesize: 10,
         clickable: true,
         thumbnailWidth: 150,
         addRemoveLinks: true,
@@ -229,11 +237,23 @@ export default {
     },
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
-      this.product.additionals.push(item)
+      let subItem = {}
+      subItem.additional_product_id = item.id
+      subItem.quantity = item.quantity
+      this.product.additionals.push(subItem)
+      this.subs = this.product.additionals.length
+    },
+    handleOk () {
+      console.log('handleOk')
+    },
+    handleCancel () {
+      this.product.additionals.length = 0
+      this.subs = 0
     },
     deleteSub (id) {
       let additionals = this.product.additionals.filter(x => x.additional_product_id !== id)
       this.product.additionals = additionals
+      this.subs = this.product.additionals.length
     },
     fileAdded (file) {
       this.product.image = file.dataURL
@@ -248,11 +268,7 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => {
-            if (error.response.status === 401) {
-              this.$router.push({ name: 'auth1.sign-in1' })
-            }
-          })
+          .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
@@ -262,11 +278,7 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => {
-            if (error.response.status === 401) {
-              this.$router.push({ name: 'auth1.sign-in1' })
-            }
-          })
+          .catch((error) => { console.log(error) })
           .finally(() => { this.loading = false })
       }
     }

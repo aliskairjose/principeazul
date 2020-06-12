@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 /* Layouts */
 import Layout1 from '../layouts/Layout1'
 import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
+import Default from '../layouts/BlankLayout'
 
 /* Dashboards View */
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import ClientEdit from '@/views/Clients/ClientEdit.vue'
-import ProductList from '@/views/Product/ProductList'
-import ProductEdit from '@/views/Product/ProductEdit'
+import ProductList from '@/views/Product/ProductList.vue'
+import ProductEdit from '@/views/Product/ProductEdit.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
 
@@ -19,6 +20,11 @@ import SignUp1 from '../views/AuthPages/Default/SignUp1'
 import RecoverPassword1 from '../views/AuthPages/Default/RecoverPassword1'
 import LockScreen1 from '../views/AuthPages/Default/LockScreen1'
 import ConfirmMail1 from '../views/AuthPages/Default/ConfirmMail1'
+
+import ErrorPage from '@/views/Pages/ErrorPage'
+import ComingSoon from '@/views/Pages/ComingSoon'
+import Maintenance from '@/views/Pages/Maintenance'
+
 Vue.use(VueRouter)
 
 // Set View in this function
@@ -28,10 +34,13 @@ const paRoutes = (prop, mode = false) => [
     name: prop + '.home',
     meta: { dark: mode, auth: true, name: 'Dashborad' },
     component: Dashboard1
-  },
+  }
+]
+
+const orderRoutes = (prop, mode = false) => [
   {
     path: 'orders',
-    name: prop + '.order',
+    name: prop + '.index',
     meta: { dark: mode, auth: true, name: 'Ordenes' },
     component: Order
   }
@@ -112,8 +121,32 @@ const authChildRoutes = (prop, mode = false) => [
   }
 ]
 
+const pagesChildRoutes = (prop, mode = false) => [
+  {
+    path: 'error/:code',
+    name: prop + '.error',
+    meta: { dark: mode, auth: true },
+    component: ErrorPage
+  },
+  {
+    path: 'coming-soon',
+    name: prop + '.coming-soon',
+    meta: { dark: mode, auth: true },
+    component: ComingSoon
+  },
+  {
+    path: 'maintenance',
+    name: prop + '.maintenance',
+    meta: { dark: mode, auth: true },
+    component: Maintenance
+  }
+]
+
 // Set Layout in this route
 const routes = [
+  {
+    path: '*', redirect: '/'
+  },
   {
     path: '/auth',
     name: 'auth1',
@@ -130,10 +163,10 @@ const routes = [
   },
   {
     path: '/',
-    name: 'order',
+    name: 'orders',
     component: Layout1,
     meta: { auth: true },
-    children: paRoutes('orders')
+    children: orderRoutes('orders')
   },
   {
     path: '/',
@@ -148,6 +181,13 @@ const routes = [
     component: Layout1,
     meta: { auth: true },
     children: productRoutes('product')
+  },
+  {
+    path: '/pages',
+    name: 'pages',
+    component: Default,
+    meta: { auth: true },
+    children: pagesChildRoutes('default')
   },
   {
     path: '/callback',
@@ -170,8 +210,6 @@ router.beforeEach((to, from, next) => {
     if (authRequired && loggedIn === null) {
       return next('/auth/sign-in1')
     } else if (to.name === 'dashboard' || to.name === 'mini.dashboard') {
-      return next('/home')
-    } else if (to.name === 'dark.dashboard' || to.name === 'dark.mini.dashboard') {
       return next('/home')
     }
   }
