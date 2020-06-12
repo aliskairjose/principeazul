@@ -39,28 +39,34 @@ const paRoutes = (prop, mode = false) => [
 
 const orderRoutes = (prop, mode = false) => [
   {
-    path: 'orders',
+    path: '',
     name: prop + '.index',
     meta: { dark: mode, auth: true, name: 'Ordenes' },
+    component: Order
+  },
+  {
+    path: 'list',
+    name: prop + '.list',
+    meta: { dark: mode, auth: true, name: 'Lista de ordenes' },
     component: Order
   }
 ]
 
 const clientRoutes = (prop, mode = false) => [
   {
-    path: 'client/list',
+    path: 'list',
     name: prop + '.list',
     meta: { dark: mode, auth: true, name: 'Clientes' },
     component: ClientList
   },
   {
-    path: 'client/add/',
+    path: 'add/',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar cliente' },
     component: ClientEdit
   },
   {
-    path: 'client/edit/:id',
+    path: 'edit/:id',
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar cliente' },
     component: ClientEdit
@@ -69,19 +75,19 @@ const clientRoutes = (prop, mode = false) => [
 
 const productRoutes = (prop, mode = false) => [
   {
-    path: 'product/list',
+    path: 'list',
     name: prop + '.list',
     meta: { dark: mode, auth: true, name: 'Inventario' },
     component: ProductList
   },
   {
-    path: 'product/add',
+    path: 'add',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar producto' },
     component: ProductEdit
   },
   {
-    path: 'product/edit/:id',
+    path: 'edit/:id',
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar producto' },
     component: ProductEdit
@@ -162,21 +168,21 @@ const routes = [
     children: paRoutes('dashboard')
   },
   {
-    path: '/',
+    path: '/orders',
     name: 'orders',
     component: Layout1,
     meta: { auth: true },
     children: orderRoutes('orders')
   },
   {
-    path: '/',
+    path: '/clients',
     name: 'clients',
     component: Layout1,
     meta: { auth: true },
     children: clientRoutes('client')
   },
   {
-    path: '/',
+    path: '/products',
     name: 'product',
     component: Layout1,
     meta: { auth: true },
