@@ -14,7 +14,6 @@ pipelines:
       - step:
           name: Build
           script:
-            - npm i -g --unsafe-perm --no-interactive increase-memory-limit @vue/cli
             - npm i
             - npm i --save vue-class-component
             - npm run build
