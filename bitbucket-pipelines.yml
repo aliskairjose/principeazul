@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: vuejs/ci:latest
+image: node:10.21.0-jessie
 
 options:
   max-time: 60
