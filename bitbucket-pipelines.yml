@@ -27,7 +27,7 @@ pipelines:
           script:
             - pipe: atlassian/scp-deploy:0.3.3
               variables:
-                USER: $USER
-                SERVER: $SERVER
+                USER: $USER_APP
+                SERVER: $SERVER_APP
                 REMOTE_PATH: $PATH_APP
                 LOCAL_PATH: 'dist/*'
