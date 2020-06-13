@@ -362,7 +362,6 @@ import productService from '@/services/product'
 import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
 import { VMoney } from 'v-money'
-import OrderResponse from '../../FackApi/json/OrderResponse'
 
 export default {
   name: 'Order',
@@ -415,7 +414,6 @@ export default {
     return {
       sendForm: false,
       title: '',
-      orderResponse: OrderResponse,
       money: {},
       note: '',
       index: null,
