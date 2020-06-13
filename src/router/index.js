@@ -13,6 +13,7 @@ import ProductList from '@/views/Product/ProductList.vue'
 import ProductEdit from '@/views/Product/ProductEdit.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
+import OrderList from '@/views/Orders/OrderList.vue'
 
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
@@ -48,6 +49,12 @@ const orderRoutes = (prop, mode = false) => [
     path: 'list',
     name: prop + '.list',
     meta: { dark: mode, auth: true, name: 'Lista de ordenes' },
+    component: OrderList
+  },
+  {
+    path: 'edit/:id',
+    name: prop + '.edit',
+    meta: { dark: mode, auth: true, name: 'Editar orden' },
     component: Order
   }
 ]

@@ -2,13 +2,10 @@ import axios from '@/services/index'
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
-  console.log(token)
-  setTimeout(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    }
-  }, 200)
-  console.log(config)
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  }
+  console.log(config.headers.common)
   return config
 }, (err) => { return Promise.reject(err) })
 
@@ -24,9 +21,9 @@ axios.interceptors.response.use(
     console.log(error)
     if ([401, 403].indexOf(error.response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-      localStorage.removeItem('user')
-      localStorage.removeItem('access_token')
-      this.$router.push({ name: 'auth1.sign-in1' })
+      // localStorage.removeItem('user')
+      // localStorage.removeItem('access_token')
+      // this.$router.push({ name: 'auth1.sign-in1' })
     }
     if ([404].indexOf(error.response.status) !== -1) {
       // this.$router.push({ name: 'default.error/:code'})

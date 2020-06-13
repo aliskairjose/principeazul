@@ -4,7 +4,7 @@
       <b-col>
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title mt-3">Ordenes</h4>
+            <h4 class="card-title mt-3">{{title}}</h4>
           </template>
           <template v-slot:body>
             <b-row>
@@ -314,7 +314,6 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder"
     >
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
@@ -392,10 +391,25 @@ export default {
         })
       })
       .finally(() => { this.loading = false })
+
+    if (this.getStatus() === 'add') {
+      this.title = 'Crear Orden'
+    }
+    if (this.getStatus() === 'edit') {
+      this.loading = true
+      this.title = 'Editar Orden'
+      orderService.getById(this.$route.params.id)
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch((error) => { console.log(error) })
+        .finally(() => { this.loading = false })
+    }
   },
   data () {
     return {
       sendForm: false,
+      title: '',
       orderResponse: OrderResponse,
       money: {},
       note: '',
@@ -739,6 +753,11 @@ export default {
       }
       this.order.payments = this.payments
       return true
+    },
+    getStatus () {
+      const id = this.$route.params.id
+      if (id) return 'edit'
+      if (!id) return 'add'
     }
   }
 }

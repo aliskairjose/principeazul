@@ -55,7 +55,7 @@
                 </b-form-group>
               </b-col>
               <template v-if="clients.length === 0">
-                <b-col>
+                <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
                     <div class="iq-alert-text">
                       <b>No hay clientes para mostrar.</b> Por favor agrege un cliente para comenzar!

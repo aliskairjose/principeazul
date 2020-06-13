@@ -14,14 +14,13 @@
   {
     "title": "Ordenes / Compras",
     "name": "Ordenes / Compras",
-    "is_heading": false,
     "is_active": false,
     "link": {
       "name": "orders.index"
     },
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-question-answer-line"
+    "icon": "ri-file-list-line"
   },
   {
     "title": "Clientes",
@@ -58,5 +57,5 @@
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-file-line"
-  }
+  }  
 ]
