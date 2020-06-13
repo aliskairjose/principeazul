@@ -400,7 +400,11 @@ export default {
       this.title = 'Editar Orden'
       orderService.getById(this.$route.params.id)
         .then(response => {
-          console.log(response.data)
+          const data = response.data
+          this.order = data
+          this.payments = data.payments
+          this.client = data.client
+          this.orderProducts = data.products
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
@@ -717,32 +721,36 @@ export default {
         this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
         return false
       }
-      this.order.products.length = 0
-      this.validateMsg = ''
-      for (const key in this.orderProducts) {
-        if (this.orderProducts.hasOwnProperty(key)) {
-          const element = this.orderProducts[key]
-          this.product = {}
-          this.product.product_id = element.id
-          this.product.name = element.name
-          this.product.note = element.note
-          this.product.image = element.image
-          this.product.price = element.price
-          this.product.quantity = 1
-          this.product.additionals = []
+      if (this.getStatus() === 'add') {
+        this.order.products.length = 0
 
-          for (const key in element.additionals) {
-            if (element.additionals.hasOwnProperty(key)) {
-              const item = element.additionals[key]
-              this.additional = {}
-              this.additional.product_id = item.id
-              this.additional.name = item.name
-              this.additional.quantity = '1'
-              this.additional.type = 'extra'
-              this.product.additionals.push(this.additional)
+        this.validateMsg = ''
+
+        for (const key in this.orderProducts) {
+          if (this.orderProducts.hasOwnProperty(key)) {
+            const element = this.orderProducts[key]
+            this.product = {}
+            this.product.product_id = element.id
+            this.product.name = element.name
+            this.product.note = element.note
+            this.product.image = element.image
+            this.product.price = element.price
+            this.product.quantity = 1
+            this.product.additionals = []
+
+            for (const key in element.additionals) {
+              if (element.additionals.hasOwnProperty(key)) {
+                const item = element.additionals[key]
+                this.additional = {}
+                this.additional.product_id = item.id
+                this.additional.name = item.name
+                this.additional.quantity = '1'
+                this.additional.type = 'extra'
+                this.product.additionals.push(this.additional)
+              }
             }
+            this.order.products.push(this.product)
           }
-          this.order.products.push(this.product)
         }
       }
       return true

@@ -4,10 +4,15 @@ axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    // axios.defaults.headers.common.Authorization = `Bearer ${token}`
+    console.log(token)
+    console.log(config.headers.common)
   }
-  console.log(config.headers.common)
   return config
-}, (err) => { return Promise.reject(err) })
+}, (err) => {
+  console.log(err)
+  return Promise.reject(err)
+})
 
 axios.interceptors.response.use(
   (response) => {
@@ -18,7 +23,7 @@ axios.interceptors.response.use(
     }
   },
   (error) => {
-    console.log(error)
+    // console.log(error)
     if ([401, 403].indexOf(error.response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
       // localStorage.removeItem('user')

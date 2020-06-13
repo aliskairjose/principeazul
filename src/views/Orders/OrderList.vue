@@ -65,24 +65,8 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
-                    <template v-slot:cell(name)="orders">
-                      <label for="" class="text-capitalize">{{orders.item.name}}</label>
-                    </template>
-                    <template v-slot:cell(type)="orders">
-                      {{orders.item.type === 'principal' ? 'Principal' : 'Adicional'}}
-                    </template>
-                    <template v-slot:cell(price)="orders">
-                      {{orders.item.price}} $
-                    </template>
-                    <template v-slot:cell(image)="orders">
-                      <b-img
-                        v-viewer="{movable: false}"
-                        center
-                        rounded="circle"
-                        :src="orders.item.image ? orders.item.image : require(`@/assets/images/no-image.png`)"
-                        id="image"
-                        class="">
-                      </b-img>
+                    <template v-slot:cell(status)="orders">
+                      <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
                     </template>
                     <template v-slot:cell(action)="orders">
                       <b-button
@@ -155,7 +139,7 @@ export default {
       .then(response => {
         this.orders = response.data
       })
-      .catch(error => { console.log(error) })
+      .catch(() => { })
       .finally(() => { this.loading = false })
   },
   mounted () {
@@ -178,7 +162,8 @@ export default {
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
         { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
-        { label: 'Cliente', key: 'client_id', class: 'text-center', sortable: true },
+        { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
+        { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
