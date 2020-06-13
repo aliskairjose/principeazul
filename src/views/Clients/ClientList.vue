@@ -75,8 +75,8 @@
                     :current-page="currentPage"
                     :per-page="perPage"
                     @filtered="onFiltered">
-                    <template v-slot:cell(date)="clients">
-                      {{ clients.item.date }}
+                    <template v-slot:cell(created_at)="clients">
+                      {{ clients.item.created_at.substring(0, 10) }}
                     </template>
                     <template v-slot:cell(action)="clients">
                       <b-button

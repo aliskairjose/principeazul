@@ -65,6 +65,9 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(created_at)="orders">
+                      {{orders.item.created_at.substring(0, 10)}}
+                    </template>
                     <template v-slot:cell(status)="orders">
                       <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
                       <b-badge variant="secondary" v-if="orders.item.status === 'Pendiente'">{{orders.item.status}}</b-badge>
