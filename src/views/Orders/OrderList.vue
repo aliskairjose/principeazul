@@ -66,7 +66,7 @@
                     :current-page="currentPage"
                     @filtered="onFiltered">
                     <template v-slot:cell(created_at)="orders">
-                      {{orders.item.created_at.substring(0, 10)}}
+                      {{orders.item.created_at | formatDate}}
                     </template>
                     <template v-slot:cell(status)="orders">
                       <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>

@@ -76,7 +76,7 @@
                     :per-page="perPage"
                     @filtered="onFiltered">
                     <template v-slot:cell(created_at)="clients">
-                      {{ clients.item.created_at.substring(0, 10) }}
+                      {{ clients.item.created_at | formatDate }}
                     </template>
                     <template v-slot:cell(action)="clients">
                       <b-button
@@ -134,6 +134,7 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import clientService from '@/services/client'
+
 export default {
   name: 'ClientList',
   created () {
