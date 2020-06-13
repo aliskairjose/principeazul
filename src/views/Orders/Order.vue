@@ -209,7 +209,7 @@
                       pill
                       variant="outline-link"
                       class="mb-3 mr-1"
-                    >
+                      v-if="getStatus === 'add'">
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
                     </b-button>
@@ -406,7 +406,6 @@ export default {
           this.payments = data.payments
           this.client = data.client
           this.orderProducts = data.products
-          console.log(this.orderProducts)
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
