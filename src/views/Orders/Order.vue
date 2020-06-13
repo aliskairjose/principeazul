@@ -318,7 +318,8 @@
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
-        <p class="h5 text-secondary">{{ order.client_name }} - {{ order.client_dni }}</p>
+        <p class="h5 text-secondary" v-if="getStatus === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
+        <p class="h5 text-secondary" v-else>{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
 
         <b-row class="mb-0" v-for="item in orderResponse.products" :key="item.id">
           <b-col class="col-md-10">
@@ -405,6 +406,7 @@ export default {
           this.payments = data.payments
           this.client = data.client
           this.orderProducts = data.products
+          console.log(this.orderProducts)
         })
         .catch((error) => { console.log(error) })
         .finally(() => { this.loading = false })
@@ -440,7 +442,9 @@ export default {
         payments: []
       },
       product: {
+        id: null,
         product_id: '',
+        order_id: null,
         quantity: 1,
         note: '',
         price: null,
@@ -448,6 +452,8 @@ export default {
         additionals: []
       },
       additional: {
+        id: null,
+        order_product_id: null,
         quantity: '',
         name: '',
         product_id: '',
@@ -520,7 +526,7 @@ export default {
           price += element.price
         }
       }
-      return price
+      return parseFloat(price).toFixed(2)
     },
     payOut () {
       const object = this.payments
@@ -608,13 +614,19 @@ export default {
       }
     },
     handleOk () {
-      if (this.tempProd.length > 0) {
-        for (const key in this.tempProd) {
-          if (this.tempProd.hasOwnProperty(key)) {
-            const element = this.tempProd[key]
-            this.orderProducts.push(element)
+      if (this.getStatus() === 'add') {
+        if (this.tempProd.length > 0) {
+          for (const key in this.tempProd) {
+            if (this.tempProd.hasOwnProperty(key)) {
+              const element = this.tempProd[key]
+              this.orderProducts.push(element)
+            }
           }
         }
+      }
+
+      if (this.getStatus() === 'edit') {
+
       }
       this.tempProd.length = 0
     },
@@ -674,13 +686,25 @@ export default {
     },
     onComplete () {
       this.loading = true
-      orderService.create(this.order)
-        .then(response => {
-          this.orderResponse = response.data
-          this.$refs['modal-order'].show()
-        })
-        .catch(error => { console.log(error) })
-        .finally(() => { this.loading = false })
+      if (this.getStatus() === 'add') {
+        orderService.create(this.order)
+          .then(response => {
+            this.orderResponse = response.data
+            this.$refs['modal-order'].show()
+          })
+          .catch(error => { console.log(error) })
+          .finally(() => { this.loading = false })
+      }
+      if (this.getStatus() === 'edit') {
+        orderService.update(this.order.id, this.order)
+          .then(response => {
+            console.log(response.data)
+            this.orderResponse = response.data
+            this.$refs['modal-order'].show()
+          })
+          .catch(error => { console.log(error) })
+          .finally(() => { this.loading = false })
+      }
     },
     showModal (modal, index) {
       this.index = index
@@ -721,10 +745,11 @@ export default {
         this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
         return false
       }
+
+      this.validateMsg = ''
+
       if (this.getStatus() === 'add') {
         this.order.products.length = 0
-
-        this.validateMsg = ''
 
         for (const key in this.orderProducts) {
           if (this.orderProducts.hasOwnProperty(key)) {
@@ -737,7 +762,6 @@ export default {
             this.product.price = element.price
             this.product.quantity = 1
             this.product.additionals = []
-
             for (const key in element.additionals) {
               if (element.additionals.hasOwnProperty(key)) {
                 const item = element.additionals[key]
@@ -753,6 +777,7 @@ export default {
           }
         }
       }
+
       return true
     },
     validatePayment () {

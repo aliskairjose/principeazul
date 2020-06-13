@@ -16,7 +16,7 @@
     "name": "Ordenes / Compras",
     "is_active": false,
     "link": {
-      "name": "orders.index"
+      "name": "orders.list"
     },
     "class_name": "",
     "is_icon_class": true,

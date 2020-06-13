@@ -5,8 +5,8 @@ axios.interceptors.request.use((config) => {
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     // axios.defaults.headers.common.Authorization = `Bearer ${token}`
-    console.log(token)
-    console.log(config.headers.common)
+    // console.log(token)
+    // console.log(config.headers.common)
   }
   return config
 }, (err) => {

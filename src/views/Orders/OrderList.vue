@@ -67,6 +67,12 @@
                     @filtered="onFiltered">
                     <template v-slot:cell(status)="orders">
                       <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="secondary" v-if="orders.item.status === 'Pendiente'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="warning" v-if="orders.item.status === 'En confección'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="light" v-if="orders.item.status === 'Confeccionado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="info" v-if="orders.item.status === 'En camino a reparto'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="success" v-if="orders.item.status === 'Entregado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="primary" v-if="orders.item.status === 'Cancelado'">{{orders.item.status}}</b-badge>
                     </template>
                     <template v-slot:cell(action)="orders">
                       <b-button
