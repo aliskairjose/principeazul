@@ -90,7 +90,7 @@ import clientService from '@/services/client'
 import { mask } from 'vue-the-mask'
 
 export default {
-  name: 'ClientEdit',
+  name: 'Client',
   directives: { mask },
   title: '',
   btnTitle: '',

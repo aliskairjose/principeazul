@@ -139,7 +139,7 @@ import { VMoney } from 'v-money'
 import ModalTable from '@/components/Modals/ModalTable'
 
 export default {
-  name: 'ProductEdit',
+  name: 'Product',
   components: {
     vueDropzone: vue2Dropzone,
     ModalTable

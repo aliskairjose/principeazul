@@ -57,5 +57,39 @@
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-file-line"
-  }  
+  },
+  {
+    "title": "Email",
+    "name": "sidebar.email",
+    "is_heading": false,
+    "is_active": false,
+    "link": "",
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-mail-open-line",
+    "children": [
+      {
+        "title": "Inbox",
+        "name": "sidebar.inbox",
+        "is_active": false,
+        "link": {
+          "name" : "app.email"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-inbox-line"
+      },
+      {
+        "title": "Email Compose",
+        "name": "sidebar.emailCompose",
+        "is_active": false,
+        "link": {
+          "name" : "app.email.compose"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-edit-line"
+      }
+    ]
+  }
 ]

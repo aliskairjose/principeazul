@@ -7,13 +7,13 @@ import Default from '../layouts/BlankLayout'
 
 /* Dashboards View */
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
+import Client from '@/views/Clients/Client.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
-import ClientEdit from '@/views/Clients/ClientEdit.vue'
+import Product from '@/views/Product/Product.vue'
 import ProductList from '@/views/Product/ProductList.vue'
-import ProductEdit from '@/views/Product/ProductEdit.vue'
-import Callback from '@/views/AuthPages/Default/Callback'
 import Order from '@/views/Orders/Order.vue'
 import OrderList from '@/views/Orders/OrderList.vue'
+import Callback from '@/views/AuthPages/Default/Callback'
 
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
@@ -70,13 +70,13 @@ const clientRoutes = (prop, mode = false) => [
     path: 'add/',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar cliente' },
-    component: ClientEdit
+    component: Client
   },
   {
     path: 'edit/:id',
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar cliente' },
-    component: ClientEdit
+    component: Client
   }
 ]
 
@@ -91,13 +91,13 @@ const productRoutes = (prop, mode = false) => [
     path: 'add',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar producto' },
-    component: ProductEdit
+    component: Product
   },
   {
     path: 'edit/:id',
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar producto' },
-    component: ProductEdit
+    component: Product
   }
 ]
 
