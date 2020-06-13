@@ -92,13 +92,6 @@
                         @click="remove(orders.item)">
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
-                      <b-button
-                        v-b-tooltip.top="'Inventario'"
-                        variant=" iq-bg-primary mr-1 mb-1"
-                        size="sm"
-                        @click="inventory(orders.item)">
-                        <i class="ri-list-unordered m-0"></i>
-                      </b-button>
                     </template>
                   </b-table>
                 </b-col>
