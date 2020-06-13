@@ -17,9 +17,9 @@
           </div>
         </b-alert>
         <iq-card>
-          <template v-slot:headerTitle>
+          <!-- <template v-slot:headerTitle>
             <h4 class="card-title mt-3">Lista de clientes</h4>
-          </template>
+          </template> -->
           <template v-slot:body>
             <div class="text-center is-removing" v-show="isRemoving">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
