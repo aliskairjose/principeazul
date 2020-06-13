@@ -60,7 +60,7 @@
   },
   {
     "title": "Email",
-    "name": "sidebar.email",
+    "name": "Correo electrónico",
     "is_heading": false,
     "is_active": false,
     "link": "",
@@ -70,7 +70,7 @@
     "children": [
       {
         "title": "Inbox",
-        "name": "sidebar.inbox",
+        "name": "Inbox",
         "is_active": false,
         "link": {
           "name" : "app.email"
@@ -81,7 +81,7 @@
       },
       {
         "title": "Email Compose",
-        "name": "sidebar.emailCompose",
+        "name": "Mail Compose",
         "is_active": false,
         "link": {
           "name" : "app.email.compose"

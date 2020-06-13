@@ -18,7 +18,6 @@ import { extend } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
 import { messages } from 'vee-validate/dist/locale/es.json'
 import interceptors from '@/helpers/interceptors'
-import moment from 'moment'
 
 Object.keys(rules).forEach(rule => {
   extend(rule, {
@@ -29,11 +28,6 @@ Object.keys(rules).forEach(rule => {
 
 global.Raphael = Raphael
 
-Vue.filter('formatDate', (value) => {
-  if (value) {
-    return moment(String(value)).format('DD-MM-YYYY')
-  }
-})
 Vue.use(interceptors)
 Vue.use(AlgoliaComponents)
 Vue.use(Viewer)

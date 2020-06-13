@@ -15,7 +15,7 @@
       >
         <i :class="item.icon" v-if="item.is_icon_class" />
         <template v-else v-html="item.icon"></template>
-        <span>{{ $t(item.name) }}</span>
+        <span>{{ item.name }}</span>
         <i v-if="item.children" class="ri-arrow-right-s-line iq-arrow-right" />
         <small v-html="item.append" :class="item.append_class" />
       </router-link>
@@ -28,11 +28,11 @@
         :className="`iq-submenu ${item.class_name}`"
       />
     </li>
-    <!-- <div class="d-inline-block w-100 text-center p-3">
+    <div class="d-inline-block w-100 text-center p-3">
       <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}
         <i class="ri-login-box-line ml-2"></i>
       </a>
-    </div> -->
+    </div>
   </b-collapse>
 </template>
 <script>

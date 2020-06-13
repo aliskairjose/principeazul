@@ -181,7 +181,6 @@
     </div>
     <FooterStyle1>
       <template v-slot:left>
-
       </template>
       <template v-slot:right>
         Copyright 2020 <a href="#">Principe Azul</a> All Rights Reserved.

@@ -170,12 +170,13 @@
                         @click="deleteExtra(index, item.id)"
                       >
                         {{ item.name }}
-                        <i class="ri-indeterminate-circle-line"></i>
+                        <i class="ri-indeterminate-circle-line" v-if="getStatus === 'add'"></i>
                       </b-button>
                       <b-button
                         variant="outline-success"
                         class="mb-3 mr-1"
                         @click="showModal('extras', index)"
+                        v-if="getStatus === 'add'"
                       >
                         Añadir
                         <i class="ri-add-line"></i>
@@ -412,6 +413,7 @@ export default {
   },
   data () {
     return {
+      orderResponse: [],
       sendForm: false,
       title: '',
       money: {},
@@ -591,7 +593,9 @@ export default {
       })
     },
     deleteExtra (index, id) {
-      this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
+      if (this.getStatus() === 'add') {
+        this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
+      }
     },
     getClient () {
       if (this.clients.length === 0) {
