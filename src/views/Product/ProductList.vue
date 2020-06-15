@@ -217,7 +217,7 @@ export default {
   },
   methods: {
     loadData () {
-      productService.getAll()
+      productService.getAll(``)
         .then(response => {
           this.products = response.data
         })
