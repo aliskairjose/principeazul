@@ -44,6 +44,11 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
+              <b-col md="2" class="my-1">
+                <b-form-group>
+                  <b-button variant="primary" @click="createOrder">Crear orden</b-button>
+                </b-form-group>
+              </b-col>
               <template v-if="orders.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
@@ -176,6 +181,9 @@ export default {
     }
   },
   methods: {
+    createOrder () {
+      this.$router.push({ name: 'orders.add' })
+    },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length

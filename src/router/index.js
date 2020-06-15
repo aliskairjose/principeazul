@@ -45,8 +45,8 @@ const paRoutes = (prop, mode = false) => [
 
 const orderRoutes = (prop, mode = false) => [
   {
-    path: '',
-    name: prop + '.index',
+    path: 'add',
+    name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Crear orden' },
     component: Order
   },
@@ -82,7 +82,7 @@ const clientRoutes = (prop, mode = false) => [
     component: ClientList
   },
   {
-    path: 'add/',
+    path: 'add',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Agregar cliente' },
     component: Client

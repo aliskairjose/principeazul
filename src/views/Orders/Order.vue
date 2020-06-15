@@ -425,7 +425,9 @@ export default {
       checkbox1: null,
       selectedType: null,
       selectedDelivery: null,
-      client: { },
+      client: {
+        name: ''
+      },
       order: {
         client_id: '',
         client_name: '',
@@ -438,7 +440,11 @@ export default {
         dedication: '',
         signature: '',
         products: [],
-        payments: []
+        payments: [],
+        client: {
+          name: '',
+          dni: ''
+        }
       },
       product: {
         id: null,
