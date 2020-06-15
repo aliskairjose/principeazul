@@ -80,6 +80,9 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(name)="results">
+                      {{ results.item.name | capitalize}}
+                    </template>
                     <template v-slot:cell(created_at)="results">
                       {{results.item.created_at | formatDate}}
                     </template>
@@ -182,11 +185,11 @@ export default {
       totalRows: 1,
       currentPage: 1,
       titles: [
-        { label: 'Producto', key: 'name', class: 'text-left' },
-        { label: 'Cantidad', key: 'quantity', class: 'text-left' },
-        { label: 'Tipo', key: 'type', class: 'text-left' },
-        { label: 'Proveedor', key: 'provider', class: 'text-left' },
-        { label: 'Creado el', key: 'created_at', class: 'text-left' }
+        { label: 'Producto', key: 'name', class: 'text-center' },
+        { label: 'Cantidad', key: 'quantity', class: 'text-center' },
+        { label: 'Tipo', key: 'type', class: 'text-center' },
+        { label: 'Proveedor', key: 'provider', class: 'text-center' },
+        { label: 'Creado el', key: 'created_at', class: 'text-center' }
 
       ]
     }

@@ -311,7 +311,7 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-    >
+      @ok="finishOrder">
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
@@ -790,6 +790,9 @@ export default {
       const id = this.$route.params.id
       if (id) return 'edit'
       if (!id) return 'add'
+    },
+    finishOrder () {
+      this.$router.push({ name: 'orders.list' })
     }
   }
 }
