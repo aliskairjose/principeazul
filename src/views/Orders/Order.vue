@@ -260,8 +260,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table
         :items="principals"
         :titems="pTitles"
@@ -279,8 +278,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra"
-    >
+      @cancel="handleCancelExtra">
       <modal-table
         :items="additionals"
         :titems="pTitles"
@@ -511,7 +509,6 @@ export default {
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
