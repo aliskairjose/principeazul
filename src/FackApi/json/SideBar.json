@@ -52,7 +52,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "app.project.management"
+      "name": "reports.productsMovements"
     },
     "class_name": "",
     "is_icon_class": true,

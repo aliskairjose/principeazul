@@ -34,6 +34,8 @@
     "instantsearch.js": "^3.6.0",
     "jquery": "^3.4.1",
     "js-cookie": "^2.2.1",
+    "jspdf": "^1.5.3",
+    "jspdf-autotable": "^3.5.4",
     "lodash": "latest",
     "lottie-web": "^5.5.10",
     "moment": "^2.24.0",
