@@ -33,8 +33,7 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder"
-              >
+                :before-change="validateOrder">
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -170,14 +169,13 @@
                         @click="deleteExtra(index, item.id)"
                       >
                         {{ item.name }}
-                        <i class="ri-indeterminate-circle-line" v-if="getStatus === 'add'"></i>
+                        <i class="ri-indeterminate-circle-line" v-if="getStatus() === 'add'"></i>
                       </b-button>
                       <b-button
                         variant="outline-success"
                         class="mb-3 mr-1"
                         @click="showModal('extras', index)"
-                        v-if="getStatus === 'add'"
-                      >
+                        v-if="getStatus() === 'add'">
                         Añadir
                         <i class="ri-add-line"></i>
                       </b-button>
@@ -210,7 +208,7 @@
                       pill
                       variant="outline-link"
                       class="mb-3 mr-1"
-                      v-if="getStatus === 'add'">
+                      v-if="getStatus() === 'add'">
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
                     </b-button>
@@ -319,7 +317,7 @@
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
-        <p class="h5 text-secondary" v-if="getStatus === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
+        <p class="h5 text-secondary" v-if="getStatus() === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
         <p class="h5 text-secondary" v-else>{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
 
         <b-row class="mb-0" v-for="item in orderResponse.products" :key="item.id">
@@ -438,7 +436,11 @@ export default {
         dedication: '',
         signature: '',
         products: [],
-        payments: []
+        payments: [],
+        client: {
+          name: '',
+          dni: ''
+        }
       },
       product: {
         id: null,
@@ -699,7 +701,6 @@ export default {
       if (this.getStatus() === 'edit') {
         orderService.update(this.order.id, this.order)
           .then(response => {
-            console.log(response.data)
             this.orderResponse = response.data
             this.$refs['modal-order'].show()
           })

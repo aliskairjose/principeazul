@@ -22,7 +22,7 @@
             <div class="text-center" id="spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
-            <b-row v-else align-h="start">
+            <b-row v-else align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group
                   label="Filtro"
@@ -42,6 +42,11 @@
                       <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
                     </b-input-group-append>
                   </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col md="2" class="my-1">
+                <b-form-group>
+                  <b-button variant="primary" @click="createOrder">Crear orden</b-button>
                 </b-form-group>
               </b-col>
               <template v-if="orders.length === 0">
@@ -176,6 +181,9 @@ export default {
     }
   },
   methods: {
+    createOrder () {
+      this.$router.push({ name: 'orders.add' })
+    },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length

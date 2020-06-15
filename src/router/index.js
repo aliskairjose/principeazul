@@ -46,7 +46,7 @@ const paRoutes = (prop, mode = false) => [
 const orderRoutes = (prop, mode = false) => [
   {
     path: '',
-    name: prop + '.index',
+    name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Crear orden' },
     component: Order
   },
