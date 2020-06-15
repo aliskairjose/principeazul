@@ -204,9 +204,8 @@ export default {
         { title: 'Creado el', dataKey: 'created_at' }
       ]
       doc.text('Movimiento de productos', 40, 40)
-      doc.autoTable(columns, this.results, {
-        margin: { top: 60 } })
-      doc.save('todos.pdf')
+      doc.autoTable(columns, this.results, { margin: { top: 60 } })
+      doc.save('Movimiento de productos.pdf')
     },
     getData () {
       let params = `type=${this.filters.type}&product_id=${this.filters.products}&init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
