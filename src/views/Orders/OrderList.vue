@@ -22,7 +22,7 @@
             <div class="text-center" id="spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
-            <b-row v-else align-h="between">
+            <b-row v-else align-h="start">
               <b-col md="4" class="my-1">
                 <b-form-group
                   label="Filtro"
