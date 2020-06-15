@@ -15,6 +15,11 @@ import Order from '@/views/Orders/Order.vue'
 import OrderList from '@/views/Orders/OrderList.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 
+/* Reports */
+/* Products movements */
+import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
+/* End Reports */
+
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
 import SignUp1 from '../views/AuthPages/Default/SignUp1'
@@ -57,6 +62,16 @@ const orderRoutes = (prop, mode = false) => [
     meta: { dark: mode, auth: true, name: 'Editar orden' },
     component: Order
   }
+]
+
+const reportRoutes = (prop, mode = false) => [
+  {
+    path: 'products-movements',
+    name: prop + '.productsMovements',
+    meta: { dark: mode, auth: true, name: 'Movimientos de productos' },
+    component: ProductsMovements
+  }
+
 ]
 
 const clientRoutes = (prop, mode = false) => [
@@ -180,6 +195,13 @@ const routes = [
     component: Layout1,
     meta: { auth: true },
     children: orderRoutes('orders')
+  },
+  {
+    path: '/reports',
+    name: 'reports',
+    component: Layout1,
+    meta: { auth: true },
+    children: reportRoutes('reports')
   },
   {
     path: '/clients',
