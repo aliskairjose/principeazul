@@ -49,8 +49,8 @@
                       </b-button>
                   </div>
                   <div class="col-md-2 text-left">
-                    <b-button variant="outline-success" class="mt-5 mb-2" @click="getData()">
-                      Exportar a PDF <i class="ri-file-pdf-line"></i>
+                    <b-button variant="outline-success" class="mt-5 mb-2" @click="exportPDF">
+                      Descargar <i class="ri-download-cloud-line"></i>
                       </b-button>
                   </div>
                 </b-row>
@@ -65,6 +65,7 @@
               <template v-else>
                 <b-col md="12" class="table-responsive">
                   <b-table
+                     ref="content"
                     striped
                     bordered
                     hover
@@ -124,6 +125,8 @@
 import { vito } from '../../config/pluginInit'
 import reportsService from '@/services/reports'
 import productService from '@/services/product'
+import JsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 export default {
   name: 'ProductsMovementsList',
@@ -191,6 +194,20 @@ export default {
     }
   },
   methods: {
+    exportPDF () {
+      const doc = new JsPDF()
+      let columns = [
+        { title: 'Producto', dataKey: 'name' },
+        { title: 'Cantidad', dataKey: 'quantity' },
+        { title: 'Tipo', dataKey: 'type' },
+        { title: 'Proveedor', dataKey: 'provider' },
+        { title: 'Creado el', dataKey: 'created_at' }
+      ]
+      doc.text('Movimiento de productos', 40, 40)
+      doc.autoTable(columns, this.results, {
+        margin: { top: 60 } })
+      doc.save('todos.pdf')
+    },
     getData () {
       let params = `type=${this.filters.type}&product_id=${this.filters.products}&init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
       reportsService.getProductsMovements(params)
