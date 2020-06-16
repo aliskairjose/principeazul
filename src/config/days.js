@@ -1,5 +1,5 @@
 let days = []
-let dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat']
+let dayName = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
 let j = 0
 for (let i = 1; i <= 30; i++) {
   days.push({

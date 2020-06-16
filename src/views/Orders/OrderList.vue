@@ -1,0 +1,201 @@
+<template>
+   <b-container fluid>
+    <b-row>
+      <b-col md="12">
+        <b-alert :show="isShow" variant="success" class="bg-white" id="alert">
+          <div class="iq-alert-icon">
+            <i class="ri-alert-line"></i>
+          </div>
+          <div class="iq-alert-text">
+            El registro ha sido
+            <b>eliminado</b> con éxito!
+          </div>
+        </b-alert>
+        <iq-card>
+          <!-- <template v-slot:headerTitle>
+            <h4 class="card-title mt-3">Lista de ordenes</h4>
+          </template> -->
+          <template v-slot:body>
+            <div class="text-center is-removing" v-show="isRemoving">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </div>
+            <div class="text-center" id="spinner" v-if="loading">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </div>
+            <b-row v-else align-h="between">
+              <b-col md="4" class="my-1">
+                <b-form-group
+                  label="Filtro"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="filterInput"
+                  class="mb-0">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      id="filterInput"
+                      placeholder="Escriba para buscar">
+                    </b-form-input>
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col md="2" class="my-1">
+                <b-form-group>
+                  <b-button variant="primary" @click="createOrder">Crear orden</b-button>
+                </b-form-group>
+              </b-col>
+              <template v-if="orders.length === 0">
+                <b-col class="col-md-12">
+                  <b-alert :show="true" variant="secondary">
+                    <div class="iq-alert-text"><b>No hay ordenes para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
+                  </b-alert>
+                </b-col>
+              </template>
+              <template v-else>
+                <b-col md="12" class="table-responsive">
+                  <b-table
+                    striped
+                    bordered
+                    hover
+                    :items="orders"
+                    :filter="filter"
+                    :fields="titles"
+                    :per-page="perPage"
+                    :sort-by.sync="sortBy"
+                    :sort-desc.sync="sortDesc"
+                    :current-page="currentPage"
+                    @filtered="onFiltered">
+                    <template v-slot:cell(created_at)="orders">
+                      {{orders.item.created_at | formatDate}}
+                    </template>
+                    <template v-slot:cell(status)="orders">
+                      <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="secondary" v-if="orders.item.status === 'Pendiente'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="warning" v-if="orders.item.status === 'En confección'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="light" v-if="orders.item.status === 'Confeccionado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="info" v-if="orders.item.status === 'En camino a reparto'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="success" v-if="orders.item.status === 'Entregado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="danger" v-if="orders.item.status === 'Cancelado'">{{orders.item.status}}</b-badge>
+                    </template>
+                    <template v-slot:cell(action)="orders">
+                      <b-button
+                        v-b-tooltip.top="'Editar'"
+                        variant=" iq-bg-success mr-1 mb-1"
+                        size="sm"
+                        @click="edit(orders.item)">
+                        <i class="ri-ball-pen-fill m-0"></i>
+                      </b-button>
+                      <b-button
+                        v-b-tooltip.top="'Eliminar'"
+                        variant=" iq-bg-danger mr-1 mb-1"
+                        size="sm"
+                        @click="remove(orders.item)">
+                        <i class="ri-delete-bin-line m-0"></i>
+                      </b-button>
+                    </template>
+                  </b-table>
+                </b-col>
+                <b-col sm="5" md="4">
+                  <b-form-group
+                    label="Resultados por página"
+                    label-cols-sm="6"
+                    label-cols-md="6"
+                    label-align-sm="right"
+                    label-size="sm"
+                    label-for="perPageSelect"
+                    class="mb-0">
+                    <b-form-select
+                      v-model="perPage"
+                      id="perPageSelect"
+                      size="sm"
+                      :options="pageOptions"
+                    ></b-form-select>
+                  </b-form-group>
+                </b-col>
+                <b-col sm="7" md="8">
+                  <b-pagination
+                    v-model="currentPage"
+                    :total-rows="rows"
+                    :per-page="perPage"
+                    align="right"
+                    aria-controls="my-table">
+                  </b-pagination>
+                </b-col>
+              </template>
+            </b-row>
+          </template>
+        </iq-card>
+      </b-col>
+    </b-row>
+  </b-container>
+</template>
+
+<script>
+import { vito } from '../../config/pluginInit'
+import orderService from '@/services/order'
+
+export default {
+  name: 'OrderList',
+  created () {
+    orderService.getAll()
+      .then(response => {
+        this.orders = response.data
+      })
+      .catch(() => { })
+      .finally(() => { this.loading = false })
+  },
+  mounted () {
+    vito.index()
+  },
+  data () {
+    return {
+      orders: [],
+      sortBy: '',
+      loading: true,
+      filter: null,
+      isShow: false,
+      isRemoving: false,
+      perPage: 15,
+      selectedType: null,
+      sortDesc: false,
+      pageOptions: [5, 10, 15, 25, 50, 100, 200],
+      totalRows: 1,
+      currentPage: 1,
+      titles: [
+        { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
+        { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
+        { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
+        { label: 'Acción', key: 'action', class: 'text-center' }
+      ]
+    }
+  },
+  computed: {
+    rows () {
+      return this.orders.length
+    }
+  },
+  methods: {
+    createOrder () {
+      this.$router.push({ name: 'orders.add' })
+    },
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    },
+    edit (item) {
+      this.$router.push({ name: 'orders.edit', params: { id: item.id } })
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

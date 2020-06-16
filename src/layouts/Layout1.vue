@@ -2,89 +2,6 @@
   <div>
     <div id="show-overlay"></div>
     <Loader />
-    <RightSideBar toggleClass="top-50 setting-toggle iq-card">
-      <i class="ri-sound-module-fill font-size-18 text-primary" slot="icon" />
-      <iq-card class="shadow-none">
-        <template v-slot:headerTitle>
-          <h4>{{ $t('customizer.colorCustomizer') }}</h4>
-        </template>
-        <template v-slot:headerAction>
-          <b-button variant="primary" size="sm" @click="reset">{{ $t('customizer.reset') }}</b-button>
-        </template>
-        <template v-slot:body>
-          <b-row>
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">{{ $t('customizer.themeColor') }}</h4>
-              <div class="text-center">
-                <div v-for="(item,index) in colors" :key="index" class="d-inline-flex justify-content-between">
-                  <div :style="`background: ${item.primary};border-radius: 50%;`" @click="changeColor(item)" class="p-3 mx-1"></div>
-                </div>
-              </div>
-            </b-col>
-            <!--<div class="border mt-4 mb-4 w-100" />
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">Nav Color</h4>
-              <div class="text-center">
-                <div v-for="(item,index) in colors" :key="index" class="d-inline-flex justify-content-between">
-                  <div :style="`background: ${item.code};color: ${item.code};`" @click="changeColor(item.code)" class="p-3 mx-1"></div>
-                </div>
-              </div>
-            </b-col>-->
-            <!--<div class="border mt-4 mb-4 w-100" />
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">Sidebar Color</h4>
-              <div class="text-center">
-                <div v-for="(item,index) in colors" :key="index" class="d-inline-flex justify-content-between">
-                  <div :style="`background: ${item.code};color: ${item.code};`" @click="changeColor(item.code)" class="p-3 mx-1"></div>
-                </div>
-              </div>
-            </b-col>-->
-            <div class="border mt-4 mb-4 w-100" />
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">{{ $t('customizer.colorMode') }}</h4>
-              <div class="text-center d-flex">
-                <img :src="require('../assets/images/customizer/customizer-01.png')" alt="light" @click="light" class="img-fluid" style="height: 150px;border: 2px solid var(--iq-primary)">
-                <img :src="require('../assets/images/customizer/customizer-03.png')" alt="dark" @click="dark" class="img-fluid ml-2" style="height: 150px;border: 2px solid var(--iq-primary)">
-              </div>
-            </b-col>
-            <div class="border mt-4 mb-4 w-100" />
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">{{ $t('customizer.sidebar') }}</h4>
-            </b-col>
-            <b-col cols="12" class="justify-content-between d-flex">
-              <label>{{ $t('customizer.sidebarMini')}}</label>
-              <b-form-checkbox class="custom-switch-color" color="primary" v-model="mini" @change="sidebarMini" name="check-button" switch inline>
-              </b-form-checkbox>
-            </b-col>
-            <!--            <b-col cols="12" class="justify-content-between d-flex">-->
-            <!--              <label>Sidebar Horizontal</label>-->
-            <!--              <b-form-checkbox class="custom-switch-color" color="primary" v-model="horizontal" @change="sidebarHorizontal" name="check-button" switch inline>-->
-            <!--              </b-form-checkbox>-->
-            <!--            </b-col>-->
-            <div class="border mt-4 mb-4 w-100" />
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">{{ $t('customizer.rtlMode')}}</h4>
-              <div class="text-center d-flex">
-                <img :src="require('../assets/images/customizer/ltr-img.png')" alt="ltr" @click="rtlChange(true)" class="img-fluid" style="height: 150px;border: 2px solid var(--iq-primary)">
-                <img :src="require('../assets/images/customizer/rtl-img.png')" alt="rtl" @click="rtlChange(false)" class="img-fluid ml-2" style="height: 150px;border: 2px solid var(--iq-primary)">
-              </div>
-            </b-col>
-            <div class="border mt-4 mb-4 w-100" />
-            <b-col cols="12" class="justify-content-between">
-              <h4 class="text-left mb-2">{{ $t('customizer.routeAnimation') }}</h4>
-              <div class="text-center d-flex">
-                <b-form-radio-group
-                  id="radio-group-1"
-                  v-model="animated"
-                  :options="animateClass"
-                  name="radio-options"
-                ></b-form-radio-group>
-              </div>
-            </b-col>
-          </b-row>
-        </template>
-      </iq-card>
-    </RightSideBar>
     <div class="wrapper">
       <!-- Sidebar  -->
       <SideBarStyle1 :items="verticalMenu" :horizontal="horizontal" :logo="logo" @toggle="sidebarMini" />
@@ -92,14 +9,6 @@
       <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo" :horizontal="horizontal" :items="horizontalMenu">
         <template slot="responsiveRight">
           <ul class="navbar-nav ml-auto navbar-list">
-            <li class="nav-item">
-              <a class="search-toggle iq-waves-effect language-title" href="#"><img :src="selectedLang.image" alt="img-flaf" class="img-fluid mr-1" style="height: 16px; width: 16px;" /> {{ selectedLang.title }} <i class="ri-arrow-down-s-line"></i></a>
-              <div class="iq-sub-dropdown">
-                <a class="iq-sub-card" href="javascript:void(0)" v-for="(lang, i) in langsOptions" :key="`Lang${i}`" @click="langChange(lang)">
-                  <img :src="lang.image" alt="img-flaf" class="img-fluid mr-2" />{{ lang.title }}
-                </a>
-              </div>
-            </li>
             <li class="nav-item">
               <a href="javascript:void(0)" class="iq-waves-effect" :class="cartCount > 0 ? 'search-toggle' : ''">
                 <i class="ri-shopping-cart-2-line" />
@@ -246,7 +155,9 @@
                       </div>
                     </a>
                     <div class="d-inline-block w-100 text-center p-3">
-                      <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}<i class="ri-login-box-line ml-2"></i></a>
+                      <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}
+                        <i class="ri-login-box-line ml-2"></i>
+                        </a>
                     </div>
                   </div>
                 </div>
@@ -270,11 +181,9 @@
     </div>
     <FooterStyle1>
       <template v-slot:left>
-        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-        <li class="list-inline-item"><a href="#">Terms of Use</a></li>
       </template>
       <template v-slot:right>
-        Copyright 2020 <a href="#">Vito</a> All Rights Reserved.
+        Copyright 2020 <a href="#">Principe Azul</a> All Rights Reserved.
       </template>
     </FooterStyle1>
   </div>
@@ -302,6 +211,7 @@ export default {
     NavBarStyle1
   },
   mounted () {
+    this.$i18n.locale = 'sp'
     this.updateRadio()
     body.classList.remove('sidebar-main-active')
     body.classList.remove('right-column-fixed')
@@ -422,16 +332,6 @@ export default {
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
       this.$router.push({ name: 'auth1.sign-in1' })
-    },
-    langChange (lang) {
-      this.langChangeState(lang)
-      this.$i18n.locale = lang.value
-      document.getElementsByClassName('iq-show')[0].classList.remove('iq-show')
-      if (lang.value === 'ar') {
-        this.rtlAdd(lang)
-      } else {
-        this.rtlRemove(lang)
-      }
     },
     ...mapActions({
       removeToCart: 'Ecommerce/removeToCartAction',

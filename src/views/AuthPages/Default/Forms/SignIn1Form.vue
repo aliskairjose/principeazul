@@ -1,12 +1,21 @@
 <template>
   <ValidationObserver ref="form" v-slot="{ handleSubmit }">
     <form class="mt-4" novalidate @submit.prevent="handleSubmit(onSubmit)">
+      <div class="text-center" id="spinner" v-show="loading">
+        <b-spinner variant="primary" type="grow" label="Spinning" style="width: 5rem; height: 5rem;"></b-spinner>
+      </div>
       <ValidationProvider vid="email" name="E-mail" rules="required|email" v-slot="{ errors }">
         <div class="form-group">
-          <label for="emailInput">Email address</label>
-          <input type="email" :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
-                 id="emailInput" aria-describedby="emailHelp"
-                 v-model="user.email" placeholder="Enter email" required>
+          <label for="emailInput">Email</label>
+          <input
+            type="email"
+            :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
+            id="emailInput"
+            aria-describedby="emailHelp"
+            v-model="user.email"
+            placeholder="Tú email"
+            required
+          />
           <div class="invalid-feedback">
             <span>{{ errors[0] }}</span>
           </div>
@@ -15,12 +24,15 @@
       <ValidationProvider vid="password" name="Password" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="passwordInput">Password</label>
-          <router-link to="/auth/password-reset1" class="float-right">
-            Forgot password?
-          </router-link>
-          <input type="password"  :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
-                 id="passwordInput"
-                 v-model="user.password" placeholder="Password" required>
+          <router-link to="/auth/password-reset1" class="float-right">Olvidó la contraseña?</router-link>
+          <input
+            type="password"
+            :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
+            id="passwordInput"
+            v-model="user.password"
+            placeholder="Tú contraseña"
+            required
+          />
           <div class="invalid-feedback">
             <span>{{ errors[0] }}</span>
           </div>
@@ -28,47 +40,35 @@
       </ValidationProvider>
       <div class="d-inline-block w-100">
         <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-          <input type="checkbox" class="custom-control-input" :id="formType">
-          <label class="custom-control-label" :for="formType">Remember Me</label>
+          <input type="checkbox" class="custom-control-input"/>
+          <label class="custom-control-label">Recordarme</label>
         </div>
-        <button type="submit" class="btn btn-primary float-right">Sign in</button>
+        <button type="submit" class="btn btn-primary float-right">Inicia sesión</button>
       </div>
-      <div class="sign-info">
-          <span class="dark-color d-inline-block line-height-2">
-            Don't have an account?
-            <router-link to="/dark/auth/sign-up1" class="iq-waves-effect pr-4" v-if="$route.meta.dark">
-              Sign up
-            </router-link>
-            <router-link to="/auth/sign-up1" class="iq-waves-effect pr-4" v-else>
-              Sign up
-            </router-link>
-          </span>
-        <social-login-form></social-login-form>
-      </div>
+      <b-alert :show="isError" variant="danger" class="bg-white mt-2">
+        <div class="iq-alert-icon">
+          <i class="ri-information-line"></i>
+        </div>
+        <div class="iq-alert-text"> <b>Verifique</b> sus credenciales e intente de nuevo!</div>
+      </b-alert>
     </form>
   </ValidationObserver>
 </template>
 
 <script>
-import auth from '../../../../services/auth'
-import firebase from 'firebase'
-import SocialLoginForm from './SocialLoginForm'
-import { vito } from '../../../../config/pluginInit'
 import { mapGetters } from 'vuex'
-
+import auth from '@/services/auth'
 export default {
   name: 'SignIn1Form',
-  components: { SocialLoginForm },
-  props: ['formType', 'email', 'password'],
   data: () => ({
+    loading: false,
+    isError: false,
     user: {
       email: '',
       password: ''
     }
   }),
   mounted () {
-    this.user.email = this.$props.email
-    this.user.password = this.$props.password
   },
   computed: {
     ...mapGetters({
@@ -77,69 +77,31 @@ export default {
   },
   methods: {
     onSubmit () {
-      if (this.formType === 'passport') {
-        this.passportLogin()
-      } else if (this.formType === 'jwt') {
-        this.jwtLogin()
-      } else if (this.formType === 'firebase') {
-        this.firebaseLogin()
-      }
+      this.loading = true
+      this.jwtLogin(this.user)
     },
-    passportLogin () {
+    jwtLogin () {
       auth.login(this.user).then(response => {
-        if (response.status) {
-          localStorage.setItem('user', JSON.stringify(response.data))
-          this.$router.push({ name: 'mini.dashboard.home-1' })
+        const resp = response.data
+        if (response) {
+          localStorage.setItem('user', JSON.stringify(resp.data))
+          localStorage.setItem('access_token', resp.access_token)
+          this.$router.push({ name: 'dashboard.home' })
         } else if (response.data.errors.length > 0) {
           this.$refs.form.setErrors(response.data.errors)
         }
-      }).finally(() => { this.loading = false })
-    },
-    jwtLogin () {
-      let selectedUser = this.stateUsers.find(user => {
-        return (user.email === this.user.email && user.password === this.user.password)
-      }) || null
-      if (selectedUser) {
-        this.$store.dispatch('Setting/authUserAction', {
-          auth: true,
-          authType: 'jwt',
-          user: {
-            id: selectedUser.uid,
-            name: selectedUser.name,
-            mobileNo: null,
-            email: selectedUser.email,
-            profileImage: null
-          }
-        })
-        localStorage.setItem('user', JSON.stringify(selectedUser))
-        localStorage.setItem('access_token', selectedUser.token)
-        this.$router.push({ name: 'mini.dashboard.home-1' })
-      }
-    },
-    firebaseLogin () {
-      firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password).then((user) => {
-        let firebaseUser = firebase.auth().currentUser.providerData[0]
-        this.$store.dispatch('Setting/authUserAction', {
-          auth: true,
-          authType: 'firebase',
-          user: {
-            id: firebaseUser.uid,
-            name: firebaseUser.displayName,
-            mobileNo: firebaseUser.phoneNumber,
-            email: firebaseUser.email,
-            profileImage: firebaseUser.photoURL
-          }
-        })
-        localStorage.setItem('user', JSON.stringify(firebaseUser))
-        this.$router.push({ name: 'mini.dashboard.home-1' })
-      }).catch((err) => {
-        if (err.code === 'auth/user-not-found') {
-          vito.showSnackbar('error', 'These credentials do not match our records.')
-        } else {
-          vito.showSnackbar('error', err.message)
-        }
       })
+        .catch(() => { this.isError = true })
+        .finally(() => { this.loading = false })
     }
   }
 }
 </script>
+
+<style scoped>
+  #spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 40%;
+  }
+</style>

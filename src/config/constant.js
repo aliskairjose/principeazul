@@ -1,5 +1,5 @@
 export default {
-  webBaseURL: process.env.MIX_APP_URL,
+  webBaseURL: 'http://api.pa.dev.cronapis.com/api',
   firebaseConfig: {
     apiKey: '',
     authDomain: '',
