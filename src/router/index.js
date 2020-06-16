@@ -238,7 +238,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/auth/sign-in', '/auth/sign-up', '/dark/auth/sign-in', '/dark/auth/sign-up']
+  const publicPages = ['/auth/sign-in', '/auth/sign-up']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
   if (to.meta.auth) {
