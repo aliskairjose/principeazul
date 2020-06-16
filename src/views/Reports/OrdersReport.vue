@@ -182,8 +182,8 @@ export default {
         { title: 'Fecha', dataKey: 'created_at' },
         { title: 'Total', dataKey: 'total' }
       ]
-      doc.text('Reporte de Ganancias', 20, 40)
-      doc.autoTable(columns, this.results, { margin: { top: 60 } })
+      doc.text('Reporte de Ganancias', 20, 20)
+      doc.autoTable(columns, this.results, { margin: { top: 30 } })
       doc.save('Reporte de Ganancias.pdf')
     },
     getData () {

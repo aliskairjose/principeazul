@@ -203,8 +203,8 @@ export default {
         { title: 'Proveedor', dataKey: 'provider' },
         { title: 'Creado el', dataKey: 'created_at' }
       ]
-      doc.text('Movimiento de productos', 40, 40)
-      doc.autoTable(columns, this.results, { margin: { top: 60 } })
+      doc.text('Movimiento de productos', 20, 20)
+      doc.autoTable(columns, this.results, { margin: { top: 30 } })
       doc.save('Movimiento de productos.pdf')
     },
     getData () {

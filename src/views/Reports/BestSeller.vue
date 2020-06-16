@@ -179,8 +179,8 @@ export default {
         { title: 'Producto', dataKey: 'name' },
         { title: 'Total', dataKey: 'total' }
       ]
-      doc.text('Best Sellers', 40, 40)
-      doc.autoTable(columns, this.results, { margin: { top: 60 } })
+      doc.text('Best Sellers', 20, 20)
+      doc.autoTable(columns, this.results, { margin: { top: 30 } })
       doc.save('Best Sellers.pdf')
     },
     getData () {
