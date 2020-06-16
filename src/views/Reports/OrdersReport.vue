@@ -6,10 +6,6 @@
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
-          <div class="iq-alert-text">
-            El registro ha sido
-            <b>eliminado</b> con éxito!
-          </div>
         </b-alert>
         <iq-card>
           <template v-slot:body>
@@ -17,30 +13,22 @@
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row v-else align-h="between">
-              <b-col md="12" class="my-1 text-center">
-                <!-- <div class="row">
-                  <div class="col-md-3">
-                    Selecciona un tipo
-                    <b-form-select v-model="filters.type" :options="options.type" size="sm" ></b-form-select>
-                  </div>
-                  <div class="col-md-3">
-                    Productos
-                    <b-form-select v-model="filters.products" multiple :options="options.products" size="sm" ></b-form-select>
-                  </div>
-                  <div class="col-md-3">
+              <b-col md="12" class="my-1">
+                <b-row align-h="end">
+                  <b-col md="3">
                     Fecha inicial
                     <b-form-input v-model="filters.initDate" type="date"></b-form-input>
-                  </div>
-                  <div class="col-md-3">
+                  </b-col>
+                  <b-col md="3">
                     Fecha final
                     <b-form-input v-model="filters.endDate" type="date"></b-form-input>
-                  </div>
-                </div> -->
+                  </b-col>
+                </b-row>
                 <b-row align-h="end" class="mb-2 mt-2" >
                   <div class="col-md-2 text-right">
-                    <!-- <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                    <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
                       <i class="ri-search-line"></i>
-                    </b-button> -->
+                      </b-button>
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
                       <i class="ri-download-cloud-line"></i>
                       </b-button>
@@ -69,15 +57,20 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
-                    <template v-slot:cell(name)="results">
-                      {{ results.item.name | capitalize}}
-                    </template>
-                    <template v-slot:cell(created_at)="results">
-                      {{results.item.created_at | formatDate}}
-                    </template>
                     <template v-slot:cell(type)="results">
-                      <b-badge variant="success" v-if="results.item.type === 'sale'">Venta</b-badge>
-                      <b-badge variant="primary" v-if="results.item.type === 'purchase'">Compra</b-badge>
+                      {{ results.item.type | capitalize}}
+                    </template>
+                    <template v-slot:cell(status)="orders">
+                      <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="secondary" v-if="orders.item.status === 'Pendiente'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="warning" v-if="orders.item.status === 'En confección'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="light" v-if="orders.item.status === 'Confeccionado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="info" v-if="orders.item.status === 'En camino a reparto'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="success" v-if="orders.item.status === 'Entregado'">{{orders.item.status}}</b-badge>
+                      <b-badge variant="danger" v-if="orders.item.status === 'Cancelado'">{{orders.item.status}}</b-badge>
+                    </template>
+                    <template v-slot:cell(created_at)="orders">
+                      {{ orders.item.created_at | formatDate }}
                     </template>
                   </b-table>
                 </b-col>
@@ -119,13 +112,25 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import reportsService from '@/services/reports'
+import orderService from '@/services/order'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
 
 export default {
-  name: 'BestSeller',
+  name: 'OrdersReport',
   created () {
     this.getData()
+
+    orderService.getAll()
+      .then(response => {
+        response.data.map(r => {
+          r.value = r.id
+          r.text = r.name
+        })
+        this.options.orders = this.options.orders.concat(response.data)
+      })
+      .catch(() => { })
+      .finally(() => { this.loading = false })
   },
   mounted () {
     vito.index()
@@ -134,7 +139,7 @@ export default {
     return {
       filters: {
         type: '',
-        products: [],
+        orders: [],
         initDate: '',
         endDate: ''
       },
@@ -144,7 +149,7 @@ export default {
           { value: 'sale', text: 'Venta' },
           { value: 'purchase', text: 'Compra' }
         ],
-        products: [
+        orders: [
           { value: '', text: 'Todos' }
 
         ]
@@ -162,8 +167,13 @@ export default {
       totalRows: 1,
       currentPage: 1,
       titles: [
-        { label: 'Producto', key: 'name', class: 'text-center' },
+        { label: 'Id', key: 'id', class: 'text-center' },
+        { label: 'Cliente', key: 'client.name', class: 'text-center' },
+        { label: 'Tipo de compra', key: 'type', class: 'text-center' },
+        { label: 'Status', key: 'status', class: 'text-center' },
+        { label: 'Fecha', key: 'created_at', class: 'text-center' },
         { label: 'Total', key: 'total', class: 'text-center' }
+
       ]
     }
   },
@@ -176,17 +186,22 @@ export default {
     exportPDF () {
       const doc = new JsPDF()
       let columns = [
-        { title: 'Producto', dataKey: 'name' },
+        { title: 'Id', dataKey: 'id' },
+        { title: 'Cliente', dataKey: 'client.name' },
+        { title: 'Tipo', dataKey: 'type' },
+        { title: 'Status', dataKey: 'status' },
+        { title: 'Fecha', dataKey: 'created_at' },
         { title: 'Total', dataKey: 'total' }
       ]
-      doc.text('Best Sellers', 40, 40)
+      doc.text('Reporte de Ganancias', 20, 40)
       doc.autoTable(columns, this.results, { margin: { top: 60 } })
-      doc.save('Best Sellers.pdf')
+      doc.save('Reporte de Ganancias.pdf')
     },
     getData () {
-      // let params = `type=${this.filters.type}&product_id=${this.filters.products}&init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
-      reportsService.getBestSellers()
+      let params = `init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
+      reportsService.getOrderReport(params)
         .then(response => {
+          console.log(response.data)
           this.results = response.data
         })
         .catch(() => { })
@@ -201,3 +216,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

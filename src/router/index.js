@@ -21,6 +21,7 @@ import Callback from '@/views/AuthPages/Default/Callback'
 /* Products movements */
 import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
 import BestSeller from '@/views/Reports/BestSeller.vue'
+import OrdersReport from '@/views/Reports/OrdersReport.vue'
 
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
@@ -99,8 +100,13 @@ const reportRoutes = (prop, mode = false) => [
     name: prop + '.bestSellers',
     meta: { dark: mode, auth: true, name: 'Best sellers' },
     component: BestSeller
+  },
+  {
+    path: 'order-report',
+    name: prop + '.orderReport',
+    meta: { dark: mode, auth: true, name: 'Reporte de ganancias' },
+    component: OrdersReport
   }
-
 ]
 
 const clientRoutes = (prop, mode = false) => [

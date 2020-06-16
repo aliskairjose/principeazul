@@ -13,12 +13,9 @@
         </b-alert>
         <iq-card>
           <template v-slot:body>
-            <div class="text-center is-removing" v-show="isRemoving">
+            <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
-            <div class="text-center" id="spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
+            </b-col>
             <b-row v-else align-h="between">
               <b-col md="12" class="my-1 text-center">
                 <div class="row">
