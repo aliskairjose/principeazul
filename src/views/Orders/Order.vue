@@ -10,8 +10,8 @@
                   variant="primary"
                   type="grow"
                   label="Spinning"
-                  style="width: 3rem; height: 3rem;"
-                ></b-spinner>
+                  style="width: 3rem; height: 3rem;">
+                </b-spinner>
               </div>
             </b-row>
             <form-wizard
@@ -125,13 +125,22 @@
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="dedication"
-                      >
+                        label-for="dedication">
                         <b-form-input
                           v-model="order.dedication"
                           type="text"
-                          placeholder="Dedicatoria del regalo"
-                        ></b-form-input>
+                          placeholder="Dedicatoria del regalo">
+                        </b-form-input>
+                      </b-form-group>
+                      <b-form-group
+                        v-if="status === 'edit'"
+                        class="col-md-6"
+                        label="Status de la compra:"
+                        label-for="statuses">
+                          <b-form-select
+                            v-model="order.status"
+                            :options="statuses">
+                          </b-form-select>
                       </b-form-group>
                     </b-row>
                   </form>
@@ -164,13 +173,13 @@
                         @click="deleteExtra(index, item.id)"
                       >
                         {{ item.name }}
-                        <i class="ri-indeterminate-circle-line" v-if="getStatus() === 'add'"></i>
+                        <i class="ri-indeterminate-circle-line" v-if="status === 'add'"></i>
                       </b-button>
                       <b-button
                         variant="outline-success"
                         class="mb-3 mr-1"
                         @click="showModal('extras', index)"
-                        v-if="getStatus() === 'add'">
+                        v-if="status === 'add'">
                         Añadir
                         <i class="ri-add-line"></i>
                       </b-button>
@@ -203,7 +212,7 @@
                       pill
                       variant="outline-link"
                       class="mb-3 mr-1"
-                      v-if="getStatus() === 'add'">
+                      v-if="status === 'add'">
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
                     </b-button>
@@ -310,7 +319,7 @@
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
-        <p class="h5 text-secondary" v-if="getStatus() === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
+        <p class="h5 text-secondary" v-if="status === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
         <p class="h5 text-secondary" v-else>{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
 
         <b-row class="mb-0" v-for="item in orderResponse.products" :key="item.id">
@@ -363,6 +372,10 @@ export default {
     TabContent,
     ModalTable
   },
+  created () {
+    const id = this.$route.params.id
+    if (id) this.status = 'edit'
+  },
   mounted () {
     vito.index()
     this.loading = true
@@ -384,7 +397,7 @@ export default {
       })
       .finally(() => { this.loading = false })
 
-    if (this.getStatus() === 'edit') {
+    if (this.status === 'edit') {
       this.loading = true
       orderService.getById(this.$route.params.id)
         .then(response => {
@@ -400,6 +413,7 @@ export default {
   },
   data () {
     return {
+      status: 'add',
       orderResponse: [],
       sendForm: false,
       money: {},
@@ -419,6 +433,7 @@ export default {
         delivery_date: '',
         type: null,
         mode: null,
+        status: null,
         delivery_address: '',
         addressee: '',
         dedication: '',
@@ -430,6 +445,15 @@ export default {
           dni: ''
         }
       },
+      statuses: [
+        { value: 'Creado', text: 'Creado' },
+        { value: 'Pendiente', text: 'Pendiente' },
+        { value: 'En confección', text: 'En confección' },
+        { value: 'Confeccionado', text: 'Confeccionado' },
+        { value: 'En camino a reparto', text: 'En camino a reparto' },
+        { value: 'Entregado', text: 'Entregado' },
+        { value: 'Cancelado', text: 'Cancelado' }
+      ],
       product: {
         id: null,
         product_id: '',
@@ -582,7 +606,7 @@ export default {
       })
     },
     deleteExtra (index, id) {
-      if (this.getStatus() === 'add') {
+      if (this.status === 'add') {
         this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
       }
     },
@@ -604,7 +628,7 @@ export default {
       }
     },
     handleOk () {
-      if (this.getStatus() === 'add') {
+      if (this.status === 'add') {
         if (this.tempProd.length > 0) {
           for (const key in this.tempProd) {
             if (this.tempProd.hasOwnProperty(key)) {
@@ -615,7 +639,7 @@ export default {
         }
       }
 
-      if (this.getStatus() === 'edit') {
+      if (this.status === 'edit') {
 
       }
       this.tempProd.length = 0
@@ -676,7 +700,7 @@ export default {
     },
     onComplete () {
       this.loading = true
-      if (this.getStatus() === 'add') {
+      if (this.status === 'add') {
         orderService.create(this.order)
           .then(response => {
             this.orderResponse = response.data
@@ -685,7 +709,7 @@ export default {
           .catch(error => { console.log(error) })
           .finally(() => { this.loading = false })
       }
-      if (this.getStatus() === 'edit') {
+      if (this.status === 'edit') {
         orderService.update(this.order.id, this.order)
           .then(response => {
             this.orderResponse = response.data
@@ -737,7 +761,7 @@ export default {
 
       this.validateMsg = ''
 
-      if (this.getStatus() === 'add') {
+      if (this.status === 'add') {
         this.order.products.length = 0
 
         for (const key in this.orderProducts) {
@@ -775,11 +799,6 @@ export default {
       }
       this.order.payments = this.payments
       return true
-    },
-    getStatus () {
-      const id = this.$route.params.id
-      if (id) return 'edit'
-      if (!id) return 'add'
     },
     finishOrder () {
       this.$router.push({ name: 'orders.list' })
