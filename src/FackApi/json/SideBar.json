@@ -32,7 +32,7 @@
     },
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-file-list-line"
+    "icon": "ri-pages-line"
   },
   {
     "title": "Clientes",
@@ -66,7 +66,7 @@
     "link": "",
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-shopping-cart-line",
+    "icon": "ri-bar-chart-grouped-line",
     "children": [
       {
         "title": "Best Sellers",
