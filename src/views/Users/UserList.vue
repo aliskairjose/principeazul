@@ -12,9 +12,6 @@
           </div>
         </b-alert>
         <iq-card>
-          <!-- <template v-slot:headerTitle>
-            <h4 class="card-title mt-3">Lista de ordenes</h4>
-          </template> -->
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-show="isRemoving" id="removing">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
@@ -70,18 +67,6 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
-                    <template v-slot:cell(created_at)="users">
-                      {{users.item.created_at | formatDate}}
-                    </template>
-                    <template v-slot:cell(status)="users">
-                      <b-badge variant="primary" v-if="users.item.status === 'Creado'">{{users.item.status}}</b-badge>
-                      <b-badge variant="secondary" v-if="users.item.status === 'Pendiente'">{{users.item.status}}</b-badge>
-                      <b-badge variant="warning" v-if="users.item.status === 'En confección'">{{users.item.status}}</b-badge>
-                      <b-badge variant="light" v-if="users.item.status === 'Confeccionado'">{{users.item.status}}</b-badge>
-                      <b-badge variant="info" v-if="users.item.status === 'En camino a reparto'">{{users.item.status}}</b-badge>
-                      <b-badge variant="success" v-if="users.item.status === 'Entregado'">{{users.item.status}}</b-badge>
-                      <b-badge variant="danger" v-if="users.item.status === 'Cancelado'">{{users.item.status}}</b-badge>
-                    </template>
                     <template v-slot:cell(action)="users">
                       <b-button
                         v-b-tooltip.top="'Editar'"
@@ -142,12 +127,7 @@ import userService from '@/services/user'
 export default {
   name: 'OrderList',
   created () {
-    userService.getAll()
-      .then(response => {
-        this.users = response.data
-      })
-      .catch(() => { })
-      .finally(() => { this.loading = false })
+    this.loadData()
   },
   mounted () {
     vito.index()
@@ -182,6 +162,14 @@ export default {
     }
   },
   methods: {
+    loadData () {
+      userService.getAll()
+        .then(response => {
+          this.users = response.data
+        })
+        .catch(() => { })
+        .finally(() => { this.loading = false })
+    },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
@@ -193,8 +181,31 @@ export default {
     edit (item) {
       this.$router.push({ name: 'user.edit', params: { id: item.id } })
     },
-    delete (id) {
-      // Delete user
+    remove (item) {
+      this.$bvModal.msgBoxConfirm('Esta seguro que desea eliminar el registro?.', {
+        title: 'Por favor confirme',
+        okVariant: 'danger',
+        okTitle: 'Si',
+        cancelTitle: 'No',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.isRemoving = true
+            userService.delete(item.id)
+              .then(res => {
+                this.isShow = true
+              })
+              .catch((error) => { console.log(error) })
+              .finally(() => {
+                this.isRemoving = false
+                this.loadData()
+              })
+          }
+        })
+        .catch((error) => { console.log(error) })
     }
   }
 }

@@ -25,23 +25,35 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
-                      <b-form-input
-                        v-model="user.phone"
-                        type="tel"
-                        name="phone"
-                        id="phone"
-                        placeholder="Teléfono"
-                        v-mask="['###-####', '####-####']"
-                      ></b-form-input>
+                      <ValidationProvider name="Teléfono" rules="required" v-slot="{ errors }">
+                        <b-form-input
+                          v-model="user.phone"
+                          type="tel"
+                          name="phone"
+                          id="phone"
+                          placeholder="Teléfono"
+                          v-mask="['###-####', '####-####']"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                        </b-form-input>
+                         <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Email" label-for="email">
-                      <b-form-input
-                        v-model="user.email"
-                        type="text"
-                        name="email"
-                        id="email"
-                        placeholder="Correo electrónico"
-                      ></b-form-input>
+                      <ValidationProvider name="Email" rules="required" v-slot="{ errors }">
+                        <b-form-input
+                          v-model="user.email"
+                          type="text"
+                          name="email"
+                          id="email"
+                          placeholder="Correo electrónico"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                        </b-form-input>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Role:" label-for="role">
                       <ValidationProvider name="Rol" rules="required" v-slot="{ errors }">
@@ -50,6 +62,19 @@
                           :state="errors[0] ? false : (user.role ? true : null)"
                           :options="roles"
                         ></b-form-select>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
+                    </b-form-group>
+                    <b-form-group class="col-md-6" label="Contraseña:" label-for="role">
+                      <ValidationProvider name="Contraseña" rules="required" v-slot="{ errors }">
+                        <b-form-input
+                          v-model="user.password"
+                          type="text"
+                          placeholder="Contraseña"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                        ></b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
@@ -102,7 +127,8 @@ export default {
         name: '',
         phone: '',
         email: '',
-        role: null
+        role: null,
+        password: ''
       },
       roles: [
         { value: null, text: 'Seleccione un rol' },
