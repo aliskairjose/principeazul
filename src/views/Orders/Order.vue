@@ -18,7 +18,7 @@
               ref="wizard"
               @on-complete="onComplete"
               @on-change="tabChange"
-              title="Crear orden"
+              :title="title"
               :subtitle="validateMsg"
               :back-button-text="backBtn"
               :next-button-text="nextBtn"
