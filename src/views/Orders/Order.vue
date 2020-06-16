@@ -18,7 +18,7 @@
               ref="wizard"
               @on-complete="onComplete"
               @on-change="tabChange"
-              :title="title"
+              title=""
               :subtitle="validateMsg"
               :back-button-text="backBtn"
               :next-button-text="nextBtn"
@@ -386,12 +386,8 @@ export default {
       })
       .finally(() => { this.loading = false })
 
-    if (this.getStatus() === 'add') {
-      this.title = 'Crear Orden'
-    }
     if (this.getStatus() === 'edit') {
       this.loading = true
-      this.title = 'Editar Orden'
       orderService.getById(this.$route.params.id)
         .then(response => {
           const data = response.data
@@ -408,7 +404,6 @@ export default {
     return {
       orderResponse: [],
       sendForm: false,
-      title: '',
       money: {},
       note: '',
       index: null,
