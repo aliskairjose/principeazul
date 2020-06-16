@@ -16,12 +16,12 @@
             <h4 class="card-title mt-3">Lista de ordenes</h4>
           </template> -->
           <template v-slot:body>
-            <div class="text-center is-removing" v-show="isRemoving">
+            <b-col md="12" class="text-center spinner" v-show="isRemoving" id="removing">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
-            <div class="text-center" id="spinner" v-if="loading">
+            </b-col>
+            <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
+            </b-col>
             <b-row v-else align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group
@@ -52,7 +52,7 @@
               <template v-if="orders.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay ordenes para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
+                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
                   </b-alert>
                 </b-col>
               </template>

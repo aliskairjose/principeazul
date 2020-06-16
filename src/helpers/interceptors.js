@@ -23,7 +23,7 @@ axios.interceptors.response.use(
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
-      this.$router.push({ name: 'auth1.sign-in1' })
+      this.$router.push({ name: 'auth1.sign-in' })
     }
     if ([404].indexOf(error.response.status) !== -1) {
       // this.$router.push({ name: 'default.error/:code'})

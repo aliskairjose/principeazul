@@ -12,6 +12,18 @@
     "icon": "ri-home-3-line"
   },
   {
+    "title": "Usuarios",
+    "name": "Usuarios",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "user.list"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-user-line"
+  },
+  {
     "title": "Ordenes / Compras",
     "name": "Ordenes / Compras",
     "is_active": false,
@@ -47,15 +59,63 @@
     "icon": "ri-terminal-window-line"
   },
   {
-    "title": "Reporte",
-    "name": "Reporte",
+    "title": "Reportes",
+    "name": "Reportes",
+    "is_heading": false,
+    "is_active": false,
+    "link": "",
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-shopping-cart-line",
+    "children": [
+      {
+        "title": "Best Sellers",
+        "name": "Best Sellers",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.bestSellers"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
+        "title": "Movimiento de productos",
+        "name": "Movimiento de productos",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.productsMovements"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
+        "title": "Reporte de ganancias",
+        "name": "Reporte de ganancias",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.orderReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      }
+    ]
+  },
+  {
+    "title": "Cerrar Sesión",
+    "name": "Cerrar Sesión",
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "reports.productsMovements"
+      "name": "product.list"
     },
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-file-line"
+    "icon": "ri-login-box-line"
   }
 ]

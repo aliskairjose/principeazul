@@ -18,7 +18,7 @@
             </b-col>
             <b-row v-else align-h="between">
               <b-col md="12" class="my-1 text-center">
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-3">
                     Selecciona un tipo
                     <b-form-select v-model="filters.type" :options="options.type" size="sm" ></b-form-select>
@@ -35,21 +35,16 @@
                     Fecha final
                     <b-form-input v-model="filters.endDate" type="date"></b-form-input>
                   </div>
-                </div>
+                </div> -->
                 <b-row align-h="end" class="mb-2 mt-2" >
                   <div class="col-md-2 text-right">
-                    <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                    <!-- <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
                       <i class="ri-search-line"></i>
-                      </b-button>
+                    </b-button> -->
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
                       <i class="ri-download-cloud-line"></i>
                       </b-button>
                   </div>
-                  <!-- <div class="col-md-2 text-left">
-                    <b-button variant="outline-success" @click="exportPDF">
-                      <i class="ri-download-cloud-line"></i>
-                      </b-button>
-                  </div> -->
                 </b-row>
               </b-col>
               <template v-if="results.length === 0">
@@ -124,25 +119,13 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import reportsService from '@/services/reports'
-import productService from '@/services/product'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
 
 export default {
-  name: 'ProductsMovementsList',
+  name: 'BestSeller',
   created () {
     this.getData()
-
-    productService.getAll(``)
-      .then(response => {
-        response.data.map(r => {
-          r.value = r.id
-          r.text = r.name
-        })
-        this.options.products = this.options.products.concat(response.data)
-      })
-      .catch(() => { })
-      .finally(() => { this.loading = false })
   },
   mounted () {
     vito.index()
@@ -180,11 +163,7 @@ export default {
       currentPage: 1,
       titles: [
         { label: 'Producto', key: 'name', class: 'text-center' },
-        { label: 'Cantidad', key: 'quantity', class: 'text-center' },
-        { label: 'Tipo', key: 'type', class: 'text-center' },
-        { label: 'Proveedor', key: 'provider', class: 'text-center' },
-        { label: 'Creado el', key: 'created_at', class: 'text-center' }
-
+        { label: 'Total', key: 'total', class: 'text-center' }
       ]
     }
   },
@@ -198,23 +177,16 @@ export default {
       const doc = new JsPDF()
       let columns = [
         { title: 'Producto', dataKey: 'name' },
-        { title: 'Cantidad', dataKey: 'quantity' },
-        { title: 'Tipo', dataKey: 'type' },
-        { title: 'Proveedor', dataKey: 'provider' },
-        { title: 'Creado el', dataKey: 'created_at' }
+        { title: 'Total', dataKey: 'total' }
       ]
-      doc.text('Movimiento de productos', 20, 20)
+      doc.text('Best Sellers', 20, 20)
       doc.autoTable(columns, this.results, { margin: { top: 30 } })
-      doc.save('Movimiento de productos.pdf')
+      doc.save('Best Sellers.pdf')
     },
     getData () {
-      let params = `type=${this.filters.type}&product_id=${this.filters.products}&init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
-      reportsService.getProductsMovements(params)
+      // let params = `type=${this.filters.type}&product_id=${this.filters.products}&init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
+      reportsService.getBestSellers()
         .then(response => {
-          response.data.map(r => {
-            r.name = r.product.name
-            r.provider = r.provider ? r.provider.name : 'El principe azul'
-          })
           this.results = response.data
         })
         .catch(() => { })
@@ -229,7 +201,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

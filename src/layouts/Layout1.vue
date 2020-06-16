@@ -11,10 +11,10 @@
           <ul class="navbar-nav ml-auto navbar-list">
             <li class="nav-item">
               <a href="javascript:void(0)" class="iq-waves-effect" :class="cartCount > 0 ? 'search-toggle' : ''">
-                <i class="ri-shopping-cart-2-line" />
-                <span class="menu-tag ml-2">{{ cartCount }}</span>
+                <!-- <i class="ri-shopping-cart-2-line" />
+                <span class="menu-tag ml-2">{{ cartCount }}</span> -->
               </a>
-              <div class="iq-sub-dropdown">
+              <!-- <div class="iq-sub-dropdown">
                 <div class="iq-card shadow-none m-0">
                   <div class="iq-card-body p-0 ">
                     <div class="bg-primary p-3">
@@ -36,13 +36,13 @@
                     <router-link :to="{ name: 'app.e-commerce.cart'}"><b-button variant=" iq-bg-primary" block><i class="fas fa-cart-plus"/>{{ $t('nav.viewCarts') }}</b-button></router-link>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </li>
             <li class="nav-item">
-              <a href="#" class="search-toggle iq-waves-effect">
+              <!-- <a href="#" class="search-toggle iq-waves-effect">
                 <lottie :option="require('../assets/images/small/lottie-bell')" id="lottie-beil" />
                 <span class="bg-danger dots"></span>
-              </a>
+              </a> -->
               <div class="iq-sub-dropdown">
                 <div class="iq-card shadow-none m-0">
                   <div class="iq-card-body p-0 ">
@@ -65,7 +65,7 @@
                 </div>
               </div>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="#" class="search-toggle iq-waves-effect">
                 <lottie :option="require('../assets/images/small/lottie-mail')" id="lottie-mail" />
                 <span class="bg-primary count-mail"></span>
@@ -90,7 +90,7 @@
                   </div>
                 </div>
               </div>
-            </li>
+            </li> -->
           </ul>
         </template>
         <template slot="right">
@@ -200,12 +200,11 @@ import darkLoader from '../assets/images/darkMode/dark-logo.gif'
 import { vito } from '../config/pluginInit'
 import { Users } from '../FackApi/api/chat'
 import { mapGetters, mapActions } from 'vuex'
-import Lottie from '../components/vito/lottie/Lottie'
+// import Lottie from '../components/vito/lottie/Lottie'
 let body = document.querySelector('body')
 export default {
   name: 'Layout1',
   components: {
-    Lottie,
     Loader,
     SideBarStyle1,
     NavBarStyle1

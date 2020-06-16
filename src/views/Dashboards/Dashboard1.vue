@@ -1,6 +1,10 @@
 <template>
   <b-container fluid>
+
     <b-row>
+      <b-col md="12" class="text-center" id="spinner" v-if="loading">
+        <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+      </b-col>
       <b-col md="3" sm="6">
         <iq-card>
           <template v-slot:body>
@@ -197,14 +201,22 @@
 <script>
 import { vito } from '../../config/pluginInit'
 // import AmChart from '../../components/vito/charts/AmChart'
+import productService from '@/services/product'
 export default {
   name: 'Dashboard1',
   // components: { AmChart },
   mounted () {
     vito.index()
+    productService.bestSellers()
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => { console.log(error) })
+      .finally(() => { this.loading = false })
   },
   data () {
     return {
+      loading: true,
       items: [
         { cliente: 'Ira Membrit', fecha: '18/10/2019', compra: '20156', monto: '1500', estado: { name: 'paid', color: 'success' } },
         { cliente: 'Pete Sariya', fecha: '26/10/2019', compra: '7859', monto: '2000', estado: { name: 'paid', color: 'success' } },
@@ -392,4 +404,9 @@ export default {
 .iq-card-body{
   flex: unset;
 }
+#spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 0;
+  }
 </style>

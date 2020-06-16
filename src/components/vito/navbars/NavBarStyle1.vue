@@ -16,7 +16,7 @@
         </div>
       </div>
       <nav class="navbar navbar-expand-lg navbar-light p-0">
-          <div class="navbar-left">
+          <!-- <div class="navbar-left">
               <div class="iq-search-bar">
                   <form action="#" class="searchbox">
                     <input type="text" class="text search-input" @click="openSearch" v-model="globalSearch" placeholder="Escriba aqui para buscar...">
@@ -24,7 +24,7 @@
                     <GlobalSearch :search="globalSearch" @closeSearch="removeClass "/>
                   </form>
               </div>
-          </div>
+          </div> -->
           <b-navbar-toggle target="nav-collapse">
             <i class="ri-menu-3-line"></i>
           </b-navbar-toggle>
