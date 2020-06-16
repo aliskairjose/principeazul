@@ -28,11 +28,11 @@
         />
       </li>
     </b-collapse>
-    <!-- <div class="d-inline-block w-100 text-center p-3">
+    <div class="d-inline-block w-100 text-center p-3">
       <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}
         <i class="ri-login-box-line ml-2"></i>
       </a>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>

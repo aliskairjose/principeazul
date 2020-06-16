@@ -5,7 +5,6 @@
         <iq-card>
           <template v-slot:body>
             <div class="new-user-info">
-              <h4>home</h4>
               <iframe
                 :src="iframeUrl"
                 frameborder="0"
