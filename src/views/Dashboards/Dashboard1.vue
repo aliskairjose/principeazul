@@ -197,11 +197,18 @@
 <script>
 import { vito } from '../../config/pluginInit'
 // import AmChart from '../../components/vito/charts/AmChart'
+import productService from '@/services/product'
 export default {
   name: 'Dashboard1',
   // components: { AmChart },
   mounted () {
     vito.index()
+    productService.bestSellers()
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => { console.log(error) })
+      .finally(() => { })
   },
   data () {
     return {

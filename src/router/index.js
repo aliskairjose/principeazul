@@ -118,32 +118,32 @@ const productRoutes = (prop, mode = false) => [
 
 const authChildRoutes = (prop, mode = false) => [
   {
-    path: 'sign-in1',
-    name: prop + '.sign-in1',
+    path: 'sign-in',
+    name: prop + '.sign-in',
     meta: { dark: mode, auth: true },
     component: SignIn1
   },
   {
-    path: 'sign-up1',
-    name: prop + '.sign-up1',
+    path: 'sign-up',
+    name: prop + '.sign-up',
     meta: { dark: mode, auth: true },
     component: SignUp1
   },
   {
-    path: 'password-reset1',
-    name: prop + '.password-reset1',
+    path: 'password-reset',
+    name: prop + '.password-reset',
     meta: { dark: mode, auth: true },
     component: RecoverPassword1
   },
   {
-    path: 'lock-screen1',
-    name: prop + '.lock-screen1',
+    path: 'lock-screen',
+    name: prop + '.lock-screen',
     meta: { dark: mode, auth: true },
     component: LockScreen1
   },
   {
-    path: 'confirm-mail1',
-    name: prop + '.confirm-mail1',
+    path: 'confirm-mail',
+    name: prop + '.confirm-mail',
     meta: { dark: mode, auth: true },
     component: ConfirmMail1
   }
@@ -238,13 +238,13 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/auth/sign-in1', '/auth/sign-up1', '/dark/auth/sign-in1', '/dark/auth/sign-up1']
+  const publicPages = ['/auth/sign-in', '/auth/sign-up', '/dark/auth/sign-in', '/dark/auth/sign-up']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
   if (to.meta.auth) {
     if (authRequired && loggedIn === null) {
-      return next('/auth/sign-in1')
-    } else if (to.name === 'dashboard' || to.name === 'mini.dashboard') {
+      return next('/auth/sign-in')
+    } else if (to.name === 'dashboard') {
       return next('/home')
     }
   }
