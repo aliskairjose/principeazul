@@ -9,6 +9,9 @@
         </b-alert>
         <iq-card>
           <template v-slot:body>
+            <b-col md="12" class="text-center spinner" v-show="search">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </b-col>
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
@@ -148,7 +151,7 @@ export default {
       loading: true,
       filter: null,
       isShow: false,
-      isRemoving: false,
+      search: false,
       perPage: 15,
       selectedType: null,
       sortDesc: false,
@@ -186,13 +189,14 @@ export default {
       doc.save('Reporte de Ganancias.pdf')
     },
     getData () {
+      this.search = true
       let params = `init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
       reportsService.getOrderReport(params)
         .then(response => {
           this.results = response.data
         })
         .catch(() => { })
-        .finally(() => { this.loading = false })
+        .finally(() => { this.search = false })
     },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
