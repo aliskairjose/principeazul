@@ -8,7 +8,7 @@
               <template v-slot:body>
                 <div class="new-user-info">
                   <b-row>
-                    <div class="text-center" id="spinner" v-show="loading">
+                    <div class="text-center spinner" v-show="loading">
                       <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
                     </div>
                   </b-row>
@@ -96,12 +96,10 @@ export default {
   },
   created () {
     if (this.getStatus() === 'add') {
-      this.title = 'Agregar nuevo cliente'
       this.btnTitle = 'Nuevo cliente'
     }
     if (this.getStatus() === 'edit') {
       this.loading = true
-      this.title = 'Editar cliente'
       this.btnTitle = 'Guardar cambios'
       clientService.getById(this.$route.params.id)
         .then(response => {
@@ -175,11 +173,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  #spinner {
-    z-index: 1000;
-    position: absolute;
-    left: 40vw;
-  }
-</style>

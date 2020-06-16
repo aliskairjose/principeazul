@@ -68,7 +68,7 @@ const orderRoutes = (prop, mode = false) => [
 
 const userRoutes = (prop, mode = false) => [
   {
-    path: '',
+    path: 'add',
     name: prop + '.add',
     meta: { dark: mode, auth: true, name: 'Crear usuario' },
     component: User
@@ -76,7 +76,7 @@ const userRoutes = (prop, mode = false) => [
   {
     path: 'list',
     name: prop + '.list',
-    meta: { dark: mode, auth: true, name: 'Lista de ussuarios' },
+    meta: { dark: mode, auth: true, name: 'Lista de usuarios' },
     component: UserList
   },
   {

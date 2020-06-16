@@ -46,7 +46,7 @@
               </b-col>
               <b-col md="2" class="my-1">
                 <b-form-group>
-                  <b-button variant="primary" @click="createOrder">Nuevo usuario</b-button>
+                  <b-button variant="primary" @click="add">Nuevo usuario</b-button>
                 </b-form-group>
               </b-col>
               <template v-if="users.length === 0">
@@ -182,16 +182,19 @@ export default {
     }
   },
   methods: {
-    createOrder () {
-      this.$router.push({ name: 'users.add' })
-    },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    add () {
+      this.$router.push({ name: 'user.add' })
+    },
     edit (item) {
-      this.$router.push({ name: 'users.edit', params: { id: item.id } })
+      this.$router.push({ name: 'user.edit', params: { id: item.id } })
+    },
+    delete (id) {
+      // Delete user
     }
   }
 }

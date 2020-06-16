@@ -55,13 +55,11 @@
                         class="col-md-6"
                         label="Modo de entrega:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }"
-                      >
+                        lot-scope="{ valid, errors }">
                         <ValidationProvider
                           name="Modo de entrega"
                           rules="required"
-                          v-slot="{ errors }"
-                        >
+                          v-slot="{ errors }">
                           <b-form-select
                             v-model="order.mode"
                             :state="errors[0] ? false : (order.mode ? true : null)"
