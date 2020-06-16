@@ -5,9 +5,6 @@
         <b-row>
           <b-col lg="12">
             <iq-card>
-              <template v-slot:headerTitle>
-                <h4 class="card-title mt-3">{{title}}</h4>
-              </template>
               <template v-slot:body>
                 <div class="new-user-info">
                   <b-row>

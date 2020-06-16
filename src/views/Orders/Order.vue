@@ -3,9 +3,6 @@
     <b-row>
       <b-col>
         <iq-card>
-          <template v-slot:headerTitle>
-            <h4 class="card-title mt-3">{{title}}</h4>
-          </template>
           <template v-slot:body>
             <b-row>
               <div class="text-center" id="spinner" v-show="loading">
