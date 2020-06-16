@@ -15,8 +15,8 @@
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
-            <b-row v-else align-h="between">
-              <b-col md="12" class="my-1">
+            <b-row v-else align-h="end">
+              <b-col md="12" class="my-1 mb-3">
                 <b-row align-h="end">
                   <b-col md="3">
                     Fecha inicial
@@ -26,16 +26,14 @@
                     Fecha final
                     <b-form-input v-model="filters.endDate" type="date"></b-form-input>
                   </b-col>
-                </b-row>
-                <b-row align-h="end" class="mb-2 mt-2" >
-                  <div class="col-md-2 text-right">
+                  <b-col md="2" align-self="end">
                     <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
                       <i class="ri-search-line"></i>
                       </b-button>
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
                       <i class="ri-download-cloud-line"></i>
                       </b-button>
-                  </div>
+                  </b-col>
                 </b-row>
               </b-col>
               <template v-if="results.length === 0">
