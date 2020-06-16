@@ -16,12 +16,12 @@
             <h4 class="card-title mt-3">Lista de ordenes</h4>
           </template> -->
           <template v-slot:body>
-            <div class="text-center is-removing" v-show="isRemoving">
+            <b-col md="12" class="text-center spinner" v-show="isRemoving" id="removing">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
-            <div class="text-center" id="spinner" v-if="loading">
+            </b-col>
+            <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
+            </b-col>
             <b-row v-else align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group

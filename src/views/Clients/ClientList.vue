@@ -5,8 +5,7 @@
         <b-alert
           :show="isShow"
           variant="success"
-          class="bg-white"
-          id="alert"
+          class="bg-white spinner"
           mt-2>
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
@@ -21,12 +20,12 @@
             <h4 class="card-title mt-3">Lista de clientes</h4>
           </template> -->
           <template v-slot:body>
-            <div class="text-center is-removing" v-show="isRemoving">
+            <b-col md="12" class="text-center spinner" v-show="isRemoving">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
-            <div class="text-center" id="spinner" v-if="loading">
+            </b-col>
+            <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
-            </div>
+            </b-col>
             <b-row v-else align-h="between">
               <b-col sm="5" md="4" class="my-1">
                 <b-form-group
@@ -229,19 +228,5 @@ export default {
 </script>
 
 <style scoped>
-#alert {
-  z-index: 1000;
-  position: absolute;
-  left: 40%;
-}
-.is-removing {
-  z-index: 1000;
-  position: absolute;
-  left: 40%;
-}
-#spinner {
-  z-index: 1000;
-  position: absolute;
-  left: 40%;
-}
+
 </style>
