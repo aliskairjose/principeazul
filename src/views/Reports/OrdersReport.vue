@@ -143,17 +143,6 @@ export default {
         initDate: '',
         endDate: ''
       },
-      options: {
-        type: [
-          { value: '', text: 'Todos' },
-          { value: 'sale', text: 'Venta' },
-          { value: 'purchase', text: 'Compra' }
-        ],
-        orders: [
-          { value: '', text: 'Todos' }
-
-        ]
-      },
       results: [],
       sortBy: '',
       loading: true,
@@ -173,7 +162,6 @@ export default {
         { label: 'Status', key: 'status', class: 'text-center' },
         { label: 'Fecha', key: 'created_at', class: 'text-center' },
         { label: 'Total', key: 'total', class: 'text-center' }
-
       ]
     }
   },
@@ -201,7 +189,6 @@ export default {
       let params = `init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
       reportsService.getOrderReport(params)
         .then(response => {
-          console.log(response.data)
           this.results = response.data
         })
         .catch(() => { })
