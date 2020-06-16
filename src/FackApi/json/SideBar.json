@@ -69,12 +69,36 @@
     "icon": "ri-shopping-cart-line",
     "children": [
       {
+        "title": "Best Sellers",
+        "name": "Best Sellers",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.bestSellers"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
         "title": "Movimiento de productos",
         "name": "Movimiento de productos",
         "is_heading": false,
         "is_active": false,
         "link": {
           "name": "reports.productsMovements"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
+        "title": "Reporte de ganancias",
+        "name": "Reporte de ganancias",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.orderReport"
         },
         "class_name": "",
         "is_icon_class": true,
