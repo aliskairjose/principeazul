@@ -57,7 +57,7 @@
                     </b-form-group>
                   </b-row>
                   <hr />
-                  <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
+                  <b-button variant="primary" type="submit">{{status === 'add' ? 'Crear usuario' : 'Actualizar usuario'}}</b-button>
                 </div>
               </template>
             </iq-card>
@@ -79,8 +79,8 @@ export default {
   created () {
     const id = this.$route.params.id
     if (id) this.status = 'edit'
-    this.loading = true
     if (this.status === 'edit') {
+      this.loading = true
       userService.getById(id)
         .then(response => {
           this.user = response.data
@@ -116,7 +116,7 @@ export default {
     onSubmit () {
       this.loading = true
       if (this.status === 'add') {
-        this.userService.create(this.user)
+        userService.create(this.user)
           .then(response => {
             this.$router.push({ name: 'user.list' })
           })
@@ -125,7 +125,7 @@ export default {
       }
 
       if (this.status === 'edit') {
-        this.userService.update(this.$route.params.id, this.user)
+        userService.update(this.$route.params.id, this.user)
           .then(response => {
             if (response.status) { this.$router.push({ name: 'user.list' }) }
           })
