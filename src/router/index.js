@@ -13,6 +13,8 @@ import Product from '@/views/Product/Product.vue'
 import ProductList from '@/views/Product/ProductList.vue'
 import Order from '@/views/Orders/Order.vue'
 import OrderList from '@/views/Orders/OrderList.vue'
+import User from '@/views/Users/User.vue'
+import UserList from '@/views/Users/UserList.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 
 /* Reports */
@@ -61,6 +63,27 @@ const orderRoutes = (prop, mode = false) => [
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar orden' },
     component: Order
+  }
+]
+
+const userRoutes = (prop, mode = false) => [
+  {
+    path: '',
+    name: prop + '.add',
+    meta: { dark: mode, auth: true, name: 'Crear usuario' },
+    component: User
+  },
+  {
+    path: 'list',
+    name: prop + '.list',
+    meta: { dark: mode, auth: true, name: 'Lista de ussuarios' },
+    component: UserList
+  },
+  {
+    path: 'edit/:id',
+    name: prop + '.edit',
+    meta: { dark: mode, auth: true, name: 'Editar usuario' },
+    component: User
   }
 ]
 
@@ -195,6 +218,13 @@ const routes = [
     component: Layout1,
     meta: { auth: true },
     children: orderRoutes('orders')
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: Layout1,
+    meta: { auth: true },
+    children: userRoutes('user')
   },
   {
     path: '/reports',

@@ -12,6 +12,18 @@
     "icon": "ri-home-3-line"
   },
   {
+    "title": "Usuarios",
+    "name": "Usuarios",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "user.list"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-user-line"
+  },
+  {
     "title": "Ordenes / Compras",
     "name": "Ordenes / Compras",
     "is_active": false,

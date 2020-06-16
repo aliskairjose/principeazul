@@ -52,7 +52,7 @@
               <template v-if="orders.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay ordenes para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
+                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
                   </b-alert>
                 </b-col>
               </template>
