@@ -8,7 +8,7 @@
               <Fullcalendar locale="es"
                       :plugins="calendarPlugins"
                       :header="{
-                        left:'dayGridMonth, timeGridWeek, timeGridDay, listWeek',
+                        left: '',
                         center: 'title',
                         right: 'prev today next'
                       }"

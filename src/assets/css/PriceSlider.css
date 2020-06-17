@@ -11,6 +11,12 @@
 .fc-content{
 text-align: center !important;
 }
+.fc-list-grid-container{
+  height: 300px !important;
+}
+.fc-time-grid-container{
+  height: 300px !important;
+}
 .fc-day-grid-container{
   height: 300px !important;
 }
