@@ -20,7 +20,7 @@
     },
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-file-list-line"
+    "icon": "ri-th-large"
   },
   {
     "title": "Clientes",
@@ -57,5 +57,19 @@
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-file-line"
+  },
+
+  {
+    "title": "Calendario de entregas",
+    "name": "Calendario de entregas",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "calendar.calendar"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-calendar-2-line"
   }
+
 ]

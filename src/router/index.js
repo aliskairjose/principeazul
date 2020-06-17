@@ -20,6 +20,11 @@ import Callback from '@/views/AuthPages/Default/Callback'
 import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
 /* End Reports */
 
+/* Calendar */
+/* -------------------- */
+import Calendar from '@/views/Calendar/Calendar.vue'
+/* End Calendar */
+
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
 import SignUp1 from '../views/AuthPages/Default/SignUp1'
@@ -70,6 +75,16 @@ const reportRoutes = (prop, mode = false) => [
     name: prop + '.productsMovements',
     meta: { dark: mode, auth: true, name: 'Movimientos de productos' },
     component: ProductsMovements
+  }
+
+]
+
+const calendarRoutes = (prop, mode = false) => [
+  {
+    path: 'calendar-registry',
+    name: prop + '.calendar',
+    meta: { dark: mode, auth: true, name: 'Calendario de Registry' },
+    component: Calendar
   }
 
 ]
@@ -202,6 +217,13 @@ const routes = [
     component: Layout1,
     meta: { auth: true },
     children: reportRoutes('reports')
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: Layout1,
+    meta: { auth: true },
+    children: calendarRoutes('calendar')
   },
   {
     path: '/clients',
