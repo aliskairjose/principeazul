@@ -68,7 +68,7 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Contraseña:" label-for="role">
-                      <ValidationProvider name="Contraseña" rules="required" v-slot="{ errors }">
+                      <ValidationProvider name="Contraseña" rules="required|min:8" v-slot="{ errors }">
                         <b-form-input
                           v-model="user.password"
                           type="text"
