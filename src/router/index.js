@@ -14,6 +14,7 @@ import Product from '@/views/Product/Product.vue'
 import ProductList from '@/views/Product/ProductList.vue'
 import Order from '@/views/Orders/Order.vue'
 import OrderList from '@/views/Orders/OrderList.vue'
+import OrderUpdate from '@/views/Orders/OrderUpdate.vue'
 import User from '@/views/Users/User.vue'
 import UserList from '@/views/Users/UserList.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
@@ -76,6 +77,12 @@ const orderRoutes = (prop, mode = false) => [
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar orden' },
     component: Order
+  },
+  {
+    path: 'public/order',
+    name: prop + '.update',
+    meta: { dark: mode, auth: true },
+    component: OrderUpdate
   }
 ]
 
@@ -247,6 +254,13 @@ const routes = [
     children: paRoutes('dashboard')
   },
   {
+    path: '/form',
+    name: 'orders',
+    component: AuthLayout1,
+    meta: { auth: true },
+    children: orderRoutes('orders')
+  },
+  {
     path: '/orders',
     name: 'orders',
     component: Layout1,
@@ -309,7 +323,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/auth/sign-in', '/auth/sign-up']
+  const publicPages = ['/auth/sign-in', '/auth/sign-up', '/form/public/order']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
   if (to.meta.auth) {
