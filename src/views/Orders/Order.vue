@@ -430,6 +430,7 @@ export default {
         name: ''
       },
       order: {
+        id: '',
         client_id: '',
         client_name: '',
         client_dni: '',
@@ -532,7 +533,7 @@ export default {
   },
   computed: {
     url () {
-      return `${window.location.origin}/form/public/${this.order.id}`
+      return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
     finalPrice () {
       // Total a pagar
