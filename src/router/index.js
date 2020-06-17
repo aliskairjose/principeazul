@@ -80,15 +80,6 @@ const orderRoutes = (prop, mode = false) => [
   }
 ]
 
-const publicRoutes = (prop, mode = false) => [
-  {
-    path: 'public/order',
-    name: prop + '.update',
-    meta: { dark: mode, auth: true },
-    component: OrderUpdate
-  }
-]
-
 const userRoutes = (prop, mode = false) => [
   {
     path: 'add',
@@ -213,6 +204,12 @@ const authChildRoutes = (prop, mode = false) => [
     name: prop + '.confirm-mail',
     meta: { dark: mode, auth: true },
     component: ConfirmMail1
+  },
+  {
+    path: 'public',
+    name: prop + '.update',
+    meta: { dark: mode, auth: true },
+    component: OrderUpdate
   }
 ]
 
@@ -261,7 +258,7 @@ const routes = [
     name: 'public',
     component: AuthLayout1,
     meta: { auth: true },
-    children: publicRoutes('public')
+    children: authChildRoutes('public')
   },
   {
     path: '/orders',
