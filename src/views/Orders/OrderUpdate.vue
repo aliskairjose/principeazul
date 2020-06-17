@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="mb-0">Inicia sesión</h1>
-    <p>Ingresa con tu cuanta del administrador del principe azul.</p>
+    <h2 class="mb-0">Gracias por su compra!</h2>
+    <p>Para completar la misma, te pedimosque llenes o modifiques los datos de tu orden según sea necesario.</p>
     <UpdateForm></UpdateForm>
   </div>
 </template>
@@ -12,7 +12,8 @@ import UpdateForm from './Forms/UpdateForm'
 export default {
   name: 'OrderUpdate',
   components: { UpdateForm },
-  data: () => ({}),
+  data: () => ({
+  }),
   mounted () {
 
   },

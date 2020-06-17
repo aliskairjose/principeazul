@@ -77,7 +77,10 @@ const orderRoutes = (prop, mode = false) => [
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar orden' },
     component: Order
-  },
+  }
+]
+
+const publicRoutes = (prop, mode = false) => [
   {
     path: 'public/order',
     name: prop + '.update',
@@ -255,10 +258,10 @@ const routes = [
   },
   {
     path: '/form',
-    name: 'orders',
+    name: 'public',
     component: AuthLayout1,
     meta: { auth: true },
-    children: orderRoutes('orders')
+    children: publicRoutes('public')
   },
   {
     path: '/orders',

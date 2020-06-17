@@ -712,7 +712,6 @@ export default {
           .finally(() => { this.loading = false })
       }
       if (this.status === 'edit') {
-        console.log('update')
         orderService.update(this.order.id, this.order)
           .then(response => {
             this.orderResponse = response.data
