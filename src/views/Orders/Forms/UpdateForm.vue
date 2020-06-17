@@ -4,6 +4,9 @@
       <div class="text-center" id="spinner" v-show="loading">
         <b-spinner variant="primary" type="grow" label="Spinning" style="width: 5rem; height: 5rem;"></b-spinner>
       </div>
+      <b-alert :show="isUpdated" variant=" " dismissible fade  class="text-white bg-info">
+        <div class="iq-alert-text">Datos actualizados con <b>exito</b>!</div>
+      </b-alert>
       <ValidationProvider vid="Fecha" name="Fecha de entrega" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="dateInput">Fecha de entrega</label>
@@ -115,6 +118,7 @@ export default {
   },
   data: () => ({
     loading: true,
+    isUpdated: false,
     order: {
       delivery_date: '',
       delivery_address: '',
@@ -129,11 +133,10 @@ export default {
       orderService.update(this.order.id, this.order)
         .then(response => {
           this.orderResponse = response.data
+          this.isUpdated = true
         })
         .catch(error => { console.log(error) })
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => { this.loading = false })
     }
   }
 }
