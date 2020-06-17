@@ -196,8 +196,9 @@ export default {
       ],
       categories: [
         { value: null, text: 'Seleccione una categoria' },
-        { value: 1, text: 'Categoria 1' },
-        { value: 2, text: 'Categoria 2' }
+        { value: 1, text: 'Regalos' },
+        { value: 2, text: 'Globos' },
+        { value: 3, text: 'Complementos' }
       ],
       subProductTitle: [
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
