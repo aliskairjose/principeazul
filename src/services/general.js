@@ -8,6 +8,6 @@ export default {
   async orderStatus () {
     const res = await axios.get('/order-statuses')
     return res.data
-  },
+  }
 
 }

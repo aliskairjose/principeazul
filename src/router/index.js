@@ -24,6 +24,11 @@ import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
 import BestSeller from '@/views/Reports/BestSeller.vue'
 import OrdersReport from '@/views/Reports/OrdersReport.vue'
 
+/* Calendar */
+/* -------------------- */
+import Calendar from '@/views/Calendar/Calendar.vue'
+/* End Calendar */
+
 /* Authentic View */
 import SignIn1 from '../views/AuthPages/Default/SignIn1'
 import SignUp1 from '../views/AuthPages/Default/SignUp1'
@@ -114,6 +119,16 @@ const reportRoutes = (prop, mode = false) => [
     meta: { dark: mode, auth: true, name: 'Reporte de ganancias' },
     component: OrdersReport
   }
+]
+
+const calendarRoutes = (prop, mode = false) => [
+  {
+    path: 'calendar-registry',
+    name: prop + '.calendar',
+    meta: { dark: mode, auth: true, name: 'Calendario de Registry' },
+    component: Calendar
+  }
+
 ]
 
 const clientRoutes = (prop, mode = false) => [
@@ -251,6 +266,13 @@ const routes = [
     component: Layout1,
     meta: { auth: true },
     children: reportRoutes('reports')
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: Layout1,
+    meta: { auth: true },
+    children: calendarRoutes('calendar')
   },
   {
     path: '/clients',
