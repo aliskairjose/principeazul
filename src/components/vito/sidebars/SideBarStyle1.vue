@@ -17,6 +17,11 @@
       <nav class="iq-sidebar-menu" :class="horizontal ? 'd-xl-none' : ''">
         <List :items="items" :open="true" :horizontal="horizontal"/>
       </nav>
+      <div class="d-inline-block w-100 text-center p-3">
+        <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}
+          <i class="ri-login-box-line ml-2"></i>
+        </a>
+      </div>
       <div class="p-3"></div>
     </div>
   </div>
@@ -40,6 +45,13 @@ export default {
   methods: {
     miniSidebar () {
       this.$emit('toggle')
+    },
+    logout () {
+      console.log('logout')
+      localStorage.removeItem('user')
+      localStorage.removeItem('access_token')
+      // this.$router.push({ name: 'auth1.sign-in1' })
+      window.location.assign('/auth/sign-in')
     }
   },
   data () {

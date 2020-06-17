@@ -7,18 +7,22 @@ import Default from '../layouts/BlankLayout'
 
 /* Dashboards View */
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
+import Home from '@/views/Dashboards/Home.vue'
 import Client from '@/views/Clients/Client.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import Product from '@/views/Product/Product.vue'
 import ProductList from '@/views/Product/ProductList.vue'
 import Order from '@/views/Orders/Order.vue'
 import OrderList from '@/views/Orders/OrderList.vue'
+import User from '@/views/Users/User.vue'
+import UserList from '@/views/Users/UserList.vue'
 import Callback from '@/views/AuthPages/Default/Callback'
 
 /* Reports */
 /* Products movements */
 import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
-/* End Reports */
+import BestSeller from '@/views/Reports/BestSeller.vue'
+import OrdersReport from '@/views/Reports/OrdersReport.vue'
 
 /* Calendar */
 /* -------------------- */
@@ -45,6 +49,12 @@ const paRoutes = (prop, mode = false) => [
     name: prop + '.home',
     meta: { dark: mode, auth: true, name: 'Dashborad' },
     component: Dashboard1
+  },
+  {
+    path: 'home-2',
+    name: prop + '.home-2',
+    meta: { dark: mode, auth: true, name: 'Home' },
+    component: Home
   }
 ]
 
@@ -69,14 +79,46 @@ const orderRoutes = (prop, mode = false) => [
   }
 ]
 
+const userRoutes = (prop, mode = false) => [
+  {
+    path: 'add',
+    name: prop + '.add',
+    meta: { dark: mode, auth: true, name: 'Crear usuario' },
+    component: User
+  },
+  {
+    path: 'list',
+    name: prop + '.list',
+    meta: { dark: mode, auth: true, name: 'Lista de usuarios' },
+    component: UserList
+  },
+  {
+    path: 'edit/:id',
+    name: prop + '.edit',
+    meta: { dark: mode, auth: true, name: 'Editar usuario' },
+    component: User
+  }
+]
+
 const reportRoutes = (prop, mode = false) => [
   {
     path: 'products-movements',
     name: prop + '.productsMovements',
     meta: { dark: mode, auth: true, name: 'Movimientos de productos' },
     component: ProductsMovements
+  },
+  {
+    path: 'best-seller',
+    name: prop + '.bestSellers',
+    meta: { dark: mode, auth: true, name: 'Best sellers' },
+    component: BestSeller
+  },
+  {
+    path: 'order-report',
+    name: prop + '.orderReport',
+    meta: { dark: mode, auth: true, name: 'Reporte de ganancias' },
+    component: OrdersReport
   }
-
 ]
 
 const calendarRoutes = (prop, mode = false) => [
@@ -133,32 +175,32 @@ const productRoutes = (prop, mode = false) => [
 
 const authChildRoutes = (prop, mode = false) => [
   {
-    path: 'sign-in1',
-    name: prop + '.sign-in1',
+    path: 'sign-in',
+    name: prop + '.sign-in',
     meta: { dark: mode, auth: true },
     component: SignIn1
   },
   {
-    path: 'sign-up1',
-    name: prop + '.sign-up1',
+    path: 'sign-up',
+    name: prop + '.sign-up',
     meta: { dark: mode, auth: true },
     component: SignUp1
   },
   {
-    path: 'password-reset1',
-    name: prop + '.password-reset1',
+    path: 'password-reset',
+    name: prop + '.password-reset',
     meta: { dark: mode, auth: true },
     component: RecoverPassword1
   },
   {
-    path: 'lock-screen1',
-    name: prop + '.lock-screen1',
+    path: 'lock-screen',
+    name: prop + '.lock-screen',
     meta: { dark: mode, auth: true },
     component: LockScreen1
   },
   {
-    path: 'confirm-mail1',
-    name: prop + '.confirm-mail1',
+    path: 'confirm-mail',
+    name: prop + '.confirm-mail',
     meta: { dark: mode, auth: true },
     component: ConfirmMail1
   }
@@ -212,6 +254,13 @@ const routes = [
     children: orderRoutes('orders')
   },
   {
+    path: '/user',
+    name: 'user',
+    component: Layout1,
+    meta: { auth: true },
+    children: userRoutes('user')
+  },
+  {
     path: '/reports',
     name: 'reports',
     component: Layout1,
@@ -260,13 +309,13 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/auth/sign-in1', '/auth/sign-up1', '/dark/auth/sign-in1', '/dark/auth/sign-up1']
+  const publicPages = ['/auth/sign-in', '/auth/sign-up']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
   if (to.meta.auth) {
     if (authRequired && loggedIn === null) {
-      return next('/auth/sign-in1')
-    } else if (to.name === 'dashboard' || to.name === 'mini.dashboard') {
+      return next('/auth/sign-in')
+    } else if (to.name === 'dashboard') {
       return next('/home')
     }
   }

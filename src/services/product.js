@@ -5,6 +5,10 @@ export default {
     const res = await axios.get(`/products?${param}`)
     return res.data
   },
+  async bestSellers () {
+    const res = await axios.get('/products/best-sellers')
+    return res.data
+  },
   async getById (id) {
     const res = await axios.get(`/products/${id}`)
     return res.data

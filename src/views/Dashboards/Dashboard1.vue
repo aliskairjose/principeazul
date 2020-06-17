@@ -392,4 +392,9 @@ export default {
 .iq-card-body{
   flex: unset;
 }
+#spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 0;
+  }
 </style>
