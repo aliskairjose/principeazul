@@ -402,7 +402,6 @@ export default {
       this.loading = true
       orderService.getById(this.$route.params.id)
         .then(response => {
-          console.log(response.data)
           const data = response.data
           this.order = data
           this.payments = data.payments
