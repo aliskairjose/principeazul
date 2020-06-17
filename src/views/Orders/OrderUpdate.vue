@@ -12,13 +12,8 @@ import UpdateForm from './Forms/UpdateForm'
 export default {
   name: 'OrderUpdate',
   components: { UpdateForm },
-  data: () => ({
-  }),
-  mounted () {
-
-  },
-  methods: {
-
-  }
+  data: () => ({ }),
+  mounted () { },
+  methods: { }
 }
 </script>

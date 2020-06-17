@@ -94,17 +94,27 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mask } from 'vue-the-mask'
+import orderService from '@/services/order'
 
 export default {
   name: 'UpdateForm',
   directives: { mask },
+  mounted () {
+    const id = this.$route.params.id
+    orderService.getById(id)
+      .then(response => {
+        this.order = response.data
+      })
+      .catch(error => { console.log(error) })
+      .finally(() => { this.loading = false })
+  },
   computed: {
     ...mapGetters({
       orders: 'Setting/ordersState'
     })
   },
   data: () => ({
-    loading: false,
+    loading: true,
     order: {
       delivery_date: '',
       delivery_address: '',
@@ -112,6 +122,26 @@ export default {
       dedication: '',
       signature: ''
     }
-  })
+  }),
+  methods: {
+    onSubmit () {
+      this.loading = true
+      orderService.update(this.order.id, this.order)
+        .then(response => {
+          console.log(response)
+          this.orderResponse = response.data
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.loading = false })
+    }
+  }
 }
 </script>
+
+<style scoped>
+  #spinner {
+    z-index: 1000;
+    position: absolute;
+    left: 40%;
+  }
+</style>

@@ -206,7 +206,7 @@ const authChildRoutes = (prop, mode = false) => [
     component: ConfirmMail1
   },
   {
-    path: 'public',
+    path: 'public/:id',
     name: prop + '.update',
     meta: { dark: mode, auth: true },
     component: OrderUpdate
@@ -323,7 +323,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/auth/sign-in', '/auth/sign-up', '/form/public/order']
+  const publicPages = ['/auth/sign-in', '/auth/sign-up', '/form/public/order/:id']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
   if (to.meta.auth) {
