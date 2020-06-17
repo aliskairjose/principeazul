@@ -322,7 +322,7 @@
         <p class="h5 text-secondary" v-if="status === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
         <p class="h5 text-secondary" v-else>{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
 
-        <b-row class="mb-0" v-for="item in orderResponse.products" :key="item.id">
+        <b-row class="mb-0" v-for="item in orderProducts" :key="item.id">
           <b-col class="col-md-10">
             <label for class="text-dark text-capitalize">{{ item.name }}</label>
           </b-col>
@@ -333,18 +333,19 @@
 
         <b-row class="mt-4"></b-row>
 
-        <b-row v-for="item in orderResponse.payments" :key="item.id">
+        <b-row v-for="p in payments" :key="p.id">
           <b-col class="col-md-10">
-            <label for class="text-dark" v-if="item.amount > 0">{{ item.payment_method }}</label>
+            <label for class="text-dark" v-if="p.amount > 0">{{ p.payment_method }}</label>
           </b-col>
           <b-col class="col-md-2">
-            <label for class="text-primary" v-if="item.amount > 0">{{ item.amount }}$</label>
+            <label for class="text-primary" v-if="p.amount > 0">{{ p.amount }}$</label>
           </b-col>
         </b-row>
 
         <b-row class="mt-4"></b-row>
 
-        <label for class="text-primary">Formulario de datos</label>
+        <label for class="text-primary">Formulario de datos</label> <br>
+        <a :href="url">{{url}}</a> <br><br>
         <b-form-checkbox
           v-model="sendForm"
           name="sendForm"
@@ -401,6 +402,7 @@ export default {
       this.loading = true
       orderService.getById(this.$route.params.id)
         .then(response => {
+          console.log(response.data)
           const data = response.data
           this.order = data
           this.payments = data.payments
@@ -530,6 +532,9 @@ export default {
     }
   },
   computed: {
+    url () {
+      return `${window.location.origin}/form/public/${this.order.id}`
+    },
     finalPrice () {
       // Total a pagar
       let price = 0
