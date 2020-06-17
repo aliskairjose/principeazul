@@ -69,8 +69,8 @@
     "icon": "ri-bar-chart-grouped-line",
     "children": [
       {
-        "title": "Best Sellers",
-        "name": "Best Sellers",
+        "title": "Productos más vendidos",
+        "name": "Productos más vendidos",
         "is_heading": false,
         "is_active": false,
         "link": {

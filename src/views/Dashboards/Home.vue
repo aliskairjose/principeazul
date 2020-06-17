@@ -1,10 +1,10 @@
 <template>
   <b-container fluid>
     <b-row>
-      <b-col>
+      <b-col md="12">
         <iq-card>
           <template v-slot:body>
-            <div class="new-user-info">
+            <div class="d-flex align-items-center justify-content-between">
               <iframe
                 :src="iframeUrl"
                 frameborder="0"

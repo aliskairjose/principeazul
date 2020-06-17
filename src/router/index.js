@@ -103,9 +103,9 @@ const reportRoutes = (prop, mode = false) => [
     component: ProductsMovements
   },
   {
-    path: 'best-seller',
+    path: 'mas-vendidos',
     name: prop + '.bestSellers',
-    meta: { dark: mode, auth: true, name: 'Best sellers' },
+    meta: { dark: mode, auth: true, name: 'Productos más vendidos' },
     component: BestSeller
   },
   {
