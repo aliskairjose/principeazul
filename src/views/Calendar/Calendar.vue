@@ -32,20 +32,24 @@
 </template>
 
 <script>
+import { vito } from '../../config/pluginInit'
 import Fullcalendar from '@fullcalendar/vue'
 import DayGridPlugin from '@fullcalendar/daygrid'
 import TimeGridPlugin from '@fullcalendar/timegrid'
 import InteractionPlugin from '@fullcalendar/interaction'
 import ListPlugin from '@fullcalendar/list'
 import calendarService from '@/services/calendar'
-
 require('@fullcalendar/core/main.min.css')
 require('@fullcalendar/daygrid/main.min.css')
 require('@fullcalendar/timegrid/main.min.css')
 
 export default {
+  name: 'Calendar',
   created () {
     this.loadData()
+  },
+  mounted () {
+    vito.index()
   },
   data: () => ({
     calendarPlugins: [
@@ -81,3 +85,6 @@ export default {
   }
 }
 </script>
+<style lang="stylus" scoped>
+
+</style>

@@ -125,7 +125,7 @@ const calendarRoutes = (prop, mode = false) => [
   {
     path: 'calendar-registry',
     name: prop + '.calendar',
-    meta: { dark: mode, auth: true, name: 'Calendario de Registry' },
+    meta: { dark: mode, auth: true, name: 'Calendario de entregas' },
     component: Calendar
   }
 
@@ -268,8 +268,8 @@ const routes = [
     children: reportRoutes('reports')
   },
   {
-    path: '/orders',
-    name: 'orders',
+    path: '',
+    name: 'calendar',
     component: Layout1,
     meta: { auth: true },
     children: calendarRoutes('calendar')
