@@ -132,6 +132,7 @@ import { vito } from '../../config/pluginInit'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import productService from '@/services/product'
+import categoryService from '@/services/category'
 import { VMoney } from 'v-money'
 import ModalTable from '@/components/Modals/ModalTable'
 
@@ -149,6 +150,21 @@ export default {
           if (r.type === 'additional') {
             this.subProducts.push(r)
           }
+        })
+      })
+      .catch((error) => { console.log(error) })
+
+    categoryService.getAll()
+      .then(response => {
+        const data = response.data
+        this.category.value = null
+        this.category.text = 'Seleccione un tipo'
+        this.categories.push(this.category)
+        data.map(r => {
+          this.category = {}
+          this.category.value = r.id
+          this.category.text = r.name
+          this.categories.push(this.category)
         })
       })
       .catch((error) => { console.log(error) })
@@ -194,12 +210,8 @@ export default {
         { value: 'principal', text: 'Principal' },
         { value: 'additional', text: 'Adicional' }
       ],
-      categories: [
-        { value: null, text: 'Seleccione una categoria' },
-        { value: 1, text: 'Regalos' },
-        { value: 2, text: 'Globos' },
-        { value: 3, text: 'Complementos' }
-      ],
+      categories: [],
+      category: {},
       subProductTitle: [
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
