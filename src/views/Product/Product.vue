@@ -58,10 +58,9 @@
                     <b-form-group class="col-md-6" label="Categoría:" label-for="category" lot-scope="{ valid, errors }">
                       <ValidationProvider name="Categoria" rules="required" v-slot="{ errors }">
                         <b-form-select
-                          :state="errors[0] ? false : (selectedCategory ? true : null)"
-                          v-model="selectedCategory"
-                          :options="categories"
-                          @change="onCategoryChange">
+                          :state="errors[0] ? false : (product.category_id ? true : null)"
+                          v-model="product.category_id"
+                          :options="categories">
                         </b-form-select>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
@@ -71,10 +70,9 @@
                     <b-form-group class="col-md-6" label="Tipo:" label-for="type">
                       <ValidationProvider name="Tipo" rules="required" v-slot="{ errors }">
                         <b-form-select
-                          :state="errors[0] ? false : (selectedType ? true : null)"
-                          v-model="selectedType"
-                          :options="types"
-                          @change="onTypeChange()">
+                          :state="errors[0] ? false : (product.type ? true : null)"
+                          v-model="product.type"
+                          :options="types">
                         </b-form-select>
                          <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
@@ -238,12 +236,6 @@ export default {
     },
     addSubproduct () {
       // alert('agregar subproducto')
-    },
-    onTypeChange () {
-      this.product.type = this.selectedType
-    },
-    onCategoryChange () {
-      this.product.category_id = this.selectedCategory
     },
     addSub (item) {
       // Captura el item del componente hijo SubProductTable
