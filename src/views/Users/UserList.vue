@@ -67,6 +67,9 @@
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
                     @filtered="onFiltered">
+                    <template v-slot:cell(role)="users">
+                      {{users.item.role | capitalize}}
+                    </template>
                     <template v-slot:cell(action)="users">
                       <b-button
                         v-b-tooltip.top="'Editar'"

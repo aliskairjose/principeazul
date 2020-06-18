@@ -86,6 +86,7 @@ export default {
         if (response) {
           localStorage.setItem('user', JSON.stringify(resp.data))
           localStorage.setItem('access_token', resp.access_token)
+          this.$user.set(Object.assign(resp.data))
           this.$router.push({ name: 'dashboard.home' })
         } else if (response.data.errors.length > 0) {
           this.$refs.form.setErrors(response.data.errors)
