@@ -12,9 +12,6 @@
           </div>
         </b-alert>
         <iq-card>
-          <!-- <template v-slot:headerTitle>
-            <h4 class="card-title mt-3">Lista de ordenes</h4>
-          </template> -->
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-show="isRemoving" id="removing">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>

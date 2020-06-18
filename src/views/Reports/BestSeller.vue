@@ -2,15 +2,6 @@
    <b-container fluid>
     <b-row>
       <b-col md="12">
-        <b-alert :show="isShow" variant="success" class="bg-white" id="alert">
-          <div class="iq-alert-icon">
-            <i class="ri-alert-line"></i>
-          </div>
-          <div class="iq-alert-text">
-            El registro ha sido
-            <b>eliminado</b> con éxito!
-          </div>
-        </b-alert>
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
@@ -18,29 +9,8 @@
             </b-col>
             <b-row v-else align-h="between">
               <b-col md="12" class="my-1 text-center">
-                <!-- <div class="row">
-                  <div class="col-md-3">
-                    Selecciona un tipo
-                    <b-form-select v-model="filters.type" :options="options.type" size="sm" ></b-form-select>
-                  </div>
-                  <div class="col-md-3">
-                    Productos
-                    <b-form-select v-model="filters.products" multiple :options="options.products" size="sm" ></b-form-select>
-                  </div>
-                  <div class="col-md-3">
-                    Fecha inicial
-                    <b-form-input v-model="filters.initDate" type="date"></b-form-input>
-                  </div>
-                  <div class="col-md-3">
-                    Fecha final
-                    <b-form-input v-model="filters.endDate" type="date"></b-form-input>
-                  </div>
-                </div> -->
                 <b-row align-h="end" class="mb-2 mt-2" >
                   <div class="col-md-2 text-right">
-                    <!-- <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
-                      <i class="ri-search-line"></i>
-                    </b-button> -->
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
                       <i class="ri-download-cloud-line"></i>
                       </b-button>
@@ -57,7 +27,7 @@
               <template v-else>
                 <b-col md="12" class="table-responsive">
                   <b-table
-                     ref="content"
+                    ref="content"
                     striped
                     bordered
                     hover
@@ -70,7 +40,7 @@
                     :current-page="currentPage"
                     @filtered="onFiltered">
                     <template v-slot:cell(name)="results">
-                      {{ results.item.name | capitalize}}
+                      <label for="" class="text-capitalize">{{ results.item.name }}</label>
                     </template>
                     <template v-slot:cell(created_at)="results">
                       {{results.item.created_at | formatDate}}

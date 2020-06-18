@@ -2,15 +2,6 @@
    <b-container fluid>
     <b-row>
       <b-col md="12">
-        <b-alert :show="isShow" variant="success" class="bg-white" id="alert">
-          <div class="iq-alert-icon">
-            <i class="ri-alert-line"></i>
-          </div>
-          <div class="iq-alert-text">
-            El registro ha sido
-            <b>eliminado</b> con éxito!
-          </div>
-        </b-alert>
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
@@ -45,11 +36,6 @@
                       <i class="ri-download-cloud-line"></i>
                       </b-button>
                   </div>
-                  <!-- <div class="col-md-2 text-left">
-                    <b-button variant="outline-success" @click="exportPDF">
-                      <i class="ri-download-cloud-line"></i>
-                      </b-button>
-                  </div> -->
                 </b-row>
               </b-col>
               <template v-if="results.length === 0">
@@ -75,7 +61,7 @@
                     :current-page="currentPage"
                     @filtered="onFiltered">
                     <template v-slot:cell(name)="results">
-                      {{ results.item.name | capitalize}}
+                      <label for="" class="text-capitalize">{{ results.item.name }}</label>
                     </template>
                     <template v-slot:cell(created_at)="results">
                       {{results.item.created_at | formatDate}}
