@@ -11,38 +11,9 @@
           <ul class="navbar-nav ml-auto navbar-list">
             <li class="nav-item">
               <a href="javascript:void(0)" class="iq-waves-effect" :class="cartCount > 0 ? 'search-toggle' : ''">
-                <!-- <i class="ri-shopping-cart-2-line" />
-                <span class="menu-tag ml-2">{{ cartCount }}</span> -->
               </a>
-              <!-- <div class="iq-sub-dropdown">
-                <div class="iq-card shadow-none m-0">
-                  <div class="iq-card-body p-0 ">
-                    <div class="bg-primary p-3">
-                      <h5 class="mb-0 text-white">{{ $t('nav.allCarts') }}</h5>
-                    </div>
-                    <div class="iq-sub-card" v-for="(item, index) in cartItems" :key="index">
-                      <div class="media align-items-center">
-                        <div class="w-20 text-center d-none justify-content-center d-md-block">
-                          <img :src="item.image" :alt="item.name" class="w-100 align-self-center mr-3" />
-                        </div>
-                        <div class="media-body ml-3">
-                          <b-button variant=" iq-bg-danger mt-3" size="sm" class="float-right" @click="removeToCart(item)">X</b-button>
-                          <h6 class="mb-0 ">{{ item.name.substring(0,20) + '...' }}</h6>
-                          <p class="mb-0 font-size-12">{{ item.description.substring(0,20) + '...' }}</p>
-                          <p class="mb-0"><b>$ {{ item.price }}</b></p>
-                        </div>
-                      </div>
-                    </div>
-                    <router-link :to="{ name: 'app.e-commerce.cart'}"><b-button variant=" iq-bg-primary" block><i class="fas fa-cart-plus"/>{{ $t('nav.viewCarts') }}</b-button></router-link>
-                  </div>
-                </div>
-              </div> -->
             </li>
             <li class="nav-item">
-              <!-- <a href="#" class="search-toggle iq-waves-effect">
-                <lottie :option="require('../assets/images/small/lottie-bell')" id="lottie-beil" />
-                <span class="bg-danger dots"></span>
-              </a> -->
               <div class="iq-sub-dropdown">
                 <div class="iq-card shadow-none m-0">
                   <div class="iq-card-body p-0 ">
@@ -65,32 +36,6 @@
                 </div>
               </div>
             </li>
-            <!-- <li class="nav-item">
-              <a href="#" class="search-toggle iq-waves-effect">
-                <lottie :option="require('../assets/images/small/lottie-mail')" id="lottie-mail" />
-                <span class="bg-primary count-mail"></span>
-              </a>
-              <div class="iq-sub-dropdown">
-                <div class="iq-card shadow-none m-0">
-                  <div class="iq-card-body p-0 ">
-                    <div class="bg-primary p-3">
-                      <h5 class="mb-0 text-white">{{ $t('nav.allMessages') }}<small class="badge  badge-light float-right pt-1">5</small></h5>
-                    </div>
-                    <a href="#" class="iq-sub-card" v-for="(item,index) in message" :key="index">
-                      <div class="media align-items-center">
-                        <div class="">
-                          <img class="avatar-40 rounded" :src="item.image" alt="img">
-                        </div>
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 ">{{ item.name }}</h6>
-                          <small class="float-left font-size-12">{{ item.date }}</small>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li> -->
           </ul>
         </template>
         <template slot="right">
@@ -193,6 +138,8 @@ import Loader from '../components/vito/loader/Loader'
 import SideBarStyle1 from '../components/vito/sidebars/SideBarStyle1'
 import NavBarStyle1 from '../components/vito/navbars/NavBarStyle1'
 import SideBarItems from '../FackApi/json/SideBar'
+import MenuTaller from '../FackApi/json/SideBarTaller'
+import MenuVentas from '../FackApi/json/SideBarVentas'
 import HorizontalItems from '../FackApi/json/HorizontalMenu'
 import profile from '../assets/images/user/user-1.jpeg'
 import loader from '../assets/images/loader.gif'
@@ -214,6 +161,12 @@ export default {
     this.updateRadio()
     body.classList.remove('sidebar-main-active')
     body.classList.remove('right-column-fixed')
+    if (this.$user.get().role === 'taller') {
+      this.verticalMenu = MenuTaller
+    }
+    if (this.$user.get().role === 'ventas') {
+      this.verticalMenu = MenuVentas
+    }
     if (this.$route.meta.dark) {
       body.classList.add('dark')
       body.classList.remove('light')

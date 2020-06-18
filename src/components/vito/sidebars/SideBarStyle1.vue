@@ -32,6 +32,8 @@
 import List from '../menus/ListStyle1'
 export default {
   name: 'SideBarStyle1',
+  mounted () {
+  },
   props: {
     homeURL: { type: Object, default: () => ({ name: 'layout1.dashboard' }) },
     items: { type: Array },
@@ -47,10 +49,8 @@ export default {
       this.$emit('toggle')
     },
     logout () {
-      console.log('logout')
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
-      // this.$router.push({ name: 'auth1.sign-in1' })
       window.location.assign('/auth/sign-in')
     }
   },
