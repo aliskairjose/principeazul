@@ -133,6 +133,7 @@ export default {
   methods: {
     loadData () {
       this.loading = true
+      this.index = this.idList.indexOf(this.dataId)
       orderService.getById(this.dataId)
         .then(response => {
           this.data = response.data

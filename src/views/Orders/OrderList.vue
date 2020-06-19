@@ -140,7 +140,6 @@
       ref="orderDetailModal"
       size="lg"
       id="modal-1"
-      title="Detalles de la orden"
       cancel-title="Cancelar"
       ok-only
       no-close-on-esc
