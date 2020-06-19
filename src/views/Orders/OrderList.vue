@@ -148,6 +148,7 @@
       hide-header-close>
         <OrderDetailComponent
           :dataId="orderId"
+          :idList="ids"
         >
         </OrderDetailComponent>
       </b-modal>
@@ -166,6 +167,9 @@ export default {
     orderService.getAll()
       .then(response => {
         this.orders = response.data
+        this.orders.map(r => {
+          this.ids.push(r.id)
+        })
       })
       .catch(() => { })
       .finally(() => { this.loading = false })
@@ -176,6 +180,7 @@ export default {
   },
   data () {
     return {
+      ids: [],
       role: '',
       orderId: '',
       orders: [],

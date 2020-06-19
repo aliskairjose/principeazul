@@ -4,6 +4,9 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
+            <b-col md="12" class="text-center spinner" v-if="loading">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </b-col>
             <b-row>
               <b-col md="12" class="mb-4">
                 <h4>Detalles de la orden #{{data.id}}</h4>
@@ -45,10 +48,10 @@
             </b-row>
             <b-row align-h="center" class="mt-3" v-show="isEnable">
               <b-col md="4">
-                <b-button variant="outline-primary">Orden Anterior</b-button>
+                <b-button variant="outline-primary" v-show="index > 0 ? true : false" @click="prev">Orden Anterior</b-button>
               </b-col>
               <b-col md="4">
-                <b-button variant="outline-primary">Orden Siguiente</b-button>
+                <b-button variant="outline-primary" @click="next">Orden Siguiente</b-button>
               </b-col>
             </b-row>
           </template>
@@ -65,24 +68,21 @@ import orderService from '@/services/order'
 export default {
   name: 'OrderDetailComponent',
   props: {
-    dataId: { type: Number }
+    dataId: { type: Number },
+    idList: { type: Array }
   },
   mounted () {
     vito.index()
     if (localStorage.getItem('role') === 'taller') {
       this.isEnable = true
     }
-    orderService.getById(this.dataId)
-      .then(response => {
-        console.log(response.data)
-        this.data = response.data
-      })
-      .catch(error => { console.log(error) })
-      .finally(() => { this.loading = false })
+    this.loadData()
   },
   data () {
     return {
+      loading: true,
       isEnable: false,
+      index: '',
       data: {
         client: {
           name: '',
@@ -90,6 +90,26 @@ export default {
           email: ''
         }
       }
+    }
+  },
+  methods: {
+    loadData () {
+      orderService.getById(this.dataId)
+        .then(response => {
+          this.data = response.data
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.loading = false })
+    },
+    prev () {
+      this.index = this.idList.indexOf(this.dataId) - 1
+      this.dataId = this.idList[this.index]
+      this.loadData()
+    },
+    next () {
+      this.index = this.idList.indexOf(this.dataId) + 1
+      this.dataId = this.idList[this.index]
+      this.loadData()
     }
   }
 }
