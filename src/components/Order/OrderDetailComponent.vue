@@ -37,7 +37,7 @@
               <div v-for="(item, index) in data.products" :key="item.id" class="product-info">
                 <b-row md="12">
                   <b-col md="6">
-                    {{ item.name }} | {{item.showDetails}}
+                    {{ item.name }}
                   </b-col>
                   <b-col md="4">
                     <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
@@ -63,14 +63,13 @@
                       <tr v-for="x in item.additionals" :key="x.id" class="text-muted text-capitalize text-muted text-center">
                         <td>{{ x.id }}</td>
                         <td>
-                          <!-- <b-img
+                          <b-img
                             v-viewer="{movable: false}"
                             center
                             rounded="circle"
                             :src="x.image ? products.item.image : require(`@/assets/images/no-image.png`)"
-                            id="image"
-                            class="">
-                          </b-img> -->
+                            class="image">
+                          </b-img>
                         </td>
                         <td>{{ x.name }}</td>
                         <td>{{ x.quantity }}</td>
@@ -162,5 +161,9 @@ export default {
     border: 1px solid black;
     margin-bottom: 5px;
     padding: 5px;
+  }
+  .image {
+    width: 64px;
+    height: auto;
   }
 </style>
