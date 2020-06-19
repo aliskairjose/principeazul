@@ -147,7 +147,6 @@ import darkLoader from '../assets/images/darkMode/dark-logo.gif'
 import { vito } from '../config/pluginInit'
 import { Users } from '../FackApi/api/chat'
 import { mapGetters, mapActions } from 'vuex'
-// import Lottie from '../components/vito/lottie/Lottie'
 let body = document.querySelector('body')
 export default {
   name: 'Layout1',
@@ -157,14 +156,15 @@ export default {
     NavBarStyle1
   },
   mounted () {
+    const role = localStorage.getItem('role')
     this.$i18n.locale = 'sp'
     this.updateRadio()
     body.classList.remove('sidebar-main-active')
     body.classList.remove('right-column-fixed')
-    if (this.$user.get().role === 'taller') {
+    if (role === 'taller') {
       this.verticalMenu = MenuTaller
     }
-    if (this.$user.get().role === 'ventas') {
+    if (role === 'ventas') {
       this.verticalMenu = MenuVentas
     }
     if (this.$route.meta.dark) {

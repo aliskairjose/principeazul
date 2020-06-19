@@ -81,6 +81,13 @@
                     </template>
                     <template v-slot:cell(action)="orders">
                       <b-button
+                        v-b-tooltip.top="'Ver detalles'"
+                        variant=" iq-bg-info mr-1 mb-1"
+                        size="sm"
+                        @click="details(orders.item)">
+                        <i class="ri-search-line m-0"></i>
+                      </b-button>
+                      <b-button
                         v-b-tooltip.top="'Editar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
@@ -129,15 +136,32 @@
         </iq-card>
       </b-col>
     </b-row>
+    <b-modal
+      ref="orderDetailModal"
+      size="lg"
+      id="modal-1"
+      title="Detalles de la orden"
+      cancel-title="Cancelar"
+      ok-only
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-header-close>
+        <OrderDetailComponent
+          :data="order"
+        >
+        </OrderDetailComponent>
+      </b-modal>
   </b-container>
 </template>
 
 <script>
 import { vito } from '../../config/pluginInit'
 import orderService from '@/services/order'
+import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 
 export default {
   name: 'OrderList',
+  components: { OrderDetailComponent },
   created () {
     orderService.getAll()
       .then(response => {
@@ -151,6 +175,7 @@ export default {
   },
   data () {
     return {
+      order: {},
       orders: [],
       sortBy: '',
       loading: true,
@@ -188,6 +213,16 @@ export default {
     },
     edit (item) {
       this.$router.push({ name: 'orders.edit', params: { id: item.id } })
+    },
+    details (item) {
+      if (this.$user.get().role === 'admin') {
+        this.$router.push({ name: 'orders.details', params: { id: item.id } })
+      }
+      if (this.$user.get().role === 'taller') {
+        // Abrir el modal
+        this.order = item
+        this.$refs['orderDetailModal'].show()
+      }
     }
   }
 }

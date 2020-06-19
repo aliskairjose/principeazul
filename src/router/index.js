@@ -7,13 +7,13 @@ import Default from '../layouts/BlankLayout'
 
 /* Dashboards View */
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
-import Home from '@/views/Dashboards/Home.vue'
 import Client from '@/views/Clients/Client.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import Product from '@/views/Product/Product.vue'
 import ProductList from '@/views/Product/ProductList.vue'
 import Order from '@/views/Orders/Order.vue'
 import OrderList from '@/views/Orders/OrderList.vue'
+import OderDetail from '@/views/Orders/OrderDetail.vue'
 import OrderUpdate from '@/views/Orders/OrderUpdate.vue'
 import User from '@/views/Users/User.vue'
 import UserList from '@/views/Users/UserList.vue'
@@ -52,10 +52,10 @@ const paRoutes = (prop, mode = false) => [
     component: Dashboard1
   },
   {
-    path: 'home-2',
-    name: prop + '.home-2',
-    meta: { dark: mode, auth: true, name: 'Home' },
-    component: Home
+    path: 'home-taller',
+    name: prop + '.taller',
+    meta: { dark: mode, auth: true, name: 'Home taller' },
+    component: OrderList
   }
 ]
 
@@ -77,6 +77,12 @@ const orderRoutes = (prop, mode = false) => [
     name: prop + '.edit',
     meta: { dark: mode, auth: true, name: 'Editar orden' },
     component: Order
+  },
+  {
+    path: 'details/:id',
+    name: prop + '.details',
+    meta: { dark: mode, auth: true, name: 'Detalles de la orden' },
+    component: OderDetail
   }
 ]
 
