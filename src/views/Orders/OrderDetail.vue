@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <OrderDetailComponent
-      :data="order"
+      :dataId="$route.params.id"
     >
     </OrderDetailComponent>
   </b-container>
@@ -9,36 +9,18 @@
 
 <script>
 import { vito } from '../../config/pluginInit'
-import orderService from '@/services/order'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 
 export default {
   name: 'OrderDetail',
   components: { OrderDetailComponent },
-  created () {
-
-  },
+  created () { },
   mounted () {
     vito.index()
-    const id = this.$route.params.id
-    orderService.getById(id)
-      .then(response => {
-        this.order = response.data
-      })
-      .catch(error => { console.log(error) })
-      .finally(() => { this.loading = false })
   },
   data () {
     return {
-      loading: true,
-      order: {
-        client: {
-          name: '',
-          email: '',
-          phone: '',
-          address: ''
-        }
-      }
+      loading: true
     }
   }
 }

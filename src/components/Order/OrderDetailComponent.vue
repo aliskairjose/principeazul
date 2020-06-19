@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-row>
-      <b-col lg="12">
+      <b-col md="12">
         <iq-card>
           <template v-slot:body>
             <b-row>
@@ -32,7 +32,7 @@
               </b-col>
              <b-col>
               <b-row md="12" v-for="item in data.products" :key="item.id">
-                <b-col md="2">
+                <b-col md="6">
                   {{ item.name }}
                 </b-col>
                 <b-col md="4">
@@ -43,6 +43,14 @@
               </b-row>
              </b-col>
             </b-row>
+            <b-row align-h="center" class="mt-3" v-show="isEnable">
+              <b-col md="4">
+                <b-button variant="outline-primary">Orden Anterior</b-button>
+              </b-col>
+              <b-col md="4">
+                <b-button variant="outline-primary">Orden Siguiente</b-button>
+              </b-col>
+            </b-row>
           </template>
         </iq-card>
       </b-col>
@@ -52,14 +60,37 @@
 
 <script>
 import { vito } from '../../config/pluginInit'
+import orderService from '@/services/order'
 
 export default {
   name: 'OrderDetailComponent',
   props: {
-    data: { type: Object }
+    dataId: { type: Number }
   },
   mounted () {
     vito.index()
+    if (localStorage.getItem('role') === 'taller') {
+      this.isEnable = true
+    }
+    orderService.getById(this.dataId)
+      .then(response => {
+        console.log(response.data)
+        this.data = response.data
+      })
+      .catch(error => { console.log(error) })
+      .finally(() => { this.loading = false })
+  },
+  data () {
+    return {
+      isEnable: false,
+      data: {
+        client: {
+          name: '',
+          phone: '',
+          email: ''
+        }
+      }
+    }
   }
 }
 </script>

@@ -147,7 +147,7 @@
       no-close-on-backdrop
       hide-header-close>
         <OrderDetailComponent
-          :data="order"
+          :dataId="orderId"
         >
         </OrderDetailComponent>
       </b-modal>
@@ -172,10 +172,12 @@ export default {
   },
   mounted () {
     vito.index()
+    this.role = localStorage.getItem('role')
   },
   data () {
     return {
-      order: {},
+      role: '',
+      orderId: '',
       orders: [],
       sortBy: '',
       loading: true,
@@ -215,13 +217,12 @@ export default {
       this.$router.push({ name: 'orders.edit', params: { id: item.id } })
     },
     details (item) {
-      console.log('details')
-      if (this.$user.get().role === 'admin') {
+      if (this.role === 'admin') {
         this.$router.push({ name: 'orders.details', params: { id: item.id } })
       }
-      if (this.$user.get().role === 'taller') {
+      if (this.role === 'taller') {
         // Abrir el modal
-        this.order = item
+        this.orderId = item.id
         this.$refs['orderDetailModal'].show()
       }
     }
