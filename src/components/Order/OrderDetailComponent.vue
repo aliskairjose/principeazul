@@ -37,11 +37,11 @@
               <div v-for="(item, index) in data.products" :key="item.id" class="product-info">
                 <b-row md="12">
                   <b-col md="6">
-                    {{ item.name }}
+                    <label for="" class="text-muted text-capitalize">{{ item.name }}</label>
                   </b-col>
                   <b-col md="4">
                     <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
-                      {{ a.name }}
+                      <label for="" class="text-muted text-capitalize">{{ a.name }}</label>
                     </label>
                   </b-col>
                   <b-col md="1">
@@ -71,7 +71,9 @@
                             class="image">
                           </b-img>
                         </td>
-                        <td>{{ x.name }}</td>
+                        <td>
+                          <label for="" class="text-muted text-capitalize">{{ x.name }}</label>
+                        </td>
                         <td>{{ x.quantity }}</td>
                       </tr>
                     </table>
