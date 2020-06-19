@@ -18,7 +18,7 @@ export default {
   mounted () {
     const loggedIn = localStorage.getItem('access_token')
     if (loggedIn !== undefined && loggedIn !== null) {
-      this.$router.push({ name: 'mini.dashboard.home-2' })
+      this.$router.push({ name: 'dashboard.home' })
     }
   },
   methods: {
