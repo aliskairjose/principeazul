@@ -215,6 +215,7 @@ export default {
       this.$router.push({ name: 'orders.edit', params: { id: item.id } })
     },
     details (item) {
+      console.log('details')
       if (this.$user.get().role === 'admin') {
         this.$router.push({ name: 'orders.details', params: { id: item.id } })
       }
