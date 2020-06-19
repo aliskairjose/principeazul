@@ -48,10 +48,10 @@
             </b-row>
             <b-row align-h="center" class="mt-3" v-show="isEnable">
               <b-col md="4">
-                <b-button variant="outline-primary" v-show="index > 0 ? true : false" @click="prev">Orden Anterior</b-button>
+                <b-button variant="outline-primary" v-show="index > 0 ? true : false" @click="prevNext(-1)">Orden Anterior</b-button>
               </b-col>
               <b-col md="4">
-                <b-button variant="outline-primary" @click="next">Orden Siguiente</b-button>
+                <b-button variant="outline-primary" @click="prevNext(1)">Orden Siguiente</b-button>
               </b-col>
             </b-row>
           </template>
@@ -101,13 +101,8 @@ export default {
         .catch(error => { console.log(error) })
         .finally(() => { this.loading = false })
     },
-    prev () {
-      this.index = this.idList.indexOf(this.dataId) - 1
-      this.dataId = this.idList[this.index]
-      this.loadData()
-    },
-    next () {
-      this.index = this.idList.indexOf(this.dataId) + 1
+    prevNext (i) {
+      this.index = this.idList.indexOf(this.dataId) + i
       this.dataId = this.idList[this.index]
       this.loadData()
     }
