@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <OrderDetailComponent
-      :dataId="id"
+      :dataId="$route.params.id"
       :idList="ids"
     >
     </OrderDetailComponent>
@@ -29,7 +29,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

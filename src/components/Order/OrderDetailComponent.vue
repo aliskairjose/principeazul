@@ -121,6 +121,14 @@ export default {
       showDetails: '',
       index: '',
       data: {
+        delivery_address: '',
+        created_at: '',
+        addressee: '',
+        delivery_date: '',
+        mode: '',
+        type: '',
+        dedication: '',
+        signature: '',
         status: '',
         showDetails: false,
         client: {
