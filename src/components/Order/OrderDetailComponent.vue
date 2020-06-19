@@ -94,6 +94,7 @@ export default {
   },
   methods: {
     loadData () {
+      this.loading = true
       orderService.getById(this.dataId)
         .then(response => {
           this.data = response.data
