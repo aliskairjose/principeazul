@@ -1,7 +1,8 @@
 <template>
   <b-container fluid>
     <OrderDetailComponent
-      :dataId="$route.params.id"
+      :dataId="id"
+      :idList="ids"
     >
     </OrderDetailComponent>
   </b-container>
@@ -17,9 +18,12 @@ export default {
   created () { },
   mounted () {
     vito.index()
+    this.id = this.$route.params.id
   },
   data () {
     return {
+      id: '',
+      ids: [],
       loading: true
     }
   }

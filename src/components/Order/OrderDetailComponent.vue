@@ -121,6 +121,7 @@ export default {
       showDetails: '',
       index: '',
       data: {
+        status: '',
         showDetails: false,
         client: {
           name: '',
