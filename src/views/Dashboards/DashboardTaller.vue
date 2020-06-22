@@ -17,14 +17,25 @@
         </iq-card>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col md="12">
+        <iq-card>
+          <template v-slot:body>
+            <OrderList></OrderList>
+          </template>
+        </iq-card>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script>
 import { vito } from '../../config/pluginInit'
+import OrderList from '@/views/Orders/OrderList'
 
 export default {
   name: 'DasboardTaller',
+  components: { OrderList },
   mounted () {
     vito.index()
     let jwt = require('jsonwebtoken')
