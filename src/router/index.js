@@ -7,6 +7,7 @@ import Default from '../layouts/BlankLayout'
 
 /* Dashboards View */
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
+import DashboardTaller from '@/views/Dashboards/DashboardTaller.vue'
 import Client from '@/views/Clients/Client.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import Product from '@/views/Product/Product.vue'
@@ -55,7 +56,8 @@ const paRoutes = (prop, mode = false) => [
     path: 'home-taller',
     name: prop + '.taller',
     meta: { dark: mode, auth: true, name: 'Home taller' },
-    component: OrderList
+    component: DashboardTaller
+    // component: OrderList
   }
 ]
 
