@@ -91,12 +91,12 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-4" label-for="type" v-show="selectedType === 'principal'">
+                    <b-form-group class="col-md-4" label-for="type" v-show="product.type === 'principal'">
                         <b-button block v-b-modal.modal-lg variant="outline-primary" @click="addSubproduct" v-b-modal.modal-1>
                           Agregar subproductos
                         </b-button>
                     </b-form-group>
-                    <b-form-group class="col-md-2" label-for="type" v-show="selectedType === 'principal'">
+                    <b-form-group class="col-md-2" label-for="type" v-show="product.type === 'principal'">
                       <h6 class="mb-3"> Agregados <b-badge variant="info">{{subs}}</b-badge></h6>
                     </b-form-group>
                     <b-form-group class="col-md-12" >
@@ -154,16 +154,6 @@ export default {
   },
   directives: { money: VMoney },
   created () {
-    productService.getAll('type=additional')
-      .then(response => {
-        response.data.map(r => {
-          if (r.type === 'additional') {
-            this.subProducts.push(r)
-          }
-        })
-      })
-      .catch((error) => { console.log(error) })
-
     categoryService.getAll()
       .then(response => {
         const data = response.data
@@ -178,10 +168,14 @@ export default {
         })
       })
       .catch((error) => { console.log(error) })
-
     if (this.getStatus() === 'add') {
       this.title = 'Agregar nuevo producto'
       this.btnTitle = 'Nuevo producto'
+      productService.getAll('type=additional')
+        .then(response => {
+          this.subProducts = response.data
+        })
+        .catch((error) => { console.log(error) })
     }
     if (this.getStatus() === 'edit') {
       this.loading = true
@@ -189,7 +183,9 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
+          console.log(response.data)
           this.product = response.data
+          this.subProducts = this.product.additionals
           this.selectedType = this.product.type
           this.selectedCategory = this.product.category_id
         })
@@ -202,16 +198,14 @@ export default {
     return {
       isShow: false,
       loading: false,
-      selectedType: null,
-      selectedCategory: null,
       subs: 0,
       money: {},
       product: {
         name: '',
         description: '',
         price: null,
-        category_id: 0,
-        type: '',
+        category_id: null,
+        type: null,
         image: '',
         additionals: []
       },
