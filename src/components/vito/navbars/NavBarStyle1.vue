@@ -95,7 +95,7 @@ export default {
       this.showSearch = false
       this.showMenu = ''
       this.globalSearch = ''
-      document.getElementById('searchbox-datalink').classList.remove('show-data')
+      // document.getElementById('searchbox-datalink').classList.remove('show-data')
     }
   }
 }
