@@ -183,9 +183,11 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
-          console.log(response.data)
           this.product = response.data
           this.subProducts = this.product.additionals
+          this.subProducts.map(r => {
+            r.quantity = r.pivot.quantity
+          })
           this.selectedType = this.product.type
           this.selectedCategory = this.product.category_id
         })
@@ -220,7 +222,7 @@ export default {
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
-        { label: 'Cantidad', key: 'pivot.quantity', class: 'text-center', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       subProducts: [ ],
