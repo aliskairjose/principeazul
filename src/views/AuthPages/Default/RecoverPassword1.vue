@@ -31,11 +31,8 @@
       </form>
     </div>
     <div>
-      <b-alert :show="isSuccess" variant="success">
-        <div class="iq-alert-icon">
-          <i class="ri-alert-line"></i>
-        </div>
-        <div class="iq-alert-text">Su contraseña ha sido restablecida con exito</div>
+      <b-alert :show="isSuccess" variant="success" class="mt-4">
+        <div class="iq-alert-text">Se ha enviado una nueva contraseña a su buzón de correo!</div>
       </b-alert>
     </div>
   </ValidationObserver>
