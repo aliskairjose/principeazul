@@ -20,5 +20,9 @@ export default {
   async delete (id) {
     const res = await axios.delete(`/orders/${id}`)
     return res.data
+  },
+  async emailForm (id) {
+    const res = await axios.get(`/orders/email-additional-data/${id}`)
+    return res.data
   }
 }

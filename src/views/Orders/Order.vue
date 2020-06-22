@@ -349,8 +349,8 @@
         <b-form-checkbox
           v-model="sendForm"
           name="sendForm"
-          class="mb-2 mr-sm-2 mb-sm-0"
-        >Enviar formulario por email</b-form-checkbox>
+          class="mb-2 mr-sm-2 mb-sm-0">
+          Enviar formulario por email</b-form-checkbox>
       </div>
     </b-modal>
   </b-container>
@@ -808,7 +808,17 @@ export default {
       return true
     },
     finishOrder () {
-      this.$router.push({ name: 'orders.list' })
+      if (this.sendForm) {
+        this.loading = true
+        orderService.emailForm(this.orderResponse.id)
+          .then(response => {
+            if (response.status) { this.$router.push({ name: 'orders.list' }) }
+          })
+          .catch(error => { console.log(error) })
+          .finally(() => { this.loading = false })
+      } else {
+        this.$router.push({ name: 'orders.list' })
+      }
     }
   }
 }

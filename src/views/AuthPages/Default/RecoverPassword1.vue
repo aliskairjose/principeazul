@@ -58,7 +58,7 @@ export default {
         .then(response => {
           if (response.status) { this.isSuccess = true }
         })
-        .then(error => { console.log(error) })
+        .catch(error => { console.log(error) })
         .finally(() => { this.loading = false })
     }
   }
