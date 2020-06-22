@@ -37,7 +37,7 @@ Vue.use(money, {
   decimal: '.',
   thousands: ',',
   precision: 2,
-  masked: true
+  masked: false
 })
 
 Vue.config.productionTip = false

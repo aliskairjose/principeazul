@@ -19,6 +19,7 @@
                           v-model="product.name"
                           type="text"
                           placeholder="Nombre"
+                          class="text-capitalize"
                           :class="(errors.length > 0 ? ' is-invalid' : '')">
                         </b-form-input>
                         <div class="invalid-feedback">
@@ -42,8 +43,18 @@
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
                       <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
                         <b-form-input
+                          v-if="product.price"
+                          v-model.lazy="product.price"
+                          type="text"
+                          name="price"
+                          id="price"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          placeholder="Precio">
+                        </b-form-input>
+                        <b-form-input
+                          v-else
                           v-money="money"
-                          v-model="product.price"
+                          v-model.lazy="product.price"
                           type="text"
                           name="price"
                           id="price"
@@ -214,10 +225,10 @@ export default {
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
+        { label: 'Cantidad', key: 'pivot.quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
-      subProducts: [],
+      subProducts: [ ],
       dropzoneOptions: {
         maxFilesize: 10,
         clickable: true,
