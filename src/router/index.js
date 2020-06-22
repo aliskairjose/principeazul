@@ -198,7 +198,7 @@ const authChildRoutes = (prop, mode = false) => [
   {
     path: 'password-reset',
     name: prop + '.password-reset',
-    meta: { dark: mode, auth: true },
+    meta: { dark: mode, auth: false },
     component: RecoverPassword1
   },
   {
@@ -216,7 +216,7 @@ const authChildRoutes = (prop, mode = false) => [
   {
     path: 'public/:id',
     name: prop + '.update',
-    meta: { dark: mode, auth: true },
+    meta: { dark: mode, auth: false },
     component: OrderUpdate
   }
 ]
@@ -331,7 +331,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/auth/sign-in', '/auth/sign-up', '/form/public/order/:id']
+  const publicPages = ['/auth/sign-in', '/auth/sign-up']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
   if (to.meta.auth) {
