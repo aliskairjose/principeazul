@@ -157,6 +157,7 @@
         <OrderDetailComponent
           :dataId="orderId"
           :idList="ids"
+          :enableButtons="role === 'admin' ? false : true"
         >
         </OrderDetailComponent>
       </b-modal>

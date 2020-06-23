@@ -82,7 +82,7 @@
               </div>
              </b-col>
             </b-row>
-            <b-row align-h="center" class="mt-3" v-show="isEnable">
+            <b-row align-h="center" class="mt-3" v-show="enableButtons">
               <b-col md="4">
                 <b-button variant="outline-primary" v-show="index > 0 ? true : false" @click="prevNext(-1)">Orden Anterior</b-button>
               </b-col>
@@ -105,19 +105,16 @@ export default {
   name: 'OrderDetailComponent',
   props: {
     dataId: { type: String },
-    idList: { type: Array }
+    idList: { type: Array },
+    enableButtons: { type: Boolean }
   },
   mounted () {
     vito.index()
-    if (localStorage.getItem('role') === 'taller') {
-      this.isEnable = true
-    }
     this.loadData()
   },
   data () {
     return {
       loading: true,
-      isEnable: false,
       showDetails: '',
       index: '',
       data: {

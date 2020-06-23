@@ -39,7 +39,7 @@
         <OrderDetailComponent
           :dataId="orderId"
           :idList="ids"
-        >
+          :enableButtons="false">
         </OrderDetailComponent>
       </b-modal>
   </b-container>
