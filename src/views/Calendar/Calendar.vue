@@ -37,7 +37,7 @@
       :title="details.modalTitle">
       <b-row>
         <b-col md="12">
-          <label for="">Cliente: {{details.client.name}}</label>
+          <label for=""  class="text-capitalize">Cliente: {{details.client.name}}</label>
         </b-col>
         <b-col md="6">
           <label for="">Email: {{details.client.email}}</label>
@@ -55,7 +55,7 @@
           <label for="">Tipo de compra: {{details.type | capitalize}}</label>
         </b-col>
         <b-col md="6">
-          <label for="">Modo de entrega: {{details.mode |capitalize }}</label>
+          <label for="">Modo de entrega: {{details.mode | capitalize }}</label>
         </b-col>
         <b-col md="6">
           <label for="">Fecha de entrega: {{details.delivery_date | formatDate}}</label>
