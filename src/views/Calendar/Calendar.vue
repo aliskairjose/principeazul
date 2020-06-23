@@ -19,6 +19,7 @@
                         day: 'Día',
                         list: 'Listado'
                       }"
+                      @eventClick="handleEventClick"
                       :weekends="true"
                       :selectable="true"
                       :editable="true"
@@ -28,6 +29,50 @@
         </iq-card>
       </b-col>
     </b-row>
+    <b-modal
+      ref="modal-details"
+      size="md"
+      id="modal-detail"
+      ok-only
+      :title="details.modalTitle"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-header-close
+    >
+      <b-row>
+        <b-col md="12">
+          <label for="">Cliente: {{details.client.name}}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Email: {{details.client.email}}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Teléfono {{details.client.phone}}</label>
+        </b-col>
+        <b-col md="12">
+          <label for="">Dirección de entrega: {{details.delivery_address}}</label>
+        </b-col>
+        <b-col md="12">
+          <label for="">Destinatario: {{details.addressee }}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Tipo de compra: {{details.type | capitalize}}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Modo de entrega: {{details.mode |capitalize }}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Fecha de entrega: {{details.delivery_date | formatDate}}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Status: {{details.status}}</label>
+        </b-col>
+        <b-col md="6">
+          <label for="">Total: $ {{details.total }}</label>
+        </b-col>
+
+      </b-row>
+    </b-modal>
   </b-container>
 </template>
 
@@ -52,6 +97,13 @@ export default {
     vito.index()
   },
   data: () => ({
+    details: {
+      client: {
+        name: '',
+        email: '',
+        phone: ''
+      }
+    },
     calendarPlugins: [
       DayGridPlugin,
       TimeGridPlugin,
@@ -62,6 +114,14 @@ export default {
   }),
   components: { Fullcalendar },
   methods: {
+    handleEventClick (clickInfo) {
+      const id = clickInfo.event.id
+      let order = this.calendar.filter(x => x.id === parseInt(id))
+      this.details = order[0]
+      console.log(this.details)
+      this.details.modalTitle = `Pedido #${this.details.id}`
+      this.$refs['modal-details'].show()
+    },
     loadData () {
       calendarService.getAll()
         .then(response => {
@@ -79,7 +139,7 @@ export default {
   computed: {
     formatCalendar () {
       return this.calendar.map(item => ({
-        title: 'Pedido  #' + item.id, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
+        id: item.id, title: `Pedido  #  ${item.id}`, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
       }))
     }
   }
