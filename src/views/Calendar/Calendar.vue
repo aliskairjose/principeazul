@@ -34,11 +34,7 @@
       size="md"
       id="modal-detail"
       ok-only
-      :title="details.modalTitle"
-      no-close-on-esc
-      no-close-on-backdrop
-      hide-header-close
-    >
+      :title="details.modalTitle">
       <b-row>
         <b-col md="12">
           <label for="">Cliente: {{details.client.name}}</label>
@@ -50,10 +46,10 @@
           <label for="">Teléfono {{details.client.phone}}</label>
         </b-col>
         <b-col md="12">
-          <label for="">Dirección de entrega: {{details.delivery_address | capitalize}}</label>
+          <label for="" class="text-capitalize">Dirección de entrega: {{details.delivery_address}}</label>
         </b-col>
         <b-col md="12">
-          <label for="">Destinatario: {{details.addressee | capitalize}}</label>
+          <label for="" class="text-capitalize">Destinatario: {{details.addressee }}</label>
         </b-col>
         <b-col md="6">
           <label for="">Tipo de compra: {{details.type | capitalize}}</label>
