@@ -50,10 +50,10 @@
           <label for="">Teléfono {{details.client.phone}}</label>
         </b-col>
         <b-col md="12">
-          <label for="">Dirección de entrega: {{details.delivery_address}}</label>
+          <label for="">Dirección de entrega: {{details.delivery_address | capitalize}}</label>
         </b-col>
         <b-col md="12">
-          <label for="">Destinatario: {{details.addressee }}</label>
+          <label for="">Destinatario: {{details.addressee | capitalize}}</label>
         </b-col>
         <b-col md="6">
           <label for="">Tipo de compra: {{details.type | capitalize}}</label>
@@ -118,8 +118,7 @@ export default {
       const id = clickInfo.event.id
       let order = this.calendar.filter(x => x.id === parseInt(id))
       this.details = order[0]
-      console.log(this.details)
-      this.details.modalTitle = `Pedido #${this.details.id}`
+      this.details.modalTitle = `Detalles del pedido #${this.details.id}`
       this.$refs['modal-details'].show()
     },
     loadData () {
