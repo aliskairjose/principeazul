@@ -7,6 +7,9 @@
             <div class="text-center" id="spinner" v-show="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </div>
+            <b-alert :show="isError" variant="danger">
+              <div class="iq-alert-text">Debe seleccionar un proveedor!</div>
+            </b-alert>
             <b-row align-h="between">
               <b-col md="4" class="my-1">
                 <b-form-group>
@@ -98,9 +101,25 @@ export default {
     vito.index()
     this.totalRows = this.data.length
     this.loadData()
+    providerService.getAll()
+      .then(response => {
+        const data = response.data
+        this.providers.value = null
+        this.providers.text = 'Seleccionar proveedor'
+        this.providerOptions.push(this.providers)
+        data.map(r => {
+          this.providers = {}
+          this.providers.value = r.id
+          this.providers.text = r.name
+          this.providerOptions.push(this.providers)
+        })
+      })
+      .catch(error => { console.log(error) })
+      .finally(() => { console.log('finally') })
   },
   data () {
     return {
+      isError: false,
       quantity: 0,
       sortBy: '',
       selectedProvider: null,
@@ -140,47 +159,31 @@ export default {
       this.sortDesc = true
     },
     add () {
-      const inv = {}
-      inv.product_id = this.product.id
-      inv.quantity = parseInt(this.quantity)
-      inv.provider_id = this.selectedProvider
-      inv.type = 'purchase'
+      if (this.selectedProvider) {
+        const inv = {}
+        inv.product_id = this.product.id
+        inv.quantity = parseInt(this.quantity)
+        inv.provider_id = this.selectedProvider
+        inv.type = 'purchase'
 
-      this.loading = true
-      inventoryService.create(inv)
-        .then(response => {
-          this.loadData()
-        })
-        .catch((error) => { console.log(error) })
-        .finally(() => { console.log('finally') })
+        this.loading = true
+        inventoryService.create(inv)
+          .then(response => {
+            this.loadData()
+          })
+          .catch((error) => { console.log(error) })
+          .finally(() => { console.log('finally') })
+      } else {
+        this.isError = true
+      }
     },
     loadData () {
       inventoryService.getAll(`product_id=${this.product.id}`)
         .then(response => {
-          // response.data.map(r => {
-          //   r.name = this.product.name
-          //   r.provider = 'Cronapis Corp S.A'
-          // })
           this.data = response.data
         })
         .then((error) => { console.log(error) })
         .finally(() => { this.loading = false })
-
-      providerService.getAll()
-        .then(response => {
-          const data = response.data
-          this.providers.value = null
-          this.providers.text = 'Seleccionar proveedor'
-          this.providerOptions.push(this.providers)
-          data.map(r => {
-            this.providers = {}
-            this.providers.value = r.id
-            this.providers.text = r.name
-            this.providerOptions.push(this.providers)
-          })
-        })
-        .catch(error => { console.log(error) })
-        .finally(() => { console.log('finally') })
     }
   }
 }
