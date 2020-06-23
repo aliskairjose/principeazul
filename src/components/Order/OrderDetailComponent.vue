@@ -2,14 +2,19 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
-        <iq-card>
+        <iq-card id="printMe">
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row>
-              <b-col md="12" class="mb-4">
+              <b-col md="10" class="mb-4">
                 <h4>Detalles de la orden #{{data.id}}</h4>
+              </b-col>
+              <b-col md="2">
+                <b-button variant="link" class="mb-3 mr-1" v-print="'#printMe'">
+                  <i class="ri-printer-fill ri-lg"></i>
+                </b-button>
               </b-col>
               <b-col md="12" class="mb-2">
                 <h5>Información del cliente</h5>
