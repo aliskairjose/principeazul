@@ -127,7 +127,6 @@ export default {
       const id = clickInfo.event.id
       let order = this.calendar.filter(x => x.id === parseInt(id))
       this.details = order[0]
-      console.log(this.details)
       this.details.modalTitle = `Detalles del pedido #${this.details.id}`
       this.$refs['modal-details'].show()
     },

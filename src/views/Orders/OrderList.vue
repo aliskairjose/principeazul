@@ -79,6 +79,13 @@
                       <b-badge variant="success" v-if="orders.item.status === 'Entregado'">{{orders.item.status}}</b-badge>
                       <b-badge variant="danger" v-if="orders.item.status === 'Cancelado'">{{orders.item.status}}</b-badge>
                     </template>
+                    <template v-slot:cell(update)="orders">
+                      <b-form-select
+                          v-model="orders.item.status"
+                          :options="statuses"
+                          @change="onStatusUpdate(orders.item.id, $event)">
+                        </b-form-select>
+                    </template>
                     <template v-slot:cell(action)="orders">
                       <b-button
                         v-b-tooltip.top="'Ver detalles'"
@@ -163,6 +170,18 @@ export default {
   name: 'OrderList',
   components: { OrderDetailComponent },
   created () {
+    orderService.orderStatuses()
+      .then(response => {
+        const object = response.data
+        for (const iterator of object) {
+          let status = {}
+          status.value = iterator
+          status.text = iterator
+          this.statuses.push(status)
+        }
+      })
+      .catch(error => { console.log(error) })
+
     orderService.getAll()
       .then(response => {
         this.orders = response.data
@@ -184,6 +203,7 @@ export default {
       orderId: '',
       orders: [],
       sortBy: '',
+      statuses: [],
       loading: true,
       filter: null,
       isShow: false,
@@ -199,6 +219,7 @@ export default {
         { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
+        { label: 'Actualizar Status', key: 'update', class: 'text-center', sortable: false },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
@@ -209,6 +230,17 @@ export default {
     }
   },
   methods: {
+    onStatusUpdate (id, status) {
+      this.isRemoving = true
+      orderService.updateSatus(id, status)
+        .then(response => {
+          if (response.status) {
+
+          }
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.isRemoving = false })
+    },
     createOrder () {
       this.$router.push({ name: 'orders.add' })
     },

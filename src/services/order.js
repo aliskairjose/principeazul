@@ -24,5 +24,13 @@ export default {
   async emailForm (id) {
     const res = await axios.get(`/orders/email-additional-data/${id}`)
     return res.data
+  },
+  async orderStatuses () {
+    const res = await axios.get(`/order-statuses`)
+    return res.data
+  },
+  async updateSatus (id, status) {
+    const res = await axios.put(`/orders/update-status/${id}?status=${status}`)
+    return res.data
   }
 }

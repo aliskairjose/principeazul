@@ -22,6 +22,17 @@
               </b-col>
               <b-col md="4" class="my-1">
                 <b-form-group>
+                  <b-form-select
+                    v-model="selectedProvider"
+                    id="providers"
+                    size="sm"
+                    :options="providerOptions"
+                    @change="onChange">
+                    </b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col md="4" class="my-1">
+                <b-form-group>
                   <b-button variant="primary" @click="add">Añadir</b-button>
                 </b-form-group>
               </b-col>
@@ -57,7 +68,7 @@
                     ></b-form-select>
                   </b-form-group>
                 </b-col>
-                <!-- <b-col sm="7" md="8">
+                <b-col sm="7" md="5">
                   <b-pagination
                     v-model="currentPage"
                     :total-rows="rows"
@@ -65,7 +76,7 @@
                     align="right"
                     aria-controls="my-table">
                   </b-pagination>
-                </b-col> -->
+                </b-col>
               </template>
             </b-row>
           </template>
@@ -77,6 +88,7 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import inventoryService from '@/services/inventory'
+import providerService from '@/services/provider'
 
 export default {
   props: { product: { type: Object } },
@@ -84,16 +96,16 @@ export default {
   created () { },
   mounted () {
     vito.index()
-    // this.totalRows = this.products.length
+    this.totalRows = this.data.length
     this.loadData()
-  },
-  updated () {
-    console.log('update')
   },
   data () {
     return {
       quantity: 0,
       sortBy: '',
+      selectedProvider: null,
+      providers: {},
+      providerOptions: [],
       loading: true,
       filter: null,
       isShow: false,
@@ -113,7 +125,20 @@ export default {
       ]
     }
   },
+  computed: {
+    rows () {
+      return this.data.length
+    }
+  },
   methods: {
+    onChange () {
+      if (this.selectedProvider !== null) {
+        this.sortBy = 'provider'
+      } else {
+        this.sortBy = ''
+      }
+      this.sortDesc = true
+    },
     add () {
       const inv = {}
       inv.product_id = this.product.id
@@ -134,12 +159,28 @@ export default {
         .then(response => {
           response.data.map(r => {
             r.name = this.product.name
-            r.provider = ' Cronapis corp SA'
+            r.provider = 'Cronapis Corp S.A'
           })
           this.data = response.data
         })
         .then((error) => { console.log(error) })
         .finally(() => { this.loading = false })
+
+      providerService.getAll()
+        .then(response => {
+          const data = response.data
+          this.providers.value = null
+          this.providers.text = 'Seleccione un proveedor'
+          this.providerOptions.push(this.providers)
+          data.map(r => {
+            this.providers = {}
+            this.providers.value = r.name
+            this.providers.text = r.name
+            this.providerOptions.push(this.providers)
+          })
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { console.log('finally') })
     }
   }
 }

@@ -154,17 +154,17 @@
         </iq-card>
       </b-col>
       <b-modal size="lg" id="modal-1" :title="title" ref="my-modal">
-      <InventoryList
-        :product="product">
-      </InventoryList>
-    </b-modal>
+        <InventoryList
+          :product="product">
+        </InventoryList>
+      </b-modal>
     </b-row>
   </b-container>
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
 import productService from '@/services/product'
-import InventoryList from '@/views//Inventory/InventoryList'
+import InventoryList from '@/views/Inventory/InventoryList'
 
 export default {
   name: 'ProductList',
