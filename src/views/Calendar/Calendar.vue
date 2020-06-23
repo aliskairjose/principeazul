@@ -40,7 +40,7 @@
           <label for=""  class="text-capitalize">Cliente: {{details.client.name}}</label>
         </b-col>
         <b-col md="2">
-         <b-button variant="link" class="mb-3 mr-1">
+         <b-button variant="link" class="mb-3 mr-1" v-print="'#modal-detail'">
            <i class="ri-printer-fill ri-lg"></i>
           </b-button>
         </b-col>
@@ -121,6 +121,8 @@ export default {
   }),
   components: { Fullcalendar },
   methods: {
+    print () {
+    },
     handleEventClick (clickInfo) {
       const id = clickInfo.event.id
       let order = this.calendar.filter(x => x.id === parseInt(id))
