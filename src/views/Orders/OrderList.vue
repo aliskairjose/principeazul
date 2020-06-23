@@ -95,6 +95,7 @@
                         <i class="ri-search-line m-0"></i>
                       </b-button>
                       <b-button
+                        v-show="role === 'admin'"
                         v-b-tooltip.top="'Editar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
@@ -102,6 +103,7 @@
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
                       <b-button
+                        v-show="role === 'admin'"
                         v-b-tooltip.top="'Eliminar'"
                         variant=" iq-bg-danger mr-1 mb-1"
                         size="sm"
