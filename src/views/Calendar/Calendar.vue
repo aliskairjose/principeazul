@@ -36,8 +36,13 @@
       ok-only
       :title="details.modalTitle">
       <b-row>
-        <b-col md="12">
+        <b-col md="10">
           <label for=""  class="text-capitalize">Cliente: {{details.client.name}}</label>
+        </b-col>
+        <b-col md="2">
+         <b-button variant="link" class="mb-3 mr-1">
+           <i class="ri-printer-fill ri-lg"></i>
+          </b-button>
         </b-col>
         <b-col md="6">
           <label for="">Email: {{details.client.email}}</label>
@@ -63,7 +68,9 @@
         <b-col md="6">
           <label for="">Status: {{details.status}}</label>
         </b-col>
-        <b-col md="12">Productos</b-col>
+        <b-col md="12">
+          <h5 class="text-muted">Productos</h5>
+        </b-col>
         <b-col md="6" v-for="item in details.products" :key="item.id">
           <label for="" class="text-capitalize">{{ item.name }} - ${{item.price}}</label>
         </b-col>
