@@ -104,7 +104,7 @@ import orderService from '@/services/order'
 export default {
   name: 'OrderDetailComponent',
   props: {
-    dataId: { type: Number },
+    dataId: { type: String },
     idList: { type: Array }
   },
   mounted () {
