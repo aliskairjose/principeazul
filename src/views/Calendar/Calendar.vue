@@ -63,8 +63,12 @@
         <b-col md="6">
           <label for="">Status: {{details.status}}</label>
         </b-col>
-        <b-col md="6">
-          <label for="">Total: $ {{details.total }}</label>
+        <b-col md="12">Productos</b-col>
+        <b-col md="6" v-for="item in details.products" :key="item.id">
+          <label for="" class="text-capitalize">{{ item.name }} - ${{item.price}}</label>
+        </b-col>
+        <b-col md="12">
+          <label for="">Total: ${{details.total }}</label>
         </b-col>
 
       </b-row>
@@ -114,6 +118,7 @@ export default {
       const id = clickInfo.event.id
       let order = this.calendar.filter(x => x.id === parseInt(id))
       this.details = order[0]
+      console.log(this.details)
       this.details.modalTitle = `Detalles del pedido #${this.details.id}`
       this.$refs['modal-details'].show()
     },
