@@ -119,9 +119,9 @@ export default {
       currentPage: 1,
       data: [],
       titles: [
-        { label: 'Producto', key: 'name', class: 'text-left' },
+        { label: 'Producto', key: 'product.name', class: 'text-left' },
         { label: 'Cantidad', key: 'quantity', class: 'text-left' },
-        { label: 'Proveedor', key: 'provider', class: 'text-left' }
+        { label: 'Proveedor', key: 'provider.name', class: 'text-left' }
       ]
     }
   },
@@ -143,7 +143,7 @@ export default {
       const inv = {}
       inv.product_id = this.product.id
       inv.quantity = parseInt(this.quantity)
-      inv.provider_id = 1
+      inv.provider_id = this.selectedProvider
       inv.type = 'purchase'
 
       this.loading = true
@@ -157,10 +157,10 @@ export default {
     loadData () {
       inventoryService.getAll(`product_id=${this.product.id}`)
         .then(response => {
-          response.data.map(r => {
-            r.name = this.product.name
-            r.provider = 'Cronapis Corp S.A'
-          })
+          // response.data.map(r => {
+          //   r.name = this.product.name
+          //   r.provider = 'Cronapis Corp S.A'
+          // })
           this.data = response.data
         })
         .then((error) => { console.log(error) })
@@ -170,11 +170,11 @@ export default {
         .then(response => {
           const data = response.data
           this.providers.value = null
-          this.providers.text = 'Seleccione un proveedor'
+          this.providers.text = 'Seleccionar proveedor'
           this.providerOptions.push(this.providers)
           data.map(r => {
             this.providers = {}
-            this.providers.value = r.name
+            this.providers.value = r.id
             this.providers.text = r.name
             this.providerOptions.push(this.providers)
           })
