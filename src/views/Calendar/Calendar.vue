@@ -31,55 +31,17 @@
     </b-row>
     <b-modal
       ref="modal-details"
-      size="md"
-      id="modal-detail"
+      size="lg"
+      id="modal-details"
+      cancel-title="Cancelar"
       ok-only
       :title="details.modalTitle">
-      <b-row>
-        <b-col md="10">
-          <label for=""  class="text-capitalize">Cliente: {{details.client.name}}</label>
-        </b-col>
-        <b-col md="2">
-         <b-button variant="link" class="mb-3 mr-1" v-print="'#modal-detail'">
-           <i class="ri-printer-fill ri-lg"></i>
-          </b-button>
-        </b-col>
-        <b-col md="6">
-          <label for="">Email: {{details.client.email}}</label>
-        </b-col>
-        <b-col md="6">
-          <label for="">Teléfono {{details.client.phone}}</label>
-        </b-col>
-        <b-col md="12">
-          <label for="" class="text-capitalize">Dirección de entrega: {{details.delivery_address}}</label>
-        </b-col>
-        <b-col md="12">
-          <label for="" class="text-capitalize">Destinatario: {{details.addressee }}</label>
-        </b-col>
-        <b-col md="6">
-          <label for="">Tipo de compra: {{details.type | capitalize}}</label>
-        </b-col>
-        <b-col md="6">
-          <label for="">Modo de entrega: {{details.mode | capitalize }}</label>
-        </b-col>
-        <b-col md="6">
-          <label for="">Fecha de entrega: {{details.delivery_date | formatDate}}</label>
-        </b-col>
-        <b-col md="6">
-          <label for="">Status: {{details.status}}</label>
-        </b-col>
-        <b-col md="12">
-          <h5 class="text-muted">Productos</h5>
-        </b-col>
-        <b-col md="6" v-for="item in details.products" :key="item.id">
-          <label for="" class="text-capitalize">{{ item.name }} - ${{item.price}}</label>
-        </b-col>
-        <b-col md="12">
-          <label for="">Total: ${{details.total }}</label>
-        </b-col>
-
-      </b-row>
-    </b-modal>
+        <OrderDetailComponent
+          :dataId="orderId"
+          :idList="ids"
+        >
+        </OrderDetailComponent>
+      </b-modal>
   </b-container>
 </template>
 
@@ -90,6 +52,7 @@ import DayGridPlugin from '@fullcalendar/daygrid'
 import TimeGridPlugin from '@fullcalendar/timegrid'
 import InteractionPlugin from '@fullcalendar/interaction'
 import ListPlugin from '@fullcalendar/list'
+import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 import calendarService from '@/services/calendar'
 require('@fullcalendar/core/main.min.css')
 require('@fullcalendar/daygrid/main.min.css')
@@ -104,6 +67,8 @@ export default {
     vito.index()
   },
   data: () => ({
+    orderId: '',
+    ids: [],
     details: {
       client: {
         name: '',
@@ -119,15 +84,18 @@ export default {
     ],
     calendar: []
   }),
-  components: { Fullcalendar },
+  components: {
+    Fullcalendar,
+    OrderDetailComponent
+  },
   methods: {
     print () {
     },
     handleEventClick (clickInfo) {
-      const id = clickInfo.event.id
-      let order = this.calendar.filter(x => x.id === parseInt(id))
-      this.details = order[0]
-      this.details.modalTitle = `Detalles del pedido #${this.details.id}`
+      this.orderId = clickInfo.event.id
+      // let order = this.calendar.filter(x => x.id === parseInt(id))
+      // this.details = order[0]
+      // this.details.modalTitle = `Detalles del pedido #${this.details.id}`
       this.$refs['modal-details'].show()
     },
     loadData () {
