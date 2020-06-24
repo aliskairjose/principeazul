@@ -209,7 +209,7 @@ export default {
         category_id: null,
         type: null,
         image: '',
-        additionals: []
+        relatedProducts: []
       },
       types: [
         { value: null, text: 'Seleccione un tipo' },
@@ -250,20 +250,19 @@ export default {
       let subItem = {}
       subItem.additional_product_id = item.id
       subItem.quantity = item.quantity
-      this.product.additionals.push(subItem)
-      this.subs = this.product.additionals.length
+      this.product.relatedProducts.push(subItem)
+      this.subs = this.product.relatedProducts.length
     },
     handleOk () {
-      console.log('handleOk')
     },
     handleCancel () {
-      this.product.additionals.length = 0
+      this.product.relatedProducts.length = 0
       this.subs = 0
     },
     deleteSub (id) {
-      let additionals = this.product.additionals.filter(x => x.additional_product_id !== id)
-      this.product.additionals = additionals
-      this.subs = this.product.additionals.length
+      let relatedProducts = this.product.relatedProducts.filter(x => x.additional_product_id !== id)
+      this.product.relatedProducts = relatedProducts
+      this.subs = this.product.relatedProducts.length
     },
     fileAdded (file) {
       this.product.image = file.dataURL
