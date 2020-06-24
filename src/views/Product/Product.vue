@@ -185,6 +185,7 @@ export default {
         .then(response => {
           this.product = response.data
           this.subProducts = this.product.additionals
+          this.subs = this.product.additionals.length
           this.subProducts.map(r => {
             r.quantity = r.pivot.quantity
           })
