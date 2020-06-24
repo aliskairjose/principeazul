@@ -173,6 +173,7 @@ export default {
   name: 'OrderList',
   components: { OrderDetailComponent },
   created () {
+    console.log(process.env.VUE_APP_TYPe)
     orderService.orderStatuses()
       .then(response => {
         const object = response.data
