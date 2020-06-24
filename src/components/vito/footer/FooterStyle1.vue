@@ -6,7 +6,6 @@
         <div class="col-lg-6">
           <ul class="list-inline mb-0">
             <slot name="left">
-              {{api}}
             </slot>
           </ul>
         </div>
@@ -20,11 +19,6 @@
 </template>
 <script>
 export default {
-  name: 'FooterStyle1',
-  data () {
-    return {
-      api: process.env.VUE_APP_TYPE
-    }
-  }
+  name: 'FooterStyle1'
 }
 </script>
