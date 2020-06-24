@@ -35,6 +35,12 @@
         <div class="iq-alert-text">Se ha enviado una nueva contraseña a su buzón de correo!</div>
       </b-alert>
     </div>
+    <b-alert :show="isError" variant="danger" class="bg-white">
+      <div class="iq-alert-icon">
+        <i class="ri-information-line"></i>
+      </div>
+      <div class="iq-alert-text">El correo electrónico no existe!</div>
+    </b-alert>
   </ValidationObserver>
 </template>
 <script>
@@ -44,6 +50,7 @@ export default {
   name: 'RecoverPassword1',
   data () {
     return {
+      isError: false,
       loading: false,
       isSuccess: false,
       data: {
@@ -56,9 +63,12 @@ export default {
       this.loading = true
       auth.resetPassword(this.data)
         .then(response => {
+          console.log(response)
           if (response.status) { this.isSuccess = true }
         })
-        .catch(error => { console.log(error) })
+        .catch(() => {
+          this.isError = true
+        })
         .finally(() => { this.loading = false })
     }
   }
