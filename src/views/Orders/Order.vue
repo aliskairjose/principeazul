@@ -264,6 +264,8 @@
         <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input>
       </b-form-group>
     </b-modal>
+
+    <!-- Modal productos Principales -->
     <b-modal
       ref="lista-productos"
       size="lg"
@@ -415,7 +417,7 @@ export default {
           if (r.type === 'principal') {
             r.additionals = []
             r.note = ''
-            r.isAddItem = false
+            // r.isAddItem = false
             this.principals.push(r)
           }
           if (r.type === 'additional') {
@@ -666,6 +668,7 @@ export default {
       if (this.status === 'edit') {
 
       }
+      this.resetPrincipals()
       this.tempProd.length = 0
     },
     handleCancel () {
@@ -712,6 +715,11 @@ export default {
         }
       }
       this.tempExtra.length = 0
+    },
+    resetPrincipals () {
+      this.principals.map(r => {
+        if (r.isAddItem) { r.isAddItem = false }
+      })
     },
     resetAdditionals () {
       this.additionals.map(r => {
