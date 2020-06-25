@@ -43,12 +43,12 @@
               </b-col>
               <b-col md="3">
                 <b-form-group label="Fecha de creación:" label-for="date">
-                  <b-form-input type="date" v-model="created_at"></b-form-input>
+                  <b-form-input type="date" @change="onDateChange('created_at', $event)"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="3">
                 <b-form-group label="Fecha de entrega:" label-for="date">
-                  <b-form-input type="date" v-model="delivery_at"></b-form-input>
+                  <b-form-input type="date" @change="onDateChange('delivery_date', $event)"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="2">
@@ -227,15 +227,7 @@ export default {
       })
       .catch(error => { console.log(error) })
 
-    orderService.getAll()
-      .then(response => {
-        this.orders = response.data
-        this.orders.map(r => {
-          this.ids.push(r.id)
-        })
-      })
-      .catch(() => { })
-      .finally(() => { this.loading = false })
+    this.loadData()
   },
   mounted () {
     vito.index()
@@ -243,8 +235,6 @@ export default {
   },
   data () {
     return {
-      created_at: '',
-      delivery_at: '',
       ids: [],
       role: '',
       orderId: '',
@@ -279,6 +269,21 @@ export default {
     }
   },
   methods: {
+    loadData (params = '') {
+      orderService.getAll(params)
+        .then(response => {
+          this.orders = response.data
+          this.orders.map(r => {
+            this.ids.push(r.id)
+          })
+        })
+        .catch(() => { })
+        .finally(() => { this.loading = false })
+    },
+    onDateChange (type, date) {
+      console.log('onCreatedChange', type, date)
+      this.loadData(`${type}=${date}`)
+    },
     onStatusUpdate (id, status) {
       this.isRemoving = true
       orderService.updateSatus(id, status)
