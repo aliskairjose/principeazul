@@ -334,14 +334,12 @@
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
-        <p
-          class="h5 text-secondary"
-          v-if="status === 'add'"
-        >{{ order.client_name }} - {{ order.client_dni }}</p>
-        <p
-          class="h5 text-secondary"
-          v-else
-        >{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
+        <p class="h5 text-secondary" v-if="status === 'add'">
+          {{ order.client_name }}
+        </p>
+        <p class="h5 text-secondary" v-else>
+          {{ order.client.name }}
+        </p>
 
         <b-row class="mb-0" v-for="item in orderProducts" :key="item.id">
           <b-col class="col-md-10">
@@ -365,16 +363,14 @@
 
         <b-row class="mt-4"></b-row>
 
-        <label for class="text-primary">Formulario de datos</label>
-        <br />
-        <a :href="url">{{url}}</a>
-        <br />
-        <br />
+        <label for class="text-primary">Formulario de datos</label><br />
+        <a :href="url">{{url}}</a><br /><br />
         <b-form-checkbox
           v-model="sendForm"
           name="sendForm"
-          class="mb-2 mr-sm-2 mb-sm-0"
-        >Enviar formulario por email</b-form-checkbox>
+          class="mb-2 mr-sm-2 mb-sm-0">
+          Enviar formulario por email
+        </b-form-checkbox>
       </div>
     </b-modal>
   </b-container>
