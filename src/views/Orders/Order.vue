@@ -10,15 +10,15 @@
                   variant="primary"
                   type="grow"
                   label="Spinning"
-                  style="width: 3rem; height: 3rem;">
-                </b-spinner>
+                  style="width: 3rem; height: 3rem;"
+                ></b-spinner>
               </div>
             </b-row>
             <form-wizard
               ref="wizard"
               @on-complete="onComplete"
               @on-change="tabChange"
-              title=""
+              title
               :subtitle="validateMsg"
               :back-button-text="backBtn"
               :next-button-text="nextBtn"
@@ -30,7 +30,8 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder">
+                :before-change="validateOrder"
+              >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -55,11 +56,13 @@
                         class="col-md-6"
                         label="Modo de entrega:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }">
+                        lot-scope="{ valid, errors }"
+                      >
                         <ValidationProvider
                           name="Modo de entrega"
                           rules="required"
-                          v-slot="{ errors }">
+                          v-slot="{ errors }"
+                        >
                           <b-form-select
                             v-model="order.mode"
                             :state="errors[0] ? false : (order.mode ? true : null)"
@@ -125,22 +128,21 @@
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="dedication">
+                        label-for="dedication"
+                      >
                         <b-form-input
                           v-model="order.dedication"
                           type="text"
-                          placeholder="Dedicatoria del regalo">
-                        </b-form-input>
+                          placeholder="Dedicatoria del regalo"
+                        ></b-form-input>
                       </b-form-group>
                       <b-form-group
                         v-if="status === 'edit'"
                         class="col-md-6"
                         label="Status de la compra:"
-                        label-for="statuses">
-                          <b-form-select
-                            v-model="order.status"
-                            :options="statuses">
-                          </b-form-select>
+                        label-for="statuses"
+                      >
+                        <b-form-select v-model="order.status" :options="statuses"></b-form-select>
                       </b-form-group>
                     </b-row>
                   </form>
@@ -173,13 +175,17 @@
                         @click="deleteExtra(index, item.id)"
                       >
                         {{ item.name }}
-                        <i class="ri-indeterminate-circle-line" v-if="status === 'add'"></i>
+                        <i
+                          class="ri-indeterminate-circle-line"
+                          v-if="status === 'add'"
+                        ></i>
                       </b-button>
                       <b-button
                         variant="outline-success"
                         class="mb-3 mr-1"
                         @click="showModal('extras', index)"
-                        v-if="status === 'add'">
+                        v-if="status === 'add'"
+                      >
                         Añadir
                         <i class="ri-add-line"></i>
                       </b-button>
@@ -212,7 +218,8 @@
                       pill
                       variant="outline-link"
                       class="mb-3 mr-1"
-                      v-if="status === 'add'">
+                      v-if="status === 'add'"
+                    >
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
                     </b-button>
@@ -238,7 +245,10 @@
                     Total a pagar:
                     <label for class="success">{{finalPrice}}$</label>
                     <br />Pagado:
-                    <label for :class="payOut > finalPrice ? 'error' : 'success' ">{{ payOut }}$</label>
+                    <label
+                      for
+                      :class="payOut > finalPrice ? 'error' : 'success' "
+                    >{{ payOut }}$</label>
                     <br />Restante:
                     <label for :class="rest > 0 ? 'success' : 'error' ">{{ rest }}$</label>
                   </div>
@@ -264,7 +274,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table
         :items="principals"
         :titems="pTitles"
@@ -282,7 +293,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra">
+      @cancel="handleCancelExtra"
+    >
       <modal-table
         :items="additionals"
         :titems="pTitles"
@@ -315,12 +327,19 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder">
+      @ok="finishOrder"
+    >
       <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
-        <p class="h5 text-secondary" v-if="status === 'add'">{{ order.client_name }} - {{ order.client_dni }}</p>
-        <p class="h5 text-secondary" v-else>{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
+        <p
+          class="h5 text-secondary"
+          v-if="status === 'add'"
+        >{{ order.client_name }} - {{ order.client_dni }}</p>
+        <p
+          class="h5 text-secondary"
+          v-else
+        >{{ order.client.name.substring(0,30) + '...' }} - {{ order.client.dni }}</p>
 
         <b-row class="mb-0" v-for="item in orderProducts" :key="item.id">
           <b-col class="col-md-10">
@@ -344,13 +363,16 @@
 
         <b-row class="mt-4"></b-row>
 
-        <label for class="text-primary">Formulario de datos</label> <br>
-        <a :href="url">{{url}}</a> <br><br>
+        <label for class="text-primary">Formulario de datos</label>
+        <br />
+        <a :href="url">{{url}}</a>
+        <br />
+        <br />
         <b-form-checkbox
           v-model="sendForm"
           name="sendForm"
-          class="mb-2 mr-sm-2 mb-sm-0">
-          Enviar formulario por email</b-form-checkbox>
+          class="mb-2 mr-sm-2 mb-sm-0"
+        >Enviar formulario por email</b-form-checkbox>
       </div>
     </b-modal>
   </b-container>
@@ -380,6 +402,12 @@ export default {
   mounted () {
     vito.index()
     this.loading = true
+
+    clientService.getAll()
+      .then(response => {
+        this.clients = response.data
+      })
+
     productService.getAll()
       .then(response => {
         const data = response.data
@@ -618,21 +646,10 @@ export default {
       }
     },
     getClient () {
-      if (this.clients.length === 0) {
-        this.loading = true
-        clientService.getAll()
-          .then(response => {
-            this.clients = response.data
-            this.$refs['lista-clientes'].show()
-          })
-          .catch((error) => { console.log(error) })
-          .finally(() => { this.loading = false })
-      } else {
-        this.clients.map(r => {
-          if (r.isAddItem) { r.isAddItem = false }
-        })
-        this.$refs['lista-clientes'].show()
-      }
+      this.clients.map(r => {
+        if (r.isAddItem) { r.isAddItem = false }
+      })
+      this.$refs['lista-clientes'].show()
     },
     handleOk () {
       if (this.status === 'add') {
