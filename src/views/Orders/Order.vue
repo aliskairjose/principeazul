@@ -163,10 +163,10 @@
                       ></b-img>
                     </b-col>
                     <b-col class="col-md-7">
-                      <h3 class="text-capitalize">{{ p.name }}</h3>
-                      <p class="h5" id="price">{{ p.price }} $</p>
+                      <h5 class="text-capitalize">{{ p.name }} {{index}}</h5>
+                      <p class="h6" id="price">{{ p.price }} $</p>
                       <h5>{{ p.note }}</h5>
-                      <p class="h6 mt-3">Extras</p>
+                      <p class="mt-2">Extras</p>
                       <b-button
                         v-for="item in p.additionals"
                         :key="item.id"
@@ -195,7 +195,7 @@
                         v-b-tooltip.right="'Eliminar producto'"
                         size="lg"
                         variant="link"
-                        @click="deleteProduct(p.id)"
+                        @click="deleteProduct(index)"
                       >
                         <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
                       </b-button>
@@ -623,6 +623,7 @@ export default {
     addItem (item) {
       if (item.type === 'principal') {
         this.tempProd.push(item)
+        this.handleOk()
       } else {
         this.tempExtra.push(item)
       }
@@ -633,14 +634,16 @@ export default {
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
-    deleteProduct (id) {
-      this.orderProducts = this.orderProducts.filter(x => x.id !== id)
-      this.principals.map(r => {
-        if (r.id === id) {
-          r.isAddItem = false
-          r.additionals.length = 0
-        }
-      })
+    deleteProduct (index) {
+      console.log(this.orderProducts, index)
+      this.orderProducts = this.orderProducts.splice(index, 1)
+      // this.orderProducts = this.orderProducts.filter(x => x.id !== id)
+      // this.principals.map(r => {
+      //   if (r.id === id) {
+      //     r.isAddItem = false
+      //     r.additionals.length = 0
+      //   }
+      // })
     },
     deleteExtra (index, id) {
       if (this.status === 'add') {
@@ -668,9 +671,9 @@ export default {
       if (this.status === 'edit') {
 
       }
-      console.log(this.orderProducts)
       this.resetPrincipals()
       this.tempProd.length = 0
+      this.$refs['lista-productos'].hide()
     },
     handleCancel () {
       if (this.orderProducts.length === 0) {
@@ -853,7 +856,7 @@ export default {
 @import url('https://rawgit.com/lykmapipo/themify-icons/master/css/themify-icons.css');
 
 #row {
-  border: 1px solid black;
+  border: 1px solid #E5E8E8;
   border-radius: 7px;
   padding: 20px;
 }
