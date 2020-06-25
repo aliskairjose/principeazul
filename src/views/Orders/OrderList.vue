@@ -281,7 +281,6 @@ export default {
         .finally(() => { this.loading = false })
     },
     onDateChange (type, date) {
-      console.log('onCreatedChange', type, date)
       this.loadData(`${type}=${date}`)
     },
     onStatusUpdate (id, status) {

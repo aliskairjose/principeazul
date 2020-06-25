@@ -29,7 +29,7 @@
                 </div>
                 <b-row align-h="end" class="mb-2 mt-2" >
                   <div class="col-md-2 text-right">
-                    <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                    <b-button variant="primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
                       <i class="ri-search-line"></i>
                       </b-button>
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">

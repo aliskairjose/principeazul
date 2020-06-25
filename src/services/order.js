@@ -1,8 +1,8 @@
 import axios from './index'
 
 export default {
-  async getAll (params) {
-    const res = await axios.get(`/orders?${params}`)
+  async getAll (query) {
+    const res = await axios.get(`/orders?${query}`)
     return res.data
   },
   async getById (id) {

@@ -92,10 +92,10 @@
             </b-row>
             <b-row align-h="center" class="mt-3" v-show="enableButtons">
               <b-col md="4">
-                <b-button variant="outline-primary" v-show="index > 0 ? true : false" @click="prevNext(-1)">Orden Anterior</b-button>
+                <b-button variant="primary" v-show="index > 0 ? true : false" @click="prevNext(-1)">Orden Anterior</b-button>
               </b-col>
               <b-col md="4">
-                <b-button variant="outline-primary" @click="prevNext(1)">Orden Siguiente</b-button>
+                <b-button variant="primary" @click="prevNext(1)">Orden Siguiente</b-button>
               </b-col>
             </b-row>
           </template>

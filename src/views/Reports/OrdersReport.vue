@@ -27,7 +27,7 @@
                     <b-form-input v-model="filters.endDate" type="date"></b-form-input>
                   </b-col>
                   <b-col md="2" align-self="end">
-                    <b-button variant="outline-primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                    <b-button variant="primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
                       <i class="ri-search-line"></i>
                       </b-button>
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">

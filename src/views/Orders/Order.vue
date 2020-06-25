@@ -170,7 +170,7 @@
                       <b-button
                         v-for="item in p.additionals"
                         :key="item.id"
-                        variant="outline-primary"
+                        variant="primary"
                         class="mb-3 mr-1 text-capitalize"
                         @click="deleteExtra(index, item.id)"
                       >
@@ -181,7 +181,7 @@
                         ></i>
                       </b-button>
                       <b-button
-                        variant="outline-success"
+                        variant="success"
                         class="mb-3 mr-1"
                         @click="showModal('extras', index)"
                         v-if="status === 'add'"
