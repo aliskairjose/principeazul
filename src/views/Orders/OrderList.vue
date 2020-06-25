@@ -1,5 +1,5 @@
 <template>
-   <b-container fluid>
+  <b-container fluid>
     <b-row>
       <b-col md="12">
         <b-alert :show="isShow" variant="success" class="bg-white" id="alert">
@@ -27,14 +27,15 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0">
+                  class="mb-0"
+                >
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
                       type="search"
                       id="filterInput"
-                      placeholder="Escriba para buscar">
-                    </b-form-input>
+                      placeholder="Escriba para buscar"
+                    ></b-form-input>
                     <b-input-group-append>
                       <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
                     </b-input-group-append>
@@ -49,7 +50,9 @@
               <template v-if="orders.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b> Por favor agrege un cliente para comenzar!</div>
+                    <div class="iq-alert-text">
+                      <b>No hay registros para mostrar.</b> Por favor agrege un cliente para comenzar!
+                    </div>
                   </b-alert>
                 </b-col>
               </template>
@@ -66,32 +69,58 @@
                     :sort-by.sync="sortBy"
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
-                    @filtered="onFiltered">
-                    <template v-slot:cell(created_at)="orders">
-                      {{orders.item.created_at | formatDate}}
-                    </template>
+                    @filtered="onFiltered"
+                  >
+                    <template
+                      v-slot:cell(created_at)="orders"
+                    >{{orders.item.created_at | formatDate}}</template>
+                    <template
+                      v-slot:cell(delivery_date)="orders"
+                    >{{orders.item.delivery_date | formatDate}}</template>
                     <template v-slot:cell(status)="orders">
-                      <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="secondary" v-if="orders.item.status === 'Pendiente'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="warning" v-if="orders.item.status === 'En confección'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="light" v-if="orders.item.status === 'Confeccionado'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="info" v-if="orders.item.status === 'En camino a reparto'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="success" v-if="orders.item.status === 'Entregado'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="danger" v-if="orders.item.status === 'Cancelado'">{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="primary"
+                        v-if="orders.item.status === 'Creado'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="secondary"
+                        v-if="orders.item.status === 'Pendiente'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="warning"
+                        v-if="orders.item.status === 'En confección'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="light"
+                        v-if="orders.item.status === 'Confeccionado'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="info"
+                        v-if="orders.item.status === 'En camino a reparto'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="success"
+                        v-if="orders.item.status === 'Entregado'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="danger"
+                        v-if="orders.item.status === 'Cancelado'"
+                      >{{orders.item.status}}</b-badge>
                     </template>
                     <template v-slot:cell(update)="orders">
                       <b-form-select
-                          v-model="orders.item.status"
-                          :options="statuses"
-                          @change="onStatusUpdate(orders.item.id, $event)">
-                        </b-form-select>
+                        v-model="orders.item.status"
+                        :options="statuses"
+                        @change="onStatusUpdate(orders.item.id, $event)"
+                      ></b-form-select>
                     </template>
                     <template v-slot:cell(action)="orders">
                       <b-button
                         v-b-tooltip.top="'Ver detalles'"
                         variant=" iq-bg-info mr-1 mb-1"
                         size="sm"
-                        @click="details(orders.item)">
+                        @click="details(orders.item)"
+                      >
                         <i class="ri-search-line m-0"></i>
                       </b-button>
                       <b-button
@@ -99,7 +128,8 @@
                         v-b-tooltip.top="'Editar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
-                        @click="edit(orders.item)">
+                        @click="edit(orders.item)"
+                      >
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
                       <b-button
@@ -107,7 +137,8 @@
                         v-b-tooltip.top="'Eliminar'"
                         variant=" iq-bg-danger mr-1 mb-1"
                         size="sm"
-                        @click="remove(orders.item)">
+                        @click="remove(orders.item)"
+                      >
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
                     </template>
@@ -121,7 +152,8 @@
                     label-align-sm="right"
                     label-size="sm"
                     label-for="perPageSelect"
-                    class="mb-0">
+                    class="mb-0"
+                  >
                     <b-form-select
                       v-model="perPage"
                       id="perPageSelect"
@@ -136,8 +168,8 @@
                     :total-rows="rows"
                     :per-page="perPage"
                     align="right"
-                    aria-controls="my-table">
-                  </b-pagination>
+                    aria-controls="my-table"
+                  ></b-pagination>
                 </b-col>
               </template>
             </b-row>
@@ -153,14 +185,14 @@
       ok-only
       no-close-on-esc
       no-close-on-backdrop
-      hide-header-close>
-        <OrderDetailComponent
-          :dataId="orderId"
-          :idList="ids"
-          :enableButtons="role === 'admin' ? false : true"
-        >
-        </OrderDetailComponent>
-      </b-modal>
+      hide-header-close
+    >
+      <OrderDetailComponent
+        :dataId="orderId"
+        :idList="ids"
+        :enableButtons="role === 'admin' ? false : true"
+      ></OrderDetailComponent>
+    </b-modal>
   </b-container>
 </template>
 
@@ -220,6 +252,8 @@ export default {
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
         { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'Entrega Est.', key: 'delivery_date', class: 'text-center', sortable: true },
+        { label: 'Modo de entrega.', key: 'mode', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
         { label: 'Actualizar Status', key: 'update', class: 'text-center', sortable: false },
@@ -270,5 +304,4 @@ export default {
 </script>
 
 <style>
-
 </style>
