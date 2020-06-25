@@ -173,7 +173,12 @@ export default {
       this.btnTitle = 'Nuevo producto'
       productService.getAll('type=additional')
         .then(response => {
-          this.subProducts = response.data
+          const data = response.data
+          data.map(r => {
+            r.quantity = 0
+          })
+          this.subProducts = data
+          console.log(this.subProducts)
         })
         .catch((error) => { console.log(error) })
     }
