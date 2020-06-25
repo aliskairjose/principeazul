@@ -86,6 +86,9 @@
                 </b-row>
               </div>
              </b-col>
+             <b-col md="12">
+               <slot></slot>
+             </b-col>
             </b-row>
             <b-row align-h="center" class="mt-3" v-show="enableButtons">
               <b-col md="4">
@@ -109,7 +112,7 @@ import orderService from '@/services/order'
 export default {
   name: 'OrderDetailComponent',
   props: {
-    dataId: { type: String },
+    dataId: { type: Number },
     idList: { type: Array },
     enableButtons: { type: Boolean }
   },

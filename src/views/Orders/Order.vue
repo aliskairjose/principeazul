@@ -323,7 +323,7 @@
     <b-modal
       ok-only
       ref="modal-order"
-      size="md"
+      size="lg"
       id="final-order"
       ok-title="Finalizar orden"
       no-close-on-esc
@@ -331,7 +331,7 @@
       hide-header-close
       @ok="finishOrder"
     >
-      <div class="p-3">
+      <!-- <div class="p-3">
         <p class="h4 text-primary mb-4">Pedido #{{orderResponse.id}}</p>
 
         <p class="h5 text-secondary" v-if="status === 'add'">
@@ -371,7 +371,27 @@
           class="mb-2 mr-sm-2 mb-sm-0">
           Enviar formulario por email
         </b-form-checkbox>
-      </div>
+      </div> -->
+       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
+
+        <h5 class="mt-3">Formulario de datos</h5>
+
+        <b-row>
+          <b-col md="10">
+            <a :href="url">{{url}}</a>
+          </b-col>
+          <b-col md="2">
+            <b-button v-b-tooltip.top="'Copiar'" variant="link" class="mb-3 mr-1" v-clipboard:copy="url">
+              <i class="ri-file-copy-line pr-0"></i>
+              </b-button>
+          </b-col>
+        </b-row>
+
+        <b-form-checkbox v-model="sendForm" name="sendForm" class="mb-2 mr-sm-2 mb-sm-0">
+          Enviar formulario por email
+        </b-form-checkbox>
+
+      </OrderDetailComponent>
     </b-modal>
   </b-container>
 </template>
@@ -383,6 +403,7 @@ import clientService from '@/services/client'
 import productService from '@/services/product'
 import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
+import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 import { VMoney } from 'v-money'
 
 export default {
@@ -391,7 +412,8 @@ export default {
   components: {
     FormWizard,
     TabContent,
-    ModalTable
+    ModalTable,
+    OrderDetailComponent
   },
   created () {
     const id = this.$route.params.id
@@ -440,6 +462,7 @@ export default {
   },
   data () {
     return {
+      ids: [],
       status: 'add',
       orderResponse: [],
       sendForm: false,

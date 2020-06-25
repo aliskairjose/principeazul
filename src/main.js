@@ -20,7 +20,7 @@ import { messages } from 'vee-validate/dist/locale/es.json'
 import interceptors from '@/helpers/interceptors'
 import VueRouterUserRoles from 'vue-router-user-roles'
 import Print from 'vue-print-nb'
-import Clipboard from 'v-clipboard'
+import VueClipboard from 'vue-clipboard2'
 
 Object.keys(rules).forEach(rule => {
   extend(rule, {
@@ -31,7 +31,7 @@ Object.keys(rules).forEach(rule => {
 
 global.Raphael = Raphael
 
-Vue.use(Clipboard)
+Vue.use(VueClipboard)
 Vue.use(VueRouterUserRoles, { router })
 Vue.use(Print)
 Vue.use(interceptors)
