@@ -92,9 +92,9 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-4" label-for="type" v-show="product.type === 'principal'">
-                        <b-button block v-b-modal.modal-lg variant="outline-primary" @click="addSubproduct" v-b-modal.modal-1>
-                          Agregar subproductos
-                        </b-button>
+                      <b-button block v-b-modal.modal-lg variant="outline-primary" @click="addSubproduct" v-b-modal.modal-1>
+                        Agregar subproductos
+                      </b-button>
                     </b-form-group>
                     <b-form-group class="col-md-2" label-for="type" v-show="product.type === 'principal'">
                       <h6 class="mb-3"> Agregados <b-badge variant="info">{{subs}}</b-badge></h6>
@@ -178,7 +178,6 @@ export default {
             r.quantity = 0
           })
           this.subProducts = data
-          console.log(this.subProducts)
         })
         .catch((error) => { console.log(error) })
     }
