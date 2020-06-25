@@ -150,7 +150,7 @@
               </tab-content>
               <!-- Tab Productos -->
               <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
-                <div v-for="(p, index) in orderProducts" :key="p.id">
+                <div v-for="(p, index) in orderProducts" :key="index">
                   <b-row id="row" class="mb-2">
                     <b-col class="col-md-3">
                       <b-img
@@ -668,6 +668,7 @@ export default {
       if (this.status === 'edit') {
 
       }
+      console.log(this.orderProducts)
       this.resetPrincipals()
       this.tempProd.length = 0
     },
