@@ -216,8 +216,8 @@
                     <b-button
                       @click="showModal('lista-productos')"
                       pill
-                      variant="outline-link"
-                      class="mb-3 mr-1"
+                      variant="outline-secondary"
+                      class="mb-3 pr-5 pl-5"
                       v-if="status === 'add'"
                     >
                       <i class="ri-add-line"></i>
