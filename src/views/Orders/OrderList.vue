@@ -19,16 +19,15 @@
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
-            <b-row v-else align-h="between">
-              <b-col md="4" class="my-1">
+            <b-row v-else align-h="between" align-v="center">
+              <b-col md="3">
                 <b-form-group
                   label="Filtro"
                   label-cols-sm="3"
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0"
-                >
+                  class="mb-0">
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
@@ -42,7 +41,17 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="2" class="my-1">
+              <b-col md="3">
+                <b-form-group label="Fecha de creación:" label-for="date">
+                  <b-form-input type="date" v-model="created_at"></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col md="3">
+                <b-form-group label="Fecha de entrega:" label-for="date">
+                  <b-form-input type="date" v-model="delivery_at"></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col md="2">
                 <b-form-group>
                   <b-button variant="primary" @click="createOrder">Crear orden</b-button>
                 </b-form-group>
@@ -234,6 +243,8 @@ export default {
   },
   data () {
     return {
+      created_at: '',
+      delivery_at: '',
       ids: [],
       role: '',
       orderId: '',
