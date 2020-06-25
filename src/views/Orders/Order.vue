@@ -193,20 +193,20 @@
                     <b-col class="col-md-2">
                       <b-button
                         v-b-tooltip.right="'Eliminar producto'"
-                        size="lg"
+                        size="sm"
                         variant="link"
                         @click="deleteProduct(index)"
                       >
-                        <i class="ri-delete-back-2-fill ri-2x pr-0"></i>
+                        <i class="ri-delete-back-2-fill ri-lg pr-0"></i>
                       </b-button>
                       <br />
                       <b-button
                         v-b-tooltip.right="'Agregar notas'"
-                        size="lg"
+                        size="sm"
                         variant="utline-link"
                         @click="showModalNote(index)"
                       >
-                        <i class="ri-file-4-fill ri-2x pr-0"></i>
+                        <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                     </b-col>
                   </b-row>
