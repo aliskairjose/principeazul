@@ -42,7 +42,7 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="2" class="my-1">
+              <b-col md="3">
                 <b-form-group class="mb-0">
                   <b-form-select
                     v-model="selectedType"
@@ -53,7 +53,7 @@
                   ></b-form-select>
                 </b-form-group>
               </b-col>
-              <b-col md="2">
+              <b-col md="3">
                 <b-form-group label="Fecha inicial:" label-for="date">
                   <b-form-input
                     :disabled="selectedType ? false : true"
@@ -63,7 +63,7 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col md="2">
+              <b-col md="3">
                 <b-form-group label="Fecha final:" label-for="date">
                   <b-form-input
                     :disabled="selectedType ? false : true"
@@ -73,7 +73,7 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col md="2">
+              <b-col md="12">
                 <b-form-group>
                   <b-button variant="primary" @click="createOrder">Crear orden</b-button>
                 </b-form-group>
@@ -285,6 +285,7 @@ export default {
         { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
         { label: 'Entrega Est.', key: 'delivery_date', class: 'text-center', sortable: true },
         { label: 'Modo de entrega', key: 'mode', class: 'text-center', sortable: true },
+        { label: 'Tipo', key: 'personalized', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
         { label: 'Actualizar Status', key: 'update', class: 'text-center', sortable: false },

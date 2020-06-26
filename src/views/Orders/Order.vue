@@ -137,6 +137,17 @@
                         ></b-form-input>
                       </b-form-group>
                       <b-form-group
+                        class="col-md-6"
+                        label="Motivo:"
+                        label-for="delivery"
+                        lot-scope="{ valid, errors }"
+                      >
+                          <b-form-select
+                            v-model="order.reason"
+                            :options="reasons"
+                          ></b-form-select>
+                      </b-form-group>
+                      <b-form-group
                         v-if="status === 'edit'"
                         class="col-md-6"
                         label="Status de la compra:"
@@ -371,9 +382,8 @@
           class="mb-2 mr-sm-2 mb-sm-0">
           Enviar formulario por email
         </b-form-checkbox>
-      </div> -->
-       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
-
+      </div>-->
+      <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
         <b-row>
@@ -381,16 +391,22 @@
             <a :href="url">{{url}}</a>
           </b-col>
           <b-col md="2">
-            <b-button v-b-tooltip.top="'Copiar'" variant="link" class="mb-3 mr-1" v-clipboard:copy="url">
+            <b-button
+              v-b-tooltip.top="'Copiar'"
+              variant="link"
+              class="mb-3 mr-1"
+              v-clipboard:copy="url"
+            >
               <i class="ri-file-copy-line pr-0"></i>
-              </b-button>
+            </b-button>
           </b-col>
         </b-row>
 
-        <b-form-checkbox v-model="sendForm" name="sendForm" class="mb-2 mr-sm-2 mb-sm-0">
-          Enviar formulario por email
-        </b-form-checkbox>
-
+        <b-form-checkbox
+          v-model="sendForm"
+          name="sendForm"
+          class="mb-2 mr-sm-2 mb-sm-0"
+        >Enviar formulario por email</b-form-checkbox>
       </OrderDetailComponent>
     </b-modal>
   </b-container>
@@ -401,6 +417,7 @@ import { FormWizard, TabContent } from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import clientService from '@/services/client'
 import productService from '@/services/product'
+import generalService from '@/services/general'
 import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
@@ -423,6 +440,31 @@ export default {
     vito.index()
     this.loading = true
 
+    generalService.reasons()
+      .then(response => {
+        const object = response.data
+        this.reason.text = 'Seleccione un motivo'
+        this.reason.value = null
+        this.reasons.push(this.reason)
+        for (const iterator of object) {
+          this.reason = {}
+          this.reason.value = iterator
+          this.reason.text = iterator
+          this.reasons.push(this.reason)
+        }
+      })
+
+    generalService.orderStatus()
+      .then(response => {
+        const object = response.data
+        for (const iterator of object) {
+          let status = {}
+          status.value = iterator
+          status.text = iterator
+          this.statuses.push(status)
+        }
+      })
+
     clientService.getAll()
       .then(response => {
         this.clients = response.data
@@ -435,7 +477,6 @@ export default {
           if (r.type === 'principal') {
             r.additionals = []
             r.note = ''
-            // r.isAddItem = false
             this.principals.push(r)
           }
           if (r.type === 'additional') {
@@ -462,6 +503,8 @@ export default {
   },
   data () {
     return {
+      reasons: [],
+      reason: {},
       ids: [],
       status: 'add',
       orderResponse: [],
@@ -480,6 +523,7 @@ export default {
       },
       order: {
         id: '',
+        reason: null,
         client_id: '',
         client_name: '',
         client_dni: '',
@@ -498,15 +542,7 @@ export default {
           dni: ''
         }
       },
-      statuses: [
-        { value: 'Creado', text: 'Creado' },
-        { value: 'Pendiente', text: 'Pendiente' },
-        { value: 'En confección', text: 'En confección' },
-        { value: 'Confeccionado', text: 'Confeccionado' },
-        { value: 'En camino a reparto', text: 'En camino a reparto' },
-        { value: 'Entregado', text: 'Entregado' },
-        { value: 'Cancelado', text: 'Cancelado' }
-      ],
+      statuses: [],
       product: {
         id: null,
         product_id: '',
@@ -654,15 +690,7 @@ export default {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     deleteProduct (index) {
-      console.log(this.orderProducts, index)
       this.orderProducts = this.orderProducts.splice(index, 1)
-      // this.orderProducts = this.orderProducts.filter(x => x.id !== id)
-      // this.principals.map(r => {
-      //   if (r.id === id) {
-      //     r.isAddItem = false
-      //     r.additionals.length = 0
-      //   }
-      // })
     },
     deleteExtra (index, id) {
       if (this.status === 'add') {
