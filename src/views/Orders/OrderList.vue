@@ -125,7 +125,15 @@
                       {{orders.item.personalizedRequired ? ' Personalizado':  'Standar'}}</template>
                     <template
                     v-slot:cell(editor)="orders">
-                      <b-button v-b-modal.modal-editor>Editor</b-button>
+                      <b-button
+                        v-show="role === 'admin'"
+                        v-b-tooltip.top="'Editar'"
+                        variant=" iq-bg-success mr-1 mb-1"
+                        size="sm"
+                        @click="openEditor(orders.item)"
+                      >
+                        <i class="ri-align-left m-0"></i>
+                      </b-button>
                     </template>
                     <template v-slot:cell(status)="orders">
                       <b-badge
@@ -246,18 +254,21 @@
 
     <!-- Modal Editor de Dedicatoria -->
     <b-modal
+      ref="modalEditor"
       size="lg"
       id="modal-editor"
       cancel-title="Cancelar"
       ok-only
       no-close-on-esc
       no-close-on-backdrop
-      hide-header-close>
+      hide-header-close
+      @ok="closeEditor">
       <editor
-       api-key="no-api-key"
+        v-model="dedication"
+        api-key="no-api-key"
        :init="{
          height: 500,
-         menubar: false,
+         menubar: true,
          plugins: [
            'advlist autolink lists link image charmap print preview anchor',
            'searchreplace visualblocks code fullscreen',
@@ -266,7 +277,7 @@
          toolbar:
            'undo redo | formatselect | bold italic backcolor | \
            alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help'
+           bullist numlist outdent indent | removeformat | print'
        }"
      />
     </b-modal>
@@ -306,6 +317,7 @@ export default {
   },
   data () {
     return {
+      dedication: '',
       selectedType: null,
       selectedPersonalize: null,
       initDate: '',
@@ -425,6 +437,13 @@ export default {
         this.orderId = item.id
         this.$refs['orderDetailModal'].show()
       }
+    },
+    openEditor (item) {
+      this.dedication = item.dedication
+      this.$refs['modalEditor'].show()
+    },
+    closeEditor () {
+      this.dedication = ''
     }
   }
 }

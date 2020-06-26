@@ -2,10 +2,18 @@
   <ValidationObserver ref="form" v-slot="{ handleSubmit }">
     <form class="mt-4" novalidate @submit.prevent="handleSubmit(onSubmit)">
       <div class="text-center" id="spinner" v-show="loading">
-        <b-spinner variant="primary" type="grow" label="Spinning" style="width: 5rem; height: 5rem;"></b-spinner>
+        <b-spinner
+          variant="primary"
+          type="grow"
+          label="Spinning"
+          style="width: 5rem; height: 5rem;"
+        ></b-spinner>
       </div>
-      <b-alert :show="isUpdated" variant=" " dismissible fade  class="text-white bg-info">
-        <div class="iq-alert-text">Datos actualizados con <b>exito</b>!</div>
+      <b-alert :show="isUpdated" variant=" " dismissible fade class="text-white bg-info">
+        <div class="iq-alert-text">
+          Datos actualizados con
+          <b>exito</b>!
+        </div>
       </b-alert>
       <ValidationProvider vid="Fecha" name="Fecha de entrega" rules="required" v-slot="{ errors }">
         <div class="form-group">
@@ -22,7 +30,12 @@
           </div>
         </div>
       </ValidationProvider>
-      <ValidationProvider vid="Destinatario" name="Destinatario" rules="required" v-slot="{ errors }">
+      <ValidationProvider
+        vid="Destinatario"
+        name="Destinatario"
+        rules="required"
+        v-slot="{ errors }"
+      >
         <div class="form-group">
           <label for="destinatarioInput">Destinatario</label>
           <input
@@ -87,6 +100,16 @@
           </div>
         </div>
       </ValidationProvider>
+      <div class="form-group" v-show="order.personalizedRequired">
+        <label for="dedicationInput">Personalizado</label>
+        <input
+          type="text"
+          class="form-control mb-0"
+          id="dedicationInput"
+          v-model="order.personalized_text"
+          placeholder="Personalizado"
+        />
+      </div>
       <div class="d-inline-block w-100">
         <button type="submit" class="btn btn-primary float-right">Enviar</button>
       </div>
@@ -143,9 +166,9 @@ export default {
 </script>
 
 <style scoped>
-  #spinner {
-    z-index: 1000;
-    position: absolute;
-    left: 40%;
-  }
+#spinner {
+  z-index: 1000;
+  position: absolute;
+  left: 40%;
+}
 </style>
