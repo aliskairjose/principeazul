@@ -105,9 +105,6 @@
                       <b-form-checkbox
                         id="chkBoxPersonalized"
                         v-model="product.personalized"
-                        name="personalized"
-                        value="accepted"
-                        unchecked-value="not_accepted"
                       >Este producto es personalizado</b-form-checkbox>
                     </b-form-group>
                     <b-form-group
@@ -256,7 +253,7 @@ export default {
         category_id: null,
         type: null,
         image: '',
-        personalized: 0,
+        personalized: false,
         relatedProducts: []
       },
       types: [
