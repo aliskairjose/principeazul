@@ -690,7 +690,7 @@ export default {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     deleteProduct (index) {
-      this.orderProducts = this.orderProducts.splice(index, 1)
+      this.orderProducts.splice(index, 1)
     },
     deleteExtra (index, id) {
       if (this.status === 'add') {
