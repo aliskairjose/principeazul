@@ -123,6 +123,10 @@
                     <template
                       v-slot:cell(personalizedRequired)="orders">
                       {{orders.item.personalizedRequired ? ' Personalizado':  'Standar'}}</template>
+                    <template
+                    v-slot:cell(editor)="orders">
+                      <b-button v-b-modal.modal-editor>Editor</b-button>
+                    </template>
                     <template v-slot:cell(status)="orders">
                       <b-badge
                         variant="primary"
@@ -223,6 +227,7 @@
         </iq-card>
       </b-col>
     </b-row>
+    <!-- Modal Detalles de Orden -->
     <b-modal
       ref="orderDetailModal"
       size="lg"
@@ -231,25 +236,55 @@
       ok-only
       no-close-on-esc
       no-close-on-backdrop
-      hide-header-close
-    >
+      hide-header-close>
       <OrderDetailComponent
         :dataId="orderId"
         :idList="ids"
         :enableButtons="role === 'admin' ? false : true"
       ></OrderDetailComponent>
     </b-modal>
+
+    <!-- Modal Editor de Dedicatoria -->
+    <b-modal
+      size="lg"
+      id="modal-editor"
+      cancel-title="Cancelar"
+      ok-only
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-header-close>
+      <editor
+       api-key="no-api-key"
+       :init="{
+         height: 500,
+         menubar: false,
+         plugins: [
+           'advlist autolink lists link image charmap print preview anchor',
+           'searchreplace visualblocks code fullscreen',
+           'insertdatetime media table paste code help wordcount'
+         ],
+         toolbar:
+           'undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help'
+       }"
+     />
+    </b-modal>
   </b-container>
 </template>
 
 <script>
+import Editor from '@tinymce/tinymce-vue'
 import { vito } from '../../config/pluginInit'
 import orderService from '@/services/order'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 
 export default {
   name: 'OrderList',
-  components: { OrderDetailComponent },
+  components: {
+    OrderDetailComponent,
+    editor: Editor
+  },
   created () {
     orderService.orderStatuses()
       .then(response => {
@@ -309,7 +344,8 @@ export default {
         { label: 'Tipo', key: 'personalizedRequired', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
-        { label: 'Actualizar Status', key: 'update', class: 'text-center', sortable: false },
+        { label: 'Nuevo status', key: 'update', class: 'text-center', sortable: false },
+        { label: 'Editor', key: 'editor', class: 'text-center', sortable: false },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
