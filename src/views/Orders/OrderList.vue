@@ -333,7 +333,6 @@ export default {
         .finally(() => { this.loading = false })
     },
     onChangePersonalized () {
-      console.log(this.selectedPersonalize)
       if (this.selectedPersonalize !== 2) {
         this.loadData(`required_personalized=${this.selectedPersonalize}`)
       } else {
