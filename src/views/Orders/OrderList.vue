@@ -44,7 +44,13 @@
               </b-col>
               <b-col md="2" class="my-1">
                 <b-form-group class="mb-0">
-                  <b-form-select v-model="selectedType" id="types" size="sm" :options="typeOptions"></b-form-select>
+                  <b-form-select
+                    v-model="selectedType"
+                    id="types"
+                    size="sm"
+                    :options="typeOptions"
+                    @change="onSelectedChange"
+                  ></b-form-select>
                 </b-form-group>
               </b-col>
               <b-col md="2">
@@ -293,6 +299,7 @@ export default {
   },
   methods: {
     loadData (params = '') {
+      this.loading = true
       orderService.getAll(params)
         .then(response => {
           this.orders = response.data
@@ -312,6 +319,14 @@ export default {
           // Fecha de entrega
           this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
         }
+      }
+    },
+    onSelectedChange () {
+      if (!this.selectedType) {
+        // Limpia los campos fechas
+        this.initDate = ''
+        this.endDate = ''
+        this.loadData()
       }
     },
     onStatusUpdate (id, status) {
