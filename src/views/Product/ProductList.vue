@@ -16,7 +16,7 @@
             <b-col md="12" class="text-center spinner" v-show="isRemoving">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
-            <b-col md="12" class="text-center spinner"  v-if="loading">
+            <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row align-h="between">
@@ -27,14 +27,15 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0">
+                  class="mb-0"
+                >
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
                       type="search"
                       id="filterInput"
-                      placeholder="Escriba para buscar">
-                    </b-form-input>
+                      placeholder="Escriba para buscar"
+                    ></b-form-input>
                     <b-input-group-append>
                       <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
                     </b-input-group-append>
@@ -48,8 +49,8 @@
                     id="types"
                     size="sm"
                     :options="typesOptions"
-                    @change="onChange">
-                    </b-form-select>
+                    @change="onChange"
+                  ></b-form-select>
                 </b-form-group>
               </b-col>
               <b-col md="2" class="my-1">
@@ -60,7 +61,9 @@
               <template v-if="products.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b> Por favor agrege un producto para comenzar!</div>
+                    <div class="iq-alert-text">
+                      <b>No hay registros para mostrar.</b> Por favor agrege un producto para comenzar!
+                    </div>
                   </b-alert>
                 </b-col>
               </template>
@@ -77,16 +80,15 @@
                     :sort-by.sync="sortBy"
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
-                    @filtered="onFiltered">
+                    @filtered="onFiltered"
+                  >
                     <template v-slot:cell(name)="products">
-                      <label for="" class="text-capitalize">{{products.item.name}}</label>
+                      <label for class="text-capitalize">{{products.item.name}}</label>
                     </template>
-                    <template v-slot:cell(type)="products">
-                      {{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}
-                    </template>
-                    <template v-slot:cell(price)="products">
-                      {{products.item.price}} $
-                    </template>
+                    <template
+                      v-slot:cell(type)="products"
+                    >{{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}</template>
+                    <template v-slot:cell(price)="products">{{products.item.price}} $</template>
                     <template v-slot:cell(image)="products">
                       <b-img
                         v-viewer="{movable: false}"
@@ -94,29 +96,32 @@
                         rounded="circle"
                         :src="products.item.image ? products.item.image : require(`@/assets/images/no-image.png`)"
                         id="image"
-                        class="">
-                      </b-img>
+                        class
+                      ></b-img>
                     </template>
                     <template v-slot:cell(action)="products">
                       <b-button
                         v-b-tooltip.top="'Editar'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
-                        @click="edit(products.item)">
+                        @click="edit(products.item)"
+                      >
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
                       <b-button
                         v-b-tooltip.top="'Eliminar'"
                         variant=" iq-bg-danger mr-1 mb-1"
                         size="sm"
-                        @click="remove(products.item)">
+                        @click="remove(products.item)"
+                      >
                         <i class="ri-delete-bin-line m-0"></i>
                       </b-button>
                       <b-button
                         v-b-tooltip.top="'Inventario'"
                         variant=" iq-bg-primary mr-1 mb-1"
                         size="sm"
-                        @click="inventory(products.item)">
+                        @click="inventory(products.item)"
+                      >
                         <i class="ri-list-unordered m-0"></i>
                       </b-button>
                     </template>
@@ -130,7 +135,8 @@
                     label-align-sm="right"
                     label-size="sm"
                     label-for="perPageSelect"
-                    class="mb-0">
+                    class="mb-0"
+                  >
                     <b-form-select
                       v-model="perPage"
                       id="perPageSelect"
@@ -145,8 +151,8 @@
                     :total-rows="rows"
                     :per-page="perPage"
                     align="right"
-                    aria-controls="my-table">
-                  </b-pagination>
+                    aria-controls="my-table"
+                  ></b-pagination>
                 </b-col>
               </template>
             </b-row>
@@ -154,9 +160,7 @@
         </iq-card>
       </b-col>
       <b-modal size="lg" id="modal-1" :title="title" ref="my-modal">
-        <InventoryList
-          :product="product">
-        </InventoryList>
+        <InventoryList :product="product"></InventoryList>
       </b-modal>
     </b-row>
   </b-container>
@@ -291,9 +295,8 @@ export default {
 </script>
 
 <style scoped>
-  #image {
-    width: 64px;
-    height: 64px;
-  }
-
+#image {
+  width: 64px;
+  height: 64px;
+}
 </style>

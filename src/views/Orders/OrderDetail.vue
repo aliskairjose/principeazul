@@ -1,10 +1,6 @@
 <template>
   <b-container fluid>
-    <OrderDetailComponent
-      :dataId="$route.params.id"
-      :idList="ids"
-    >
-    </OrderDetailComponent>
+    <OrderDetailComponent :dataId="$route.params.id" :idList="ids"></OrderDetailComponent>
   </b-container>
 </template>
 

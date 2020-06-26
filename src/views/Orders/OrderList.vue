@@ -27,7 +27,8 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0">
+                  class="mb-0"
+                >
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
@@ -41,14 +42,29 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="3">
-                <b-form-group label="Fecha de creación:" label-for="date">
-                  <b-form-input type="date" @change="onDateChange('created_at', $event)"></b-form-input>
+              <b-col md="2" class="my-1">
+                <b-form-group class="mb-0">
+                  <b-form-select v-model="selectedType" id="types" size="sm" :options="typeOptions"></b-form-select>
                 </b-form-group>
               </b-col>
-              <b-col md="3">
-                <b-form-group label="Fecha de entrega:" label-for="date">
-                  <b-form-input type="date" @change="onDateChange('delivery_date', $event)"></b-form-input>
+              <b-col md="2">
+                <b-form-group label="Fecha inicial:" label-for="date">
+                  <b-form-input
+                    :disabled="selectedType ? false : true"
+                    v-model="initDate"
+                    type="date"
+                    @change="onDateChange"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col md="2">
+                <b-form-group label="Fecha final:" label-for="date">
+                  <b-form-input
+                    :disabled="selectedType ? false : true"
+                    v-model="endDate"
+                    type="date"
+                    @change="onDateChange"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="2">
@@ -235,6 +251,14 @@ export default {
   },
   data () {
     return {
+      selectedType: null,
+      initDate: '',
+      endDate: '',
+      typeOptions: [
+        { value: null, text: 'Rango de fecha' },
+        { value: 1, text: 'Fecha de creación' },
+        { value: 2, text: 'Fecha de entrega' }
+      ],
       ids: [],
       role: '',
       orderId: '',
@@ -246,7 +270,6 @@ export default {
       isShow: false,
       isRemoving: false,
       perPage: 15,
-      selectedType: null,
       sortDesc: false,
       pageOptions: [5, 10, 15, 25, 50, 100, 200],
       totalRows: 1,
@@ -280,8 +303,16 @@ export default {
         .catch(() => { })
         .finally(() => { this.loading = false })
     },
-    onDateChange (type, date) {
-      this.loadData(`${type}=${date}`)
+    onDateChange () {
+      if (this.initDate && this.endDate) {
+        if (this.selectedType === 1) {
+          // Fecha de creación
+          this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
+        } else {
+          // Fecha de entrega
+          this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+        }
+      }
     },
     onStatusUpdate (id, status) {
       this.isRemoving = true

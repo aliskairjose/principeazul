@@ -9,7 +9,12 @@
                 <div class="new-user-info">
                   <b-row>
                     <div class="text-center" id="spinner" v-show="loading">
-                      <b-spinner variant="primary" type="grow" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+                      <b-spinner
+                        variant="primary"
+                        type="grow"
+                        label="Spinning"
+                        style="width: 3rem; height: 3rem;"
+                      ></b-spinner>
                     </div>
                   </b-row>
                   <b-row align-v="end">
@@ -20,8 +25,8 @@
                           type="text"
                           placeholder="Nombre"
                           class="text-capitalize"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')">
-                        </b-form-input>
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                        ></b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
@@ -34,8 +39,8 @@
                           type="text"
                           class="text-capitalize"
                           placeholder="Descripción"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')">
-                        </b-form-input>
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                        ></b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
@@ -50,8 +55,8 @@
                           name="price"
                           id="price"
                           :class="(errors.length > 0 ? ' is-invalid' : '')"
-                          placeholder="Precio">
-                        </b-form-input>
+                          placeholder="Precio"
+                        ></b-form-input>
                         <b-form-input
                           v-else
                           v-money="money"
@@ -60,20 +65,25 @@
                           name="price"
                           id="price"
                           :class="(errors.length > 0 ? ' is-invalid' : '')"
-                          placeholder="Precio">
-                        </b-form-input>
+                          placeholder="Precio"
+                        ></b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Categoría:" label-for="category" lot-scope="{ valid, errors }">
+                    <b-form-group
+                      class="col-md-6"
+                      label="Categoría:"
+                      label-for="category"
+                      lot-scope="{ valid, errors }"
+                    >
                       <ValidationProvider name="Categoria" rules="required" v-slot="{ errors }">
                         <b-form-select
                           :state="errors[0] ? false : (product.category_id ? true : null)"
                           v-model="product.category_id"
-                          :options="categories">
-                        </b-form-select>
+                          :options="categories"
+                        ></b-form-select>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
@@ -84,28 +94,50 @@
                         <b-form-select
                           :state="errors[0] ? false : (product.type ? true : null)"
                           v-model="product.type"
-                          :options="types">
-                        </b-form-select>
-                         <div class="invalid-feedback">
+                          :options="types"
+                        ></b-form-select>
+                        <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-4" label-for="type" v-show="product.type === 'principal'">
-                      <b-button block v-b-modal.modal-lg variant="primary" @click="addSubproduct" v-b-modal.modal-1>
-                        Agregar subproductos
-                      </b-button>
+                    <b-form-group
+                      class="col-md-4"
+                      label-for="type"
+                      v-show="product.type === 'principal'"
+                    >
+                      <b-button
+                        block
+                        v-b-modal.modal-lg
+                        variant="primary"
+                        @click="addSubproduct"
+                        v-b-modal.modal-1
+                      >Agregar subproductos</b-button>
                     </b-form-group>
-                    <b-form-group class="col-md-2" label-for="type" v-show="product.type === 'principal'">
-                      <h6 class="mb-3"> Agregados <b-badge variant="info">{{subs}}</b-badge></h6>
+                    <b-form-group
+                      class="col-md-2"
+                      label-for="type"
+                      v-show="product.type === 'principal'"
+                    >
+                      <h6 class="mb-3">
+                        Agregados
+                        <b-badge variant="info">{{subs}}</b-badge>
+                      </h6>
                     </b-form-group>
-                    <b-form-group class="col-md-12" >
-                      <vue-dropzone :options="dropzoneOptions" :useCustomSlot=true :id="'image'" v-on:vdropzone-success="fileAdded">
+                    <b-form-group class="col-md-12">
+                      <vue-dropzone
+                        :options="dropzoneOptions"
+                        :useCustomSlot="true"
+                        :id="'image'"
+                        v-on:vdropzone-success="fileAdded"
+                      >
                         <div class="dropzone-custom-content">
                           <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
-                          <div class="subtitle">...o haga clic para seleccionar un archivo de su computadora</div>
+                          <div
+                            class="subtitle"
+                          >...o haga clic para seleccionar un archivo de su computadora</div>
                         </div>
-                        </vue-dropzone>
+                      </vue-dropzone>
                     </b-form-group>
                   </b-row>
                   <hr />
@@ -118,13 +150,14 @@
                     no-close-on-backdrop
                     hide-header-close
                     @ok="handleOk"
-                    @cancel="handleCancel">
+                    @cancel="handleCancel"
+                  >
                     <modal-table
                       :items="subProducts"
                       :titems="subProductTitle"
                       v-on:add-item="addSub"
-                      v-on:delete-item="deleteSub">
-                    </modal-table>
+                      v-on:delete-item="deleteSub"
+                    ></modal-table>
                   </b-modal>
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
                 </div>
@@ -301,10 +334,9 @@ export default {
 </script>
 
 <style scoped>
-  #spinner {
-    z-index: 1000;
-    position: absolute;
-    left: 40vw;
-  }
-
+#spinner {
+  z-index: 1000;
+  position: absolute;
+  left: 40vw;
+}
 </style>
