@@ -109,6 +109,9 @@
                     <template
                       v-slot:cell(delivery_date)="orders"
                     >{{orders.item.delivery_date | formatDate}}</template>
+                    <template
+                      v-slot:cell(personalizedRequired)="orders">
+                      {{orders.item.personalizedRequired ? ' Personalizado':  'Standar'}}</template>
                     <template v-slot:cell(status)="orders">
                       <b-badge
                         variant="primary"
@@ -285,7 +288,7 @@ export default {
         { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
         { label: 'Entrega Est.', key: 'delivery_date', class: 'text-center', sortable: true },
         { label: 'Modo de entrega', key: 'mode', class: 'text-center', sortable: true },
-        { label: 'Tipo', key: 'personalized', class: 'text-center', sortable: true },
+        { label: 'Tipo', key: 'personalizedRequired', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
         { label: 'Actualizar Status', key: 'update', class: 'text-center', sortable: false },
