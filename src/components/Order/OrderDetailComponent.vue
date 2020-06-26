@@ -35,6 +35,7 @@
               <b-col md="6">Status de la orden: {{ data.status | capitalize }}</b-col>
               <b-col md="6">Dedicatoria: {{ data.dedication | capitalize }}</b-col>
               <b-col md="6">Firma: {{ data.signature | capitalize }}</b-col>
+              <b-col md="6">Motivo: {{ data.reason | capitalize }}</b-col>
               <b-col md="12" class="mb-2 mt-3">
                 <h5>Productos</h5>
               </b-col>
