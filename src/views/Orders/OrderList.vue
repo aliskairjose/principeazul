@@ -42,7 +42,18 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="3">
+              <b-col md="2">
+                <b-form-group class="mb-0">
+                  <b-form-select
+                    v-model="selectedPersonalize"
+                    id="types"
+                    size="sm"
+                    :options="perOptions"
+                    @change="onChangePersonalized"
+                  ></b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col md="2">
                 <b-form-group class="mb-0">
                   <b-form-select
                     v-model="selectedType"
@@ -53,7 +64,7 @@
                   ></b-form-select>
                 </b-form-group>
               </b-col>
-              <b-col md="3">
+              <b-col md="2">
                 <b-form-group label="Fecha inicial:" label-for="date">
                   <b-form-input
                     :disabled="selectedType ? false : true"
@@ -63,7 +74,7 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col md="3">
+              <b-col md="2">
                 <b-form-group label="Fecha final:" label-for="date">
                   <b-form-input
                     :disabled="selectedType ? false : true"
@@ -261,12 +272,19 @@ export default {
   data () {
     return {
       selectedType: null,
+      selectedPersonalize: null,
       initDate: '',
       endDate: '',
       typeOptions: [
         { value: null, text: 'Rango de fecha' },
         { value: 1, text: 'Fecha de creación' },
         { value: 2, text: 'Fecha de entrega' }
+      ],
+      perOptions: [
+        { value: null, text: 'Tipo de orden' },
+        { value: 2, text: 'Todos' },
+        { value: 1, text: 'Personalizada' },
+        { value: 0, text: 'Standar' }
       ],
       ids: [],
       role: '',
@@ -313,6 +331,14 @@ export default {
         })
         .catch(() => { })
         .finally(() => { this.loading = false })
+    },
+    onChangePersonalized () {
+      console.log(this.selectedPersonalize)
+      if (this.selectedPersonalize !== 2) {
+        this.loadData(`required_personalized=${this.selectedPersonalize}`)
+      } else {
+        this.loadData(``)
+      }
     },
     onDateChange () {
       if (this.initDate && this.endDate) {
