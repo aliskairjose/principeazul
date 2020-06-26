@@ -101,6 +101,15 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <b-form-group class="col-md-6" label-for="personalized">
+                      <b-form-checkbox
+                        id="chkBoxPersonalized"
+                        v-model="product.personalized"
+                        name="personalized"
+                        value="accepted"
+                        unchecked-value="not_accepted"
+                      >Este producto es personalizado</b-form-checkbox>
+                    </b-form-group>
                     <b-form-group
                       class="col-md-4"
                       label-for="type"
@@ -247,6 +256,7 @@ export default {
         category_id: null,
         type: null,
         image: '',
+        personalized: 0,
         relatedProducts: []
       },
       types: [
