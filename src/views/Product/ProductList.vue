@@ -89,6 +89,9 @@
                       v-slot:cell(type)="products"
                     >{{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}</template>
                     <template v-slot:cell(price)="products">{{products.item.price}} $</template>
+                    <template v-slot:cell(personalized)="products">
+                      {{products.item.personalized === 0 ? 'Standard' : 'Personalizado'}}
+                    </template>
                     <template v-slot:cell(image)="products">
                       <b-img
                         v-viewer="{movable: false}"
@@ -198,7 +201,8 @@ export default {
         description: '',
         type: '',
         price: 0,
-        image: ''
+        image: '',
+        personalized: ''
       },
       typesOptions: [
         { value: null, text: 'Tipo de Producto' },
@@ -211,6 +215,7 @@ export default {
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         { label: 'Precio', key: 'price', class: 'text-center', sortable: true },
         { label: 'Tipo', key: 'type', class: 'text-center', sortable: true },
+        { label: 'Personalizado', key: 'personalized', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       products: []
