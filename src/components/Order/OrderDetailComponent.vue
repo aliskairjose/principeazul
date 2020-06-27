@@ -54,7 +54,7 @@
                               <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
                           </label>
                         </b-col>
-                        <b-col md="4">
+                        <b-col md="4" v-show="item.additionals.length > 0">
                           <b-button variant="link" @click="showHideDetail(index)">
                             <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
                             <i class="ri-arrow-up-s-fill" v-else></i>
