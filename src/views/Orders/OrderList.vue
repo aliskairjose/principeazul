@@ -127,7 +127,7 @@
                     v-slot:cell(editor)="orders">
                       <b-button
                         v-show="role === 'admin'"
-                        v-b-tooltip.top="'Editar'"
+                        v-b-tooltip.top="'Editar dedicatoria'"
                         variant=" iq-bg-success mr-1 mb-1"
                         size="sm"
                         @click="openEditor(orders.item)"
