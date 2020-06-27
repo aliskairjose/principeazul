@@ -9,84 +9,101 @@
             </b-col>
             <b-row>
               <b-col md="10" class="mb-4">
-                <h4>Detalles de la orden #{{data.id}}</h4>
+                <h4>#{{data.id}}</h4>
               </b-col>
               <b-col md="2">
                 <b-button variant="link" class="mb-3 mr-1" v-print="'#printMe'">
                   <i class="ri-printer-fill ri-lg"></i>
                 </b-button>
               </b-col>
-              <b-col md="12" class="mb-2">
-                <h5>Información del cliente</h5>
-              </b-col>
+              <!-- Información del clliente -->
               <b-col md="6">Cliente: {{ data.client.name}}</b-col>
-              <b-col md="6">Dirección: {{ data.client.address}}</b-col>
               <b-col md="6">Teléfono: {{ data.client.phone  }}</b-col>
-              <b-col md="6">Email: {{ data.client.email}}</b-col>
-              <b-col md="12" class="mb-2 mt-3">
-                <h5>Información de la orden</h5>
+              <b-col md="6">Entrega: {{ data.mode | capitalize }}</b-col>
+              <b-col md="6">Tipo: {{ data.type | capitalize }}</b-col>
+              <b-col md="6">Metodo de pago: ${{ data.total }}</b-col>
+
+              <b-col md="12"><hr></b-col>
+
+              <!-- Información del producto -->
+              <b-col md="12">
+                <div v-for="(item, index) in data.products" :key="item.id">
+                  <b-row>
+                    <b-col md="2">
+                      <b-img
+                        v-viewer="{movable: false}"
+                        center
+                        rounded="circle"
+                        :src="item.image ? item.image : require(`@/assets/images/no-image.png`)"
+                        class="image">
+                      </b-img>
+                    </b-col>
+                    <b-col md="10">
+                      <b-row>
+                        <b-col md="10"> <h5>{{item.name}}</h5> </b-col>
+                        <b-col md="2"> {{item.personalizedRequired ? 'Personalizado' : 'Standard' }} </b-col>
+                        <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note">"{{item.note}}"</label> </b-col>
+                        <b-col md="10">
+                          <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
+                              <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
+
+                          </label>
+                        </b-col>
+                        <b-col md="1">
+                          <b-button variant="link" @click="showHideDetail(index)">
+                            <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
+                            <i class="ri-arrow-down-s-fill" v-else></i>
+                          </b-button>
+                        </b-col>
+                        <b-col md="12">
+                          <b-row v-show="item.showDetails">
+                            <b-col md="12">
+                              <table style="width:100%">
+                                <tr class="text-center">
+                                  <th>Id</th>
+                                  <th>Imagen</th>
+                                  <th>Producto</th>
+                                  <th>Cantidad</th>
+                                </tr>
+                                <tr v-for="x in item.additionals" :key="x.id" class="text-muted text-capitalize text-muted text-center">
+                                  <td>{{ x.id }}</td>
+                                  <td>
+                                    <b-img
+                                      v-viewer="{movable: false}"
+                                      center
+                                      rounded="circle"
+                                      :src="x.image ? products.item.image : require(`@/assets/images/no-image.png`)"
+                                      class="image">
+                                    </b-img>
+                                  </td>
+                                  <td>
+                                    <label for="" class="text-muted text-capitalize">{{ x.name }}</label>
+                                  </td>
+                                  <td>{{ x.quantity }}</td>
+                                </tr>
+                              </table>
+                            </b-col>
+                          </b-row>
+                        </b-col>
+                      </b-row>
+                    </b-col>
+                  </b-row>
+
+                </div>
               </b-col>
-              <b-col md="6">Dirección de entrega: {{ data.delivery_address }}</b-col>
-              <b-col md="6">Fecha: {{ data.created_at | formatDate}}</b-col>
+              <b-col md="6"> Motivo: {{ data.reason ? data.reason : 'Sin motivo' }} </b-col>
+              <b-col md="6">Firma: {{ data.signature | capitalize }}</b-col>
+              <b-col md="12">Dedicatoria: <br> "{{ data.dedication | capitalize }}"</b-col>
+              <b-col md="12">Texto personalizado: <br> {{ data.personalized_text | capitalize }}</b-col>
+
+              <b-col md="12"><hr></b-col>
+
+              <!-- Datos de la entrega -->
+              <b-col md="12" class="mb-2 mt-3"> <h5 class="text-muted">Datos de la entrega</h5> </b-col>
               <b-col md="6">Recibe: {{ data.addressee}}</b-col>
               <b-col md="6">Fecha entrega: {{ data.delivery_date | formatDate}}</b-col>
-              <b-col md="6">Modo de entrega: {{ data.mode | capitalize }}</b-col>
-              <b-col md="6">Tipo de compra: {{ data.type | capitalize }}</b-col>
-              <b-col md="6">Status de la orden: {{ data.status | capitalize }}</b-col>
-              <b-col md="6">Dedicatoria: {{ data.dedication | capitalize }}</b-col>
-              <b-col md="6">Firma: {{ data.signature | capitalize }}</b-col>
-              <b-col md="6">Motivo: {{ data.reason | capitalize }}</b-col>
-              <b-col md="12" class="mb-2 mt-3">
-                <h5>Productos</h5>
-              </b-col>
-             <b-col>
-              <div v-for="(item, index) in data.products" :key="item.id" class="product-info">
-                <b-row md="12">
-                  <b-col md="6">
-                    <label for="" class="text-muted text-capitalize">{{ item.name }}</label>
-                  </b-col>
-                  <b-col md="4">
-                    <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
-                      <label for="" class="text-muted text-capitalize">{{ a.name }}</label>
-                    </label>
-                  </b-col>
-                  <b-col md="1">
-                    <b-button variant="link" @click="showHideDetail(index)">
-                      <i class="ri-arrow-down-s-line" v-if="item.showDetails"></i>
-                      <i class="ri-arrow-up-s-line" v-else></i>
-                    </b-button>
-                  </b-col>
-                </b-row>
-                <b-row v-show="item.showDetails">
-                  <b-col md="12">
-                    <table style="width:100%">
-                      <tr class="text-center">
-                        <th>Id</th>
-                        <th>Imagen</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                      </tr>
-                      <tr v-for="x in item.additionals" :key="x.id" class="text-muted text-capitalize text-muted text-center">
-                        <td>{{ x.id }}</td>
-                        <td>
-                          <b-img
-                            v-viewer="{movable: false}"
-                            center
-                            rounded="circle"
-                            :src="x.image ? products.item.image : require(`@/assets/images/no-image.png`)"
-                            class="image">
-                          </b-img>
-                        </td>
-                        <td>
-                          <label for="" class="text-muted text-capitalize">{{ x.name }}</label>
-                        </td>
-                        <td>{{ x.quantity }}</td>
-                      </tr>
-                    </table>
-                  </b-col>
-                </b-row>
-              </div>
-             </b-col>
+              <b-col md="12">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
+
              <b-col md="12">
                <slot></slot>
              </b-col>
@@ -183,5 +200,9 @@ export default {
   .image {
     width: 64px;
     height: auto;
+  }
+
+  .text-italic {
+    font-style: italic;
   }
 </style>
