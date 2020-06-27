@@ -17,17 +17,17 @@
                 </b-button>
               </b-col>
               <!-- Información del clliente -->
-              <b-col md="6">Cliente: {{ data.client.name}}</b-col>
-              <b-col md="6">Teléfono: {{ data.client.phone  }}</b-col>
-              <b-col md="6">Entrega: {{ data.mode | capitalize }}</b-col>
-              <b-col md="6">Tipo: {{ data.type | capitalize }}</b-col>
-              <b-col md="6">Metodo de pago: ${{ data.total }}</b-col>
+              <b-col md="6" class="mb-3">Cliente: {{ data.client.name}}</b-col>
+              <b-col md="6" class="mb-3">Teléfono: {{ data.client.phone  }}</b-col>
+              <b-col md="6" class="mb-3">Entrega: {{ data.mode | capitalize }}</b-col>
+              <b-col md="6" class="mb-3">Tipo: {{ data.type | capitalize }}</b-col>
+              <b-col md="6" class="mb-3">Metodo de pago: ${{ data.total }}</b-col>
 
               <b-col md="12"><hr></b-col>
 
               <!-- Información del producto -->
-              <b-col md="12">
-                <div v-for="(item, index) in data.products" :key="item.id">
+              <b-col md="12" class="mb-3">
+                <div v-for="(item, index) in data.products" :key="item.id" class="product-info pt-3">
                   <b-row>
                     <b-col md="2">
                       <b-img
@@ -40,24 +40,24 @@
                     </b-col>
                     <b-col md="10">
                       <b-row>
-                        <b-col md="10"> <h5>{{item.name}}</h5> </b-col>
-                        <b-col md="2">
+                        <b-col md="6"> <h5>{{item.name}}</h5> </b-col>
+                        <b-col md="4">
                           <h6 class="mx-1">
-                            <b-badge :variant="item.personalizedRequired ? 'info' : 'light'" class="px-3">
-                              {{item.personalizedRequired ? 'Personalizado' : 'Standard' }}
+                            <b-badge :variant="item.product.personalized ? 'info' : 'warning'" class="px-3">
+                              {{item.product.personalized ? 'Personalizado' : 'Standard'  }}
                             </b-badge>
                           </h6>
                         </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note">"{{item.note}}"</label> </b-col>
-                        <b-col md="10">
+                        <b-col md="6">
                           <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
                               <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
                           </label>
                         </b-col>
-                        <b-col md="1">
+                        <b-col md="4">
                           <b-button variant="link" @click="showHideDetail(index)">
                             <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
-                            <i class="ri-arrow-down-s-fill" v-else></i>
+                            <i class="ri-arrow-up-s-fill" v-else></i>
                           </b-button>
                         </b-col>
                         <b-col md="12">
@@ -96,18 +96,28 @@
 
                 </div>
               </b-col>
-              <b-col md="6"> Motivo: {{ data.reason ? data.reason : 'Sin motivo' }} </b-col>
-              <b-col md="6">Firma: {{ data.signature | capitalize }}</b-col>
-              <b-col md="12">Dedicatoria: <br> "{{ data.dedication | capitalize }}"</b-col>
-              <b-col md="12">Texto personalizado: <br> {{ data.personalized_text | capitalize }}</b-col>
+              <b-col md="6" class="mb-3"> Motivo: {{ data.reason ? data.reason : 'Sin motivo' }} </b-col>
+              <b-col md="6" class="mb-3">Firma: {{ data.signature | capitalize }}</b-col>
+              <b-col md="12" class="mb-3">
+                Dedicatoria: <br>
+                <label for="" class="text-italic text-muted" v-show="data.dedication">
+                  "{{ data.dedication | capitalize }}"
+                </label>
+              </b-col>
+              <b-col md="12" class="mb-3">
+                Texto personalizado: <br>
+                <label for="" class="text-italic text-muted" v-show="data.personalized_text">
+                  "{{ data.personalized_text | capitalize }}"
+                </label>
+              </b-col>
 
               <b-col md="12"><hr></b-col>
 
               <!-- Datos de la entrega -->
               <b-col md="12" class="mb-2 mt-3"> <h5 class="text-muted">Datos de la entrega</h5> </b-col>
-              <b-col md="6">Recibe: {{ data.addressee}}</b-col>
-              <b-col md="6">Fecha entrega: {{ data.delivery_date | formatDate}}</b-col>
-              <b-col md="12">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
+              <b-col md="6" class="mb-3">Recibe: {{ data.addressee}}</b-col>
+              <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatDate}}</b-col>
+              <b-col md="12" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
 
              <b-col md="12">
                <slot></slot>
@@ -199,9 +209,9 @@ export default {
 
 <style>
   .product-info {
-    border: 1px solid black;
+    border: 1px dashed #E5E8E8;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px 5px;
   }
   .image {
     width: 64px;
