@@ -9,7 +9,7 @@
             </b-col>
             <b-row>
               <b-col md="10" class="mb-4">
-                <h4>#{{data.id}}</h4>
+                <h4>Detalles de la orden #{{data.id}}</h4>
               </b-col>
               <b-col md="2">
                 <b-button variant="link" class="mb-3 mr-1" v-print="'#printMe'">
@@ -21,8 +21,14 @@
               <b-col md="6" class="mb-3">Teléfono: {{ data.client.phone  }}</b-col>
               <b-col md="6" class="mb-3">Entrega: {{ data.mode | capitalize }}</b-col>
               <b-col md="6" class="mb-3">Tipo: {{ data.type | capitalize }}</b-col>
-              <b-col md="6" class="mb-3">Metodo de pago: ${{ data.total }}</b-col>
-
+              <b-col md="6" class="mb-3">Monto total: ${{ data.total }}</b-col>
+              <b-col md="6" class="mb-3">Total pagado: ${{ data.totalPaid }}</b-col>
+              <b-col md="6" class="mb-3">
+                Metodo de pago:
+                <ul v-for="p in data.payments" :key="p.id">
+                  <li v-show="p.amount > 0">{{p.payment_method}}: ${{p.amount}}</li>
+                </ul>
+              </b-col>
               <b-col md="12"><hr></b-col>
 
               <!-- Información del producto -->
