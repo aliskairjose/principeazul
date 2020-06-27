@@ -107,9 +107,26 @@
                         <template v-slot:button-content>
                           <span class="text-primary"><i class="ri-more-fill"></i></span>
                         </template>
-                        <b-dropdown-item @click="inventory(products.item)" variant=" iq-bg-primary mr-1 mb-1"><i class="ri-eye-fill mr-2"></i>{{ $t('dropdown.view') }}</b-dropdown-item>
-                        <b-dropdown-item @click="edit(products.item)" variant=" iq-bg-success mr-1 mb-1"><i class="ri-pencil-fill mr-2"></i>{{ $t('dropdown.edit') }}</b-dropdown-item>
-                        <b-dropdown-item @click="remove(products.item)" variant=" iq-bg-danger mr-1 mb-1"><i class="ri-delete-bin-6-fill mr-2"></i>{{ $t('dropdown.delete') }}</b-dropdown-item>
+                        <b-dropdown-item
+                          @click="inventory(products.item)"
+                          variant=" iq-bg-primary mr-1 mb-1">
+                          <i class="ri-eye-fill mr-2"></i>
+                            Inventario
+                        </b-dropdown-item>
+
+                        <b-dropdown-item
+                          @click="edit(products.item)"
+                          variant=" iq-bg-success mr-1 mb-1">
+                          <i class="ri-pencil-fill mr-2"></i>
+                            {{ $t('dropdown.edit') }}
+                        </b-dropdown-item>
+
+                        <b-dropdown-item
+                          @click="remove(products.item)"
+                          variant=" iq-bg-danger mr-1 mb-1">
+                          <i class="ri-delete-bin-6-fill mr-2"></i>
+                            {{ $t('dropdown.delete') }}
+                        </b-dropdown-item>
                       </b-dropdown>
                       <!-- <b-button
                         v-b-tooltip.top="'Editar'"
