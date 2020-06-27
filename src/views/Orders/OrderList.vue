@@ -358,7 +358,7 @@ export default {
       currentPage: 1,
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
-        { label: 'Fecha', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'Fecha Creación', key: 'created_at', class: 'text-center', sortable: true },
         { label: 'Entrega Est.', key: 'delivery_date', class: 'text-center', sortable: true },
         { label: 'Modo de entrega', key: 'mode', class: 'text-center', sortable: true },
         { label: 'Tipo', key: 'personalizedRequired', class: 'text-center', sortable: true },
