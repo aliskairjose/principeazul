@@ -41,12 +41,17 @@
                     <b-col md="10">
                       <b-row>
                         <b-col md="10"> <h5>{{item.name}}</h5> </b-col>
-                        <b-col md="2"> {{item.personalizedRequired ? 'Personalizado' : 'Standard' }} </b-col>
+                        <b-col md="2">
+                          <h6 class="mx-1">
+                            <b-badge :variant="item.personalizedRequired ? 'info' : 'light'" class="px-3">
+                              {{item.personalizedRequired ? 'Personalizado' : 'Standard' }}
+                            </b-badge>
+                          </h6>
+                        </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note">"{{item.note}}"</label> </b-col>
                         <b-col md="10">
                           <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
                               <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
-
                           </label>
                         </b-col>
                         <b-col md="1">
@@ -140,6 +145,7 @@ export default {
   },
   data () {
     return {
+      variant: '',
       loading: true,
       showDetails: '',
       index: '',
