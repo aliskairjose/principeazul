@@ -102,10 +102,10 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label-for="personalized">
-                      <b-form-checkbox
-                        id="chkBoxPersonalized"
-                        v-model="product.personalized"
-                      >Este producto es personalizado</b-form-checkbox>
+                      <div class="checkbox d-inline-block mr-2">
+                        <input type="checkbox" class="checkbox-input" v-model="product.personalized">
+                        <label class="ml-2">Este producto es personalizado</label>
+                      </div>
                     </b-form-group>
                     <b-form-group
                       class="col-md-4"
