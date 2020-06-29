@@ -48,15 +48,40 @@
     "icon": "ri-terminal-window-line"
   },
   {
-    "title": "Ordenes / Compras",
-    "name": "Ordenes / Compras",
+    "title": "Ordenes",
+    "name": "Ordenes",
+    "is_heading": false,
     "is_active": false,
-    "link": {
-      "name": "orders.list"
-    },
+    "link": "",
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-pages-line"
+    "icon": "ri-pages-line",
+    "children":[
+      {
+        "title": "Crear orden",
+        "name": "Crear orden",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "orders.add"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-add-line"
+      },
+      {
+        "title": "Listado de ordenes",
+        "name": "Listado de ordenes",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "orders.list"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-list-unordered"
+      }
+    ]
   },
   {
     "title": "Reportes",
