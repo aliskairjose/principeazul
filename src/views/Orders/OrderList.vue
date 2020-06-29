@@ -66,7 +66,6 @@
               <b-col md="2">
                 <b-form-group label="Fecha inicial:" label-for="date">
                   <b-form-input
-                    class="date"
                     :disabled="selectedType ? false : true"
                     v-model="initDate"
                     type="date"
@@ -77,7 +76,6 @@
               <b-col md="2">
                 <b-form-group label="Fecha final:" label-for="date">
                   <b-form-input
-                    class="date"
                     :disabled="selectedType ? false : true"
                     v-model="endDate"
                     type="date"
@@ -450,7 +448,7 @@ export default {
 </script>
 
 <style>
-  .date {
+  input[type="date"] {
     height: 33px !important;
   }
 </style>
