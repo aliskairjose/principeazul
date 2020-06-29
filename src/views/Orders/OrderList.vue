@@ -27,8 +27,7 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0"
-                >
+                  class="mb-0 pt-3">
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
@@ -43,7 +42,7 @@
                 </b-form-group>
               </b-col>
               <b-col md="2">
-                <b-form-group class="mb-0">
+                <b-form-group class="mb-0 pt-3">
                   <b-form-select
                     v-model="selectedPersonalize"
                     id="types"
@@ -54,7 +53,7 @@
                 </b-form-group>
               </b-col>
               <b-col md="2">
-                <b-form-group class="mb-0">
+                <b-form-group class="mb-0 pt-3">
                   <b-form-select
                     v-model="selectedType"
                     id="types"
@@ -67,6 +66,7 @@
               <b-col md="2">
                 <b-form-group label="Fecha inicial:" label-for="date">
                   <b-form-input
+                    class="date"
                     :disabled="selectedType ? false : true"
                     v-model="initDate"
                     type="date"
@@ -77,6 +77,7 @@
               <b-col md="2">
                 <b-form-group label="Fecha final:" label-for="date">
                   <b-form-input
+                    class="date"
                     :disabled="selectedType ? false : true"
                     v-model="endDate"
                     type="date"
@@ -449,4 +450,7 @@ export default {
 </script>
 
 <style>
+  .date {
+    height: 33px !important;
+  }
 </style>
