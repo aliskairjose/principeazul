@@ -24,3 +24,10 @@ Vue.filter('capitalize', (value) => {
   value = value.toLowerCase()
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
+
+Vue.filter('money', (value) => {
+  if (value === 0) {
+    return `$ 0.00`
+  }
+  return `$ ${value}`
+})
