@@ -198,32 +198,6 @@
                             {{ $t('dropdown.delete') }}
                         </b-dropdown-item>
                       </b-dropdown>
-                      <!-- <b-button
-                        v-b-tooltip.top="'Ver detalles'"
-                        variant=" iq-bg-info mr-1 mb-1"
-                        size="sm"
-                        @click="details(orders.item)"
-                      >
-                        <i class="ri-search-line m-0"></i>
-                      </b-button>
-                      <b-button
-                        v-show="role === 'admin'"
-                        v-b-tooltip.top="'Editar'"
-                        variant=" iq-bg-success mr-1 mb-1"
-                        size="sm"
-                        @click="edit(orders.item)"
-                      >
-                        <i class="ri-ball-pen-fill m-0"></i>
-                      </b-button>
-                      <b-button
-                        v-show="role === 'admin'"
-                        v-b-tooltip.top="'Eliminar'"
-                        variant=" iq-bg-danger mr-1 mb-1"
-                        size="sm"
-                        @click="remove(orders.item)"
-                      >
-                        <i class="ri-delete-bin-line m-0"></i>
-                      </b-button> -->
                     </template>
                   </b-table>
                 </b-col>
@@ -356,7 +330,7 @@ export default {
         { value: null, text: 'Tipo de orden' },
         { value: 2, text: 'Todos' },
         { value: 1, text: 'Personalizada' },
-        { value: 0, text: 'Standar' }
+        { value: 0, text: 'Standard' }
       ],
       ids: [],
       role: '',
