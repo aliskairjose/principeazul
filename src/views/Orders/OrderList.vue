@@ -121,7 +121,7 @@
                     >{{orders.item.delivery_date | formatDate}}</template>
                     <template
                       v-slot:cell(personalizedRequired)="orders">
-                      {{orders.item.personalizedRequired ? ' Personalizado':  'Standar'}}</template>
+                      {{orders.item.personalizedRequired ? ' Personalizado':  'Estándar'}}</template>
                     <template
                     v-slot:cell(editor)="orders">
                       <b-button
