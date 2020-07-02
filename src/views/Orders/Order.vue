@@ -67,6 +67,7 @@
                             v-model="order.mode"
                             :state="errors[0] ? false : (order.mode ? true : null)"
                             :options="deliveryType"
+                            @change="onModeChange"
                           ></b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
@@ -633,6 +634,11 @@ export default {
     }
   },
   methods: {
+    onModeChange () {
+      if (this.order.mode === 'local') {
+        this.order.type = 'local'
+      }
+    },
     addClient (item) {
       this.client = item
       this.order.client_id = item.id
