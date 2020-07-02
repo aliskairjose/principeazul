@@ -31,19 +31,19 @@
         </div>
       </ValidationProvider>
       <ValidationProvider
-        vid="Destinatario"
-        name="Destinatario"
+        vid="Persona que recibe"
+        name="Persona que recibe"
         rules="required"
         v-slot="{ errors }"
       >
         <div class="form-group">
-          <label for="destinatarioInput">Destinatario</label>
+          <label for="destinatarioInput">Persona que recibe</label>
           <input
             type="text"
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             id="destinatarioInput"
             v-model="order.addressee"
-            placeholder="Destinatario"
+            placeholder="Persona que recibe"
             required
           />
           <div class="invalid-feedback">

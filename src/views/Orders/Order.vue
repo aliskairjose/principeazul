@@ -112,11 +112,11 @@
                           placeholder="Dirección de entrega"
                         ></b-form-input>
                       </b-form-group>
-                      <b-form-group class="col-md-6" label="Destinatario:" label-for="name">
+                      <b-form-group class="col-md-6" label="Persona que recibe:" label-for="name">
                         <b-form-input
                           v-model="order.addressee"
                           type="text"
-                          placeholder="Destinatario"
+                          placeholder="Persona que recibe"
                         ></b-form-input>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Firma del regalo:" label-for="name">
