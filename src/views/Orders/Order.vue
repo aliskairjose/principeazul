@@ -96,11 +96,18 @@
                         </ValidationProvider>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
-                        <b-form-input
+                        <!-- <b-form-input
                           v-model="order.delivery_date"
                           type="date"
                           placeholder="Fecha de entrega"
-                        ></b-form-input>
+                          :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
+                        ></b-form-input>-->
+                        <b-form-datepicker
+                          v-model="order.delivery_date"
+                          type="date"
+                          placeholder="Fecha de entrega"
+                          :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }"
+                        ></b-form-datepicker>
                       </b-form-group>
                       <b-form-group class="col-md-12">
                         <hr />
