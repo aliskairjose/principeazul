@@ -54,15 +54,16 @@
       <ValidationProvider vid="address" name="Dirección" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="emailInput">Dirección</label>
-          <input
-            type="text"
+          <textarea
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             id="direccion"
             aria-describedby="direccion"
             v-model="order.delivery_address"
             placeholder="Dirección"
+            rows="6"
+            max-rows="10"
             required
-          />
+          ></textarea>
           <div class="invalid-feedback">
             <span>{{ errors[0] }}</span>
           </div>
@@ -87,14 +88,15 @@
       <ValidationProvider vid="Dedicatoria" name="Dedicatoria" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="dedicationInput">Dedicatoria</label>
-          <input
-            type="text"
+          <textarea
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             id="dedicationInput"
             v-model="order.dedication"
             placeholder="Dedicatoria del regalo"
+            rows="6"
+            max-rows="10"
             required
-          />
+          ></textarea>
           <div class="invalid-feedback">
             <span>{{ errors[0] }}</span>
           </div>
