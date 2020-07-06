@@ -95,14 +95,14 @@
                           </div>
                         </ValidationProvider>
                       </b-form-group>
-                      <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
-                        <!-- <b-form-input
-                          v-model="order.delivery_date"
-                          type="date"
-                          placeholder="Fecha de entrega"
-                          :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
-                        ></b-form-input>-->
+                      <b-form-group
+                        class="col-md-6"
+                        label="Fecha de entrega:"
+                        label-for="date"
+                        size="sm"
+                      >
                         <b-form-datepicker
+                          size="sm"
                           v-model="order.delivery_date"
                           type="date"
                           placeholder="Fecha de entrega"
@@ -113,11 +113,24 @@
                         <hr />
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
-                        <b-form-input
+                        <b-form-textarea
                           v-model="order.delivery_address"
-                          type="text"
                           placeholder="Dirección de entrega"
-                        ></b-form-input>
+                          rows="3"
+                          max-rows="6"
+                        ></b-form-textarea>
+                      </b-form-group>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Dedicatoria del regalo:"
+                        label-for="dedication"
+                      >
+                        <b-form-textarea
+                          v-model="order.dedication"
+                          placeholder="Dedicatoria del regalo"
+                          rows="3"
+                          max-rows="6"
+                        ></b-form-textarea>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Persona que recibe:" label-for="name">
                         <b-form-input
@@ -135,22 +148,11 @@
                       </b-form-group>
                       <b-form-group
                         class="col-md-6"
-                        label="Dedicatoria del regalo:"
-                        label-for="dedication"
-                      >
-                        <b-form-input
-                          v-model="order.dedication"
-                          type="text"
-                          placeholder="Dedicatoria del regalo"
-                        ></b-form-input>
-                      </b-form-group>
-                      <b-form-group
-                        class="col-md-6"
                         label="Motivo:"
                         label-for="delivery"
                         lot-scope="{ valid, errors }"
                       >
-                        <ValidationProvider name="Moivo" rules="required" v-slot="{ errors }">
+                        <ValidationProvider name="Motivo" rules="required" v-slot="{ errors }">
                           <b-form-select
                             v-model="order.reason"
                             :options="reasons"
