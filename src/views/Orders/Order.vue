@@ -56,19 +56,17 @@
                         class="col-md-6"
                         label="Modo de entrega:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }"
-                      >
+                        lot-scope="{ valid, errors }">
                         <ValidationProvider
                           name="Modo de entrega"
                           rules="required"
-                          v-slot="{ errors }"
-                        >
+                          v-slot="{ errors }">
                           <b-form-select
                             v-model="order.mode"
                             :state="errors[0] ? false : (order.mode ? true : null)"
                             :options="deliveryType"
-                            @change="onModeChange"
-                          ></b-form-select>
+                            @change="onModeChange">
+                          </b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -94,6 +92,16 @@
                             <span>{{ errors[0] }}</span>
                           </div>
                         </ValidationProvider>
+                      </b-form-group>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Zona de entrega:"
+                        label-for="delivery">
+                          <b-form-select
+                            :disabled="order.mode !== 'delivery'"
+                            v-model="order.delivery_zone_id"
+                            :options="deliveryZones">
+                          </b-form-select>
                       </b-form-group>
                       <b-form-group
                         class="col-md-6"
@@ -429,6 +437,24 @@ export default {
         }
       })
 
+    generalService.deliveryZones()
+      .then(response => {
+        const data = response.data
+        this.deliveryZone.value = null
+        this.deliveryZone.text = 'Seleccione una zona'
+        this.deliveryZones.push(this.deliveryZone)
+
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            const element = data[key]
+            this.deliveryZone = {}
+            this.deliveryZone.value = element.id
+            this.deliveryZone.text = element.name
+            this.deliveryZones.push(this.deliveryZone)
+          }
+        }
+      })
+
     generalService.orderStatus()
       .then(response => {
         const object = response.data
@@ -499,6 +525,7 @@ export default {
       order: {
         id: '',
         reason: null,
+        delivery_zone_id: null,
         client_id: '',
         client_name: '',
         client_dni: '',
@@ -536,6 +563,8 @@ export default {
         product_id: '',
         type: ''
       },
+      deliveryZone: {},
+      deliveryZones: [],
       payments: [
         {
           payment_method: 'Efectivo',

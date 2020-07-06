@@ -12,5 +12,9 @@ export default {
   async reasons () {
     const res = await axios.get('/reasons')
     return res.data
+  },
+  async deliveryZones () {
+    const res = await axios.get('/delivery-zones')
+    return res.data
   }
 }
