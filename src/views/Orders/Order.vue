@@ -495,6 +495,10 @@ export default {
         .then(response => {
           const data = response.data
           this.order = data
+          const value = this.order.delivery_date
+          this.order.delivery_date = value.slice(0, value.indexOf(' '))
+          this.deliveryTime = value.slice(value.indexOf(' ') + 1)
+
           this.payments = data.payments
           this.client = data.client
           this.orderProducts = data.products
@@ -793,7 +797,7 @@ export default {
       this.$refs['modal-note'].show()
     },
     onComplete () {
-      // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       // console.log(this.order)
       this.loading = true
       if (this.status === 'add') {
