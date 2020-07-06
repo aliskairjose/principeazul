@@ -76,18 +76,16 @@
                         class="col-md-6"
                         label="Tipo de compra:"
                         label-for="shopType"
-                        lot-scope="{ valid, errors }"
-                      >
+                        lot-scope="{ valid, errors }">
                         <ValidationProvider
                           name="Tipo de compra"
                           rules="required"
-                          v-slot="{ errors }"
-                        >
+                          v-slot="{ errors }">
                           <b-form-select
                             v-model="order.type"
                             :state="errors[0] ? false : (order.type ? true : null)"
-                            :options="purchaseType"
-                          ></b-form-select>
+                            :options="purchaseType">
+                            </b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -107,15 +105,24 @@
                         class="col-md-6"
                         label="Fecha de entrega:"
                         label-for="date"
-                        size="sm"
-                      >
+                        size="sm">
                         <b-form-datepicker
                           size="sm"
                           v-model="order.delivery_date"
-                          type="date"
                           placeholder="Fecha de entrega"
-                          :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }"
-                        ></b-form-datepicker>
+                          :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }">
+                        </b-form-datepicker>
+                      </b-form-group>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Hora estimada de entrega:"
+                        label-for="time"
+                        size="sm">
+                        <b-form-timepicker
+                          size="sm"
+                          v-model="deliveryTime"
+                          placeholder="Hora estimada de entrega">
+                        </b-form-timepicker>
                       </b-form-group>
                       <b-form-group class="col-md-12">
                         <hr />
@@ -125,47 +132,45 @@
                           v-model="order.delivery_address"
                           placeholder="Dirección de entrega"
                           rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
+                          max-rows="6">
+                        </b-form-textarea>
                       </b-form-group>
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="dedication"
-                      >
+                        label-for="dedication">
                         <b-form-textarea
                           v-model="order.dedication"
                           placeholder="Dedicatoria del regalo"
                           rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
+                          max-rows="6">
+                        </b-form-textarea>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Persona que recibe:" label-for="name">
                         <b-form-input
                           v-model="order.addressee"
                           type="text"
-                          placeholder="Persona que recibe"
-                        ></b-form-input>
+                          placeholder="Persona que recibe">
+                        </b-form-input>
                       </b-form-group>
                       <b-form-group class="col-md-6" label="Firma del regalo:" label-for="name">
                         <b-form-input
                           v-model="order.signature"
                           type="text"
-                          placeholder="Firma del regalo"
-                        ></b-form-input>
+                          placeholder="Firma del regalo">
+                        </b-form-input>
                       </b-form-group>
                       <b-form-group
                         class="col-md-6"
                         label="Motivo:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }"
-                      >
+                        lot-scope="{ valid, errors }">
                         <ValidationProvider name="Motivo" rules="required" v-slot="{ errors }">
                           <b-form-select
                             v-model="order.reason"
                             :options="reasons"
-                            :state="errors[0] ? false : (order.reason ? true : null)"
-                          ></b-form-select>
+                            :state="errors[0] ? false : (order.reason ? true : null)">
+                          </b-form-select>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -175,8 +180,7 @@
                         v-if="status === 'edit'"
                         class="col-md-6"
                         label="Status de la compra:"
-                        label-for="statuses"
-                      >
+                        label-for="statuses">
                         <b-form-select v-model="order.status" :options="statuses"></b-form-select>
                       </b-form-group>
                     </b-row>
@@ -311,8 +315,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table
         :items="principals"
         :titems="pTitles"
@@ -330,14 +333,13 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra"
-    >
+      @cancel="handleCancelExtra">
       <modal-table
         :items="additionals"
         :titems="pTitles"
         v-on:add-item="addItem"
-        v-on:delete-item="delItem"
-      ></modal-table>
+        v-on:delete-item="delItem">
+      </modal-table>
     </b-modal>
     <b-modal
       ok-only
@@ -350,8 +352,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
     <!-- Final Order Modal -->
@@ -504,6 +505,7 @@ export default {
   },
   data () {
     return {
+      deliveryTime: null,
       reasons: [],
       reason: {},
       ids: [],
@@ -791,6 +793,8 @@ export default {
       this.$refs['modal-note'].show()
     },
     onComplete () {
+      // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      // console.log(this.order)
       this.loading = true
       if (this.status === 'add') {
         orderService.create(this.order)
