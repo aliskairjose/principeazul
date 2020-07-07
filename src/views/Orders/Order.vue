@@ -323,6 +323,7 @@
         v-on:delete-item="delItem"
       ></modal-table>
     </b-modal>
+    <!-- Modal extras  -->
     <b-modal
       ref="extras"
       size="lg"
@@ -341,6 +342,7 @@
         v-on:delete-item="delItem">
       </modal-table>
     </b-modal>
+    <!-- Modal Lista de Clientes -->
     <b-modal
       ok-only
       ref="lista-clientes"
@@ -365,8 +367,7 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder"
-    >
+      @ok="finishOrder">
       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
@@ -752,14 +753,7 @@ export default {
     },
     handleOkExtra () {
       if (this.tempExtra.length > 0) {
-        for (const key in this.tempExtra) {
-          if (this.tempExtra.hasOwnProperty(key)) {
-            const element = this.tempExtra[key]
-            this.orderProducts[this.index].additionals.push(element)
-          }
-        }
-      } else {
-        this.orderProducts[this.index].additionals.length = 0
+        this.orderProducts[this.index].additionals.push(...this.tempExtra)
       }
       this.tempExtra.length = 0
       this.resetAdditionals()
@@ -821,13 +815,13 @@ export default {
     },
     showModal (modal, index) {
       this.index = index
-      this.updateAdditonals()
+      this.updateAdditionals()
       this.$refs[modal].show()
     },
     tabChange (prevIndex, nextIndex) {
       this.tabIndex = nextIndex
     },
-    updateAdditonals () {
+    updateAdditionals () {
       if (this.orderProducts[this.index] !== undefined) {
         let extras = this.additionals
         let object = this.orderProducts[this.index].additionals
@@ -843,9 +837,7 @@ export default {
             })
           }
         }
-        this.additionals = extras.slice()
-        extras.length = 0
-        object.length = 0
+
       }
     },
     validateOrder () {
