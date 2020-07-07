@@ -837,7 +837,6 @@ export default {
             })
           }
         }
-
       }
     },
     validateOrder () {
