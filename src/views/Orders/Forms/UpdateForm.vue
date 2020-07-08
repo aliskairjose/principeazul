@@ -30,14 +30,23 @@
           </div>
         </div>
       </ValidationProvider>
-      <div class="form-group">
-        <label for="destinatarioInput">Hora estimada de entrega</label>
-        <b-form-timepicker
-          size="sm"
-          v-model="deliveryTime"
-          placeholder="Hora estimada de entrega">
-        </b-form-timepicker>
-      </div>
+      <ValidationProvider
+        vid="Hora entrega"
+        name="Hora entrega"
+        rules="required"
+        v-slot="{ errors }">
+        <div class="form-group">
+          <label for="destinatarioInput">Hora estimada de entrega</label>
+          <b-form-timepicker
+            size="sm"
+            v-model="deliveryTime"
+            placeholder="Hora estimada de entrega">
+          </b-form-timepicker>
+          <div class="invalid-feedback">
+              <span>{{ errors[0] }}</span>
+            </div>
+        </div>
+      </ValidationProvider>
       <ValidationProvider
         vid="Persona que recibe"
         name="Persona que recibe"
