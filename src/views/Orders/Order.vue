@@ -140,18 +140,21 @@
                             <b-input-group-append>
                               <b-form-timepicker
                                 v-model="deliveryTime"
+                                :value="deliveryTime"
+                                :class="(errors.length > 0 ? ' is-invalid' : '')"
                                 button-only
                                 right
                                 show-seconds
                                 locale="en-US"
                                 hourCycle="h12"
-                                aria-controls="example-input"
-                              ></b-form-timepicker>
+                                aria-controls="example-input">
+                              </b-form-timepicker>
                             </b-input-group-append>
+                              <div class="invalid-feedback">
+                                <span>{{ errors[0] }}</span>
+                              </div>
                           </b-input-group>
-                          <div class="invalid-feedback">
-                            <span>{{ errors[0] }}</span>
-                          </div>
+
                         </ValidationProvider>
                       </b-form-group>
                       <b-form-group class="col-md-12">
