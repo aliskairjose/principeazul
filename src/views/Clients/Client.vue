@@ -27,17 +27,11 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Cédula / RUC:" label-for="cedula">
-                      <ValidationProvider name="Cedula" rules="required" v-slot="{ errors }">
-                        <b-form-input
-                          v-model="client.dni"
-                          type="text"
-                          placeholder="Cédula"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
-                        ></b-form-input>
-                        <div class="invalid-feedback">
-                          <span>{{ errors[0] }}</span>
-                        </div>
-                      </ValidationProvider>
+                      <b-form-input
+                        v-model="client.dni"
+                        type="text"
+                        placeholder="Cédula">
+                      </b-form-input>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
                       <b-form-input
