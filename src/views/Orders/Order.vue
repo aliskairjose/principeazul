@@ -113,28 +113,16 @@
                           :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }">
                         </b-form-datepicker>
                       </b-form-group>
-                      <!-- <b-form-group
-                        class="col-md-6"
-                        label="Hora estimada de entrega:"
-                        label-for="time"
-                        size="sm">
-                        <b-form-timepicker
-                          size="sm"
-                          v-model="deliveryTime"
-                          placeholder="Hora estimada de entrega">
-                        </b-form-timepicker>
-                      </b-form-group> -->
                       <b-form-group
                         label="Hora estimada de entrega:"
                         class="col-md-6">
-                        <b-input-group
-                        label="Hora estimada de entrega">
+                        <b-input-group>
                         <b-form-input
                           id="example-input"
                           v-model="deliveryTime"
                           type="text"
-                          placeholder="HH:mm:ss"
-                        ></b-form-input>
+                          placeholder="HH:mm:ss">
+                        </b-form-input>
                         <b-input-group-append>
                           <b-form-timepicker
                             v-model="deliveryTime"
@@ -142,8 +130,8 @@
                             right
                             show-seconds
                             locale="en"
-                            aria-controls="example-input"
-                          ></b-form-timepicker>
+                            aria-controls="example-input">
+                          </b-form-timepicker>
                         </b-input-group-append>
                       </b-input-group>
                       </b-form-group>

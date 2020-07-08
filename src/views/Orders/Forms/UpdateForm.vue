@@ -34,24 +34,39 @@
         vid="Hora entrega"
         name="Hora entrega"
         rules="required"
-        v-slot="{ errors }">
+        v-slot="{ errors }"
+      >
         <div class="form-group">
-          <label for="destinatarioInput">Hora estimada de entrega</label>
-          <b-form-timepicker
-            size="sm"
-            v-model="deliveryTime"
-            placeholder="Hora estimada de entrega">
-          </b-form-timepicker>
+          <label for="time-input">Hora estimada de entrega</label>
+          <b-input-group>
+            <b-form-input
+              id="time-input"
+              v-model="deliveryTime"
+              type="text"
+              placeholder="HH:mm:ss"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-form-timepicker
+                v-model="deliveryTime"
+                button-only
+                right
+                show-seconds
+                locale="en"
+                aria-controls="example-input"
+              ></b-form-timepicker>
+            </b-input-group-append>
+          </b-input-group>
           <div class="invalid-feedback">
-              <span>{{ errors[0] }}</span>
-            </div>
+            <span>{{ errors[0] }}</span>
+          </div>
         </div>
       </ValidationProvider>
       <ValidationProvider
         vid="Persona que recibe"
         name="Persona que recibe"
         rules="required"
-        v-slot="{ errors }">
+        v-slot="{ errors }"
+      >
         <div class="form-group">
           <label for="destinatarioInput">Persona que recibe</label>
           <input
