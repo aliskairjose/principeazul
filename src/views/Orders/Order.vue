@@ -43,8 +43,8 @@
                             v-model="client.name"
                             @click="getClient"
                             type="text"
-                            :value="client.id"
                             placeholder="Cliente"
+                            :value="client.id"
                             :class="(errors.length > 0 ? ' is-invalid' : '')"
                           ></b-form-input>
                           <div class="invalid-feedback">
@@ -101,39 +101,59 @@
                             :options="deliveryZones">
                           </b-form-select>
                       </b-form-group>
+                      <!-- Fecha de entrega -->
                       <b-form-group
-                        class="col-md-6"
-                        label="Fecha de entrega:"
-                        label-for="date"
-                        size="sm">
-                        <b-form-datepicker
-                          size="sm"
-                          v-model="order.delivery_date"
-                          placeholder="Fecha de entrega"
-                          :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }">
-                        </b-form-datepicker>
+                      class="col-md-6"
+                      label="Fecha de entrega:"
+                      label-for="date">
+                        <ValidationProvider
+                          name="Fecha de entrega"
+                          rules="required"
+                          v-slot="{ errors }">
+                            <b-form-datepicker
+                              v-model="order.delivery_date"
+                              :value="client.delivery_date"
+                              :class="(errors.length > 0 ? ' is-invalid' : '')"
+                              placeholder="Fecha de entrega"
+                              :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }">
+                            </b-form-datepicker>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
                       </b-form-group>
+
                       <b-form-group
                         label="Hora estimada de entrega:"
                         class="col-md-6">
-                        <b-input-group>
-                        <b-form-input
-                          id="example-input"
-                          v-model="deliveryTime"
-                          type="text"
-                          placeholder="HH:mm:ss">
-                        </b-form-input>
-                        <b-input-group-append>
-                          <b-form-timepicker
+                        <ValidationProvider
+                          name="Hora de entrega"
+                          rules="required"
+                          v-slot="{ errors }">
+                          <b-input-group>
+                          <b-form-input
+                            id="example-input"
                             v-model="deliveryTime"
-                            button-only
-                            right
-                            show-seconds
-                            locale="en"
-                            aria-controls="example-input">
-                          </b-form-timepicker>
-                        </b-input-group-append>
-                      </b-input-group>
+                            :value="deliveryTime"
+                            :class="(errors.length > 0 ? ' is-invalid' : '')"
+                            type="text"
+                            placeholder="HH:mm:ss">
+                          </b-form-input>
+                          <b-input-group-append>
+                            <b-form-timepicker
+                              v-model="deliveryTime"
+                              button-only
+                              right
+                              show-seconds
+                              locale="en"
+                              aria-controls="example-input">
+                            </b-form-timepicker>
+                          </b-input-group-append>
+                        </b-input-group>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
                       </b-form-group>
                       <b-form-group class="col-md-12">
                         <hr />
