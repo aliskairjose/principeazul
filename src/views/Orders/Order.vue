@@ -684,6 +684,7 @@ export default {
     onModeChange () {
       if (this.order.mode === 'local') {
         this.order.type = 'local'
+        this.order.delivery_address = 'Local'
       }
     },
     addClient (item) {
