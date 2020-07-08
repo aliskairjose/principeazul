@@ -211,4 +211,7 @@ export default {
   position: absolute;
   left: 40%;
 }
+textarea{
+  height: 100px !important;
+}
 </style>
