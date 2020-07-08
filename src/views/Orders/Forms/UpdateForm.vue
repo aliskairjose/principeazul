@@ -30,12 +30,19 @@
           </div>
         </div>
       </ValidationProvider>
+      <div class="form-group">
+        <label for="destinatarioInput">Hora estimada de entrega</label>
+        <b-form-timepicker
+          size="sm"
+          v-model="deliveryTime"
+          placeholder="Hora estimada de entrega">
+        </b-form-timepicker>
+      </div>
       <ValidationProvider
         vid="Persona que recibe"
         name="Persona que recibe"
         rules="required"
-        v-slot="{ errors }"
-      >
+        v-slot="{ errors }">
         <div class="form-group">
           <label for="destinatarioInput">Persona que recibe</label>
           <input
@@ -132,6 +139,9 @@ export default {
     orderService.getById(id)
       .then(response => {
         this.order = response.data
+        const value = this.order.delivery_date
+        this.order.delivery_date = value.slice(0, value.indexOf(' '))
+        this.deliveryTime = value.slice(value.indexOf(' ') + 1)
       })
       .catch(error => { console.log(error) })
       .finally(() => { this.loading = false })
@@ -141,20 +151,24 @@ export default {
       orders: 'Setting/ordersState'
     })
   },
-  data: () => ({
-    loading: true,
-    isUpdated: false,
-    order: {
-      delivery_date: '',
-      delivery_address: '',
-      addressee: '',
-      dedication: '',
-      signature: ''
+  data () {
+    return {
+      deliveryTime: null,
+      loading: true,
+      isUpdated: false,
+      order: {
+        delivery_date: '',
+        delivery_address: '',
+        addressee: '',
+        dedication: '',
+        signature: ''
+      }
     }
-  }),
+  },
   methods: {
     onSubmit () {
       this.loading = true
+      this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       orderService.update(this.order.id, this.order)
         .then(response => {
           this.orderResponse = response.data
