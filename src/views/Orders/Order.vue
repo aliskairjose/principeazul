@@ -730,6 +730,7 @@ export default {
       if (this.order.mode === 'local') {
         this.order.type = 'local'
         this.order.delivery_address = 'Local'
+        this.deliveryZone.price = 0
       }
     },
     addClient (item) {
