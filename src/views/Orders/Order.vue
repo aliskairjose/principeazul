@@ -523,11 +523,11 @@ export default {
           if (r.type === 'principal') {
             r.additionals = []
             r.note = ''
+            r.quentity = 1
             this.principals.push(r)
           }
           if (r.type === 'additional') {
             r.isAddItem = false
-            r.quantity = 0
             this.additionals.push(r)
           }
         })
@@ -668,7 +668,7 @@ export default {
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
+        // { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
