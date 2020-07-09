@@ -43,7 +43,7 @@
               id="time-input"
               v-model="deliveryTime"
               type="text"
-              placeholder="HH:mm:ss"
+              placeholder="HH:mm"
             ></b-form-input>
             <b-input-group-append>
               <b-form-timepicker
@@ -140,7 +140,7 @@
           class="form-control mb-0"
           id="dedicationInput"
           v-model="order.personalized_text"
-          placeholder="Personalizado"
+          placeholder="Texto personalizado"
         />
       </div>
       <div class="d-inline-block w-100">

@@ -135,7 +135,7 @@
                               :value="deliveryTime"
                               :class="(errors.length > 0 ? ' is-invalid' : '')"
                               type="text"
-                              placeholder="HH:mm:ss"
+                              placeholder="HH:mm"
                             ></b-form-input>
                             <b-input-group-append>
                               <b-form-timepicker
