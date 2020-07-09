@@ -263,7 +263,7 @@
       @ok="closeEditor">
       <editor
         v-model="dedication"
-        api-key="no-api-key"
+        api-key="dtwycivggpsc9sq8d6ddmy3zr8xbydnjateyum1wpxjwn37c"
        :init="{
          height: 500,
          menubar: true,
