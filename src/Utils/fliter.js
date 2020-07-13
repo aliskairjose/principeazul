@@ -18,6 +18,13 @@ Vue.filter('formatDate', (value) => {
   }
 })
 
+Vue.filter('formatWeekDate', (value) => {
+  if (value) {
+    moment.locale('es')
+    return moment(String(value)).format('dddd LL')
+  }
+})
+
 Vue.filter('capitalize', (value) => {
   if (!value) return ''
   value = value.toString()

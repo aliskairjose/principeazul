@@ -118,12 +118,12 @@
                     >{{orders.item.created_at | formatDate}}</template>
                     <template
                       v-slot:cell(delivery_date)="orders"
-                    >{{orders.item.delivery_date | formatDate}}</template>
+                    >{{orders.item.delivery_date | formatWeekDate}}</template>
                     <template
                       v-slot:cell(personalizedRequired)="orders">
                       {{orders.item.personalizedRequired ? ' Personalizado':  'Estándar'}}</template>
                     <template
-                    v-slot:cell(editor)="orders">
+                      v-slot:cell(editor)="orders">
                       <b-button
                         v-show="role === 'admin'"
                         v-b-tooltip.top="'Editar dedicatoria'"
@@ -134,7 +134,8 @@
                         <i class="ri-align-left m-0"></i>
                       </b-button>
                     </template>
-                    <template v-slot:cell(status)="orders">
+                    <template
+                      v-slot:cell(status)="orders">
                       <b-badge
                         variant="primary"
                         v-if="orders.item.status === 'Creado'"
@@ -164,14 +165,16 @@
                         v-if="orders.item.status === 'Cancelado'"
                       >{{orders.item.status}}</b-badge>
                     </template>
-                    <template v-slot:cell(update)="orders">
+                    <template
+                      v-slot:cell(update)="orders">
                       <b-form-select
                         v-model="orders.item.status"
                         :options="statuses"
                         @change="onStatusUpdate(orders.item.id, $event)"
                       ></b-form-select>
                     </template>
-                    <template v-slot:cell(action)="orders">
+                    <template
+                      v-slot:cell(action)="orders">
                        <b-dropdown id="dropdownMenuButton5" right variant="none" data-toggle="dropdown">
                         <template v-slot:button-content>
                           <span class="text-primary"><i class="ri-more-fill"></i></span>
