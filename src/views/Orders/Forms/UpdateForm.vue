@@ -69,22 +69,7 @@
           </div>
         </div>
       </ValidationProvider>
-      <ValidationProvider vid="Firma" name="Firma" rules="required" v-slot="{ errors }">
-        <div class="form-group">
-          <label for="signatureInput">Firma</label>
-          <input
-            type="text"
-            :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
-            id="signatureInput"
-            v-model="order.signature"
-            placeholder="Firma del regalo"
-            required
-          />
-          <div class="invalid-feedback">
-            <span>{{ errors[0] }}</span>
-          </div>
-        </div>
-      </ValidationProvider>
+
       <ValidationProvider vid="Dedicatoria" name="Dedicatoria" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="dedicationInput">Dedicatoria</label>
