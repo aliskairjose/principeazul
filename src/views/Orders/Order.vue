@@ -52,56 +52,6 @@
                           </div>
                         </ValidationProvider>
                       </b-form-group>
-                      <b-form-group
-                        class="col-md-6"
-                        label="Modo de entrega:"
-                        label-for="delivery"
-                        lot-scope="{ valid, errors }"
-                      >
-                        <ValidationProvider
-                          name="Modo de entrega"
-                          rules="required"
-                          v-slot="{ errors }"
-                        >
-                          <b-form-select
-                            v-model="order.mode"
-                            :state="errors[0] ? false : (order.mode ? true : null)"
-                            :options="deliveryType"
-                            @change="onModeChange"
-                          ></b-form-select>
-                          <div class="invalid-feedback">
-                            <span>{{ errors[0] }}</span>
-                          </div>
-                        </ValidationProvider>
-                      </b-form-group>
-                      <b-form-group
-                        class="col-md-6"
-                        label="Tipo de compra:"
-                        label-for="shopType"
-                        lot-scope="{ valid, errors }"
-                      >
-                        <ValidationProvider
-                          name="Tipo de compra"
-                          rules="required"
-                          v-slot="{ errors }"
-                        >
-                          <b-form-select
-                            v-model="order.type"
-                            :state="errors[0] ? false : (order.type ? true : null)"
-                            :options="purchaseType"
-                          ></b-form-select>
-                          <div class="invalid-feedback">
-                            <span>{{ errors[0] }}</span>
-                          </div>
-                        </ValidationProvider>
-                      </b-form-group>
-                      <b-form-group class="col-md-6" label="Zona de entrega:" label-for="delivery">
-                        <b-form-select
-                          :disabled="order.mode !== 'delivery'"
-                          v-model="order.delivery_zone_id"
-                          :options="deliveryZones"
-                        ></b-form-select>
-                      </b-form-group>
                       <!-- Fecha de entrega -->
                       <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
                         <ValidationProvider
@@ -121,42 +71,39 @@
                           </div>
                         </ValidationProvider>
                       </b-form-group>
-
-                      <b-form-group label="Hora estimada de entrega:" class="col-md-6">
-                        <ValidationProvider
-                          name="Hora de entrega"
-                          rules="required"
-                          v-slot="{ errors }"
-                        >
-                          <b-input-group>
-                            <b-form-input
-                              id="example-input"
-                              v-model="deliveryTime"
-                              :value="deliveryTime"
-                              :class="(errors.length > 0 ? ' is-invalid' : '')"
-                              type="text"
-                              placeholder="HH:mm"
-                            ></b-form-input>
-                            <b-input-group-append>
-                              <b-form-timepicker
-                                v-model="deliveryTime"
-                                :value="deliveryTime"
-                                :class="(errors.length > 0 ? ' is-invalid' : '')"
-                                button-only
-                                right
-                                show-seconds
-                                locale="en-US"
-                                hourCycle="h12"
-                                aria-controls="example-input">
-                              </b-form-timepicker>
-                            </b-input-group-append>
-                              <div class="invalid-feedback">
-                                <span>{{ errors[0] }}</span>
-                              </div>
-                          </b-input-group>
-
-                        </ValidationProvider>
+                      <!-- Modo de entrega -->
+                      <b-form-group
+                        class="col-md-6"
+                        label="Modo de entrega:"
+                        label-for="delivery"
+                      >
+                        <b-form-select
+                          v-model="order.mode"
+                          :options="deliveryType"
+                          @change="onModeChange"
+                        ></b-form-select>
                       </b-form-group>
+                      <!-- Tipo de compra -->
+                      <b-form-group
+                        class="col-md-6"
+                        label="Tipo de compra:"
+                        label-for="shopType"
+                      >
+                        <b-form-select
+                          v-model="order.type"
+                          :options="purchaseType"
+                        ></b-form-select>
+                      </b-form-group>
+                      <!-- Modo de entrega -->
+                      <b-form-group class="col-md-6" label="Zona de entrega:" label-for="delivery">
+                        <b-form-select
+                          :disabled="order.mode !== 'delivery'"
+                          v-model="order.delivery_zone_id"
+                          :options="deliveryZones"
+                        ></b-form-select>
+                      </b-form-group>
+
+                      <!-- Direccion -->
                       <b-form-group class="col-md-12">
                         <hr />
                       </b-form-group>
@@ -168,6 +115,8 @@
                           max-rows="6"
                         ></b-form-textarea>
                       </b-form-group>
+
+                      <!-- Dedicatoria -->
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
@@ -180,6 +129,8 @@
                           max-rows="6"
                         ></b-form-textarea>
                       </b-form-group>
+
+                      <!-- Persona quien recibe -->
                       <b-form-group class="col-md-6" label="Persona que recibe:" label-for="name">
                         <b-form-input
                           v-model="order.addressee"
@@ -187,29 +138,16 @@
                           placeholder="Persona que recibe"
                         ></b-form-input>
                       </b-form-group>
-                      <b-form-group class="col-md-6" label="Firma del regalo:" label-for="name">
-                        <b-form-input
-                          v-model="order.signature"
-                          type="text"
-                          placeholder="Firma del regalo"
-                        ></b-form-input>
-                      </b-form-group>
+                      <!-- Motivo -->
                       <b-form-group
                         class="col-md-6"
                         label="Motivo:"
                         label-for="delivery"
-                        lot-scope="{ valid, errors }"
                       >
-                        <ValidationProvider name="Motivo" rules="required" v-slot="{ errors }">
                           <b-form-select
                             v-model="order.reason"
                             :options="reasons"
-                            :state="errors[0] ? false : (order.reason ? true : null)"
                           ></b-form-select>
-                          <div class="invalid-feedback">
-                            <span>{{ errors[0] }}</span>
-                          </div>
-                        </ValidationProvider>
                       </b-form-group>
                       <b-form-group
                         v-if="status === 'edit'"
@@ -843,7 +781,7 @@ export default {
       this.$refs['modal-note'].show()
     },
     onComplete () {
-      this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
         orderService.create(this.order)

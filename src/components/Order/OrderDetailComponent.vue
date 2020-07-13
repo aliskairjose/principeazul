@@ -122,7 +122,7 @@
               <!-- Datos de la entrega -->
               <b-col md="12" class="mb-2 mt-3"> <h5 class="text-muted">Datos de la entrega</h5> </b-col>
               <b-col md="6" class="mb-3">Recibe: {{ data.addressee}}</b-col>
-              <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatDate}}</b-col>
+              <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatWeekDate}}</b-col>
               <b-col md="12" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
 
              <b-col md="12">
