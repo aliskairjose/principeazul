@@ -31,37 +31,6 @@
         </div>
       </ValidationProvider>
       <ValidationProvider
-        vid="Hora entrega"
-        name="Hora entrega"
-        rules="required"
-        v-slot="{ errors }"
-      >
-        <div class="form-group">
-          <label for="time-input">Hora estimada de entrega</label>
-          <b-input-group>
-            <b-form-input
-              id="time-input"
-              v-model="deliveryTime"
-              type="text"
-              placeholder="HH:mm"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-form-timepicker
-                v-model="deliveryTime"
-                button-only
-                right
-                show-seconds
-                locale="en"
-                aria-controls="example-input"
-              ></b-form-timepicker>
-            </b-input-group-append>
-          </b-input-group>
-          <div class="invalid-feedback">
-            <span>{{ errors[0] }}</span>
-          </div>
-        </div>
-      </ValidationProvider>
-      <ValidationProvider
         vid="Persona que recibe"
         name="Persona que recibe"
         rules="required"
@@ -165,7 +134,6 @@ export default {
         this.order = response.data
         const value = this.order.delivery_date
         this.order.delivery_date = value.slice(0, value.indexOf(' '))
-        this.deliveryTime = value.slice(value.indexOf(' ') + 1)
       })
       .catch(error => { console.log(error) })
       .finally(() => { this.loading = false })

@@ -64,7 +64,6 @@
                             :value="client.delivery_date"
                             :class="(errors.length > 0 ? ' is-invalid' : '')"
                             placeholder="Fecha de entrega"
-                            :date-format-options="{ day: '2-digit', month: '2-digit', year: 'numeric' }"
                           ></b-form-datepicker>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
