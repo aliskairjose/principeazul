@@ -21,6 +21,7 @@ import interceptors from '@/helpers/interceptors'
 import VueRouterUserRoles from 'vue-router-user-roles'
 import Print from 'vue-print-nb'
 import VueClipboard from 'vue-clipboard2'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 Object.keys(rules).forEach(rule => {
   extend(rule, {
@@ -31,6 +32,8 @@ Object.keys(rules).forEach(rule => {
 
 global.Raphael = Raphael
 
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 Vue.use(VueClipboard)
 Vue.use(VueRouterUserRoles, { router })
 Vue.use(Print)
