@@ -100,6 +100,7 @@
                           :options="purchaseType"
                         ></b-form-select>
                       </b-form-group>
+
                       <!-- Modo de entrega -->
                       <b-form-group class="col-md-6" label="Zona de entrega:" label-for="delivery">
                         <b-form-select
@@ -110,31 +111,42 @@
                         ></b-form-select>
                       </b-form-group>
 
-                      <!-- Direccion -->
+                      <!-- Turnos -->
+                      <b-form-group
+                        class="col-md-6"
+                        label="Turno:"
+                        label-for="turn">
+                        <b-form-select
+                          v-model="order.turn"
+                          :options="turns">
+                        </b-form-select>
+                      </b-form-group>
+
                       <b-form-group class="col-md-12">
                         <hr />
                       </b-form-group>
+
+                      <!-- Direccion -->
                       <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
                         <b-form-textarea
                           v-model="order.delivery_address"
                           placeholder="Dirección de entrega"
                           rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
+                          max-rows="6">
+                        </b-form-textarea>
                       </b-form-group>
 
                       <!-- Dedicatoria -->
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="dedication"
-                      >
+                        label-for="dedication">
                         <b-form-textarea
                           v-model="order.dedication"
                           placeholder="Dedicatoria del regalo"
                           rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
+                          max-rows="6">
+                        </b-form-textarea>
                       </b-form-group>
 
                       <!-- Persona quien recibe -->
@@ -142,20 +154,22 @@
                         <b-form-input
                           v-model="order.addressee"
                           type="text"
-                          placeholder="Persona que recibe"
-                        ></b-form-input>
+                          placeholder="Persona que recibe">
+                        </b-form-input>
                       </b-form-group>
+
                       <!-- Motivo -->
                       <b-form-group
                         class="col-md-6"
                         label="Motivo:"
-                        label-for="delivery"
-                      >
+                        label-for="delivery">
                         <b-form-select
                           v-model="order.reason"
-                          :options="reasons"
-                        ></b-form-select>
+                          :options="reasons">
+                        </b-form-select>
                       </b-form-group>
+
+                      <!-- Status de la compra -->
                       <b-form-group
                         v-if="status === 'edit'"
                         class="col-md-6"
@@ -453,11 +467,20 @@ export default {
           this.reasons.push(this.reason)
         }
       })
-    // generalService.turns()
-    //   .then(response => {
-    //     const object = response.data
-    //
-    //   })
+
+    generalService.turns()
+      .then(response => {
+        const object = response.data
+        this.turn.text = 'Seleccione un motivo'
+        this.turn.value = null
+        this.turns.push(this.turn)
+        for (const iterator of object) {
+          this.turn = {}
+          this.turn.value = iterator
+          this.turn.text = iterator
+          this.turns.push(this.turn)
+        }
+      })
 
     generalService.deliveryZones()
       .then(response => {
@@ -559,7 +582,6 @@ export default {
       },
       order: {
         id: '',
-        reason: null,
         delivery_zone_id: null,
         client_id: '',
         client_name: '',
@@ -568,6 +590,7 @@ export default {
         type: null,
         mode: null,
         status: null,
+        reason: null,
         turn: null,
         discount: 0,
         delivery_address: '',
