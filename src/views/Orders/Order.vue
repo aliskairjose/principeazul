@@ -34,19 +34,31 @@
               >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
+
                     <b-row id="row">
+                      <!-- <b-input-group size="sm" class="mb-2">
+                        <b-input-group-prepend is-text>
+                          <b-icon icon="search"></b-icon>
+                        </b-input-group-prepend>
+                        <b-form-input type="search" placeholder="Search terms"></b-form-input>
+                      </b-input-group> -->
                       <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
                         <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
-                          <b-form-input
-                            autocomplete="off"
-                            readonly
-                            v-model="client.name"
-                            @click="getClient"
-                            type="text"
-                            placeholder="Cliente"
-                            :value="client.id"
-                            :class="(errors.length > 0 ? ' is-invalid' : '')"
-                          ></b-form-input>
+                          <b-input-group>
+                            <b-form-input
+                              autocomplete="off"
+                              readonly
+                              v-model="client.name"
+                              @click="getClient"
+                              type="text"
+                              placeholder="Cliente"
+                              :value="client.id"
+                              :class="(errors.length > 0 ? ' is-invalid' : '')">
+                            </b-form-input>
+                            <b-input-group-append is-text>
+                              <b-icon icon="search"></b-icon>
+                            </b-input-group-append>
+                          </b-input-group>
                           <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
@@ -433,15 +445,7 @@ export default {
     // generalService.turns()
     //   .then(response => {
     //     const object = response.data
-    //     this.turn.text = 'Seleccione un motivo'
-    //     this.turn.value = null
-    //     this.turnss.push(this.turn)
-    //     for (const iterator of object) {
-    //       this.turn = {}
-    //       this.turn.value = iterator
-    //       this.turn.text = iterator
-    //       this.turn.push(this.turn)
-    //     }
+    //
     //   })
 
     generalService.deliveryZones()
