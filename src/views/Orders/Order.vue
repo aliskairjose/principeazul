@@ -743,6 +743,9 @@ export default {
   watch: {
     client (newValue, oldValue) {
       if (this.client) {
+        this.order.client_id = this.client.id
+        this.order.client_dni = this.client.dni
+        this.order.client_name = this.client.name
         this.$refs['modal-client'].hide()
       }
     }
