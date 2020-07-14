@@ -99,6 +99,7 @@
                           :disabled="order.mode !== 'delivery'"
                           v-model="order.delivery_zone_id"
                           :options="deliveryZones"
+                          @change="deliveryCostChange"
                         ></b-form-select>
                       </b-form-group>
 
@@ -143,10 +144,10 @@
                         label="Motivo:"
                         label-for="delivery"
                       >
-                          <b-form-select
-                            v-model="order.reason"
-                            :options="reasons"
-                          ></b-form-select>
+                        <b-form-select
+                          v-model="order.reason"
+                          :options="reasons"
+                        ></b-form-select>
                       </b-form-group>
                       <b-form-group
                         v-if="status === 'edit'"
@@ -161,7 +162,8 @@
                 </ValidationObserver>
               </tab-content>
               <!-- Tab Productos -->
-              <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
+              <tab-content
+                title="Productos" icon="ti-package" :before-change="validateProducts">
                 <div v-for="(p, index) in orderProducts" :key="index">
                   <b-row id="row" class="mb-2">
                     <b-col class="col-md-3">
@@ -252,12 +254,24 @@
                         <b-form-input v-money="money" v-if="item.chekBox" v-model="item.amount"></b-form-input>
                       </b-form>
                     </div>
+                    <b-form-group class="col-md-6" label="% de descuento" label-for="cliente">
+                      <b-form-input
+                        id="discount"
+                        autocomplete="off"
+                        v-model="percent"
+                        type="text"
+                        v-money="money"
+                        placeholder="% Descuento">
+                      </b-form-input>
+                    </b-form-group>
                   </div>
                   <div class="col-md-3 text-right">
                     Monto a pagar:
                     <label for class="success">{{amount}}$</label>
                     <br />Monto delivery:
-                    <label for class="success">{{deliveryZone.price}}$</label>
+                    <label for class="success">{{deliveryCost}}$</label>
+                    <br />Monto descuento:
+                    <label for class="success">{{orderDiscount}}$</label>
                     <br />Total a pagar:
                     <label for class="success">{{finalPrice}}$</label>
                     <br />Pagado:
@@ -416,6 +430,19 @@ export default {
           this.reasons.push(this.reason)
         }
       })
+    // generalService.turns()
+    //   .then(response => {
+    //     const object = response.data
+    //     this.turn.text = 'Seleccione un motivo'
+    //     this.turn.value = null
+    //     this.turnss.push(this.turn)
+    //     for (const iterator of object) {
+    //       this.turn = {}
+    //       this.turn.value = iterator
+    //       this.turn.text = iterator
+    //       this.turn.push(this.turn)
+    //     }
+    //   })
 
     generalService.deliveryZones()
       .then(response => {
@@ -491,10 +518,14 @@ export default {
   },
   data () {
     return {
+      deliveryCost: 0,
+      percent: null,
       deliveryPrice: 0,
       deliveryTime: null,
       reasons: [],
       reason: {},
+      turns: [],
+      turn: {},
       ids: [],
       status: 'add',
       orderResponse: [],
@@ -522,6 +553,8 @@ export default {
         type: null,
         mode: null,
         status: null,
+        turn: null,
+        discount: 0,
         delivery_address: '',
         addressee: '',
         dedication: '',
@@ -611,6 +644,10 @@ export default {
     }
   },
   computed: {
+    orderDiscount () {
+      const val = (this.amount * this.percent) / 100
+      return parseFloat(val).toFixed(2)
+    },
     url () {
       return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
@@ -627,7 +664,7 @@ export default {
       return parseFloat(price).toFixed(2)
     },
     finalPrice () {
-      const monto = parseFloat(this.amount) + this.deliveryZone.price
+      const monto = (parseFloat(this.amount) + this.deliveryCost) - this.orderDiscount
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
@@ -666,11 +703,16 @@ export default {
     }
   },
   methods: {
+    deliveryCostChange ($event) {
+      const object = this.deliveryZones.find(x => x.value === $event)
+      this.deliveryCost = object.price
+    },
     onModeChange () {
       if (this.order.mode === 'local') {
         this.order.type = 'local'
         this.order.delivery_address = 'Local'
-        this.deliveryZone.price = 0
+        this.deliveryCost = 0
+        this.order.delivery_zone_id = null
       }
     },
     addClient (item) {
@@ -781,6 +823,8 @@ export default {
     },
     onComplete () {
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      this.order.discount = this.orderDiscount
+      // console.log(this.order)
       this.loading = true
       if (this.status === 'add') {
         orderService.create(this.order)
