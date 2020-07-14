@@ -226,7 +226,6 @@ export default {
 
 <style scoped>
  #alert{
-   position: fixed;
-    left: 50vw;
+   position: inherit;
  }
 </style>
