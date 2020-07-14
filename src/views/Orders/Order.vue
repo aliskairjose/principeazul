@@ -30,12 +30,11 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder"
-              >
+                :before-change="validateOrder">
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
-
                     <b-row id="row">
+                      <!-- Cliente -->
                       <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
                         <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
                           <b-input-group>
@@ -50,8 +49,7 @@
                               :class="(errors.length > 0 ? ' is-invalid' : '')">
                             </b-form-input>
                             <b-input-group-append is-text>
-                              <!-- <b-icon icon="person-plus-fill"></b-icon> -->
-                              <b-button size="sm" variant="outline" @click="newClient">
+                              <b-button size="sm" variant="outline" @click="showClientModal">
                                 <b-icon icon="person-plus-fill" aria-label="Help"></b-icon>
                               </b-button>
                             </b-input-group-append>
@@ -301,6 +299,23 @@
       </b-form-group>
     </b-modal>
 
+    <!-- Modal nuevo cliente -->
+    <b-modal
+      ref="modal-client"
+      size="lg"
+      id="lista-productos"
+      title="Lista de productos"
+      ok-only
+      ok-title="Cerrar"
+      no-close-on-esc
+      no-close-on-backdrop
+      >
+      <client
+        is-modal
+        @new-client="client = $event">
+        </client>
+    </b-modal>
+
     <!-- Modal productos Principales -->
     <b-modal
       ref="lista-productos"
@@ -312,14 +327,13 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table
         :items="principals"
         :titems="pTitles"
         v-on:add-item="addItem"
-        v-on:delete-item="delItem"
-      ></modal-table>
+        v-on:delete-item="delItem">
+      </modal-table>
     </b-modal>
     <!-- Modal extras  -->
     <b-modal
@@ -332,8 +346,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra"
-    >
+      @cancel="handleCancelExtra">
       <modal-table
         :items="additionals"
         :titems="pTitles"
@@ -353,8 +366,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
     <!-- Final Order Modal -->
@@ -367,8 +379,7 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder"
-    >
+      @ok="finishOrder">
       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
@@ -407,6 +418,8 @@ import generalService from '@/services/general'
 import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
+import Client from '@/views/Clients/Client'
+
 import { VMoney } from 'v-money'
 
 export default {
@@ -416,7 +429,8 @@ export default {
     FormWizard,
     TabContent,
     ModalTable,
-    OrderDetailComponent
+    OrderDetailComponent,
+    Client
   },
   created () {
     const id = this.$route.params.id
@@ -703,9 +717,16 @@ export default {
       return 'Método de pago'
     }
   },
+  watch: {
+    client (newValue, oldValue) {
+      if (this.client) {
+        this.$refs['modal-client'].hide()
+      }
+    }
+  },
   methods: {
-    newClient () {
-      alert('newClient')
+    showClientModal () {
+      this.$refs['modal-client'].show()
     },
     deliveryCostChange ($event) {
       const object = this.deliveryZones.find(x => x.value === $event)

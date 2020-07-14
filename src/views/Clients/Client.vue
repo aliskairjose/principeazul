@@ -85,6 +85,9 @@ export default {
   directives: { mask },
   title: '',
   btnTitle: '',
+  props: {
+    isModal: { type: Boolean, default: false }
+  },
   mounted () {
     vito.index()
   },
@@ -134,7 +137,11 @@ export default {
         clientService.create(this.client)
           .then(response => {
             if (response.status) {
-              this.$router.push({ name: 'client.list' })
+              if (this.isModal) {
+                this.$emit('new-client', response.data)
+              } else {
+                this.$router.push({ name: 'client.list' })
+              }
             }
           })
           .catch((error) => { console.log(error) })
