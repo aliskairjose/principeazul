@@ -3,22 +3,19 @@
     <b-row>
       <b-col md="12">
         <b-alert
+          id="alert"
           :show="isShow"
           variant="success"
-          class="bg-white spinner"
+          class="bg-white"
           mt-2>
           <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
           </div>
           <div class="iq-alert-text">
-            El registro ha sido
-            <b>eliminado</b> con éxito!
+            El registro ha sido <b>eliminado</b> con éxito!
           </div>
         </b-alert>
         <iq-card>
-          <!-- <template v-slot:headerTitle>
-            <h4 class="card-title mt-3">Lista de clientes</h4>
-          </template> -->
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-show="isRemoving">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
@@ -228,5 +225,8 @@ export default {
 </script>
 
 <style scoped>
-
+ #alert{
+   position: fixed;
+    left: 50vw;
+ }
 </style>
