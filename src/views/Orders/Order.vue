@@ -36,12 +36,6 @@
                   <form @submit.prevent="onSubmit">
 
                     <b-row id="row">
-                      <!-- <b-input-group size="sm" class="mb-2">
-                        <b-input-group-prepend is-text>
-                          <b-icon icon="search"></b-icon>
-                        </b-input-group-prepend>
-                        <b-form-input type="search" placeholder="Search terms"></b-form-input>
-                      </b-input-group> -->
                       <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
                         <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
                           <b-input-group>
@@ -56,7 +50,10 @@
                               :class="(errors.length > 0 ? ' is-invalid' : '')">
                             </b-form-input>
                             <b-input-group-append is-text>
-                              <b-icon icon="search"></b-icon>
+                              <!-- <b-icon icon="person-plus-fill"></b-icon> -->
+                              <b-button size="sm" variant="outline" @click="newClient">
+                                <b-icon icon="person-plus-fill" aria-label="Help"></b-icon>
+                              </b-button>
                             </b-input-group-append>
                           </b-input-group>
                           <div class="invalid-feedback">
@@ -707,6 +704,9 @@ export default {
     }
   },
   methods: {
+    newClient () {
+      alert('newClient')
+    },
     deliveryCostChange ($event) {
       const object = this.deliveryZones.find(x => x.value === $event)
       this.deliveryCost = object.price
