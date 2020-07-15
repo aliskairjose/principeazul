@@ -22,7 +22,12 @@
               </b-col>
               <b-col md="8">
                 <h5>{{product.name}}</h5>
-                <label class="text-muted d-inline-block text-truncate" style="max-width: 200px; font-style: italic;" for v-if="product.note">"{{product.note}}"</label>
+                <label class="text-muted d-inline-block text-truncate" style="max-width: 200px; font-style: italic;" for v-if="product.note">
+                  "{{product.note}}"
+                </label>
+                  <label v-for="a in product.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
+                    <h6 class="mx-1"> <b-badge variant="info" class="px-3"> {{ a.name }}</b-badge></h6>
+                  </label>
               </b-col>
             </b-row>
             <b-row>
