@@ -85,7 +85,7 @@ export default {
       this.loading = true
       orderService.updateSatus($event.id, $event.status)
         .then(() => { })
-        .catch(error => { console.log(error) })
+        .catch(() => { })
         .finally(() => { this.loading = false })
     },
     loadData () {

@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-row class="card-order">
-      <b-col md="12">
+      <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
         <iq-card>
           <template v-slot:body>
             <b-row>
