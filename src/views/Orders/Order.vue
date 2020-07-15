@@ -279,7 +279,7 @@
                       <b-form-input
                         id="discount"
                         autocomplete="off"
-                        v-model="percent"
+                        v-model="order.discount"
                         type="text"
                         v-money="money"
                         placeholder="% Descuento">
@@ -292,7 +292,7 @@
                     <br />Monto delivery:
                     <label for class="success">{{deliveryCost}}$</label>
                     <br />Monto descuento:
-                    <label for class="success">{{orderDiscount}}$</label>
+                    <label for class="success">{{order.discount}}$</label>
                     <br />Total a pagar:
                     <label for class="success">{{finalPrice}}$</label>
                     <br />Pagado:
@@ -702,7 +702,7 @@ export default {
       return parseFloat(price).toFixed(2)
     },
     finalPrice () {
-      const monto = (parseFloat(this.amount) + this.deliveryCost) - this.orderDiscount
+      const monto = (parseFloat(this.amount) + this.deliveryCost) - this.order.discount
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
