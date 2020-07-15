@@ -343,6 +343,7 @@
       @ok="handleOk"
       @cancel="handleCancel">
       <modal-table
+        read-only
         :items="principals"
         :titems="pTitles"
         v-on:add-item="addItem"
@@ -525,7 +526,7 @@ export default {
           if (r.type === 'principal') {
             r.additionals = []
             r.note = ''
-            r.quentity = 1
+            r.quantity = 1
             this.principals.push(r)
           }
           if (r.type === 'additional') {

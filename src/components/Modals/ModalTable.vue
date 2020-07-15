@@ -62,6 +62,7 @@
                     <template v-slot:cell(quantity)="items">
                       <b-form-input
                         v-model="items.item.quantity"
+                        :disabled="readOnly"
                         type="number"
                         name="quantity"
                         id="quantity"
@@ -129,7 +130,8 @@ export default {
   name: 'ModalTable',
   props: {
     items: { type: Array },
-    titems: { type: Array }
+    titems: { type: Array },
+    readOnly: { type: Boolean, default: false }
   },
   mounted () {
     vito.index()
