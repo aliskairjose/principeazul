@@ -154,7 +154,6 @@ export default {
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         { label: 'Email', key: 'email', class: 'text-center', sortable: true },
         { label: 'Teléfono', key: 'phone', class: 'text-center', sortable: true },
-        { label: 'Ordenes', key: 'orders', class: 'text-center', sortable: true },
         { label: 'Fecha creación', key: 'created_at', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
