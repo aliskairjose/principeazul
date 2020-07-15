@@ -4,6 +4,9 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
+            <b-col md="12" class="text-center spinner" v-if="loading">
+              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            </b-col>
             <div class="d-flex align-items-center justify-content-between">
               <iframe :src="iframeUrl" frameborder="0" width="100%" height="350" allowtransparency></iframe>
             </div>
@@ -18,7 +21,10 @@
             <!-- <OrderList></OrderList> -->
            <b-row>
              <b-col md="4" v-for="order in orders" :key="order.id">
-               <OrderCard :order="order"></OrderCard>
+               <OrderCard
+                :order="order"
+                :statuses="statuses"
+                @status-change="updateStatus($event)"></OrderCard>
              </b-col>
            </b-row>
           </template>
@@ -37,6 +43,19 @@ import orderService from '@/services/order'
 export default {
   name: 'DasboardTaller',
   components: { OrderCard },
+  created () {
+    orderService.orderStatuses()
+      .then(response => {
+        const object = response.data
+        for (const iterator of object) {
+          let status = {}
+          status.value = iterator
+          status.text = iterator
+          this.statuses.push(status)
+        }
+      })
+      .catch(error => { console.log(error) })
+  },
   mounted () {
     vito.index()
     this.loadData()
@@ -55,11 +74,20 @@ export default {
   },
   data () {
     return {
+      loading: false,
       orders: '',
-      iframeUrl: ''
+      iframeUrl: '',
+      statuses: []
     }
   },
   methods: {
+    updateStatus ($event) {
+      this.loading = true
+      orderService.updateSatus($event.id, $event.status)
+        .then(() => { })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.loading = false })
+    },
     loadData () {
       this.loading = true
       orderService
@@ -69,9 +97,7 @@ export default {
           console.log(this.orders)
         })
         .catch(() => {})
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => { this.loading = false })
     }
   }
 }

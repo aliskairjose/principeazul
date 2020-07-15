@@ -22,11 +22,17 @@
               </b-col>
               <b-col md="8">
                 <h5>{{product.name}}</h5>
-                <label class="text-muted d-inline-block text-truncate" style="max-width: 200px; font-style: italic;" for v-if="product.note">
+                <label
+                  class="text-muted d-inline-block text-truncate"
+                  style="max-width: 200px; font-style: italic;"
+                  for v-if="product.note">
                   "{{product.note}}"
                 </label>
-                  <label v-for="a in product.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
-                    <h6 class="mx-1"> <b-badge variant="info" class="px-3"> {{ a.name }}</b-badge></h6>
+                  <label
+                    v-for="a in product.additionals"
+                    :key="a.id"
+                    class="text-muted text-capitalize mr-3">
+                      <h6 class="mx-1"> <b-badge variant="info" class="px-3"> {{ a.name }}</b-badge></h6>
                   </label>
               </b-col>
             </b-row>
@@ -45,8 +51,13 @@
               </b-col>
             </b-row>
             <b-row class="mt-5 mb-0 d-flex justify-content-between">
-              <b-col md="5">
-                <p class="text-muted">Estatus: {{order.status}}</p>
+              <b-col md="6">
+                <!-- <p class="text-muted">Estatus: {{order.status}}</p> -->
+                <b-form-select
+                  v-model="order.status"
+                  :options="statuses"
+                  @change="onStatusChange(order.id, $event)">
+                </b-form-select>
               </b-col>
               <b-col md="4">
                 <b-badge
@@ -69,10 +80,17 @@ import { vito } from '../../../config/pluginInit'
 export default {
   name: 'OrderCard',
   props: {
-    order: { type: Array }
+    order: { type: Array },
+    statuses: { type: Array }
   },
   mounted () {
     vito.index()
+  },
+  methods: {
+    onStatusChange (id, $event) {
+      const status = $event
+      this.$emit('status-change', { id, status })
+    }
   }
 }
 </script>
