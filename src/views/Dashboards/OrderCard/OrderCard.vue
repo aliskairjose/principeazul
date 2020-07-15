@@ -39,9 +39,11 @@
               </p>
               </b-col>
             </b-row>
-            <b-row class="mt-5 mb-0">
-              <b-col md="12" class="d-flex justify-content-between">
-                <label for="" class="text-muted">Estatus: {{order.status}}</label>
+            <b-row class="mt-5 mb-0 d-flex justify-content-between">
+              <b-col md="5">
+                <p class="text-muted">Estatus: {{order.status}}</p>
+              </b-col>
+              <b-col md="4">
                 <b-badge
                   variant="primary"
                   v-if="order.personalizedRequired">
@@ -78,6 +80,7 @@ export default {
 }
 
 .iq-card {
+  margin-top: 10px;
   margin-bottom: 0px !important;
 }
 
