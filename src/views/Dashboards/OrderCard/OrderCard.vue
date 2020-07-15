@@ -39,7 +39,7 @@
               </p>
               </b-col>
             </b-row>
-            <b-row>
+            <b-row class="mt-5 mb-0">
               <b-col md="12" class="d-flex justify-content-between">
                 <label for="" class="text-muted">Estatus: {{order.status}}</label>
                 <b-badge
@@ -75,6 +75,10 @@ export default {
   margin-bottom: 10px;
   border-radius: 5px;
   border: solid thin var(--iq-secondary-light);
+}
+
+.iq-card {
+  margin-bottom: 0px !important;
 }
 
 </style>
