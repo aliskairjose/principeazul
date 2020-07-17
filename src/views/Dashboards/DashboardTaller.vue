@@ -143,7 +143,10 @@ export default {
       selectedPersonalize: null,
       loading: false,
       orders: '',
+      filter: null,
       iframeUrl: '',
+      initDate: '',
+      endDate: '',
       statuses: [],
       typeOptions: [
         { value: null, text: 'Rango de fecha' },
@@ -196,8 +199,8 @@ export default {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
+          console.log(response)
           this.orders = response.data
-          console.log(this.orders)
         })
         .catch(() => {})
         .finally(() => { this.loading = false })
