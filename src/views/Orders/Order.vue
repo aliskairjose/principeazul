@@ -209,7 +209,7 @@
                         class="mb-3 mr-1 text-capitalize"
                         @click="deleteExtra(index, item.id)"
                       >
-                        {{ item.name }}
+                        {{ item.name }} x {{ item.quantity }}
                         <i
                           class="ri-indeterminate-circle-line"
                           v-if="status === 'add'"
