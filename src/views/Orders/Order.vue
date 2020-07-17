@@ -275,14 +275,14 @@
                         <b-form-input v-money="money" v-if="item.chekBox" v-model="item.amount"></b-form-input>
                       </b-form>
                     </div>
-                    <b-form-group class="col-md-6" label="% de descuento" label-for="cliente">
+                    <b-form-group class="col-md-6" label="Descuento" label-for="cliente">
                       <b-form-input
                         id="discount"
                         autocomplete="off"
                         v-model="order.discount"
                         type="text"
                         v-money="money"
-                        placeholder="% Descuento">
+                        placeholder="Descuento">
                       </b-form-input>
                     </b-form-group>
                   </div>
