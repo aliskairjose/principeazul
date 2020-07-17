@@ -159,6 +159,32 @@ export default {
     }
   },
   methods: {
+    onChangePersonalized () {
+      if (this.selectedPersonalize !== 2) {
+        this.loadData(`required_personalized=${this.selectedPersonalize}`)
+      } else {
+        this.loadData(``)
+      }
+    },
+    onSelectedChange () {
+      if (!this.selectedType) {
+        // Limpia los campos fechas
+        this.initDate = ''
+        this.endDate = ''
+        this.loadData()
+      }
+    },
+    onDateChange () {
+      if (this.initDate && this.endDate) {
+        if (this.selectedType === 1) {
+          // Fecha de creación
+          this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
+        } else {
+          // Fecha de entrega
+          this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+        }
+      }
+    },
     updateStatus ($event) {
       this.loading = true
       orderService.updateSatus($event.id, $event.status)
@@ -166,10 +192,9 @@ export default {
         .catch(() => { })
         .finally(() => { this.loading = false })
     },
-    loadData () {
+    loadData (params = '') {
       this.loading = true
-      orderService
-        .getAll()
+      orderService.getAll(params)
         .then(response => {
           this.orders = response.data
           console.log(this.orders)
