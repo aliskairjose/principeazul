@@ -46,6 +46,36 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <b-form-group
+                      class="col-md-6"
+                      label="Categoría:"
+                      label-for="category"
+                      lot-scope="{ valid, errors }"
+                    >
+                      <ValidationProvider name="Categoria" rules="required" v-slot="{ errors }">
+                        <b-form-select
+                          :state="errors[0] ? false : (product.category_id ? true : null)"
+                          v-model="product.category_id"
+                          :options="categories"
+                        ></b-form-select>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
+                    </b-form-group>
+                    <b-form-group class="col-md-6" label="Tipo:" label-for="type">
+                      <ValidationProvider name="Tipo" rules="required" v-slot="{ errors }">
+                        <b-form-select
+                          :state="errors[0] ? false : (product.type ? true : null)"
+                          v-model="product.type"
+                          :options="types"
+                          @change=onTypeChange
+                        ></b-form-select>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
+                    </b-form-group>
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
                       <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
                         <b-form-input
@@ -94,36 +124,6 @@
                           :class="(errors.length > 0 ? ' is-invalid' : '')"
                           placeholder="Precio de venta"
                         ></b-form-input>
-                        <div class="invalid-feedback">
-                          <span>{{ errors[0] }}</span>
-                        </div>
-                      </ValidationProvider>
-                    </b-form-group>
-                    <b-form-group
-                      class="col-md-6"
-                      label="Categoría:"
-                      label-for="category"
-                      lot-scope="{ valid, errors }"
-                    >
-                      <ValidationProvider name="Categoria" rules="required" v-slot="{ errors }">
-                        <b-form-select
-                          :state="errors[0] ? false : (product.category_id ? true : null)"
-                          v-model="product.category_id"
-                          :options="categories"
-                        ></b-form-select>
-                        <div class="invalid-feedback">
-                          <span>{{ errors[0] }}</span>
-                        </div>
-                      </ValidationProvider>
-                    </b-form-group>
-                    <b-form-group class="col-md-6" label="Tipo:" label-for="type">
-                      <ValidationProvider name="Tipo" rules="required" v-slot="{ errors }">
-                        <b-form-select
-                          :state="errors[0] ? false : (product.type ? true : null)"
-                          v-model="product.type"
-                          :options="types"
-                          @change=onTypeChange
-                        ></b-form-select>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
