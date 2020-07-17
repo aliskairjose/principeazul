@@ -103,6 +103,8 @@
 import { vito } from '../../config/pluginInit'
 import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
+import moment from 'moment'
+
 // import OrderList from '@/views/Orders/OrderList'
 
 export default {
@@ -123,7 +125,12 @@ export default {
   },
   mounted () {
     vito.index()
-    this.loadData()
+    // this.loadData()
+    const date = new Date()
+    date.setDate(date.getDate() + 1)
+    const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+
     let jwt = require('jsonwebtoken')
 
     const METABASE_SITE_URL = 'http://64.225.42.188:3000'
@@ -199,7 +206,6 @@ export default {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
-          console.log(response)
           this.orders = response.data
         })
         .catch(() => {})

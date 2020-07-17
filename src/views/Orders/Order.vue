@@ -364,7 +364,7 @@
       @cancel="handleCancelExtra">
       <modal-table
         :items="additionals"
-        :titems="pTitles"
+        :titems="eTitles"
         v-on:add-item="addItem"
         v-on:delete-item="delItem"
       ></modal-table>
@@ -454,7 +454,6 @@ export default {
   mounted () {
     vito.index()
     this.loading = true
-
     generalService.reasons()
       .then(response => {
         const object = response.data
@@ -531,6 +530,7 @@ export default {
           }
           if (r.type === 'additional') {
             r.isAddItem = false
+            r.quantity = 1
             this.additionals.push(r)
           }
         })
@@ -678,6 +678,13 @@ export default {
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         // { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
+        { label: 'Acción', key: 'action', class: 'text-center' }
+      ],
+      eTitles: [
+        { label: 'Id', key: 'id', class: 'text-center', sortable: true },
+        { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
+        { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
+        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
