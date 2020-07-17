@@ -843,6 +843,11 @@ export default {
     },
     handleOkExtra () {
       if (this.tempExtra.length > 0) {
+        let salePrice = 0
+        for (const iterator of this.tempExtra) {
+          salePrice += iterator.sale_price * iterator.quantity
+        }
+        console.log(salePrice)
         this.orderProducts[this.index].additionals.push(...this.tempExtra)
       }
       this.tempExtra.length = 0
