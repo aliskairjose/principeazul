@@ -198,7 +198,7 @@
                       ></b-img>
                     </b-col>
                     <b-col class="col-md-6">
-                      <h5 class="text-capitalize">{{ p.name }} {{index}}</h5>
+                      <h5 class="text-capitalize">{{ p.name }}</h5>
                       <p class="h6" id="price">{{ p.price }} $</p>
                       <h5>{{ p.note }}</h5>
                       <p class="mt-2">Extras</p>

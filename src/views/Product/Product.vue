@@ -72,6 +72,33 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <b-form-group v-show="hideSalePrice" class="col-md-6" label="Precio de venta:" label-for="price">
+                      <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
+                        <b-form-input
+                          v-show="hideSalePrice"
+                          v-if="product.sale_price"
+                          v-model.lazy="product.sale_price"
+                          type="text"
+                          name="price"
+                          id="price"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          placeholder="Precio"
+                        ></b-form-input>
+                        <b-form-input
+                          v-else
+                          v-money="money"
+                          v-model.lazy="product.sale_price"
+                          type="text"
+                          name="sale_price"
+                          id="sale_price"
+                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          placeholder="Precio de venta"
+                        ></b-form-input>
+                        <div class="invalid-feedback">
+                          <span>{{ errors[0] }}</span>
+                        </div>
+                      </ValidationProvider>
+                    </b-form-group>
                     <b-form-group
                       class="col-md-6"
                       label="Categoría:"
@@ -95,6 +122,7 @@
                           :state="errors[0] ? false : (product.type ? true : null)"
                           v-model="product.type"
                           :options="types"
+                          @change=onTypeChange
                         ></b-form-select>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
@@ -244,12 +272,14 @@ export default {
     return {
       isShow: false,
       loading: false,
+      hideSalePrice: false,
       subs: 0,
       money: {},
       product: {
         name: '',
         description: '',
         price: null,
+        sale_price: null,
         category_id: null,
         type: null,
         image: '',
@@ -282,6 +312,13 @@ export default {
     }
   },
   methods: {
+    onTypeChange ($event) {
+      if ($event === 'additional') {
+        this.hideSalePrice = true
+      } else {
+        this.hideSalePrice = false
+      }
+    },
     getStatus () {
       const id = this.$route.params.id
       if (id) return 'edit'
