@@ -30,7 +30,8 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder">
+                :before-change="validateOrder"
+              >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -46,8 +47,8 @@
                               type="text"
                               placeholder="Cliente"
                               :value="client.id"
-                              :class="(errors.length > 0 ? ' is-invalid' : '')">
-                            </b-form-input>
+                              :class="(errors.length > 0 ? ' is-invalid' : '')"
+                            ></b-form-input>
                             <b-input-group-append is-text>
                               <b-button size="sm" variant="outline" @click="showClientModal">
                                 <b-icon icon="person-plus-fill" aria-label="Help"></b-icon>
@@ -78,11 +79,7 @@
                         </ValidationProvider>
                       </b-form-group>
                       <!-- Modo de entrega -->
-                      <b-form-group
-                        class="col-md-6"
-                        label="Modo de entrega:"
-                        label-for="delivery"
-                      >
+                      <b-form-group class="col-md-6" label="Modo de entrega:" label-for="delivery">
                         <b-form-select
                           v-model="order.mode"
                           :options="deliveryType"
@@ -90,15 +87,8 @@
                         ></b-form-select>
                       </b-form-group>
                       <!-- Tipo de compra -->
-                      <b-form-group
-                        class="col-md-6"
-                        label="Tipo de compra:"
-                        label-for="shopType"
-                      >
-                        <b-form-select
-                          v-model="order.type"
-                          :options="purchaseType"
-                        ></b-form-select>
+                      <b-form-group class="col-md-6" label="Tipo de compra:" label-for="shopType">
+                        <b-form-select v-model="order.type" :options="purchaseType"></b-form-select>
                       </b-form-group>
 
                       <!-- Modo de entrega -->
@@ -112,14 +102,8 @@
                       </b-form-group>
 
                       <!-- Turnos -->
-                      <b-form-group
-                        class="col-md-6"
-                        label="Turno:"
-                        label-for="turn">
-                        <b-form-select
-                          v-model="order.turn"
-                          :options="turns">
-                        </b-form-select>
+                      <b-form-group class="col-md-6" label="Turno:" label-for="turn">
+                        <b-form-select v-model="order.turn" :options="turns"></b-form-select>
                       </b-form-group>
 
                       <b-form-group class="col-md-12">
@@ -132,21 +116,22 @@
                           v-model="order.delivery_address"
                           placeholder="Dirección de entrega"
                           rows="3"
-                          max-rows="6">
-                        </b-form-textarea>
+                          max-rows="6"
+                        ></b-form-textarea>
                       </b-form-group>
 
                       <!-- Dedicatoria -->
                       <b-form-group
                         class="col-md-6"
                         label="Dedicatoria del regalo:"
-                        label-for="dedication">
+                        label-for="dedication"
+                      >
                         <b-form-textarea
                           v-model="order.dedication"
                           placeholder="Dedicatoria del regalo"
                           rows="3"
-                          max-rows="6">
-                        </b-form-textarea>
+                          max-rows="6"
+                        ></b-form-textarea>
                       </b-form-group>
 
                       <!-- Persona quien recibe -->
@@ -154,19 +139,13 @@
                         <b-form-input
                           v-model="order.addressee"
                           type="text"
-                          placeholder="Persona que recibe">
-                        </b-form-input>
+                          placeholder="Persona que recibe"
+                        ></b-form-input>
                       </b-form-group>
 
                       <!-- Motivo -->
-                      <b-form-group
-                        class="col-md-6"
-                        label="Motivo:"
-                        label-for="delivery">
-                        <b-form-select
-                          v-model="order.reason"
-                          :options="reasons">
-                        </b-form-select>
+                      <b-form-group class="col-md-6" label="Motivo:" label-for="delivery">
+                        <b-form-select v-model="order.reason" :options="reasons"></b-form-select>
                       </b-form-group>
 
                       <!-- Status de la compra -->
@@ -183,8 +162,7 @@
                 </ValidationObserver>
               </tab-content>
               <!-- Tab Productos -->
-              <tab-content
-                title="Productos" icon="ti-package" :before-change="validateProducts">
+              <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
                 <div v-for="(p, index) in orderProducts" :key="index">
                   <b-row id="row" class="mb-2">
                     <b-col class="col-md-3">
@@ -203,11 +181,11 @@
                       <h5>{{ p.note }}</h5>
                       <p class="mt-2">Extras</p>
                       <b-button
-                        v-for="item in p.additionals"
-                        :key="item.id"
+                        v-for="(item, indice) in p.additionals"
+                        :key="indice"
                         variant="primary"
                         class="mb-3 mr-1 text-capitalize"
-                        @click="deleteExtra(index, item.id)"
+                        @click="deleteExtra(index, indice)"
                       >
                         {{ item.name }} x {{ item.quantity }}
                         <i
@@ -282,8 +260,8 @@
                         v-model="order.discount"
                         type="text"
                         v-money="money"
-                        placeholder="Descuento">
-                      </b-form-input>
+                        placeholder="Descuento"
+                      ></b-form-input>
                     </b-form-group>
                   </div>
                   <div class="col-md-3 text-right">
@@ -323,11 +301,8 @@
       ok-title="Cerrar"
       no-close-on-esc
       no-close-on-backdrop
-      >
-      <client
-        is-modal
-        @new-client="client = $event">
-        </client>
+    >
+      <client is-modal @new-client="client = $event"></client>
     </b-modal>
 
     <!-- Modal productos Principales -->
@@ -341,14 +316,15 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table
         read-only
         :items="principals"
         :titems="pTitles"
         v-on:add-item="addItem"
-        v-on:delete-item="delItem">
-      </modal-table>
+        v-on:delete-item="delItem"
+      ></modal-table>
     </b-modal>
     <!-- Modal extras  -->
     <b-modal
@@ -361,7 +337,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra">
+      @cancel="handleCancelExtra"
+    >
       <modal-table
         :items="additionals"
         :titems="eTitles"
@@ -381,7 +358,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
     <!-- Final Order Modal -->
@@ -394,7 +372,8 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder">
+      @ok="finishOrder"
+    >
       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
@@ -545,7 +524,6 @@ export default {
           this.order = data
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
-          this.deliveryTime = value.slice(value.indexOf(' ') + 1)
 
           this.payments = data.payments
           this.client = data.client
@@ -560,7 +538,7 @@ export default {
       deliveryCost: 0,
       percent: null,
       deliveryPrice: 0,
-      deliveryTime: null,
+      deliveryTime: '00:00:00',
       reasons: [],
       reason: {},
       turns: [],
@@ -690,10 +668,6 @@ export default {
     }
   },
   computed: {
-    orderDiscount () {
-      const val = (this.amount * this.percent) / 100
-      return parseFloat(val).toFixed(2)
-    },
     url () {
       return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
@@ -799,10 +773,9 @@ export default {
       this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
     },
-    deleteExtra (index, id) {
+    deleteExtra (index, indice) {
       if (this.status === 'add') {
-        this.orderProducts[index].additionals.splice(index, 1)
-        // this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
+        this.orderProducts[index].additionals.splice(indice, 1)
       }
     },
     getClient () {
@@ -821,10 +794,6 @@ export default {
             }
           }
         }
-      }
-
-      if (this.status === 'edit') {
-
       }
       this.resetPrincipals()
       this.tempProd.length = 0
@@ -887,7 +856,6 @@ export default {
     },
     onComplete () {
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
-      this.order.discount = this.orderDiscount
       // console.log(this.order)
       this.loading = true
       if (this.status === 'add') {
