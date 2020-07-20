@@ -29,10 +29,10 @@
                 <b-row>
                   <b-col md="12">
                     <label
-                      class="text-muted d-inline-block text-truncate"
-                      style="max-width: 200px; font-style: italic;"
+                      class="text-muted"
+                      style="max-width: 200px; font-style: italic; font-size: 11px"
                       for v-if="product.note">
-                      "{{product.note}}"
+                      "{{product.note | capitalize}}"
                     </label>
                   </b-col>
                 </b-row>
