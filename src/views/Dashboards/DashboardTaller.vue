@@ -18,7 +18,6 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
-            <!-- <OrderList></OrderList> -->
             <b-row align-h="between" align-v="center">
               <b-col md="3">
                 <b-form-group
@@ -125,7 +124,6 @@ export default {
   },
   mounted () {
     vito.index()
-    // this.loadData()
     const date = new Date()
     date.setDate(date.getDate() + 1)
     const formatDate = moment(String(date)).format('YYYY-MM-DD')

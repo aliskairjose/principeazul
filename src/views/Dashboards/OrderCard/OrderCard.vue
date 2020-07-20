@@ -52,7 +52,6 @@
             </b-row>
             <b-row class="mt-5 mb-0 d-flex justify-content-between">
               <b-col md="6">
-                <!-- <p class="text-muted">Estatus: {{order.status}}</p> -->
                 <b-form-select
                   v-model="order.status"
                   :options="statuses"
@@ -80,7 +79,7 @@ import { vito } from '../../../config/pluginInit'
 export default {
   name: 'OrderCard',
   props: {
-    order: { type: Array },
+    order: { type: Object },
     statuses: { type: Array }
   },
   mounted () {
