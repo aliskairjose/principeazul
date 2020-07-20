@@ -60,7 +60,7 @@
                 </p>
               </b-col>
             </b-row>
-            <b-row class="mt-3ajute mb-0 d-flex justify-content-between">
+            <b-row class="mt-3 mb-0 d-flex justify-content-between">
               <b-col md="6">
                 <b-form-select
                   v-model="order.status"
