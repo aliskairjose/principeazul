@@ -796,11 +796,13 @@ export default {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     deleteProduct (index) {
+      this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
     },
     deleteExtra (index, id) {
       if (this.status === 'add') {
-        this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
+        this.orderProducts[index].additionals.splice(index, 1)
+        // this.orderProducts[index].additionals = this.orderProducts[index].additionals.filter(x => x.id !== id)
       }
     },
     getClient () {
@@ -937,7 +939,8 @@ export default {
     },
     validateOrder () {
       return this.$refs.form.validate().then(success => {
-        return success
+        // return success
+        return true
       })
     },
     validateProducts () {

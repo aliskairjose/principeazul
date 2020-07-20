@@ -27,51 +27,32 @@
                       </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Cédula / RUC:" label-for="cedula">
-                      <ValidationProvider name="Cédula" rules="required" v-slot="{ errors }">
                         <b-form-input
                           v-model="client.dni"
                           type="text"
-                          placeholder="Cédula"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                          placeholder="Cédula">
                         </b-form-input>
-                        <div class="invalid-feedback">
-                          <span>{{ errors[0] }}</span>
-                        </div>
-                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
-                      <ValidationProvider name="Telefono" rules="required" v-slot="{ errors }">
                         <b-form-input
                           v-model="client.phone"
                           type="tel"
                           name="phone"
                           id="phone"
                           placeholder="Teléfono"
-                          v-mask="['###-####', '####-####']"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                          v-mask="['###-####', '####-####']">
                         </b-form-input>
-                          <div class="invalid-feedback">
-                            <span>{{ errors[0] }}</span>
-                          </div>
-                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-6" label="Email" label-for="email">
-                      <ValidationProvider name="Email" rules="required" v-slot="{ errors }">
                         <b-form-input
                           v-model="client.email"
                           type="text"
                           name="email"
                           id="email"
-                          placeholder="Email"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                          placeholder="Email">
                         </b-form-input>
-                        <div class="invalid-feedback">
-                          <span>{{ errors[0] }}</span>
-                        </div>
-                      </ValidationProvider>
                     </b-form-group>
                     <b-form-group class="col-md-12" label="Dirección" label-for="address">
-                      <ValidationProvider name="Dirección" rules="required" v-slot="{ errors }">
                         <b-form-textarea
                           rows="3"
                           max-rows="6"
@@ -79,13 +60,8 @@
                           type="text"
                           name="address"
                           id="address"
-                          placeholder="Dirección"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')">
+                          placeholder="Dirección">
                         </b-form-textarea>
-                      <div class="invalid-feedback">
-                          <span>{{ errors[0] }}</span>
-                        </div>
-                      </ValidationProvider>
                     </b-form-group>
                   </b-row>
                   <hr />
