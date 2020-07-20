@@ -774,7 +774,13 @@ export default {
       this.orderProducts.splice(index, 1)
     },
     deleteExtra (index, indice) {
+      // console.log(this.orderProducts[index].additionals[indice])
+      const extraPrice = this.orderProducts[index].additionals[indice].sale_price
+      const qty = this.orderProducts[index].additionals[indice].quantity
+      const price = this.orderProducts[index].price
+
       if (this.status === 'add') {
+        this.orderProducts[index].price = price - (extraPrice * qty)
         this.orderProducts[index].additionals.splice(indice, 1)
       }
     },
