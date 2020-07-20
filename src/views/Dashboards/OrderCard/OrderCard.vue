@@ -42,7 +42,7 @@
                     v-for="a in product.additionals"
                     :key="a.id"
                     class="text-muted text-capitalize mr-3">
-                      <h6 class="mx-1"> <b-badge variant="info" class="px-3"> {{ a.name }}</b-badge></h6>
+                      <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
                   </label>
                 </b-col>
                 </b-row>
@@ -51,18 +51,16 @@
             <b-row>
               <b-col md="12">
                 <p>
-                Dedicatoria:
-                <label class="text-muted text-capitalize" style="font-style: italic;">{{order.dedication}}</label>
-              </p>
-              </b-col>
-              <b-col md="12">
+                  Dedicatoria:
+                  <label class="text-muted text-capitalize" style="font-style: italic;">{{order.dedication}}</label>
+                </p>
                 <p>
-                Texto personalización:
-                <label class="text-muted text-capitalize" style="font-style: italic;">{{order.personalized_text}}</label>
-              </p>
+                  Texto personalización:
+                  <label class="text-muted text-capitalize" style="font-style: italic;">{{order.personalized_text}}</label>
+                </p>
               </b-col>
             </b-row>
-            <b-row class="mt-5 mb-0 d-flex justify-content-between">
+            <b-row class="mt-3ajute mb-0 d-flex justify-content-between">
               <b-col md="6">
                 <b-form-select
                   v-model="order.status"
@@ -73,8 +71,9 @@
               <b-col md="4">
                 <b-badge
                   variant="primary"
+                  class="px-3"
                   v-if="order.personalizedRequired">
-                  Personaliado
+                  Personalizado
                 </b-badge>
               </b-col>
             </b-row>
