@@ -7,7 +7,7 @@
             <b-row>
               <b-col md="12" class="d-flex justify-content-between">
                 <h4>#{{order.id}}</h4>
-                {{order.delivery_date | formatWeekDate}}
+                <label style="font-size: 13px">{{order.delivery_date | formatWeekDate}}</label>
               </b-col>
             </b-row>
             <b-row class="my-4" v-for="product in order.products" :key="product.id">
@@ -42,7 +42,9 @@
                     v-for="a in product.additionals"
                     :key="a.id"
                     class="text-muted text-capitalize mr-3">
-                      <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
+                      <h6 class="mx-1">
+                        <b-badge variant="primary" class="px-2"> {{ a.name }} x {{a.quantity}}</b-badge>
+                      </h6>
                   </label>
                 </b-col>
                 </b-row>
