@@ -102,7 +102,7 @@
 import { vito } from '../../config/pluginInit'
 import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
-import moment from 'moment'
+// import moment from 'moment'
 
 // import OrderList from '@/views/Orders/OrderList'
 
@@ -124,10 +124,11 @@ export default {
   },
   mounted () {
     vito.index()
-    const date = new Date()
-    date.setDate(date.getDate() + 1)
-    const formatDate = moment(String(date)).format('YYYY-MM-DD')
-    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+    // const date = new Date()
+    // date.setDate(date.getDate() + 1)
+    // const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    // this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+    this.loadData()
 
     let jwt = require('jsonwebtoken')
 

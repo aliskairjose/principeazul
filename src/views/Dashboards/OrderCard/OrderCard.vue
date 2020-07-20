@@ -21,31 +21,43 @@
                 ></b-img>
               </b-col>
               <b-col md="8">
-                <h5>{{product.name}}</h5>
-                <label
-                  class="text-muted d-inline-block text-truncate"
-                  style="max-width: 200px; font-style: italic;"
-                  for v-if="product.note">
-                  "{{product.note}}"
-                </label>
+                <b-row>
+                  <b-col md="12">
+                    <h5>{{product.name}}</h5>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col md="12">
+                    <label
+                      class="text-muted d-inline-block text-truncate"
+                      style="max-width: 200px; font-style: italic;"
+                      for v-if="product.note">
+                      "{{product.note}}"
+                    </label>
+                  </b-col>
+                </b-row>
+                <b-row>
+                <b-col md="12">
                   <label
                     v-for="a in product.additionals"
                     :key="a.id"
                     class="text-muted text-capitalize mr-3">
                       <h6 class="mx-1"> <b-badge variant="info" class="px-3"> {{ a.name }}</b-badge></h6>
                   </label>
+                </b-col>
+                </b-row>
               </b-col>
             </b-row>
             <b-row>
               <b-col md="12">
                 <p>
-                Dedicatoria:<br>
+                Dedicatoria:
                 <label class="text-muted text-capitalize" style="font-style: italic;">{{order.dedication}}</label>
               </p>
               </b-col>
               <b-col md="12">
                 <p>
-                Texto personalización:<br>
+                Texto personalización:
                 <label class="text-muted text-capitalize" style="font-style: italic;">{{order.personalized_text}}</label>
               </p>
               </b-col>
