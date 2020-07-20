@@ -770,11 +770,20 @@ export default {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
     deleteProduct (index) {
+      const object = this.orderProducts[index].additionals
+      let salePrice = 0
+
+      for (const key in object) {
+        if (object.hasOwnProperty(key)) {
+          const element = object[key]
+          salePrice += element.quantity * element.sale_price
+        }
+      }
+      this.orderProducts[index].price = this.orderProducts[index].price - salePrice
       this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
     },
     deleteExtra (index, indice) {
-      // console.log(this.orderProducts[index].additionals[indice])
       const extraPrice = this.orderProducts[index].additionals[indice].sale_price
       const qty = this.orderProducts[index].additionals[indice].quantity
       const price = this.orderProducts[index].price
