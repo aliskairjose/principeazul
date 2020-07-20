@@ -52,11 +52,11 @@
             </b-row>
             <b-row>
               <b-col md="12">
-                <p>
+                <p v-if="order.dedication">
                   Dedicatoria:
                   <label class="text-muted text-capitalize" style="font-style: italic;">{{order.dedication}}</label>
                 </p>
-                <p>
+                <p  v-if="order.personalized_text">
                   Texto personalización:
                   <label class="text-muted text-capitalize" style="font-style: italic;">{{order.personalized_text}}</label>
                 </p>
