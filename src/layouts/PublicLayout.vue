@@ -111,11 +111,6 @@
       </NavBarStyle1>
       <!-- TOP Nav Bar END -->
       <div id="content-page" class="content-page" :class="horizontal ? 'ml-0' : ''">
-        <b-container fluid="" v-if="$route.name !== 'dashboard.home-2'">
-          <b-row>
-            <BreadCrumb />
-          </b-row>
-        </b-container>
         <transition name="router-anim" :enter-active-class="`animated ${animated.enter}`" mode="out-in"
                     :leave-active-class="`animated ${animated.exit}`">
           <router-view/>
