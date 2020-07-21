@@ -5,11 +5,18 @@
         <iq-card>
           <template v-slot:headerTitle>
             <b-row>
-              <b-col md="12" class="d-flex justify-content-between">
+              <b-col sm="2" md="6">
                 <h3>#{{order.id}}</h3>
-                <img :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
-                <!-- <h4>EL Principe Azul</h4> -->
               </b-col>
+              <b-col sm="8" md="6">
+                <img class="logo" :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
+              </b-col>
+              <!-- <b-col md="12" class="d-flex justify-content-between">
+                <h3>#{{order.id}}</h3>
+                <div style="float">
+                  <img :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
+                </div>
+              </b-col> -->
             </b-row>
           </template>
           <template v-slot:body>
@@ -57,7 +64,7 @@
                   @change="onStatusChange(order.id, $event)"
                 ></b-form-select>
               </b-col>
-              <b-col lg="4" md="12" sm="12">
+              <b-col lg="4" md="12" sm="12" style="padding: 0px">
                 <b-badge
                   variant="primary"
                   class="px-3"
@@ -112,8 +119,7 @@ p {
   margin-bottom: 0.5rem !important;
 }
 
-img {
-  width: auto;
-  height: 60%;
+.logo {
+  max-width: 100%;
 }
 </style>

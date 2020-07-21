@@ -9,12 +9,12 @@
             </b-col>
             <b-row>
               <b-col md="4" v-for="order in orders" :key="order.id">
-              <DeliveryCard
-                :order="order"
-                :statuses="statuses"
-                @status-change="updateStatus($event)"
-              ></DeliveryCard>
-            </b-col>
+                <DeliveryCard
+                  :order="order"
+                  :statuses="statuses"
+                  @status-change="updateStatus($event)"
+                ></DeliveryCard>
+              </b-col>
             </b-row>
           </template>
         </iq-card>
@@ -66,18 +66,17 @@ export default {
       this.loading = true
       orderService.getAll(params).then(response => {
         this.orders = [...response.data]
-        console.log(response.data)
       })
         .catch(() => {})
         .finally(() => { this.loading = false })
+    },
+    updateStatus ($event) {
+      this.loading = true
+      orderService.updateSatus($event.id, $event.status)
+        .then(() => { })
+        .catch(() => { })
+        .finally(() => { this.loading = false })
     }
-  },
-  updateStatus ($event) {
-    this.loading = true
-    orderService.updateSatus($event.id, $event.status)
-      .then(() => { })
-      .catch(() => { })
-      .finally(() => { this.loading = false })
   }
 }
 </script>

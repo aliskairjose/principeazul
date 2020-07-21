@@ -70,7 +70,7 @@
                   @change="onStatusChange(order.id, $event)">
                 </b-form-select>
               </b-col>
-              <b-col md="4">
+              <b-col lg="4" md="12" sm="12" style="padding: 0px">
                 <b-badge
                   variant="primary"
                   class="px-3"
