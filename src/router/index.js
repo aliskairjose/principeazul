@@ -2,12 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 /* Layouts */
 import Layout1 from '../layouts/Layout1'
+import PublicLayout from '../layouts/PublicLayout'
 import AuthLayout1 from '../layouts/AuthLayouts/AuthLayout1'
 import Default from '../layouts/BlankLayout'
 
 /* Dashboards View */
 import Dashboard1 from '@/views/Dashboards/Dashboard1.vue'
 import DashboardTaller from '@/views/Dashboards/DashboardTaller.vue'
+import Deliveries from '@/views/Dashboards/Deliveries.vue'
 import Client from '@/views/Clients/Client.vue'
 import ClientList from '@/views/Clients/ClientList.vue'
 import Product from '@/views/Product/Product.vue'
@@ -218,6 +220,12 @@ const authChildRoutes = (prop, mode = false) => [
     name: prop + '.update',
     meta: { dark: mode, auth: false },
     component: OrderUpdate
+  },
+  {
+    path: 'deliveries',
+    name: prop + '.deliveries',
+    meta: { dark: mode, auth: false },
+    component: Deliveries
   }
 ]
 
@@ -264,7 +272,14 @@ const routes = [
   {
     path: '/form',
     name: 'public',
-    component: AuthLayout1,
+    component: Layout1,
+    meta: { auth: true },
+    children: authChildRoutes('public')
+  },
+  {
+    path: '/public',
+    name: 'deliveries',
+    component: PublicLayout,
     meta: { auth: true },
     children: authChildRoutes('public')
   },

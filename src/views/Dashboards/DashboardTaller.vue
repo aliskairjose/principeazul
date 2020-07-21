@@ -104,8 +104,6 @@ import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
 import moment from 'moment'
 
-// import OrderList from '@/views/Orders/OrderList'
-
 export default {
   name: 'DasboardTaller',
   components: { OrderCard },
