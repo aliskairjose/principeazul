@@ -4,7 +4,7 @@
     <Loader />
     <div class="wrapper">
       <!-- TOP Nav Bar -->
-      <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo" :horizontal="horizontal" :items="horizontalMenu">
+      <!-- <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo" :horizontal="horizontal" :items="horizontalMenu">
         <template slot="responsiveRight">
           <ul class="navbar-nav ml-auto navbar-list">
             <li class="nav-item">
@@ -108,7 +108,7 @@
             </li>
           </ul>
         </template>
-      </NavBarStyle1>
+      </NavBarStyle1> -->
       <!-- TOP Nav Bar END -->
       <div id="content-page" class="content-page" :class="horizontal ? 'ml-0' : ''">
         <transition name="router-anim" :enter-active-class="`animated ${animated.enter}`" mode="out-in"
@@ -128,7 +128,7 @@
 </template>
 <script>
 import Loader from '../components/vito/loader/Loader'
-import NavBarStyle1 from '../components/vito/navbars/NavBarStyle1'
+// import NavBarStyle1 from '../components/vito/navbars/NavBarStyle1'
 import MenuTaller from '../FackApi/json/SideBarTaller'
 import MenuVentas from '../FackApi/json/SideBarVentas'
 import HorizontalItems from '../FackApi/json/HorizontalMenu'
@@ -142,8 +142,8 @@ let body = document.querySelector('body')
 export default {
   name: 'PublicLayout',
   components: {
-    Loader,
-    NavBarStyle1
+    Loader
+    // NavBarStyle1
   },
   mounted () {
     const role = localStorage.getItem('role')
@@ -287,4 +287,8 @@ export default {
 <style>
   @import url("../assets/css/custom.css");
   @import url("../assets/css/PriceSlider.css");
+  .content-page {
+    margin-left: 0px !important;
+    padding: 0 !important;
+  }
 </style>
