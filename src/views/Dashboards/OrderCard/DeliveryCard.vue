@@ -3,10 +3,14 @@
     <b-row class="card-order">
       <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
         <iq-card>
+          <template v-slot:headerTitle>
+            Hola
+          </template>
           <template v-slot:body>
             <b-row class="mb-3">
               <b-col md="12" class="d-flex justify-content-between">
                 <h4>#{{order.id}}</h4>
+                <h4>EL Principe Azul</h4>
               </b-col>
             </b-row>
             <b-row>
