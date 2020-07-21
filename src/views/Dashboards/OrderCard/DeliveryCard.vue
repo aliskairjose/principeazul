@@ -6,7 +6,7 @@
           <template v-slot:headerTitle>
             <b-row>
               <b-col md="12" class="d-flex justify-content-between">
-                <h4>#{{order.id}}</h4>
+                <h3>#{{order.id}}</h3>
                 <img :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
                 <!-- <h4>EL Principe Azul</h4> -->
               </b-col>
