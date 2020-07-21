@@ -3,114 +3,7 @@
     <div id="show-overlay"></div>
     <Loader />
     <div class="wrapper">
-      <!-- TOP Nav Bar -->
-      <!-- <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo" :horizontal="horizontal" :items="horizontalMenu">
-        <template slot="responsiveRight">
-          <ul class="navbar-nav ml-auto navbar-list">
-            <li class="nav-item">
-              <a href="javascript:void(0)" class="iq-waves-effect" :class="cartCount > 0 ? 'search-toggle' : ''">
-              </a>
-            </li>
-            <li class="nav-item">
-              <div class="iq-sub-dropdown">
-                <div class="iq-card shadow-none m-0">
-                  <div class="iq-card-body p-0 ">
-                    <div class="bg-primary p-3">
-                      <h5 class="mb-0 text-white">{{ $t('nav.allNotifications') }}<small class="badge  badge-light float-right pt-1">4</small></h5>
-                    </div>
-                    <a href="#" class="iq-sub-card" v-for="(item, index) in notification" :key="index">
-                      <div class="media align-items-center">
-                        <div class="">
-                          <img class="avatar-40 rounded" :src="item.image" alt="img">
-                        </div>
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 ">{{ item.name }}</h6>
-                          <small class="float-right font-size-12">{{ item.date }}</small>
-                          <p class="mb-0">{{ item.description.substring(0,40) + '...' }}</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </template>
-        <template slot="right">
-          <ul class="navbar-list">
-            <li>
-              <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                <img :src="userProfile" class="img-fluid rounded mr-3" alt="user">
-                <div class="caption">
-                  <h6 class="mb-0 line-height">Nik jone</h6>
-                  <span class="font-size-12">{{ $t('nav.user.available') }}</span>
-                </div>
-              </a>
-              <div class="iq-sub-dropdown iq-user-dropdown">
-                <div class="iq-card shadow-none m-0">
-                  <div class="iq-card-body p-0 ">
-                    <div class="bg-primary p-3">
-                      <h5 class="mb-0 text-white line-height">Hello Nik jone</h5>
-                      <span class="text-white font-size-12">{{ $t('nav.user.available') }}</span>
-                    </div>
-                    <a href="#" class="iq-sub-card iq-bg-primary-hover">
-                      <div class="media align-items-center">
-                        <div class="rounded iq-card-icon iq-bg-primary">
-                          <i class="ri-file-user-line"></i>
-                        </div>
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 ">{{ $t('nav.user.profileTitle') }}</h6>
-                          <p class="mb-0 font-size-12">{{ $t('nav.user.profileSub') }}</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="iq-sub-card iq-bg-primary-success-hover">
-                      <div class="media align-items-center">
-                        <div class="rounded iq-card-icon iq-bg-success">
-                          <i class="ri-profile-line"></i>
-                        </div>
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 ">{{ $t('nav.user.profileEditTitle') }}</h6>
-                          <p class="mb-0 font-size-12">{{ $t('nav.user.profileEditSub') }}</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="iq-sub-card iq-bg-primary-danger-hover">
-                      <div class="media align-items-center">
-                        <div class="rounded iq-card-icon iq-bg-danger">
-                          <i class="ri-account-box-line"></i>
-                        </div>
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 ">{{ $t('nav.user.accountSettingTitle') }}</h6>
-                          <p class="mb-0 font-size-12">{{ $t('nav.user.accountSettingSub') }}</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="iq-sub-card iq-bg-primary-secondary-hover">
-                      <div class="media align-items-center">
-                        <div class="rounded iq-card-icon iq-bg-secondary">
-                          <i class="ri-lock-line"></i>
-                        </div>
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 ">{{ $t('nav.user.privacySettingTitle') }}</h6>
-                          <p class="mb-0 font-size-12">{{ $t('nav.user.privacySettingSub')}}</p>
-                        </div>
-                      </div>
-                    </a>
-                    <div class="d-inline-block w-100 text-center p-3">
-                      <a class="iq-bg-danger iq-sign-btn" href="javascript:void(0)" @click="logout" role="button">{{ $t('nav.user.signout') }}
-                        <i class="ri-login-box-line ml-2"></i>
-                        </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </template>
-      </NavBarStyle1> -->
-      <!-- TOP Nav Bar END -->
-      <div id="content-page" class="content-page" :class="horizontal ? 'ml-0' : ''">
+      <div id="content-page" class="content-public-page" :class="horizontal ? 'ml-0' : ''">
         <transition name="router-anim" :enter-active-class="`animated ${animated.enter}`" mode="out-in"
                     :leave-active-class="`animated ${animated.exit}`">
           <router-view/>
@@ -287,8 +180,11 @@ export default {
 <style>
   @import url("../assets/css/custom.css");
   @import url("../assets/css/PriceSlider.css");
-  .content-page {
-    margin-left: 0px !important;
-    padding: 0 !important;
+  .content-public-page {
+    margin-left: 0px;
+    overflow: hidden;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-transition: all 0.3s ease-out 0s;
   }
 </style>
