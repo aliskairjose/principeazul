@@ -4,15 +4,15 @@
       <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
         <iq-card>
           <template v-slot:headerTitle>
-            Hola
-          </template>
-          <template v-slot:body>
-            <b-row class="mb-3">
+            <b-row>
               <b-col md="12" class="d-flex justify-content-between">
                 <h4>#{{order.id}}</h4>
-                <h4>EL Principe Azul</h4>
+                <img :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
+                <!-- <h4>EL Principe Azul</h4> -->
               </b-col>
             </b-row>
+          </template>
+          <template v-slot:body>
             <b-row>
               <b-col md="12">
                 <p>Persona que recibe: {{ order.addressee }}</p>
@@ -42,9 +42,9 @@
                     <label
                       class="text-muted"
                       style="max-width: 200px; font-style: italic; font-size: 11px"
-                      for v-if="product.note">
-                      "{{product.note | capitalize}}"
-                    </label>
+                      for
+                      v-if="product.note"
+                    >"{{product.note | capitalize}}"</label>
                   </b-col>
                 </b-row>
               </b-col>
@@ -54,16 +54,15 @@
                 <b-form-select
                   v-model="order.status"
                   :options="statuses"
-                  @change="onStatusChange(order.id, $event)">
-                </b-form-select>
+                  @change="onStatusChange(order.id, $event)"
+                ></b-form-select>
               </b-col>
               <b-col lg="4" md="12" sm="12">
                 <b-badge
                   variant="primary"
                   class="px-3"
-                  v-if="order.personalizedRequired">
-                  Personalizado
-                </b-badge>
+                  v-if="order.personalizedRequired"
+                >Personalizado</b-badge>
               </b-col>
             </b-row>
           </template>
@@ -108,7 +107,11 @@ export default {
 
 p {
   font-size: 13px;
-  margin-bottom: .5rem !important
+  margin-bottom: 0.5rem !important;
 }
 
+img {
+  width: auto;
+  height: 60%;
+}
 </style>
