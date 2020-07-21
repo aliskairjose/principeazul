@@ -4,7 +4,7 @@
       <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
         <iq-card>
           <template v-slot:body>
-            <b-row>
+            <b-row class="mb-3">
               <b-col md="12" class="d-flex justify-content-between">
                 <h4>#{{order.id}}</h4>
               </b-col>
@@ -103,7 +103,8 @@ export default {
 }
 
 p {
-  font-size: 13px
+  font-size: 13px;
+  margin-bottom: .5rem !important
 }
 
 </style>
