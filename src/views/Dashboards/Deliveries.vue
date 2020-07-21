@@ -39,6 +39,9 @@ export default {
         const object = response.data
         for (const iterator of object) {
           let status = {}
+          if (iterator !== 'Entregado') {
+            status.disabled = true
+          }
           status.value = iterator
           status.text = iterator
           this.statuses.push(status)
