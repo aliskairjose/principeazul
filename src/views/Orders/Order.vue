@@ -952,7 +952,7 @@ export default {
                 this.additional = {}
                 this.additional.product_id = item.id
                 this.additional.name = item.name
-                this.additional.quantity = '1'
+                this.additional.quantity = item.quantity
                 this.additional.type = 'extra'
                 this.product.additionals.push(this.additional)
               }
