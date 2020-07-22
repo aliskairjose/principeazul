@@ -84,18 +84,16 @@
                 </b-form-group>
               </b-col>
             </b-row>
-            <b-row>
-              <b-col md="4">
-                <draggable v-model="orders">
-                  <div v-for="order in orders" :key="order.id">
-                    <OrderCard
-                      :order="order"
-                      :statuses="statuses"
-                      @status-change="updateStatus($event)">
-                    </OrderCard>
-                  </div>
-                </draggable>
-              </b-col>
+            <b-row cols-md="3" cols-sm="1">
+              <!-- <draggable v-model="orders"> -->
+                <b-col v-for="order in orders" :key="order.id">
+                  <OrderCard
+                    :order="order"
+                    :statuses="statuses"
+                    @status-change="updateStatus($event)"
+                  ></OrderCard>
+                </b-col>
+              <!-- </draggable> -->
             </b-row>
           </template>
         </iq-card>
@@ -109,13 +107,13 @@ import { vito } from '../../config/pluginInit'
 import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
 import moment from 'moment'
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 
 export default {
   name: 'DasboardTaller',
   components: {
-    OrderCard,
-    draggable
+    OrderCard
+    // draggable
   },
   created () {
     orderService.orderStatuses()
@@ -135,7 +133,6 @@ export default {
     const date = new Date()
     date.setDate(date.getDate() + 1)
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
-    // this.loadData()
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
 
     let jwt = require('jsonwebtoken')

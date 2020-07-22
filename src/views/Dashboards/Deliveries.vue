@@ -9,7 +9,7 @@
             </b-col>
             <b-row>
               <b-col md="4">
-                <draggable v-model="orders">
+                <!-- <draggable v-model="orders"> -->
                   <div v-for="order in orders" :key="order.id">
                     <DeliveryCard
                       :order="order"
@@ -17,7 +17,7 @@
                       @status-change="updateStatus($event)"
                     ></DeliveryCard>
                   </div>
-                </draggable>
+                <!-- </draggable> -->
               </b-col>
             </b-row>
           </template>
@@ -32,11 +32,14 @@ import { vito } from '../../config/pluginInit'
 import orderService from '@/services/order'
 import DeliveryCard from '@/views/Dashboards/OrderCard/DeliveryCard'
 import moment from 'moment'
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 
 export default {
   name: 'Deliveries',
-  components: { DeliveryCard, draggable },
+  components: {
+    DeliveryCard
+  //  draggable
+  },
   mounted () {
     vito.index()
     orderService.orderStatuses()
