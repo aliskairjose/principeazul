@@ -300,7 +300,7 @@
       </b-form-group>
     </b-modal>
     <b-modal ref="modal-design-note" ok-only id="modal-design-note" title="Añadir nota dieño" @ok="addDesignNote">
-      <b-form-group class="col-md-12" label="Nota de diseño:" label-for="cliente">
+      <b-form-group class="col-md-12" label="Nota de diseño:">
         <b-form-input autocomplete="off" v-model="note_design" type="text"></b-form-input>
       </b-form-group>
     </b-modal>
@@ -518,6 +518,7 @@ export default {
           if (r.type === 'principal') {
             r.additionals = []
             r.note = ''
+            r.note_design = ''
             r.quantity = 1
             this.principals.push(r)
           }
