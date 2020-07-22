@@ -37,7 +37,6 @@
                         <b-form-input
                           v-model="product.description"
                           type="text"
-                          class="text-capitalize"
                           placeholder="Descripción"
                           :class="(errors.length > 0 ? ' is-invalid' : '')"
                         ></b-form-input>

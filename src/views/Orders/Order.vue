@@ -219,6 +219,15 @@
                         variant="utline-link"
                         @click="showModalNote(index)"
                       >
+                       <i class="ri-file-4-fill ri-lg pr-0"></i>
+                      </b-button>
+                      <br />
+                      <b-button
+                        v-b-tooltip.right="'Agregar notas de diseño'"
+                        size="sm"
+                        variant="link"
+                        @click="showModalDesignNote(index)"
+                      >
                         <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                     </b-col>
@@ -286,8 +295,13 @@
       </b-col>
     </b-row>
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
-      <b-form-group class="col-md-12" label="Nota de regalo:" label-for="cliente">
+      <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
         <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input>
+      </b-form-group>
+    </b-modal>
+    <b-modal ref="modal-design-note" ok-only id="modal-design-note" title="Añadir nota dieño" @ok="addDesignNote">
+      <b-form-group class="col-md-12" label="Nota de diseño:" label-for="cliente">
+        <b-form-input autocomplete="off" v-model="note_design" type="text"></b-form-input>
       </b-form-group>
     </b-modal>
 
@@ -549,6 +563,7 @@ export default {
       sendForm: false,
       money: {},
       note: '',
+      note_design: '',
       index: null,
       tabIndex: 0,
       validateMsg: '',
@@ -590,6 +605,7 @@ export default {
         order_id: null,
         quantity: 1,
         note: '',
+        note_design: '',
         price: null,
         image: '',
         additionals: []
@@ -766,6 +782,9 @@ export default {
     addNote () {
       this.orderProducts[this.index].note = this.note
     },
+    addDesignNote () {
+      this.orderProducts[this.index].note_design = this.note_design
+    },
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
@@ -869,6 +888,10 @@ export default {
       this.index = index
       this.$refs['modal-note'].show()
     },
+    showModalDesignNote (index) {
+      this.index = index
+      this.$refs['modal-design-note'].show()
+    },
     onComplete () {
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       // console.log(this.order)
@@ -920,8 +943,8 @@ export default {
     },
     validateOrder () {
       return this.$refs.form.validate().then(success => {
-        // return success
-        return true
+        return success
+        // return true
       })
     },
     validateProducts () {
@@ -941,6 +964,7 @@ export default {
             this.product = {}
             this.product.product_id = element.id
             this.product.name = element.name
+            this.product.note_design = element.note_design
             this.product.note = element.note
             this.product.image = element.image
             this.product.price = element.price
