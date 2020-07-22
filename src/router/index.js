@@ -263,18 +263,18 @@ const routes = [
     children: authChildRoutes('auth1')
   },
   {
+    path: '/form',
+    name: 'public',
+    component: AuthLayout1,
+    meta: { auth: true },
+    children: authChildRoutes('public')
+  },
+  {
     path: '/',
     name: 'dashboard',
     component: Layout1,
     meta: { auth: true },
     children: paRoutes('dashboard')
-  },
-  {
-    path: '/form',
-    name: 'public',
-    component: Layout1,
-    meta: { auth: true },
-    children: authChildRoutes('public')
   },
   {
     path: '/public',
