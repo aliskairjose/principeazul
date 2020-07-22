@@ -30,8 +30,7 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder"
-              >
+                :before-change="validateOrder">
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -178,7 +177,8 @@
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
                       <p class="h6" id="price">{{ p.price }} $</p>
-                      <h5>{{ p.note }}</h5>
+                      <h6>Nota de taller: {{ p.note }}</h6>
+                      <h6>Nota de diseño: {{ p.note_design }}</h6>
                       <p class="mt-2">Extras</p>
                       <b-button
                         v-for="(item, indice) in p.additionals"
@@ -798,6 +798,8 @@ export default {
           salePrice += element.quantity * element.sale_price
         }
       }
+      this.orderProducts[index].note = ''
+      this.orderProducts[index].note_design = ''
       this.orderProducts[index].price = this.orderProducts[index].price - salePrice
       this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
@@ -961,6 +963,7 @@ export default {
         for (const key in this.orderProducts) {
           if (this.orderProducts.hasOwnProperty(key)) {
             const element = this.orderProducts[key]
+            console.log(element)
             this.product = {}
             this.product.product_id = element.id
             this.product.name = element.name
