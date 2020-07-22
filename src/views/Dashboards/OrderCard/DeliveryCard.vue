@@ -11,12 +11,6 @@
               <b-col sm="8" md="6">
                 <img class="logo" :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
               </b-col>
-              <!-- <b-col md="12" class="d-flex justify-content-between">
-                <h3>#{{order.id}}</h3>
-                <div style="float">
-                  <img :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
-                </div>
-              </b-col> -->
             </b-row>
           </template>
           <template v-slot:body>

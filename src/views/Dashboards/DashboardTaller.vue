@@ -21,76 +21,82 @@
             <b-row align-h="between" align-v="center">
               <b-col md="3">
                 <b-form-group
-                    label="Filtro"
-                    label-cols-sm="3"
-                    label-align-sm="right"
-                    label-size="sm"
-                    label-for="filterInput"
-                    class="mb-0 pt-3">
-                    <b-input-group size="sm">
-                      <b-form-input
-                        v-model="filter"
-                        type="search"
-                        id="filterInput"
-                        placeholder="Escriba para buscar">
-                      </b-form-input>
-                      <b-input-group-append>
-                        <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
-                      </b-input-group-append>
-                    </b-input-group>
+                  label="Filtro"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  label-for="filterInput"
+                  class="mb-0 pt-3"
+                >
+                  <b-input-group size="sm">
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      id="filterInput"
+                      placeholder="Escriba para buscar"
+                    ></b-form-input>
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
                 </b-form-group>
               </b-col>
               <b-col md="2">
-                  <b-form-group class="mb-0 pt-3">
-                    <b-form-select
-                      v-model="selectedPersonalize"
-                      id="types"
-                      size="sm"
-                      :options="perOptions"
-                      @change="onChangePersonalized"
-                    ></b-form-select>
-                  </b-form-group>
+                <b-form-group class="mb-0 pt-3">
+                  <b-form-select
+                    v-model="selectedPersonalize"
+                    id="types"
+                    size="sm"
+                    :options="perOptions"
+                    @change="onChangePersonalized"
+                  ></b-form-select>
+                </b-form-group>
               </b-col>
               <b-col md="2">
-                  <b-form-group class="mb-0 pt-3">
-                    <b-form-select
-                      v-model="selectedType"
-                      id="types"
-                      size="sm"
-                      :options="typeOptions"
-                      @change="onSelectedChange"
-                    ></b-form-select>
-                  </b-form-group>
+                <b-form-group class="mb-0 pt-3">
+                  <b-form-select
+                    v-model="selectedType"
+                    id="types"
+                    size="sm"
+                    :options="typeOptions"
+                    @change="onSelectedChange"
+                  ></b-form-select>
+                </b-form-group>
               </b-col>
               <b-col md="2">
-                  <b-form-group label="Fecha inicial:" label-for="date">
-                    <b-form-input
-                      :disabled="selectedType ? false : true"
-                      v-model="initDate"
-                      type="date"
-                      @change="onDateChange"
-                    ></b-form-input>
-                  </b-form-group>
+                <b-form-group label="Fecha inicial:" label-for="date">
+                  <b-form-input
+                    :disabled="selectedType ? false : true"
+                    v-model="initDate"
+                    type="date"
+                    @change="onDateChange"
+                  ></b-form-input>
+                </b-form-group>
               </b-col>
               <b-col md="2">
-                  <b-form-group label="Fecha final:" label-for="date">
-                    <b-form-input
-                      :disabled="selectedType ? false : true"
-                      v-model="endDate"
-                      type="date"
-                      @change="onDateChange"
-                    ></b-form-input>
-                  </b-form-group>
+                <b-form-group label="Fecha final:" label-for="date">
+                  <b-form-input
+                    :disabled="selectedType ? false : true"
+                    v-model="endDate"
+                    type="date"
+                    @change="onDateChange"
+                  ></b-form-input>
+                </b-form-group>
               </b-col>
-              </b-row>
+            </b-row>
             <b-row>
-            <b-col md="4" v-for="order in orders" :key="order.id">
-              <OrderCard
-               :order="order"
-               :statuses="statuses"
-               @status-change="updateStatus($event)"></OrderCard>
-            </b-col>
-           </b-row>
+              <b-col md="4">
+                <draggable v-model="orders">
+                  <div v-for="order in orders" :key="order.id">
+                    <OrderCard
+                      :order="order"
+                      :statuses="statuses"
+                      @status-change="updateStatus($event)">
+                    </OrderCard>
+                  </div>
+                </draggable>
+              </b-col>
+            </b-row>
           </template>
         </iq-card>
       </b-col>
@@ -103,10 +109,14 @@ import { vito } from '../../config/pluginInit'
 import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
 import moment from 'moment'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'DasboardTaller',
-  components: { OrderCard },
+  components: {
+    OrderCard,
+    draggable
+  },
   created () {
     orderService.orderStatuses()
       .then(response => {
@@ -125,6 +135,7 @@ export default {
     const date = new Date()
     date.setDate(date.getDate() + 1)
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    // this.loadData()
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
 
     let jwt = require('jsonwebtoken')
@@ -145,7 +156,7 @@ export default {
       selectedType: null,
       selectedPersonalize: null,
       loading: false,
-      orders: '',
+      orders: [],
       filter: null,
       iframeUrl: '',
       initDate: '',
