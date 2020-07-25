@@ -8,17 +8,15 @@
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row>
-              <b-col md="4" v-for="order in orders" :key="order.id">
-                <!-- <draggable v-model="orders"> -->
-                <!-- <div v-for="order in orders" :key="order.id"> -->
-                <DeliveryCard
-                  :order="order"
-                  :statuses="statuses"
-                  @status-change="updateStatus($event)"
-                ></DeliveryCard>
-                <!-- </div> -->
-                <!-- </draggable> -->
-              </b-col>
+              <draggable v-model="orders">
+                <b-col md="4" v-for="order in orders" :key="order.id">
+                  <DeliveryCard
+                    :order="order"
+                    :statuses="statuses"
+                    @status-change="updateStatus($event)"
+                  ></DeliveryCard>
+                </b-col>
+              </draggable>
             </b-row>
           </template>
         </iq-card>
@@ -32,13 +30,13 @@ import { vito } from '../../config/pluginInit'
 import orderService from '@/services/order'
 import DeliveryCard from '@/views/Dashboards/OrderCard/DeliveryCard'
 import moment from 'moment'
-// import draggable from 'vuedraggable'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'Deliveries',
   components: {
-    DeliveryCard
-  //  draggable
+    DeliveryCard,
+    draggable
   },
   mounted () {
     vito.index()
