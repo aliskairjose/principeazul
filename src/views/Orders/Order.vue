@@ -106,6 +106,18 @@
                         <b-form-select v-model="order.turn" :options="turns"></b-form-select>
                       </b-form-group>
 
+                      <!-- Phone number -->
+                      <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
+                        <b-form-input
+                          v-model="order.phone_number"
+                          type="tel"
+                          name="phone_number"
+                          id="phone_number"
+                          placeholder="Teléfono"
+                          v-mask="['###-####', '####-####']">
+                        </b-form-input>
+                    </b-form-group>
+
                       <b-form-group class="col-md-12">
                         <hr />
                       </b-form-group>
@@ -444,12 +456,14 @@ import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 import Client from '@/views/Clients/Client'
+import { mask } from 'vue-the-mask'
 
 import { VMoney } from 'v-money'
 
 export default {
   name: 'Order',
-  directives: { money: VMoney },
+  directives: { money: VMoney, mask },
+
   components: {
     FormWizard,
     TabContent,
@@ -594,6 +608,7 @@ export default {
       },
       order: {
         id: '',
+        phone_number: null,
         delivery_zone_id: null,
         client_id: '',
         client_name: '',
@@ -914,7 +929,6 @@ export default {
     },
     onComplete () {
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
-      // console.log(this.order)
       this.loading = true
       if (this.status === 'add') {
         orderService.create(this.order)
@@ -981,7 +995,6 @@ export default {
         for (const key in this.orderProducts) {
           if (this.orderProducts.hasOwnProperty(key)) {
             const element = this.orderProducts[key]
-            console.log(element)
             this.product = {}
             this.product.product_id = element.id
             this.product.name = element.name

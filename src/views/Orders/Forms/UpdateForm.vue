@@ -30,6 +30,19 @@
           </div>
         </div>
       </ValidationProvider>
+      <!-- Phone number -->
+
+      <div class="form-group">
+        <label for="destinatarioInput">Teleéfono</label>
+        <input
+          type=tel
+          class="form-control"
+          id="destinatarioInput"
+          v-model="order.phone_number"
+          v-mask="['###-####', '####-####']"
+          placeholder="000-000"
+          required/>
+      </div>
       <ValidationProvider
         vid="Persona que recibe"
         name="Persona que recibe"
@@ -139,7 +152,8 @@ export default {
         delivery_address: '',
         addressee: '',
         dedication: '',
-        signature: ''
+        signature: '',
+        phone_number: null
       }
     }
   },
