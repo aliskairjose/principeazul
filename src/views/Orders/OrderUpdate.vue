@@ -5,7 +5,7 @@
     <div v-for="item in order.products" :key="item.id" class="text-center">
       {{ item.name }}
     </div>
-    <div>{{order.delivery_address}}</div>
+    <!-- <div>{{order.delivery_address | capitalize}}</div> -->
     <UpdateForm :order="order"></UpdateForm>
   </div>
 </template>
