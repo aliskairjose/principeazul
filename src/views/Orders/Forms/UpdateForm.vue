@@ -85,7 +85,7 @@
 
       <ValidationProvider vid="Dedicatoria" name="Dedicatoria" rules="required" v-slot="{ errors }">
         <div class="form-group">
-          <label for="dedicationInput">Dedicatoria</label>
+          <label for="dedicationInput">Mensaje para la tarjeta dedicatoria</label>
           <textarea
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             id="dedicationInput"

@@ -106,7 +106,7 @@
               <b-col md="6" class="mb-3"> Motivo: {{ data.reason ? data.reason : 'Sin motivo' }} </b-col>
               <b-col md="6" class="mb-3">Firma: {{ data.signature | capitalize }}</b-col>
               <b-col md="12" class="mb-3">
-                Dedicatoria: <br>
+                Mensaje para la parjeta dedicatoria: <br>
                 <label for="" class="text-italic text-muted" v-show="data.dedication">
                   "{{ data.dedication | capitalize }}"
                 </label>
