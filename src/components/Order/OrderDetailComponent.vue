@@ -40,7 +40,7 @@
                         v-viewer="{movable: false}"
                         center
                         rounded="circle"
-                        :src="item.image ? item.image : require(`@/assets/images/no-image.png`)"
+                        :src="item.product.image ? item.product.image : require(`@/assets/images/no-image.png`)"
                         class="image">
                       </b-img>
                     </b-col>
@@ -192,6 +192,7 @@ export default {
       orderService.getById(this.dataId)
         .then(response => {
           this.data = response.data
+          console.log(this.data)
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
               const element = this.data.products[key]
