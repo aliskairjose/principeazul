@@ -16,7 +16,7 @@
                   <i class="ri-printer-fill ri-lg"></i>
                 </b-button>
               </b-col>
-              <!-- Información del clliente -->
+              <!-- Información del cliente -->
               <b-col md="6" class="mb-3">Cliente: {{ data.client.name}}</b-col>
               <b-col md="6" class="mb-3">Teléfono: {{ data.client.phone  }}</b-col>
               <b-col md="6" class="mb-3">Entrega: {{ data.mode | capitalize }}</b-col>
@@ -63,11 +63,11 @@
                         </b-col>
                         <b-col md="4" v-show="item.additionals.length > 0">
                           <b-button variant="link" @click="showHideDetail(index)">
-                            <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
-                            <i class="ri-arrow-up-s-fill" v-else></i>
+                            <!-- <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
+                            <i class="ri-arrow-up-s-fill" v-else></i> -->
                           </b-button>
                         </b-col>
-                        <b-col md="12">
+                        <!-- <b-col md="12">
                           <b-row v-show="item.showDetails">
                             <b-col md="12">
                               <table style="width:100%">
@@ -96,7 +96,7 @@
                               </table>
                             </b-col>
                           </b-row>
-                        </b-col>
+                        </b-col> -->
                       </b-row>
                     </b-col>
                   </b-row>

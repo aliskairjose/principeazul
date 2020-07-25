@@ -8,15 +8,15 @@
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row>
-              <b-col md="4">
+              <b-col md="4" v-for="order in orders" :key="order.id">
                 <!-- <draggable v-model="orders"> -->
-                  <div v-for="order in orders" :key="order.id">
-                    <DeliveryCard
-                      :order="order"
-                      :statuses="statuses"
-                      @status-change="updateStatus($event)"
-                    ></DeliveryCard>
-                  </div>
+                <!-- <div v-for="order in orders" :key="order.id"> -->
+                <DeliveryCard
+                  :order="order"
+                  :statuses="statuses"
+                  @status-change="updateStatus($event)"
+                ></DeliveryCard>
+                <!-- </div> -->
                 <!-- </draggable> -->
               </b-col>
             </b-row>
