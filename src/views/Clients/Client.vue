@@ -26,13 +26,13 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Cédula / RUC:" label-for="cedula">
+                    <!-- <b-form-group class="col-md-6" label="Cédula / RUC:" label-for="cedula">
                         <b-form-input
                           v-model="client.dni"
                           type="text"
                           placeholder="Cédula">
                         </b-form-input>
-                    </b-form-group>
+                    </b-form-group> -->
                     <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
                         <b-form-input
                           v-model="client.phone"
@@ -52,7 +52,7 @@
                           placeholder="Email">
                         </b-form-input>
                     </b-form-group>
-                    <b-form-group class="col-md-12" label="Dirección" label-for="address">
+                    <!-- <b-form-group class="col-md-12" label="Dirección" label-for="address">
                         <b-form-textarea
                           rows="3"
                           max-rows="6"
@@ -62,7 +62,7 @@
                           id="address"
                           placeholder="Dirección">
                         </b-form-textarea>
-                    </b-form-group>
+                    </b-form-group> -->
                   </b-row>
                   <hr />
                   <b-button variant="primary" type="submit">{{btnTitle}}</b-button>

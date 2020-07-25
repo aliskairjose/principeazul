@@ -2,7 +2,7 @@
   <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-between">
       <router-link :to="homeURL">
-        <span class="text-capitalize">El Principe Azul</span>
+        <span class="text-capitalize">El Príncipe Azul</span>
       </router-link>
       <div class="iq-menu-bt-sidebar" v-if="toggleButton">
         <div class="iq-menu-bt align-self-center">

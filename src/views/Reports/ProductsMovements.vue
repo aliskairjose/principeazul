@@ -199,7 +199,7 @@ export default {
         .then(response => {
           response.data.map(r => {
             r.name = r.product.name
-            r.provider = r.provider ? r.provider.name : 'El Principe Azul'
+            r.provider = r.provider ? r.provider.name : 'El Príncipe Azul'
           })
           this.results = response.data
         })

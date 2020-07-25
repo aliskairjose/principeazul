@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="mb-0">Inicia sesión</h1>
-    <p>Ingresa con tu cuanta del administrador de El Principe Azul.</p>
+    <p>Ingresa con tu cuanta del administrador de El Príncipe Azul.</p>
     <sign-in1-form></sign-in1-form>
   </div>
 </template>

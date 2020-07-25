@@ -30,7 +30,8 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder">
+                :before-change="validateOrder"
+              >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -122,12 +123,12 @@
                       <!-- Dedicatoria -->
                       <b-form-group
                         class="col-md-6"
-                        label="Dedicatoria del regalo:"
+                        label="Dedicatoria del arreglo:"
                         label-for="dedication"
                       >
                         <b-form-textarea
                           v-model="order.dedication"
-                          placeholder="Dedicatoria del regalo"
+                          placeholder="Dedicatoria del arreglo"
                           rows="3"
                           max-rows="6"
                         ></b-form-textarea>
@@ -219,7 +220,7 @@
                         variant="utline-link"
                         @click="showModalNote(index)"
                       >
-                       <i class="ri-file-4-fill ri-lg pr-0"></i>
+                        <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                       <br />
                       <b-button
@@ -296,12 +297,28 @@
     </b-row>
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
-        <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input>
+        <!-- <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input> -->
+        <b-form-textarea
+          v-model="note"
+          rows="3"
+          max-rows="6"
+        ></b-form-textarea>
       </b-form-group>
     </b-modal>
-    <b-modal ref="modal-design-note" ok-only id="modal-design-note" title="Añadir nota dieño" @ok="addDesignNote">
+    <b-modal
+      ref="modal-design-note"
+      ok-only
+      id="modal-design-note"
+      title="Añadir nota dieño"
+      @ok="addDesignNote"
+    >
       <b-form-group class="col-md-12" label="Nota de diseño:">
-        <b-form-input autocomplete="off" v-model="note_design" type="text"></b-form-input>
+        <!-- <b-form-input autocomplete="off" v-model="note_design" type="text"></b-form-input> -->
+        <b-form-textarea
+          v-model="note_design"
+          rows="3"
+          max-rows="6"
+        ></b-form-textarea>
       </b-form-group>
     </b-modal>
 
@@ -464,7 +481,7 @@ export default {
     generalService.turns()
       .then(response => {
         const object = response.data
-        this.turn.text = 'Seleccione un motivo'
+        this.turn.text = 'Seleccione un turno'
         this.turn.value = null
         this.turns.push(this.turn)
         for (const iterator of object) {

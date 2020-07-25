@@ -77,7 +77,7 @@
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             id="dedicationInput"
             v-model="order.dedication"
-            placeholder="Dedicatoria del regalo"
+            placeholder="Dedicatoria del arreglo"
             rows="6"
             max-rows="10"
             required
