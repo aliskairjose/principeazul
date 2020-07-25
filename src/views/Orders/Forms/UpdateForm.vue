@@ -130,7 +130,7 @@ export default {
   },
   data () {
     return {
-      deliveryTime: null,
+      deliveryTime: '00:00:00',
       loading: true,
       isUpdated: false,
       order: {
@@ -164,7 +164,7 @@ export default {
   position: absolute;
   left: 40%;
 }
-textarea{
+textarea {
   height: 100px !important;
 }
 </style>
