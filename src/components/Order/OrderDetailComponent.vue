@@ -56,11 +56,11 @@
                         </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note">Nota de taller: "{{item.note}}"</label> </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note_design">Nota de diseño: "{{item.note_design}}"</label> </b-col>
-                        <b-col md="6">
+                        <!-- <b-col md="6">
                           <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
                               <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
                           </label>
-                        </b-col>
+                        </b-col> -->
                         <b-col md="4" v-show="item.additionals.length > 0">
                           <b-button variant="link" @click="showHideDetail(index)">
                             <!-- <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
