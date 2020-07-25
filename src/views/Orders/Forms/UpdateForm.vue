@@ -101,7 +101,7 @@
         </div>
       </ValidationProvider>
       <div class="form-group" v-show="order.personalizedRequired">
-        <label for="dedicationInput">Personalizado</label>
+        <label for="dedicationInput">Texto Personalizado</label>
         <input
           type="text"
           class="form-control mb-0"
