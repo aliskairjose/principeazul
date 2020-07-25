@@ -66,7 +66,7 @@
       </ValidationProvider>
       <ValidationProvider vid="address" name="Dirección" rules="required" v-slot="{ errors }">
         <div class="form-group">
-          <label for="emailInput">Dirección</label>
+          <label for="emailInput">Dirección exacta</label>
           <textarea
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             id="direccion"
