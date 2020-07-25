@@ -95,6 +95,7 @@
           id="dedicationInput"
           v-model="order.personalized_text"
           placeholder="Texto personalizado"
+          maxlength="60"
         />
       </div>
       <div class="d-inline-block w-100">
