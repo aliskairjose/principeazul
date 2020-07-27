@@ -478,6 +478,18 @@ export default {
   mounted () {
     vito.index()
     this.loading = true
+    generalService.paymentMethods()
+      .then(response => {
+        console.log(response.data)
+        const object = response.data
+        for (const iterator of object) {
+          this.payment = {}
+          this.payment.payment_method = iterator
+          this.payment.amount = 0
+          this.payment.chekBox = false
+          this.payments.push(this.payment)
+        }
+      })
     generalService.reasons()
       .then(response => {
         const object = response.data
@@ -653,23 +665,29 @@ export default {
       },
       deliveryZone: {},
       deliveryZones: [],
-      payments: [
-        {
-          payment_method: 'Efectivo',
-          amount: 0,
-          chekBox: false
-        },
-        {
-          payment_method: 'Depósito',
-          amount: 0,
-          chekBox: false
-        },
-        {
-          payment_method: 'Tarjeta de crédito',
-          amount: 0,
-          chekBox: false
-        }
-      ],
+      payments: [],
+      payment: {
+        payment_method: '',
+        amount: 0,
+        chekBox: false
+      },
+      // payments: [
+      //   {
+      //     payment_method: 'Efectivo',
+      //     amount: 0,
+      //     chekBox: false
+      //   },
+      //   {
+      //     payment_method: 'Depósito',
+      //     amount: 0,
+      //     chekBox: false
+      //   },
+      //   {
+      //     payment_method: 'Tarjeta de crédito',
+      //     amount: 0,
+      //     chekBox: false
+      //   }
+      // ],
       orderProducts: [],
       paymentSelected: [],
       paymentOptions: [
