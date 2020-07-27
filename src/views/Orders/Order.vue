@@ -480,7 +480,6 @@ export default {
     this.loading = true
     generalService.paymentMethods()
       .then(response => {
-        console.log(response.data)
         const object = response.data
         for (const iterator of object) {
           this.payment = {}
@@ -671,23 +670,6 @@ export default {
         amount: 0,
         chekBox: false
       },
-      // payments: [
-      //   {
-      //     payment_method: 'Efectivo',
-      //     amount: 0,
-      //     chekBox: false
-      //   },
-      //   {
-      //     payment_method: 'Depósito',
-      //     amount: 0,
-      //     chekBox: false
-      //   },
-      //   {
-      //     payment_method: 'Tarjeta de crédito',
-      //     amount: 0,
-      //     chekBox: false
-      //   }
-      // ],
       orderProducts: [],
       paymentSelected: [],
       paymentOptions: [
