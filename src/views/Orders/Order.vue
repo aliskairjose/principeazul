@@ -679,21 +679,21 @@ export default {
       ],
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
-        { value: 'local', text: 'Local' },
+        { value: 'apetito24', text: 'Apetito24' },
         { value: 'delivery', text: 'Delivery' },
-        { value: 'apetito24', text: 'Apetito24' }
+        { value: 'local', text: 'Local' }
       ],
       purchaseType: [
         { value: null, text: 'Seleccione tipo de compra' },
-        { value: 'local', text: 'Local' },
-        { value: 'delivery', text: 'Delivery' },
-        { value: 'web', text: 'Web' },
-        { value: 'redes', text: 'Redes' },
-        { value: 'paginaweb', text: 'Pagina Web' },
-        { value: 'whatsapp', text: 'WhatsApp' },
-        { value: 'instagram', text: 'Instagram' },
-        { value: 'tienda', text: 'Tienda' },
         { value: 'apetito24', text: 'Apetito24' },
+        { value: 'delivery', text: 'Delivery' },
+        { value: 'local', text: 'Local' },
+        { value: 'instagram', text: 'Instagram' },
+        { value: 'paginaweb', text: 'Pagina Web' },
+        { value: 'redes', text: 'Redes' },
+        { value: 'tienda', text: 'Tienda' },
+        { value: 'web', text: 'Web' },
+        { value: 'whatsapp', text: 'WhatsApp' },
         { value: 'otros', text: 'Otros' }
       ],
       tempProd: [],
