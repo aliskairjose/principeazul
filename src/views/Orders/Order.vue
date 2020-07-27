@@ -680,7 +680,8 @@ export default {
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
         { value: 'local', text: 'Local' },
-        { value: 'delivery', text: 'Delivery' }
+        { value: 'delivery', text: 'Delivery' },
+        { value: 'apetito24', text: 'Apetito24' }
       ],
       purchaseType: [
         { value: null, text: 'Seleccione tipo de compra' },
@@ -688,6 +689,11 @@ export default {
         { value: 'delivery', text: 'Delivery' },
         { value: 'web', text: 'Web' },
         { value: 'redes', text: 'Redes' },
+        { value: 'paginaweb', text: 'Pagina Web' },
+        { value: 'whatsapp', text: 'WhatsApp' },
+        { value: 'instagram', text: 'Instagram' },
+        { value: 'tienda', text: 'Tienda' },
+        { value: 'apetito24', text: 'Apetito24' },
         { value: 'otros', text: 'Otros' }
       ],
       tempProd: [],
