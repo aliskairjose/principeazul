@@ -30,8 +30,7 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder"
-              >
+                :before-change="validateOrder">
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -183,9 +182,8 @@
                         center
                         rounded="circle"
                         :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
-                        id="image"
-                        class
-                      ></b-img>
+                        id="image">
+                      </b-img>
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
@@ -268,11 +266,12 @@
                     <div v-for="item in payments" :key="item.id">
                       <b-form inline class="mb-2">
                         <b-form-checkbox
-                          v-model="item.chekBox"
+                          v-model="item.checkBox"
                           :name="item.payment_method"
-                          class="mb-2 mr-sm-2 mb-sm-0"
-                        >{{item.payment_method}}</b-form-checkbox>
-                        <b-form-input v-money="money" v-if="item.chekBox" v-model="item.amount"></b-form-input>
+                          class="mb-2 mr-sm-2 mb-sm-0">
+                          {{item.payment_method}}
+                        </b-form-checkbox>
+                        <b-form-input v-money="money" v-if="item.checkBox" v-model="item.amount"></b-form-input>
                       </b-form>
                     </div>
                     <b-form-group class="col-md-6" label="Descuento" label-for="cliente">
@@ -485,7 +484,7 @@ export default {
           this.payment = {}
           this.payment.payment_method = iterator
           this.payment.amount = 0
-          this.payment.chekBox = false
+          // this.payment.checkBox = false
           this.payments.push(this.payment)
         }
       })
@@ -668,7 +667,7 @@ export default {
       payment: {
         payment_method: '',
         amount: 0,
-        chekBox: false
+        checkBox: false
       },
       orderProducts: [],
       paymentSelected: [],
@@ -748,7 +747,7 @@ export default {
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
           const element = object[key]
-          if (!element.chekBox) { element.amount = 0 }
+          if (!element.checkBox) { element.amount = 0 }
           amount += parseFloat(element.amount)
         }
       }
