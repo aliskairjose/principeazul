@@ -802,6 +802,9 @@ export default {
         this.deliveryCost = 0
         this.order.delivery_zone_id = null
       }
+      if (this.order.mode === 'apetito24') {
+        this.order.delivery_zone_id = null
+      }
     },
     addClient (item) {
       this.client = item
