@@ -269,9 +269,13 @@
                           v-model="item.checkBox"
                           :name="item.payment_method"
                           class="mb-2 mr-sm-2 mb-sm-0">
-                          {{item.payment_method}}
+                          {{ item.payment_method }}
                         </b-form-checkbox>
-                        <b-form-input v-money="money" v-if="item.checkBox" v-model="item.amount"></b-form-input>
+                        <b-form-input
+                          v-money="money"
+                          v-show="item.checkBox"
+                          v-model="item.amount">
+                        </b-form-input>
                       </b-form>
                     </div>
                     <b-form-group class="col-md-6" label="Descuento" label-for="cliente">
@@ -306,6 +310,7 @@
         </iq-card>
       </b-col>
     </b-row>
+
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
         <!-- <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input> -->
@@ -316,15 +321,14 @@
         ></b-form-textarea>
       </b-form-group>
     </b-modal>
+
     <b-modal
       ref="modal-design-note"
       ok-only
       id="modal-design-note"
       title="Añadir nota dieño"
-      @ok="addDesignNote"
-    >
+      @ok="addDesignNote">
       <b-form-group class="col-md-12" label="Nota de diseño:">
-        <!-- <b-form-input autocomplete="off" v-model="note_design" type="text"></b-form-input> -->
         <b-form-textarea
           v-model="note_design"
           rows="3"
@@ -342,8 +346,7 @@
       ok-only
       ok-title="Cerrar"
       no-close-on-esc
-      no-close-on-backdrop
-    >
+      no-close-on-backdrop>
       <client is-modal @new-client="client = $event"></client>
     </b-modal>
 
@@ -358,16 +361,16 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table
         read-only
         :items="principals"
         :titems="pTitles"
         v-on:add-item="addItem"
-        v-on:delete-item="delItem"
-      ></modal-table>
+        v-on:delete-item="delItem">
+      </modal-table>
     </b-modal>
+
     <!-- Modal extras  -->
     <b-modal
       ref="extras"
@@ -379,8 +382,7 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra"
-    >
+      @cancel="handleCancelExtra">
       <modal-table
         :items="additionals"
         :titems="eTitles"
@@ -388,6 +390,7 @@
         v-on:delete-item="delItem"
       ></modal-table>
     </b-modal>
+
     <!-- Modal Lista de Clientes -->
     <b-modal
       ok-only
@@ -400,10 +403,10 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel"
-    >
+      @cancel="handleCancel">
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
+
     <!-- Final Order Modal -->
     <b-modal
       ok-only
@@ -414,8 +417,7 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder"
-    >
+      @ok="finishOrder">
       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
@@ -442,12 +444,13 @@
         >Enviar formulario por email</b-form-checkbox>
       </OrderDetailComponent>
     </b-modal>
+
   </b-container>
 </template>
 <script>
 import { vito } from '../../config/pluginInit'
+import { mask } from 'vue-the-mask'
 import { FormWizard, TabContent } from 'vue-form-wizard'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import clientService from '@/services/client'
 import productService from '@/services/product'
 import generalService from '@/services/general'
@@ -455,7 +458,7 @@ import orderService from '@/services/order'
 import ModalTable from '@/components/Modals/ModalTable'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 import Client from '@/views/Clients/Client'
-import { mask } from 'vue-the-mask'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
 import { VMoney } from 'v-money'
 
@@ -480,12 +483,15 @@ export default {
     generalService.paymentMethods()
       .then(response => {
         const object = response.data
+        console.log(object)
+        const list = []
         for (const iterator of object) {
           this.payment = {}
-          this.payment.payment_method = iterator
-          this.payment.amount = 0
-          this.payments.push(this.payment)
+          this.$set(this.payment, 'payment_method', iterator)
+          this.$set(this.payment, 'amount', 0)
+          list.push(this.payment)
         }
+        this.payments = [ ...list ]
       })
     generalService.reasons()
       .then(response => {
@@ -741,11 +747,11 @@ export default {
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
-      const object = this.payments
+      // const object = this.payments
       let amount = 0
-      for (const key in object) {
-        if (object.hasOwnProperty(key)) {
-          const element = object[key]
+      for (const key in this.payments) {
+        if (this.payments.hasOwnProperty(key)) {
+          const element = this.payments[key]
           if (!element.checkBox) { element.amount = 0 }
           amount += parseFloat(element.amount)
         }
