@@ -18,13 +18,6 @@
       <ValidationProvider vid="Fecha" name="Fecha de entrega" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="dateInput">Fecha de entrega</label>
-          <!-- <input
-            type="date"
-            :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
-            id="destinatarioInput"
-            v-model="order.delivery_date"
-            required
-          /> -->
           <b-form-datepicker
             id="example-datepicker"
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
@@ -136,15 +129,6 @@ export default {
   name: 'UpdateForm',
   directives: { mask },
   mounted () {
-    // const id = this.$route.params.id
-    // orderService.getById(id)
-    //   .then(response => {
-    //     this.order = response.data
-    //     const value = this.order.delivery_date
-    //     this.order.delivery_date = value.slice(0, value.indexOf(' '))
-    //   })
-    //   .catch(error => { console.log(error) })
-    //   .finally(() => { this.loading = false })
   },
   computed: {
     ...mapGetters({
@@ -156,14 +140,6 @@ export default {
       deliveryTime: '00:00:00',
       loading: false,
       isUpdated: false
-      // order: {
-      //   delivery_date: '',
-      //   delivery_address: '',
-      //   addressee: '',
-      //   dedication: '',
-      //   signature: '',
-      //   phone_number: null
-      // }
     }
   },
   methods: {
@@ -189,6 +165,6 @@ export default {
   left: 40%;
 }
 textarea {
-  height: 100px !important;
+  height: 150px !important;
 }
 </style>

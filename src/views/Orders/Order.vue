@@ -484,7 +484,6 @@ export default {
           this.payment = {}
           this.payment.payment_method = iterator
           this.payment.amount = 0
-          // this.payment.checkBox = false
           this.payments.push(this.payment)
         }
       })
