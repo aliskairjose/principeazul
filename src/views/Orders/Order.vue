@@ -166,7 +166,11 @@
                         label="Status de la compra:"
                         label-for="statuses"
                       >
-                        <b-form-select v-model="order.status" :options="statuses"></b-form-select>
+                        <b-form-select
+                          :disabled="order.status === 'Entregado' || order.status === 'Cancelado'"
+                          v-model="order.status"
+                          :options="statuses">
+                        </b-form-select>
                       </b-form-group>
                     </b-row>
                   </form>
