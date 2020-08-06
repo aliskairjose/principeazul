@@ -149,6 +149,10 @@
                         v-if="orders.item.status === 'En confección'"
                       >{{orders.item.status}}</b-badge>
                       <b-badge
+                        variant="warning"
+                        v-if="orders.item.status === 'Confección urgente'"
+                      >{{orders.item.status}}</b-badge>
+                      <b-badge
                         variant="light"
                         v-if="orders.item.status === 'Confeccionado'"
                       >{{orders.item.status}}</b-badge>
@@ -168,6 +172,7 @@
                     <template
                       v-slot:cell(update)="orders">
                       <b-form-select
+                        :disabled="orders.item.status === 'Entregado' || orders.item.status === 'Cancelado'"
                         v-model="orders.item.status"
                         :options="statuses"
                         @change="onStatusUpdate(orders.item.id, $event)"
@@ -303,6 +308,7 @@ export default {
         const object = response.data
         for (const iterator of object) {
           let status = {}
+          status.disabled = false
           status.value = iterator
           status.text = iterator
           this.statuses.push(status)
@@ -410,11 +416,7 @@ export default {
     onStatusUpdate (id, status) {
       this.isRemoving = true
       orderService.updateSatus(id, status)
-        .then(response => {
-          if (response.status) {
-
-          }
-        })
+        .then(response => {})
         .catch(error => { console.log(error) })
         .finally(() => { this.isRemoving = false })
     },
