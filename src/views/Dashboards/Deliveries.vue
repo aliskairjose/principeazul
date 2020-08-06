@@ -10,7 +10,7 @@
             <b-row class="py-5">
               <b-col md="12" v-if="orders.length === 0">
                 <div class="text-center mt-5 mb-5">
-                  <img class="logo" :src="require('../../assets/images/logo-gold.png')" alt="logo" />
+                  <img class="logo" :src="require('@/assets/images/logo-gold.png')" alt="logo" />
                   <h2 class="mt-5">No hay envíos disponibles</h2>
                 </div>
               </b-col>

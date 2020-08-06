@@ -85,15 +85,13 @@
               </b-col>
             </b-row>
             <b-row cols-md="3" cols-sm="1">
-              <!-- <draggable v-model="orders"> -->
-                <b-col v-for="order in orders" :key="order.id">
-                  <OrderCard
-                    :order="order"
-                    :statuses="statuses"
-                    @status-change="updateStatus($event)"
-                  ></OrderCard>
-                </b-col>
-              <!-- </draggable> -->
+              <b-col v-for="order in orders" :key="order.id">
+                <OrderCard
+                  :order="order"
+                  :statuses="statuses"
+                  @status-change="updateStatus($event)"
+                ></OrderCard>
+              </b-col>
             </b-row>
           </template>
         </iq-card>
@@ -107,13 +105,11 @@ import { vito } from '../../config/pluginInit'
 import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
 import moment from 'moment'
-// import draggable from 'vuedraggable'
 
 export default {
   name: 'DasboardTaller',
   components: {
     OrderCard
-    // draggable
   },
   created () {
     orderService.orderStatuses()
@@ -133,6 +129,7 @@ export default {
     const date = new Date()
     date.setDate(date.getDate() + 1)
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    this.loadData()
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
 
     let jwt = require('jsonwebtoken')
@@ -202,15 +199,25 @@ export default {
     updateStatus ($event) {
       this.loading = true
       orderService.updateSatus($event.id, $event.status)
-        .then(() => { })
+        .then(() => {})
         .catch(() => { })
-        .finally(() => { this.loading = false })
+        .finally(() => {
+          this.loadData(``)
+          this.loading = false
+        })
     },
     loadData (params = '') {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
-          this.orders = response.data
+          const data = response.data
+          let list = []
+          for (const d of data) {
+            if (d.status === 'Creado' || d.status === 'Pendiente' || d.status === 'En confección' || d.status === 'Confección urgente') {
+              list.push(d)
+            }
+          }
+          this.orders = [...list]
         })
         .catch(() => {})
         .finally(() => { this.loading = false })

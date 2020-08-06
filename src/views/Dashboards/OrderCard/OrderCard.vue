@@ -97,6 +97,7 @@ export default {
   },
   mounted () {
     vito.index()
+    console.log(this.order)
   },
   methods: {
     onStatusChange (id, $event) {
