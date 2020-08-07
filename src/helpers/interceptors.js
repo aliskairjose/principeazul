@@ -19,6 +19,7 @@ axios.interceptors.response.use(
     }
   },
   (error) => {
+    console.log(error)
     if ([401, 403].indexOf(error.response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
       localStorage.removeItem('user')
@@ -27,10 +28,10 @@ axios.interceptors.response.use(
     }
     if ([404].indexOf(error.response.status) !== -1) {
       // this.$router.push({ name: 'default.error/:code'})
-      this.$router.push({ name: 'default.error/404' })
+      this.$router.push({ name: 'default.error', params: { code: 404 } })
     }
     if ([500, 501, 502, 503, 504].indexOf(error.response.status) !== -1) {
-      this.$router.push({ name: 'default.error/500' })
+      this.$router.push({ name: 'default.error', params: { code: 500 } })
     }
   }
 )

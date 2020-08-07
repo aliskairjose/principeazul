@@ -253,7 +253,12 @@ const pagesChildRoutes = (prop, mode = false) => [
 // Set Layout in this route
 const routes = [
   {
-    path: '*', redirect: '/'
+    path: '*',
+    redirect: 'default/error/404',
+    // name: 'default',
+    component: ErrorPage,
+    meta: { auth: true },
+    children: pagesChildRoutes('default')
   },
   {
     path: '/auth',
