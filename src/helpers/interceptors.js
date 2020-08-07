@@ -19,7 +19,7 @@ axios.interceptors.response.use(
     }
   },
   (error) => {
-    console.log(error)
+    console.log(error.response.data.message)
     if ([401, 403].indexOf(error.response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
       localStorage.removeItem('user')
