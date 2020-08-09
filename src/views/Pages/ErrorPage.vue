@@ -20,7 +20,6 @@ export default {
   name: 'ErrorPage',
   mounted () {
     vito.index()
-    console.log(this.$route.params.code)
   },
   data () {
     return {
