@@ -28,12 +28,14 @@ axios.interceptors.response.use(
     }
     if ([404].indexOf(error.response.status) !== -1) {
       // this.$router.push({ name: 'default.error/:code'})
-      this.$router.push({ name: 'default.error', params: { code: 404 } })
+      // this.$router.push({ name: 'default.error', params: { code: 404 } })
+      window.location.assign(window.location.origin + '/default/error/400')
     }
     if ([500, 501, 502, 503, 504].indexOf(error.response.status) !== -1) {
-      this.$router.push({ name: 'default.error', params: { code: 500 } })
+      window.location.assign(window.location.origin + '/default/error/500')
+      // this.$router.push({ name: 'default.error', params: { code: 500 } })
     }
   }
 )
 
-export default { }
+export default {}
