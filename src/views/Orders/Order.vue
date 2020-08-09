@@ -487,7 +487,6 @@ export default {
     generalService.paymentMethods()
       .then(response => {
         const object = response.data
-        console.log(object)
         const list = []
         for (const iterator of object) {
           this.payment = {}
