@@ -122,13 +122,9 @@ export default {
           this.statuses.push(status)
         }
       })
-      .catch(error => { console.log(error) })
 
     setInterval(() => {
-      const date = new Date()
-      date.setDate(date.getDate() + 1)
-      const formatDate = moment(String(date)).format('YYYY-MM-DD')
-      this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+      this.loadData(this.params)
     }, 30000)
   },
   mounted () {
@@ -136,7 +132,6 @@ export default {
     const date = new Date()
     date.setDate(date.getDate() + 1)
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
-    // this.loadData()
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
 
     let jwt = require('jsonwebtoken')
@@ -154,6 +149,7 @@ export default {
   },
   data () {
     return {
+      params: '',
       selectedType: null,
       selectedPersonalize: null,
       loading: false,
@@ -189,7 +185,11 @@ export default {
         // Limpia los campos fechas
         this.initDate = ''
         this.endDate = ''
-        this.loadData()
+        this.params = ''
+        const date = new Date()
+        date.setDate(date.getDate() + 1)
+        const formatDate = moment(String(date)).format('YYYY-MM-DD')
+        this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
       }
     },
     onDateChange () {
@@ -214,12 +214,12 @@ export default {
         })
     },
     loadData (params = '') {
+      this.params = params
       this.loading = true
       orderService.getAll(params)
         .then(response => {
-          const data = response.data
           let list = []
-          for (const d of data) {
+          for (const d of response.data) {
             if (d.status === 'Creado' || d.status === 'Pendiente' || d.status === 'En confección' || d.status === 'Confección urgente') {
               list.push(d)
             }
