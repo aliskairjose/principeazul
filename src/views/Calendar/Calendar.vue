@@ -93,17 +93,14 @@ export default {
     },
     handleEventClick (clickInfo) {
       this.orderId = clickInfo.event.id
-      // let order = this.calendar.filter(x => x.id === parseInt(id))
-      // this.details = order[0]
-      // this.details.modalTitle = `Detalles del pedido #${this.details.id}`
       this.$refs['modal-details'].show()
     },
     loadData () {
       calendarService.getAll()
         .then(response => {
-          this.calendar = response.data
+          this.calendar = [...response.data]
         })
-        .catch(error => { console.log(error) })
+        .catch(() => { })
         .finally(() => {
           this.loading = false
           setTimeout(() => {
