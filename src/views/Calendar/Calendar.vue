@@ -6,24 +6,24 @@
           <b-col md="12">
             <template>
               <Fullcalendar locale="es"
-                      :plugins="calendarPlugins"
-                      :header="{
-                        left: '',
-                        center: 'title',
-                        right: 'prev today next'
-                      }"
-                      :buttonText="{
-                        today: 'Hoy',
-                        month: 'Mes',
-                        week: 'Semana',
-                        day: 'Día',
-                        list: 'Listado'
-                      }"
-                      @eventClick="handleEventClick"
-                      :weekends="true"
-                      :selectable="true"
-                      :editable="true"
-                      :events="formatCalendar"/>
+                :plugins="calendarPlugins"
+                :header="{
+                  left: '',
+                  center: 'title',
+                  right: 'prev today next'
+                }"
+                :buttonText="{
+                  today: 'Hoy',
+                  month: 'Mes',
+                  week: 'Semana',
+                  day: 'Día',
+                  list: 'Listado'
+                }"
+                @eventClick="handleEventClick"
+                :weekends="true"
+                :selectable="true"
+                :editable="true"
+                :events="formatCalendar"/>
             </template>
           </b-col>
         </iq-card>
