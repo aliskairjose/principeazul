@@ -47,7 +47,7 @@
                 <p>Persona que recibe: {{ order.addressee }}</p>
                 <p>Día de entrega: {{ order.delivery_date | formatWeekDate }}</p>
                 <p v-if="order.client.phone">Teléfono: {{ order.client.phone }}</p>
-                <p>Direccón: {{ order.delivery_address }}</p>
+                <p>Dirección: {{ order.delivery_address }}</p>
               </b-col>
             </b-row>
             <b-row class="mt-3 mb-0 d-flex justify-content-between">
