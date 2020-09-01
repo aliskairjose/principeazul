@@ -32,7 +32,7 @@
       <!-- Phone number -->
 
       <div class="form-group">
-        <label for="destinatarioInput">Teleéfono</label>
+        <label for="destinatarioInput">Teléfono</label>
         <input
           type=tel
           class="form-control"
