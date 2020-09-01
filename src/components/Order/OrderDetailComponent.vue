@@ -24,7 +24,7 @@
               <b-col md="6" class="mb-3">Monto total: {{ data.total | money }}</b-col>
               <b-col md="6" class="mb-3">Total pagado: {{ data.totalPaid | money }}</b-col>
               <b-col md="6" class="mb-3">
-                Metodo de pago:
+                Método de pago:
                 <ul v-for="p in data.payments" :key="p.id">
                   <li v-show="p.amount > 0">{{p.payment_method}}: {{p.amount | money }}</li>
                 </ul>
