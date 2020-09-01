@@ -124,7 +124,8 @@
               <b-col md="12" class="mb-2 mt-3"> <h5 class="text-muted">Datos de la entrega</h5> </b-col>
               <b-col md="6" class="mb-3">Recibe: {{ data.addressee}}</b-col>
               <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatWeekDate}}</b-col>
-              <b-col md="12" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
+              <b-col md="6" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
+              <!-- <b-col md="6" class="mb-3">Teléfono: <br>{{ data.phone_number }}</b-col> -->
 
              <b-col md="12">
                <slot></slot>
@@ -192,6 +193,7 @@ export default {
       orderService.getById(this.dataId)
         .then(response => {
           this.data = response.data
+          console.log(this.data)
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
               const element = this.data.products[key]
