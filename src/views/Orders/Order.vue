@@ -315,7 +315,6 @@
 
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
-        <!-- <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input> -->
         <b-form-textarea v-model="note" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
