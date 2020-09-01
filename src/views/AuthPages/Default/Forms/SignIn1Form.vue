@@ -24,7 +24,7 @@
       <ValidationProvider vid="password" name="Password" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="passwordInput">Password</label>
-          <router-link to="/auth/password-reset" class="float-right">Olvidó la contraseña?</router-link>
+          <router-link to="/auth/password-reset" class="float-right">¿Olvidó la contraseña?</router-link>
           <input
             type="password"
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
