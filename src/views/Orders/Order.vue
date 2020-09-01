@@ -30,7 +30,8 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder">
+                :before-change="validateOrder"
+              >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -105,6 +106,10 @@
                         <b-form-select v-model="order.turn" :options="turns"></b-form-select>
                       </b-form-group>
 
+                      <b-form-group class="col-md-12">
+                        <hr />
+                      </b-form-group>
+
                       <!-- Phone number -->
                       <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
                         <b-form-input
@@ -113,13 +118,11 @@
                           name="phone_number"
                           id="phone_number"
                           placeholder="Teléfono"
-                          v-mask="['###-####', '####-####']">
-                        </b-form-input>
-                    </b-form-group>
-
-                      <b-form-group class="col-md-12">
-                        <hr />
+                          v-mask="['###-####', '####-####']"
+                        ></b-form-input>
                       </b-form-group>
+                      <!-- Columna vacia -->
+                      <b-form-group class="col-md-6"></b-form-group>
 
                       <!-- Direccion -->
                       <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
@@ -169,8 +172,8 @@
                         <b-form-select
                           :disabled="order.status === 'Entregado' || order.status === 'Cancelado'"
                           v-model="order.status"
-                          :options="statuses">
-                        </b-form-select>
+                          :options="statuses"
+                        ></b-form-select>
                       </b-form-group>
                     </b-row>
                   </form>
@@ -186,8 +189,8 @@
                         center
                         rounded="circle"
                         :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
-                        id="image">
-                      </b-img>
+                        id="image"
+                      ></b-img>
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
@@ -272,14 +275,9 @@
                         <b-form-checkbox
                           v-model="item.checkBox"
                           :name="item.payment_method"
-                          class="mb-2 mr-sm-2 mb-sm-0">
-                          {{ item.payment_method }}
-                        </b-form-checkbox>
-                        <b-form-input
-                          v-money="money"
-                          v-show="item.checkBox"
-                          v-model="item.amount">
-                        </b-form-input>
+                          class="mb-2 mr-sm-2 mb-sm-0"
+                        >{{ item.payment_method }}</b-form-checkbox>
+                        <b-form-input v-money="money" v-show="item.checkBox" v-model="item.amount"></b-form-input>
                       </b-form>
                     </div>
                     <b-form-group class="col-md-6" label="Descuento" label-for="cliente">
@@ -318,11 +316,7 @@
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
         <!-- <b-form-input autocomplete="off" v-model="note" type="text"></b-form-input> -->
-        <b-form-textarea
-          v-model="note"
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
+        <b-form-textarea v-model="note" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
 
@@ -331,13 +325,10 @@
       ok-only
       id="modal-design-note"
       title="Añadir nota dieño"
-      @ok="addDesignNote">
+      @ok="addDesignNote"
+    >
       <b-form-group class="col-md-12" label="Nota de diseño:">
-        <b-form-textarea
-          v-model="note_design"
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
+        <b-form-textarea v-model="note_design" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
 
@@ -350,7 +341,8 @@
       ok-only
       ok-title="Cerrar"
       no-close-on-esc
-      no-close-on-backdrop>
+      no-close-on-backdrop
+    >
       <client is-modal @new-client="client = $event"></client>
     </b-modal>
 
@@ -365,14 +357,15 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table
         read-only
         :items="principals"
         :titems="pTitles"
         v-on:add-item="addItem"
-        v-on:delete-item="delItem">
-      </modal-table>
+        v-on:delete-item="delItem"
+      ></modal-table>
     </b-modal>
 
     <!-- Modal extras  -->
@@ -386,7 +379,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOkExtra"
-      @cancel="handleCancelExtra">
+      @cancel="handleCancelExtra"
+    >
       <modal-table
         :items="additionals"
         :titems="eTitles"
@@ -407,7 +401,8 @@
       no-close-on-backdrop
       hide-header-close
       @ok="handleOk"
-      @cancel="handleCancel">
+      @cancel="handleCancel"
+    >
       <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
     </b-modal>
 
@@ -421,7 +416,8 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder">
+      @ok="finishOrder"
+    >
       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
@@ -448,7 +444,6 @@
         >Enviar formulario por email</b-form-checkbox>
       </OrderDetailComponent>
     </b-modal>
-
   </b-container>
 </template>
 <script>
