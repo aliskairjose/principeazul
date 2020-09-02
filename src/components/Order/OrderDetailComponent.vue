@@ -125,7 +125,7 @@
               <b-col md="6" class="mb-3">Recibe: {{ data.addressee}}</b-col>
               <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatWeekDate}}</b-col>
               <b-col md="6" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
-              <!-- <b-col md="6" class="mb-3">Teléfono: <br>{{ data.phone_number }}</b-col> -->
+              <b-col md="6" class="mb-3">Teléfono: <br>{{ data.phone }}</b-col>
 
              <b-col md="12">
                <slot></slot>

@@ -113,10 +113,10 @@
                       <!-- Phone number -->
                       <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
                         <b-form-input
-                          v-model="order.phone_number"
+                          v-model="order.phone"
                           type="tel"
-                          name="phone_number"
-                          id="phone_number"
+                          name="phone"
+                          id="phone"
                           placeholder="Teléfono"
                           v-mask="['###-####', '####-####']"
                         ></b-form-input>
@@ -620,7 +620,7 @@ export default {
       },
       order: {
         id: '',
-        phone_number: null,
+        phone: null,
         delivery_zone_id: null,
         client_id: '',
         client_name: '',
@@ -938,6 +938,7 @@ export default {
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
+      console.log(this.order)
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
