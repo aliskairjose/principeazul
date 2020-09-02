@@ -24,6 +24,15 @@
                 <b-row>
                   <b-col md="12">
                     <h5>{{product.name}}</h5>
+                    <b-button
+                      size="sm"
+                      variant="outline-light"
+                      @click="showModalRecipe(product.additionals)"
+                      v-b-modal="product.id"
+                      v-if="product.additionals.length > 0">
+                        Receta
+                        <b-icon icon="search" style="color: #7952b3;"></b-icon>
+                    </b-button>
                   </b-col>
                 </b-row>
                 <b-row>
@@ -102,6 +111,9 @@ export default {
     onStatusChange (id, $event) {
       const status = $event
       this.$emit('status-change', { id, status })
+    },
+    showModalRecipe (recipes) {
+      this.$emit('modal-recipes', { recipes })
     }
   }
 }

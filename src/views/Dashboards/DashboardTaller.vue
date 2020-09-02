@@ -90,9 +90,22 @@
                   :order="order"
                   :statuses="statuses"
                   @status-change="updateStatus($event)"
+                  @modal-recipes="showModalRecipes($event)"
                 ></OrderCard>
               </b-col>
             </b-row>
+            <b-modal ok-only ref="modal-recipes" title="Receta de producto">
+              <b-col md="12">
+                <label
+                  v-for="a in recipes"
+                  :key="a.id"
+                  class="text-muted text-capitalize mr-3">
+                  <h6 class="mx-1">
+                    <b-badge variant="primary" class="px-2">{{ a.name }} x {{a.quantity}}</b-badge>
+                  </h6>
+                </label>
+              </b-col>
+            </b-modal>
           </template>
         </iq-card>
       </b-col>
@@ -150,6 +163,7 @@ export default {
   data () {
     return {
       params: '',
+      recipes: [],
       selectedType: null,
       selectedPersonalize: null,
       loading: false,
@@ -212,6 +226,10 @@ export default {
           this.loadData(``)
           this.loading = false
         })
+    },
+    showModalRecipes ($event) {
+      this.recipes = [...$event.recipes]
+      this.$refs['modal-recipes'].show()
     },
     loadData (params = '') {
       this.params = params
