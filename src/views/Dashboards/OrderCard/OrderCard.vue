@@ -37,7 +37,7 @@
                   </b-col>
                 </b-row>
                 <b-row>
-                <b-col md="12">
+                <!-- <b-col md="12">
                   <label
                     v-for="a in product.additionals"
                     :key="a.id"
@@ -46,7 +46,7 @@
                         <b-badge variant="primary" class="px-2"> {{ a.name }} x {{a.quantity}}</b-badge>
                       </h6>
                   </label>
-                </b-col>
+                </b-col> -->
                 </b-row>
               </b-col>
             </b-row>
