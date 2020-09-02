@@ -16,7 +16,7 @@
                 <div class="item">
                   <img :src="require('../../assets/images/login/login-1.png')" class="img-fluid mb-4" alt="logo">
                   <h4 class="mb-1 text-white">Sistema de El Príncipe Azul</h4>
-                  <p>Manejo de ordenes, inventario y clientes</p>
+                  <p>Manejo de órdenes, inventario y clientes</p>
                 </div>
               </Slick>
             </div>
