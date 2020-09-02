@@ -25,14 +25,21 @@
                   <b-col md="12">
                     <h5>{{product.name}}</h5>
                     <b-button
+                      class="mx-2"
                       size="sm"
-                      variant="outline-light"
+                      variant="light"
                       @click="showModalRecipe(product.additionals)"
-                      v-b-modal="product.id"
                       v-if="product.additionals.length > 0">
                         Receta
                         <b-icon icon="search" style="color: #7952b3;"></b-icon>
                     </b-button>
+                    <b-button
+                      size="sm"
+                      variant="light"
+                      v-if="product.additionals.length > 0">
+                        <b-icon icon="printer" style="color: #7952b3;"></b-icon>
+                    </b-button>
+
                   </b-col>
                 </b-row>
                 <b-row>
