@@ -53,21 +53,21 @@
                   </b-col>
                 </b-row>
                 <b-row>
-                <!-- <b-col md="12">
-                  <label
-                    v-for="a in product.additionals"
-                    :key="a.id"
-                    class="text-muted text-capitalize mr-3">
-                      <h6 class="mx-1">
-                        <b-badge variant="primary" class="px-2"> {{ a.name }} x {{a.quantity}}</b-badge>
-                      </h6>
-                  </label>
-                </b-col> -->
                 </b-row>
               </b-col>
             </b-row>
             <b-row>
               <b-col md="12">
+                <div v-for="item in order.products" :key="item.id" >
+                  <p v-if="item.note">
+                    Nota de taller:
+                    <label class="text-muted text-capitalize" style="font-style: italic;">{{item.note}}</label>
+                  </p>
+                  <p v-if="item.note_design">
+                    Nota de diseño:
+                    <label class="text-muted text-capitalize" style="font-style: italic;">{{item.note_design}}</label>
+                  </p>
+                </div>
                 <p v-if="order.dedication">
                   Dedicatoria:
                   <label class="text-muted text-capitalize" style="font-style: italic;">{{order.dedication}}</label>
