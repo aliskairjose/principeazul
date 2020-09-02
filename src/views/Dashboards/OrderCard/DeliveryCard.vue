@@ -44,8 +44,9 @@
             </b-row>
             <b-row class="mt-3">
               <b-col md="12">
-                <p>Persona que recibe: {{ order.addressee }}</p>
                 <p>Día de entrega: {{ order.delivery_date | formatWeekDate }}</p>
+                <p>Turno: {{ order.turn }}</p>
+                <p>Persona que recibe: {{ order.addressee }}</p>
                 <p v-if="order.client.phone">Teléfono: {{ order.client.phone }}</p>
                 <p>Dirección: {{ order.delivery_address }}</p>
               </b-col>
@@ -84,6 +85,7 @@ export default {
   },
   mounted () {
     vito.index()
+    console.log(this.order)
   },
   methods: {
     onStatusChange (id, $event) {
