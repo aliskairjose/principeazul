@@ -145,6 +145,8 @@ export default {
     const date = new Date()
     date.setDate(date.getDate() + 1)
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    this.initDate = formatDate
+    this.endDate = formatDate
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
 
     let jwt = require('jsonwebtoken')
@@ -164,7 +166,7 @@ export default {
     return {
       params: '',
       recipes: [],
-      selectedType: null,
+      selectedType: 1,
       selectedPersonalize: null,
       loading: false,
       orders: [],
