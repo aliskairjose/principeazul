@@ -12,7 +12,7 @@
       <b-alert :show="isUpdated" variant=" " dismissible fade class="text-white bg-info">
         <div class="iq-alert-text">
           Datos actualizados con
-          <b>exito</b>!
+          <b>éxito</b>!
         </div>
       </b-alert>
       <ValidationProvider vid="Fecha" name="Fecha de entrega" rules="required" v-slot="{ errors }">
