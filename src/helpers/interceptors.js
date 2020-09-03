@@ -19,7 +19,8 @@ axios.interceptors.response.use(
     }
   },
   (error) => {
-    if ([401, 403].indexOf(error.response.status) !== -1) {
+    console.log(error)
+    if ([403].indexOf(error.response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
@@ -30,7 +31,8 @@ axios.interceptors.response.use(
       window.location.assign(window.location.origin + '/default/error/400')
     }
     if ([500, 501, 502, 503, 504].indexOf(error.response.status) !== -1) {
-      window.location.assign(window.location.origin + '/default/error/500')
+      // window.location.assign(window.location.origin + '/default/error/500')
+      console.log(error)
     }
   }
 )

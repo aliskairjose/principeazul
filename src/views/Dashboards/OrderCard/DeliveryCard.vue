@@ -15,14 +15,23 @@
           </template>
           <template v-slot:body>
             <b-row v-for="product in order.products" :key="product.id">
-              <b-col md="4">
+              <b-col md="4" v-if="product.product">
                 <b-img
                   v-viewer="{movable: false}"
                   center
                   rounded="circle"
                   :src="product.product.image ? product.product.image : require(`@/assets/images/no-image.png`)"
-                  class="image"
-                ></b-img>
+                  class="image">
+                </b-img>
+              </b-col>
+              <b-col md="4" v-if="!product.product">
+                <b-img
+                  v-viewer="{movable: false}"
+                  center
+                  rounded="circle"
+                  :src="require(`@/assets/images/no-image.png`)"
+                  class="image">
+                </b-img>
               </b-col>
               <b-col md="8">
                 <b-row>
@@ -44,8 +53,9 @@
             </b-row>
             <b-row class="mt-3">
               <b-col md="12">
-                <p>Persona que recibe: {{ order.addressee }}</p>
                 <p>Día de entrega: {{ order.delivery_date | formatWeekDate }}</p>
+                <p>Turno: {{ order.turn }}</p>
+                <p>Persona que recibe: {{ order.addressee }}</p>
                 <p v-if="order.client.phone">Teléfono: {{ order.client.phone }}</p>
                 <p>Dirección: {{ order.delivery_address }}</p>
               </b-col>
@@ -96,6 +106,7 @@ export default {
 
 <style>
 .card-order {
+  height: auto;
   margin-bottom: 10px;
   border-radius: 5px;
   border: solid thin var(--iq-secondary-light);

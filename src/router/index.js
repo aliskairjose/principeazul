@@ -225,7 +225,15 @@ const authChildRoutes = (prop, mode = false) => [
     path: 'deliveries',
     name: prop + '.deliveries',
     meta: { dark: mode, auth: false },
-    component: Deliveries
+    component: Deliveries,
+    props: { mode: 'delivery' }
+  },
+  {
+    path: 'local',
+    name: prop + '.local',
+    meta: { dark: mode, auth: false },
+    component: Deliveries,
+    props: { mode: 'local' }
   }
 ]
 

@@ -20,7 +20,7 @@
               <b-col md="6" class="mb-3">Cliente: {{ data.client.name}}</b-col>
               <b-col md="6" class="mb-3">Teléfono: {{ data.client.phone  }}</b-col>
               <b-col md="6" class="mb-3">Entrega: {{ data.mode | capitalize }}</b-col>
-              <b-col md="6" class="mb-3">Tipo: {{ data.type | capitalize }}</b-col>
+              <b-col md="6" class="mb-3">Tipo de compra: {{ data.type | capitalize }}</b-col>
               <b-col md="6" class="mb-3">Monto total: {{ data.total | money }}</b-col>
               <b-col md="6" class="mb-3">Total pagado: {{ data.totalPaid | money }}</b-col>
               <b-col md="6" class="mb-3">
@@ -104,7 +104,7 @@
                 </div>
               </b-col>
               <b-col md="6" class="mb-3"> Motivo: {{ data.reason ? data.reason : 'Sin motivo' }} </b-col>
-              <b-col md="6" class="mb-3">Firma: {{ data.signature | capitalize }}</b-col>
+              <!-- <b-col md="6" class="mb-3">Firma: {{ data.signature | capitalize }}</b-col> -->
               <b-col md="12" class="mb-3">
                 Mensaje para la tarjeta dedicatoria: <br>
                 <label for="" class="text-italic text-muted" v-show="data.dedication">
@@ -124,7 +124,8 @@
               <b-col md="12" class="mb-2 mt-3"> <h5 class="text-muted">Datos de la entrega</h5> </b-col>
               <b-col md="6" class="mb-3">Recibe: {{ data.addressee}}</b-col>
               <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatWeekDate}}</b-col>
-              <b-col md="12" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
+              <b-col md="6" class="mb-3">Dirección de entrega: <br>{{ data.delivery_address }}</b-col>
+              <b-col md="6" class="mb-3">Teléfono: <br>{{ data.phone }}</b-col>
 
              <b-col md="12">
                <slot></slot>
@@ -192,6 +193,7 @@ export default {
       orderService.getById(this.dataId)
         .then(response => {
           this.data = response.data
+          console.log(this.data)
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
               const element = this.data.products[key]

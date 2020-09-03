@@ -12,7 +12,7 @@
       <b-alert :show="isUpdated" variant=" " dismissible fade class="text-white bg-info">
         <div class="iq-alert-text">
           Datos actualizados con
-          <b>exito</b>!
+          <b>éxito</b>!
         </div>
       </b-alert>
       <ValidationProvider vid="Fecha" name="Fecha de entrega" rules="required" v-slot="{ errors }">
@@ -29,8 +29,27 @@
           </div>
         </div>
       </ValidationProvider>
-      <!-- Phone number -->
-
+     <!-- Persona que recibe -->
+      <ValidationProvider
+        vid="Persona que recibe"
+        name="Persona que recibe"
+        rules="required"
+        v-slot="{ errors }">
+        <div class="form-group">
+          <label for="destinatarioInput">Persona que recibe</label>
+          <input
+            type="text"
+            :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
+            id="destinatarioInput"
+            v-model="order.addressee"
+            placeholder="Persona que recibe"
+            required/>
+          <div class="invalid-feedback">
+            <span>{{ errors[0] }}</span>
+          </div>
+        </div>
+      </ValidationProvider>
+       <!-- Phone number -->
       <div class="form-group">
         <label for="destinatarioInput">Teléfono</label>
         <input
@@ -42,27 +61,7 @@
           placeholder="000-000"
           required/>
       </div>
-      <ValidationProvider
-        vid="Persona que recibe"
-        name="Persona que recibe"
-        rules="required"
-        v-slot="{ errors }"
-      >
-        <div class="form-group">
-          <label for="destinatarioInput">Persona que recibe</label>
-          <input
-            type="text"
-            :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
-            id="destinatarioInput"
-            v-model="order.addressee"
-            placeholder="Persona que recibe"
-            required
-          />
-          <div class="invalid-feedback">
-            <span>{{ errors[0] }}</span>
-          </div>
-        </div>
-      </ValidationProvider>
+      <!-- Dirección -->
       <ValidationProvider vid="address" name="Dirección" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="emailInput">Dirección exacta</label>
@@ -81,7 +80,7 @@
           </div>
         </div>
       </ValidationProvider>
-
+      <!-- Dedicatoria -->
       <ValidationProvider vid="Dedicatoria" name="Dedicatoria" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="dedicationInput">Mensaje para la tarjeta dedicatoria</label>

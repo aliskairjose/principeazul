@@ -62,6 +62,7 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <!-- Tipo -->
                     <b-form-group class="col-md-6" label="Tipo:" label-for="type">
                       <ValidationProvider name="Tipo" rules="required" v-slot="{ errors }">
                         <b-form-select
@@ -75,6 +76,7 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <!-- Precio -->
                     <b-form-group class="col-md-6" label="Precio:" label-for="price">
                       <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
                         <b-form-input
@@ -101,6 +103,7 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <!-- Sale Price -->
                     <b-form-group v-show="hideSalePrice" class="col-md-6" label="Precio de venta:" label-for="price">
                       <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
                         <b-form-input
@@ -128,17 +131,25 @@
                         </div>
                       </ValidationProvider>
                     </b-form-group>
+                    <!-- ITBMS -->
+                    <b-form-group class="col-md-6" label="ITBMS:" label-for="itbms_price">
+                        <b-form-select
+                          v-model="product.itbms_price"
+                          :options="itbms">
+                        </b-form-select>
+                    </b-form-group>
+                    <!-- CheckBox Personalizado -->
                     <b-form-group class="col-md-6" label-for="personalized">
                       <div class="checkbox d-inline-block mr-2">
                         <input type="checkbox" class="checkbox-input" v-model="product.personalized">
                         <label class="ml-2">Este producto es personalizado</label>
                       </div>
                     </b-form-group>
+                    <!-- Agregar Subproductos -->
                     <b-form-group
                       class="col-md-4"
                       label-for="type"
-                      v-show="product.type === 'principal'"
-                    >
+                      v-show="product.type === 'principal'">
                       <b-button
                         block
                         v-b-modal.modal-lg
@@ -150,8 +161,7 @@
                     <b-form-group
                       class="col-md-2"
                       label-for="type"
-                      v-show="product.type === 'principal'"
-                    >
+                      v-show="product.type === 'principal'">
                       <h6 class="mb-3">
                         Agregados
                         <b-badge variant="info">{{subs}}</b-badge>
@@ -162,8 +172,7 @@
                         :options="dropzoneOptions"
                         :useCustomSlot="true"
                         :id="'image'"
-                        v-on:vdropzone-success="fileAdded"
-                      >
+                        v-on:vdropzone-success="fileAdded">
                         <div class="dropzone-custom-content">
                           <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
                           <div
@@ -274,10 +283,15 @@ export default {
       hideSalePrice: false,
       subs: 0,
       money: {},
+      itbms: [
+        { value: 0, text: '0%' },
+        { value: 7, text: '7%' }
+      ],
       product: {
         name: '',
         description: '',
         price: null,
+        itbms_price: 7,
         sale_price: null,
         category_id: null,
         type: null,
