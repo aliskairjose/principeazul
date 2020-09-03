@@ -56,7 +56,7 @@
           type=tel
           class="form-control"
           id="destinatarioInput"
-          v-model="order.phone_number"
+          v-model="order.phone"
           v-mask="['###-####', '####-####']"
           placeholder="000-000"
           required/>
@@ -99,15 +99,16 @@
         </div>
       </ValidationProvider>
       <div class="form-group" v-show="order.personalizedRequired">
-        <label for="dedicationInput">Texto Personalizado</label>
-        <input
-          type="text"
-          class="form-control mb-0"
-          id="dedicationInput"
-          v-model="order.personalized_text"
-          placeholder="Texto personalizado"
-          maxlength="60"
-        />
+        <div v-for="product in order.products" :key="product.id">
+          <label for="dedicationInput">Texto Personalizado</label>
+          <input
+            type="text"
+            class="form-control mb-0"
+            id="dedicationInput"
+            v-model="product.personalized_text"
+            placeholder="Texto personalizado"
+            maxlength="60"/>
+        </div>
       </div>
       <div class="d-inline-block w-100">
         <button type="submit" class="btn btn-primary float-right">Enviar</button>

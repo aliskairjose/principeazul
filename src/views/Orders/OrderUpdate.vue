@@ -5,7 +5,6 @@
     <div v-for="item in order.products" :key="item.id" class="text-center">
       {{ item.name }}
     </div>
-    <!-- <div>{{order.delivery_address | capitalize}}</div> -->
     <UpdateForm :order="order"></UpdateForm>
   </div>
 </template>
@@ -33,6 +32,7 @@ export default {
     orderService.getById(id)
       .then(response => {
         this.order = response.data
+        console.log(this.order)
         const value = this.order.delivery_date
         this.order.delivery_date = value.slice(0, value.indexOf(' '))
       })
