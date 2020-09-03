@@ -79,14 +79,14 @@
               </b-col>
             </b-row>
             <b-row class="mt-3 mb-0 d-flex justify-content-between align-items-center footer">
-              <b-col md="6">
+              <b-col lg="8" md="8">
                 <b-form-select
                   v-model="order.status"
                   :options="statuses"
                   @change="onStatusChange(order.id, $event)">
                 </b-form-select>
               </b-col>
-              <b-col lg="4" md="12" sm="12" style="padding: 0px">
+              <b-col lg="4" md="4" sm="12" style="padding: 0px">
                 <b-badge
                   variant="primary"
                   class="px-3"
