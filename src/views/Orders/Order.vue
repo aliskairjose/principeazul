@@ -195,7 +195,7 @@
                       <p class="h6" id="price">{{ p.price }} $</p>
                       <h6>Nota de taller: {{ p.note }}</h6>
                       <h6>Nota de diseño: {{ p.note_design }}</h6>
-                      <h6>Texto personalizado: {{ p.personalized_text }}</h6>
+                      <h6 v-if="p.personalized">Texto personalizado: {{ p.personalized_text }}</h6>
                       <p class="mt-2">Extras</p>
                       <b-button
                         v-for="(item, indice) in p.additionals"
@@ -248,6 +248,7 @@
                       </b-button>
                       <br />
                       <b-button
+                        v-if="p.personalized"
                         v-b-tooltip.right="'Añadir texto Personalizado'"
                         size="sm"
                         variant="link"
