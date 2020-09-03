@@ -320,19 +320,19 @@
       </b-col>
     </b-row>
 
-    <!-- Añadir Nota -->
+    <!-- Modal Nota -->
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
         <b-form-textarea v-model="note" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
-    <!-- Añadir Texto Personalizado -->
+    <!-- Modal Texto Personalizado -->
     <b-modal ref="modal-personalized" ok-only id="modal-personalized" title="Texto personalizado" @ok="addPersonalizedNote">
       <b-form-group class="col-md-12" label="Texto personalizado:" label-for="cliente">
         <b-form-textarea v-model="personalized_text" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
-
+    <!-- Modal Nota de diseño -->
     <b-modal
       ref="modal-design-note"
       ok-only
@@ -429,8 +429,7 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder"
-    >
+      @ok="finishOrder">
       <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
         <h5 class="mt-3">Formulario de datos</h5>
 
@@ -443,8 +442,7 @@
               v-b-tooltip.top="'Copiar'"
               variant="link"
               class="mb-3 mr-1"
-              v-clipboard:copy="url"
-            >
+              v-clipboard:copy="url">
               <i class="ri-file-copy-line pr-0"></i>
             </b-button>
           </b-col>
