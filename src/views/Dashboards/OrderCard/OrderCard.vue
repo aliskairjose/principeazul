@@ -11,7 +11,7 @@
               </b-col>
             </b-row>
             <b-row class="my-4" v-for="product in order.products" :key="product.id">
-              <b-col md="4">
+              <b-col md="4" v-if="product.product">
                 <b-img
                   v-viewer="{movable: false}"
                   center
@@ -113,6 +113,7 @@ export default {
   },
   mounted () {
     vito.index()
+    console.log(this.order)
   },
   methods: {
     onStatusChange (id, $event) {
