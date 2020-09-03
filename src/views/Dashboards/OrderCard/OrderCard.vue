@@ -20,6 +20,15 @@
                   class="image">
                 </b-img>
               </b-col>
+              <b-col md="4" v-if="!product.product">
+                <b-img
+                  v-viewer="{movable: false}"
+                  center
+                  rounded="circle"
+                  :src="require(`@/assets/images/no-image.png`)"
+                  class="image">
+                </b-img>
+              </b-col>
               <b-col md="8">
                 <b-row>
                   <b-col md="12">
