@@ -7,11 +7,16 @@
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
-            <b-row class="py-5">
+            <b-row class="py-5 d-flex justify-content-center">
               <b-col md="12" v-if="orders.length === 0">
                 <div class="text-center mt-5 mb-5">
                   <img class="logo" :src="require('@/assets/images/logo-gold.png')" alt="logo" />
                   <h2 class="mt-5">No hay envíos disponibles</h2>
+                </div>
+              </b-col>
+              <b-col md="12" v-else>
+                <div class="text-center mt-5 mb-5">
+                  <img class="logo" :src="require('@/assets/images/logo-gold.png')" alt="logo" />
                 </div>
               </b-col>
               <b-col md="4">
@@ -42,6 +47,9 @@ import draggable from 'vuedraggable'
 
 export default {
   name: 'Deliveries',
+  props: {
+    mode: { type: String }
+  },
   components: {
     DeliveryCard,
     draggable
@@ -66,7 +74,7 @@ export default {
     const date = new Date()
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
     // this.loadData()
-    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}&mode=${this.mode}`)
   },
   data () {
     return {
