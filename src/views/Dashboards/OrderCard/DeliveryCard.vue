@@ -15,14 +15,23 @@
           </template>
           <template v-slot:body>
             <b-row v-for="product in order.products" :key="product.id">
-              <b-col md="4">
+              <b-col md="4" v-if="product.product">
                 <b-img
                   v-viewer="{movable: false}"
                   center
                   rounded="circle"
                   :src="product.product.image ? product.product.image : require(`@/assets/images/no-image.png`)"
-                  class="image"
-                ></b-img>
+                  class="image">
+                </b-img>
+              </b-col>
+              <b-col md="4" v-if="!product.product">
+                <b-img
+                  v-viewer="{movable: false}"
+                  center
+                  rounded="circle"
+                  :src="require(`@/assets/images/no-image.png`)"
+                  class="image">
+                </b-img>
               </b-col>
               <b-col md="8">
                 <b-row>
@@ -85,7 +94,6 @@ export default {
   },
   mounted () {
     vito.index()
-    console.log(this.order)
   },
   methods: {
     onStatusChange (id, $event) {
