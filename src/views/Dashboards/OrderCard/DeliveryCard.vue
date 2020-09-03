@@ -106,6 +106,7 @@ export default {
 
 <style>
 .card-order {
+  height: auto;
   margin-bottom: 10px;
   border-radius: 5px;
   border: solid thin var(--iq-secondary-light);
