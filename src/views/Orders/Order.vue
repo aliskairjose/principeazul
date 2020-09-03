@@ -197,6 +197,7 @@
                       <p class="h6" id="price">{{ p.price }} $</p>
                       <h6>Nota de taller: {{ p.note }}</h6>
                       <h6>Nota de diseño: {{ p.note_design }}</h6>
+                      <h6>Texto personalizado: {{ p.personalized_text }}</h6>
                       <p class="mt-2">Extras</p>
                       <b-button
                         v-for="(item, indice) in p.additionals"
@@ -244,8 +245,15 @@
                         v-b-tooltip.right="'Agregar notas de diseño'"
                         size="sm"
                         variant="link"
-                        @click="showModalDesignNote(index)"
-                      >
+                        @click="showModalDesignNote(index)">
+                        <i class="ri-file-4-fill ri-lg pr-0"></i>
+                      </b-button>
+                      <br />
+                      <b-button
+                        v-b-tooltip.right="'Añadir texto Personalizado'"
+                        size="sm"
+                        variant="link"
+                        @click="showPersonalizedText(index)">
                         <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                     </b-col>
@@ -313,9 +321,16 @@
       </b-col>
     </b-row>
 
+    <!-- Añadir Nota -->
     <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
       <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
         <b-form-textarea v-model="note" rows="3" max-rows="6"></b-form-textarea>
+      </b-form-group>
+    </b-modal>
+    <!-- Añadir Texto Personalizado -->
+    <b-modal ref="modal-personalized" ok-only id="modal-personalized" title="Texto personalizado" @ok="addPersonalizedNote">
+      <b-form-group class="col-md-12" label="Texto personalizado:" label-for="cliente">
+        <b-form-textarea v-model="personalized_text" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
 
@@ -562,6 +577,7 @@ export default {
             r.additionals = []
             r.note = ''
             r.note_design = ''
+            r.personalized_text = ''
             r.quantity = 1
             this.principals.push(r)
           }
@@ -608,6 +624,7 @@ export default {
       money: {},
       note: '',
       note_design: '',
+      personalized_text: '',
       index: null,
       tabIndex: 0,
       validateMsg: '',
@@ -646,6 +663,7 @@ export default {
       statuses: [],
       product: {
         id: null,
+        personalized_text: '',
         product_id: '',
         order_id: null,
         quantity: 1,
@@ -828,6 +846,9 @@ export default {
     addDesignNote () {
       this.orderProducts[this.index].note_design = this.note_design
     },
+    addPersonalizedNote () {
+      this.orderProducts[this.index].personalized_text = this.personalized_text
+    },
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
@@ -929,6 +950,10 @@ export default {
         if (r.isAddItem) { r.isAddItem = false }
       })
     },
+    showPersonalizedText (index) {
+      this.index = index
+      this.$refs['modal-personalized'].show()
+    },
     showModalNote (index) {
       this.index = index
       this.$refs['modal-note'].show()
@@ -1011,6 +1036,7 @@ export default {
             this.product.name = element.name
             this.product.note_design = element.note_design
             this.product.note = element.note
+            this.product.personalized_text = element.personalized_text
             this.product.image = element.image
             this.product.price = element.price
             this.product.quantity = 1
