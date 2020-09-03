@@ -17,8 +17,8 @@
                   center
                   rounded="circle"
                   :src="product.product.image ? product.product.image : require(`@/assets/images/no-image.png`)"
-                  class="image"
-                ></b-img>
+                  class="image">
+                </b-img>
               </b-col>
               <b-col md="8">
                 <b-row>
