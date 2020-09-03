@@ -14,6 +14,11 @@
                   <h2 class="mt-5">No hay envíos disponibles</h2>
                 </div>
               </b-col>
+              <b-col md="12" v-else>
+                <div class="text-center mt-5 mb-5">
+                  <img class="logo" :src="require('@/assets/images/logo-gold.png')" alt="logo" />
+                </div>
+              </b-col>
               <b-col md="4">
                 <draggable v-model="orders">
                   <div v-for="order in orders" :key="order.id">
