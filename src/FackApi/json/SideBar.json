@@ -59,7 +59,7 @@
     "children":[
       {
         "title": "Crear orden",
-        "name": "Crear órden",
+        "name": "Crear orden",
         "is_heading": false,
         "is_active": false,
         "link": {
