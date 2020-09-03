@@ -145,8 +145,7 @@ export default {
 {
   position: absolute;
   bottom: 10px;
-    width: 100%;
-
-  }
+  width: 90%;
+}
 
 </style>
