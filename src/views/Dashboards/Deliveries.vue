@@ -7,7 +7,7 @@
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
-            <b-row class="py-5">
+            <b-row class="py-5 d-flex justify-content-center">
               <b-col md="12" v-if="orders.length === 0">
                 <div class="text-center mt-5 mb-5">
                   <img class="logo" :src="require('@/assets/images/logo-gold.png')" alt="logo" />
