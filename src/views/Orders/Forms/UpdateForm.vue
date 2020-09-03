@@ -99,8 +99,8 @@
         </div>
       </ValidationProvider>
       <div class="form-group" v-show="order.personalizedRequired">
-        <div v-for="product in order.products" :key="product.id">
-          <label for="dedicationInput">Texto Personalizado</label>
+        <div v-for="(product, index) in order.products" :key="product.id">
+          <label for="dedicationInput">Texto Personalizado </label> <label v-if="order.products.length > 1"> - Producto {{ index + 1}}</label>
           <input
             type="text"
             class="form-control mb-0"

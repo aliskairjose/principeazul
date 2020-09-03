@@ -861,6 +861,7 @@ export default {
       }
       this.orderProducts[index].note = ''
       this.orderProducts[index].note_design = ''
+      this.orderProducts[index].personalized_text = ''
       this.orderProducts[index].price = this.orderProducts[index].price - salePrice
       this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
