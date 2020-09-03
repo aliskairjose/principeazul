@@ -78,7 +78,7 @@
                 </p>
               </b-col>
             </b-row>
-            <b-row class="mt-3 mb-0 d-flex justify-content-between">
+            <b-row class="mt-3 mb-0 d-flex justify-content-between align-items-center footer">
               <b-col md="6">
                 <b-form-select
                   v-model="order.status"
@@ -128,6 +128,9 @@ export default {
 
 <style>
 .card-order {
+  height: 400px;
+  overflow:auto;
+  overflow:-x;
   margin-bottom: 10px;
   border-radius: 5px;
   border: solid thin var(--iq-secondary-light);
@@ -137,5 +140,13 @@ export default {
   margin-top: 10px;
   margin-bottom: 0px !important;
 }
+
+.footer
+{
+  position: absolute;
+  bottom: 10px;
+    width: 100%;
+
+  }
 
 </style>
