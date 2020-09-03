@@ -110,20 +110,6 @@
                         <hr />
                       </b-form-group>
 
-                      <!-- Phone number -->
-                      <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
-                        <b-form-input
-                          v-model="order.phone"
-                          type="tel"
-                          name="phone"
-                          id="phone"
-                          placeholder="Teléfono"
-                          v-mask="['###-####', '####-####']"
-                        ></b-form-input>
-                      </b-form-group>
-                      <!-- Columna vacia -->
-                      <b-form-group class="col-md-6"></b-form-group>
-
                       <!-- Direccion -->
                       <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
                         <b-form-textarea
@@ -161,7 +147,19 @@
                       <b-form-group class="col-md-6" label="Motivo:" label-for="delivery">
                         <b-form-select v-model="order.reason" :options="reasons"></b-form-select>
                       </b-form-group>
-
+                      <!-- Phone number -->
+                      <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
+                        <b-form-input
+                          v-model="order.phone"
+                          type="tel"
+                          name="phone"
+                          id="phone"
+                          placeholder="Teléfono"
+                          v-mask="['###-####', '####-####']"
+                        ></b-form-input>
+                      </b-form-group>
+                      <!-- Columna vacia -->
+                      <b-form-group class="col-md-6"></b-form-group>
                       <!-- Status de la compra -->
                       <b-form-group
                         v-if="status === 'edit'"
