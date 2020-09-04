@@ -157,7 +157,6 @@ export default {
       orderService.getById(this.dataId)
         .then(response => {
           this.data = response.data
-          console.log(this.data)
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
               const element = this.data.products[key]
