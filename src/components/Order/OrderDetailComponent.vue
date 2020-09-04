@@ -9,7 +9,7 @@
             </b-col>
             <b-row>
               <b-col md="10" class="mb-4">
-                <h4>Detalles de la orden #{{data.id}}</h4>
+                <h4>Detalles de la orden #{{data.id}} <small>{{data.created_at | formatWeekDate}}</small></h4>
               </b-col>
               <b-col md="2">
                 <b-button variant="link" class="mb-3 mr-1" v-print="'#printMe'">
@@ -40,7 +40,7 @@
                         v-viewer="{movable: false}"
                         center
                         rounded="circle"
-                        :src="item.product.image ? item.product.image : require(`@/assets/images/no-image.png`)"
+                        :src="item.product.image ? item.product.image : require('@/assets/images/no-image.png')"
                         class="image">
                       </b-img>
                     </b-col>
@@ -56,47 +56,12 @@
                         </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note">Nota de taller: "{{item.note}}"</label> </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note_design">Nota de diseño: "{{item.note_design}}"</label> </b-col>
-                        <!-- <b-col md="6">
-                          <label v-for="(a) in item.additionals" :key="a.id" class="text-muted text-capitalize mr-3">
-                              <h6 class="mx-1"> <b-badge variant="primary" class="px-3"> {{ a.name }}</b-badge></h6>
-                          </label>
-                        </b-col> -->
                         <b-col md="4" v-show="item.additionals.length > 0">
                           <b-button variant="link" @click="showHideDetail(index)">
                             <!-- <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
                             <i class="ri-arrow-up-s-fill" v-else></i> -->
                           </b-button>
                         </b-col>
-                        <!-- <b-col md="12">
-                          <b-row v-show="item.showDetails">
-                            <b-col md="12">
-                              <table style="width:100%">
-                                <tr class="text-center">
-                                  <th>Id</th>
-                                  <th>Imagen</th>
-                                  <th>Producto</th>
-                                  <th>Cantidad</th>
-                                </tr>
-                                <tr v-for="x in item.additionals" :key="x.id" class="text-muted text-capitalize text-muted text-center">
-                                  <td>{{ x.id }}</td>
-                                  <td>
-                                    <b-img
-                                      v-viewer="{movable: false}"
-                                      center
-                                      rounded="circle"
-                                      :src="x.image ? products.item.image : require(`@/assets/images/no-image.png`)"
-                                      class="image">
-                                    </b-img>
-                                  </td>
-                                  <td>
-                                    <label for="" class="text-muted text-capitalize">{{ x.name }}</label>
-                                  </td>
-                                  <td>{{ x.quantity }}</td>
-                                </tr>
-                              </table>
-                            </b-col>
-                          </b-row>
-                        </b-col> -->
                       </b-row>
                     </b-col>
                   </b-row>
@@ -104,7 +69,6 @@
                 </div>
               </b-col>
               <b-col md="6" class="mb-3"> Motivo: {{ data.reason ? data.reason : 'Sin motivo' }} </b-col>
-              <!-- <b-col md="6" class="mb-3">Firma: {{ data.signature | capitalize }}</b-col> -->
               <b-col md="12" class="mb-3">
                 Mensaje para la tarjeta dedicatoria: <br>
                 <label for="" class="text-italic text-muted" v-show="data.dedication">
