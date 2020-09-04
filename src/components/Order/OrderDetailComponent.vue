@@ -40,7 +40,7 @@
                         v-viewer="{movable: false}"
                         center
                         rounded="circle"
-                        :src="item.product.image ? item.product.image : require('@/assets/images/no-image.png')"
+                        :src="item.product.image ? item.product.image : require(`@/assets/images/no-image.png`)"
                         class="image">
                       </b-img>
                     </b-col>
@@ -193,5 +193,16 @@ export default {
 
   .text-italic {
     font-style: italic;
+  }
+  @media print {
+    /* All your print styles go here */
+    #header, #footer, #nav {
+      display: none !important;
+
+    }
+    .image {
+      width: 80px;
+      height: auto;
+    }
   }
 </style>
