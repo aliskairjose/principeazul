@@ -195,11 +195,6 @@ export default {
     font-style: italic;
   }
   @media print {
-    /* All your print styles go here */
-    #header, #footer, #nav {
-      display: none !important;
-
-    }
     .image {
       width: 80px;
       height: auto;
