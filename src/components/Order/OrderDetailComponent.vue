@@ -90,6 +90,7 @@
               <b-col md="6" class="mb-3">Fecha entrega: {{ data.delivery_date | formatWeekDate}}</b-col>
               <b-col md="6" class="mb-3">Dirección de entrega: {{ data.delivery_address }}</b-col>
               <b-col md="6" class="mb-3">Teléfono: {{ data.phone }}</b-col>
+              <b-col md="6" class="mb-3" v-if="data.turn">Turno: {{ data.turn }}</b-col>
 
              <b-col md="12">
                <slot></slot>

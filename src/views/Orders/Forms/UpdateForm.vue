@@ -15,6 +15,7 @@
           <b>éxito</b>!
         </div>
       </b-alert>
+      <!-- Fecha de entrega -->
       <ValidationProvider vid="Fecha" name="Fecha de entrega" rules="required" v-slot="{ errors }">
         <div class="form-group">
           <label for="dateInput">Fecha de entrega</label>
@@ -22,19 +23,30 @@
             id="example-datepicker"
             :class="'form-control mb-0' +(errors.length > 0 ? ' is-invalid' : '')"
             v-model="order.delivery_date"
-            class="mb-2">
-          </b-form-datepicker>
+            class="mb-2"
+          ></b-form-datepicker>
           <div class="invalid-feedback">
             <span>{{ errors[0] }}</span>
           </div>
         </div>
       </ValidationProvider>
-     <!-- Persona que recibe -->
+      <!-- Turno -->
+      <div class="form-group">
+        <label for="destinatarioInput">Turno</label>
+        <input
+          type="text"
+          class="form-control"
+          id="turnInput"
+          v-model="order.turn"
+        />
+      </div>
+      <!-- Persona que recibe -->
       <ValidationProvider
         vid="Persona que recibe"
         name="Persona que recibe"
         rules="required"
-        v-slot="{ errors }">
+        v-slot="{ errors }"
+      >
         <div class="form-group">
           <label for="destinatarioInput">Persona que recibe</label>
           <input
@@ -43,23 +55,25 @@
             id="destinatarioInput"
             v-model="order.addressee"
             placeholder="Persona que recibe"
-            required/>
+            required
+          />
           <div class="invalid-feedback">
             <span>{{ errors[0] }}</span>
           </div>
         </div>
       </ValidationProvider>
-       <!-- Phone number -->
+      <!-- Phone number -->
       <div class="form-group">
         <label for="destinatarioInput">Teléfono</label>
         <input
-          type=tel
+          type="tel"
           class="form-control"
           id="destinatarioInput"
           v-model="order.phone"
           v-mask="['###-####', '####-####']"
           placeholder="000-000"
-          required/>
+          required
+        />
       </div>
       <!-- Dirección -->
       <ValidationProvider vid="address" name="Dirección" rules="required" v-slot="{ errors }">
@@ -100,15 +114,27 @@
       </ValidationProvider>
       <div class="form-group" v-show="order.personalizedRequired">
         <div v-for="(product, index) in order.products" :key="product.id">
-          <label for="dedicationInput">Texto Personalizado </label> <label v-if="order.products.length > 1"> - Producto {{ index + 1}}</label>
+          <label for="dedicationInput">Texto Personalizado</label>
+          <label v-if="order.products.length > 1">- Producto {{ index + 1}}</label>
           <input
             type="text"
             class="form-control mb-0"
             id="dedicationInput"
             v-model="product.personalized_text"
             placeholder="Texto personalizado"
-            maxlength="60"/>
+            maxlength="60"
+          />
         </div>
+      </div>
+      <!-- Persona que recibio -->
+      <div class="form-group">
+        <label for="destinatarioInput">Persona que recibio</label>
+        <input
+          type="text"
+          class="form-control"
+          id="recibidoInput"
+          placeholder="Persona que recibio"
+          v-model="order.order_receiver"/>
       </div>
       <div class="d-inline-block w-100">
         <button type="submit" class="btn btn-primary float-right">Enviar</button>
