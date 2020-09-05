@@ -5,7 +5,7 @@
     <div v-for="item in order.products" :key="item.id" class="text-center">
       {{ item.name }}
     </div>
-    <div>
+    <div v-if="deliveryZone">
       Zona de entrega: {{ deliveryZone }}
     </div>
     <UpdateForm :order="order"></UpdateForm>
