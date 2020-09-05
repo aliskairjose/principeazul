@@ -85,7 +85,7 @@ export default {
   methods: {
     loadData (params = '') {
       this.loading = true
-      orderService.getAll().then(response => {
+      orderService.getAll(params).then(response => {
         this.orders = [...response.data]
       })
         .catch(() => {})
