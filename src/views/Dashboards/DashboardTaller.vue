@@ -19,6 +19,7 @@
         <iq-card>
           <template v-slot:body>
             <b-row align-h="between" align-v="center">
+              <!-- Fiiltro texto -->
               <b-col md="3">
                 <b-form-group
                   label="Filtro"
@@ -26,21 +27,21 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0 pt-3"
-                >
+                  class="mb-0 pt-3">
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
                       type="search"
                       id="filterInput"
-                      placeholder="Escriba para buscar"
-                    ></b-form-input>
+                      placeholder="Escriba para buscar">
+                    </b-form-input>
                     <b-input-group-append>
                       <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
                     </b-input-group-append>
                   </b-input-group>
                 </b-form-group>
               </b-col>
+              <!-- Filtro Tipo de orden -->
               <b-col md="2">
                 <b-form-group class="mb-0 pt-3">
                   <b-form-select
@@ -52,6 +53,7 @@
                   ></b-form-select>
                 </b-form-group>
               </b-col>
+              <!-- Rango de fechas -->
               <b-col md="2">
                 <b-form-group class="mb-0 pt-3">
                   <b-form-select
@@ -63,6 +65,7 @@
                   ></b-form-select>
                 </b-form-group>
               </b-col>
+              <!-- Filtro Fecha Inicial -->
               <b-col md="2">
                 <b-form-group label="Fecha inicial:" label-for="date">
                   <b-form-input
@@ -73,6 +76,7 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
+              <!-- Filtro Fecha Final -->
               <b-col md="2">
                 <b-form-group label="Fecha final:" label-for="date">
                   <b-form-input
@@ -147,7 +151,7 @@ export default {
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
     this.initDate = formatDate
     this.endDate = formatDate
-    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+    this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
 
     let jwt = require('jsonwebtoken')
 
@@ -176,7 +180,6 @@ export default {
       endDate: '',
       statuses: [],
       typeOptions: [
-        { value: null, text: 'Rango de fecha' },
         { value: 1, text: 'Fecha de creación' },
         { value: 2, text: 'Fecha de entrega' }
       ],
@@ -191,21 +194,19 @@ export default {
   methods: {
     onChangePersonalized () {
       if (this.selectedPersonalize !== 2) {
-        this.loadData(`required_personalized=${this.selectedPersonalize}`)
-      } else {
-        this.loadData(``)
+        this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+        return
       }
+      this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
     },
     onSelectedChange () {
-      if (!this.selectedType) {
-        // Limpia los campos fechas
-        this.initDate = ''
-        this.endDate = ''
-        this.params = ''
-        const date = new Date()
-        date.setDate(date.getDate() + 1)
-        const formatDate = moment(String(date)).format('YYYY-MM-DD')
-        this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}`)
+      // Fecha de creacion
+      if (this.selectedType === 1) {
+        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
+      }
+      // Fecha de entrega
+      if (this.selectedType === 2) {
+        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
       }
     },
     onDateChange () {
