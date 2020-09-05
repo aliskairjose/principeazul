@@ -21,7 +21,7 @@
               </b-col>
               <b-col md="4">
                 <draggable v-model="orders">
-                  <div v-for="order in orders" :key="order.id">
+                  <div v-for="order in orders" :key="order.id" class="mb-4">
                     <DeliveryCard
                       :order="order"
                       :statuses="statuses"
@@ -73,7 +73,6 @@ export default {
 
     const date = new Date()
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
-    // this.loadData()
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}&mode=${this.mode}`)
   },
   data () {
@@ -86,7 +85,7 @@ export default {
   methods: {
     loadData (params = '') {
       this.loading = true
-      orderService.getAll(params).then(response => {
+      orderService.getAll().then(response => {
         this.orders = [...response.data]
       })
         .catch(() => {})
