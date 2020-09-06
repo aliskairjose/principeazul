@@ -171,14 +171,15 @@ export default {
 }
 
 @media print {
-    .footer
-    {
-      position: inherit;
-      width: 30%;
-    }
-    .additionals {
-      display: block;
-    }
+
+  .footer
+  {
+    position: inherit;
+    width: 30%;
   }
+  .additionals {
+    display: block;
+  }
+}
 
 </style>
