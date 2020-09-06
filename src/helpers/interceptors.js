@@ -19,20 +19,23 @@ axios.interceptors.response.use(
     }
   },
   (error) => {
-    console.log(error)
+    // console.log(error.response.data.message)
+    if ([401].indexOf(error.response.status) !== -1) {
+      if (error.response.data.message !== 'Credenciales inválidas') {
+        window.location.assign(window.location.origin + '/auth1/sign-in')
+      }
+    }
     if ([403].indexOf(error.response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
-      // this.$router.push({ name: 'auth1.sign-in' })
       window.location.assign(window.location.origin + '/auth1/sign-in')
     }
     if ([404].indexOf(error.response.status) !== -1) {
       window.location.assign(window.location.origin + '/default/error/400')
     }
     if ([500, 501, 502, 503, 504].indexOf(error.response.status) !== -1) {
-      // window.location.assign(window.location.origin + '/default/error/500')
-      console.log(error)
+      alert(`Ha ocurrido un error inesperado: ${error.response.data.message}`)
     }
   }
 )

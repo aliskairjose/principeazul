@@ -195,7 +195,7 @@
                       <p class="h6" id="price">{{ p.price }} $</p>
                       <h6>Nota de taller: {{ p.note }}</h6>
                       <h6>Nota de diseño: {{ p.note_design }}</h6>
-                      <h6 v-if="p.personalized">Texto personalizado: {{ p.personalized_text }}</h6>
+                      <!-- <h6 v-if="p.personalized">Texto personalizado: {{ p.personalized_text }}</h6> -->
                       <p class="mt-2">Extras</p>
                       <b-button
                         v-for="(item, indice) in p.additionals"
@@ -327,11 +327,11 @@
       </b-form-group>
     </b-modal>
     <!-- Modal Texto Personalizado -->
-    <b-modal ref="modal-personalized" ok-only id="modal-personalized" title="Texto personalizado" @ok="addPersonalizedNote">
+    <!-- <b-modal ref="modal-personalized" ok-only id="modal-personalized" title="Texto personalizado" @ok="addPersonalizedNote">
       <b-form-group class="col-md-12" label="Texto personalizado:" label-for="cliente">
         <b-form-textarea v-model="personalized_text" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
-    </b-modal>
+    </b-modal> -->
     <!-- Modal Nota de diseño -->
     <b-modal
       ref="modal-design-note"
@@ -574,7 +574,7 @@ export default {
             r.additionals = []
             r.note = ''
             r.note_design = ''
-            r.personalized_text = ''
+            // r.personalized_text = ''
             r.quantity = 1
             this.principals.push(r)
           }
@@ -621,7 +621,7 @@ export default {
       money: {},
       note: '',
       note_design: '',
-      personalized_text: '',
+      // personalized_text: '',
       index: null,
       tabIndex: 0,
       validateMsg: '',
@@ -660,7 +660,7 @@ export default {
       statuses: [],
       product: {
         id: null,
-        personalized_text: '',
+        // personalized_text: '',
         product_id: '',
         order_id: null,
         quantity: 1,
@@ -843,9 +843,9 @@ export default {
     addDesignNote () {
       this.orderProducts[this.index].note_design = this.note_design
     },
-    addPersonalizedNote () {
-      this.orderProducts[this.index].personalized_text = this.personalized_text
-    },
+    // addPersonalizedNote () {
+    //   this.orderProducts[this.index].personalized_text = this.personalized_text
+    // },
     delItem (id) {
       this.tempProd = this.tempProd.filter(x => x.id !== id)
     },
@@ -861,7 +861,7 @@ export default {
       }
       this.orderProducts[index].note = ''
       this.orderProducts[index].note_design = ''
-      this.orderProducts[index].personalized_text = ''
+      // this.orderProducts[index].personalized_text = ''
       this.orderProducts[index].price = this.orderProducts[index].price - salePrice
       this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
@@ -1033,7 +1033,7 @@ export default {
             this.product.name = element.name
             this.product.note_design = element.note_design
             this.product.note = element.note
-            this.product.personalized_text = element.personalized_text
+            // this.product.personalized_text = element.personalized_text
             this.product.image = element.image
             this.product.price = element.price
             this.product.quantity = 1
