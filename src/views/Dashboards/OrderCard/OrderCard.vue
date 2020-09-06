@@ -49,7 +49,16 @@
                       v-if="product.additionals.length > 0">
                         <b-icon icon="printer" style="color: #7952b3;"></b-icon>
                     </b-button>
-
+                  </b-col>
+                  <b-col md="12" class="additionals">
+                    <label
+                      v-for="a in product.additionals"
+                      :key="a.id"
+                      class="text-muted text-capitalize mr-3">
+                      <h6 class="mx-1">
+                        <b-badge variant="primary" class="px-2">{{ a.name }} x {{a.quantity}}</b-badge>
+                      </h6>
+                    </label>
                   </b-col>
                 </b-row>
                 <b-row>
@@ -157,5 +166,19 @@ export default {
   bottom: 10px;
   width: 90%;
 }
+.additionals {
+  display: none;
+}
+
+@media print {
+    .footer
+    {
+      position: inherit;
+      width: 30%;
+    }
+    .additionals {
+      display: block;
+    }
+  }
 
 </style>
