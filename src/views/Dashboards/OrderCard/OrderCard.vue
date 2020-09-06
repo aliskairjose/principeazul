@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-row class="card-order">
       <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
-        <iq-card id="printMe">
+        <iq-card :id="`${order.id}`">
           <template v-slot:body>
             <b-row>
               <b-col md="12" class="d-flex justify-content-between">
@@ -45,7 +45,7 @@
                     <b-button
                       size="sm"
                       variant="light"
-                      v-print="'#printMe'"
+                      v-print="`#${order.id}`"
                       v-if="product.additionals.length > 0">
                         <b-icon icon="printer" style="color: #7952b3;"></b-icon>
                     </b-button>
@@ -123,7 +123,6 @@ export default {
   },
   mounted () {
     vito.index()
-    this.printMe = `#printMe${this.order.id}`
   },
   methods: {
     onStatusChange (id, $event) {
@@ -132,11 +131,6 @@ export default {
     },
     showModalRecipe (recipes) {
       this.$emit('modal-recipes', { recipes })
-    }
-  },
-  data () {
-    return {
-      printMe: ''
     }
   }
 }
