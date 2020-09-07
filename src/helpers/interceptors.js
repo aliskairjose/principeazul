@@ -22,6 +22,8 @@ axios.interceptors.response.use(
     // console.log(error.response.data.message)
     if ([401].indexOf(error.response.status) !== -1) {
       if (error.response.data.message !== 'Credenciales inválidas') {
+        localStorage.removeItem('user')
+        localStorage.removeItem('access_token')
         window.location.assign(window.location.origin + '/auth1/sign-in')
       }
     }
