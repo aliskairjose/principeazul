@@ -31,7 +31,7 @@
         </div>
       </ValidationProvider>
       <!-- Turno -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="destinatarioInput">Turno</label>
         <input
           type="text"
@@ -39,7 +39,7 @@
           id="turnInput"
           v-model="order.turn"
         />
-      </div>
+      </div> -->
       <!-- Persona que recibe -->
       <ValidationProvider
         vid="Persona que recibe"
@@ -127,7 +127,7 @@
         </div>
       </div>
       <!-- Persona que recibio -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="destinatarioInput">Persona que recibio</label>
         <input
           type="text"
@@ -135,7 +135,7 @@
           id="recibidoInput"
           placeholder="Persona que recibio"
           v-model="order.order_receiver"/>
-      </div>
+      </div> -->
       <div class="d-inline-block w-100">
         <button type="submit" class="btn btn-primary float-right">Enviar</button>
       </div>
