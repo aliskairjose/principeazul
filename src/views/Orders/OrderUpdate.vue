@@ -1,11 +1,11 @@
 <template>
   <div>
-    <img class="logo my-4" :src="require('../../assets/images/logo-gold.png')" alt="logo" />
+    <img class="logo my-4" :src="require('../../assets/images/logo-black.png')" alt="logo" />
     <p>Gracias por su compra!, Su orden es la NO. {{order.id}} e incluye lo siguiente:</p>
     <div v-for="item in order.products" :key="item.id" class="text-center">
       {{ item.name }}
     </div>
-    <div v-if="deliveryZone">
+    <div v-if="deliveryZone" class="text-center">
       Zona de entrega: {{ deliveryZone }}
     </div>
     <UpdateForm :order="order"></UpdateForm>
