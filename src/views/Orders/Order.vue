@@ -233,9 +233,8 @@
                       <b-button
                         v-b-tooltip.right="'Agregar notas'"
                         size="sm"
-                        variant="utline-link"
-                        @click="showModalNote(index)"
-                      >
+                        variant="outline-link"
+                        @click="showModalNote(index)">
                         <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                       <br />
@@ -248,6 +247,7 @@
                       </b-button>
                       <br />
                       <b-button
+                        class="btn-link-personlized"
                         v-if="p.personalized"
                         v-b-tooltip.right="'Añadir texto Personalizado'"
                         size="sm"
@@ -265,8 +265,7 @@
                       pill
                       variant="outline-secondary"
                       class="mb-3 pr-5 pl-5"
-                      v-if="status === 'add'"
-                    >
+                      v-if="status === 'add'">
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
                     </b-button>
@@ -1109,5 +1108,9 @@ export default {
 
 .success {
   color: var(--pa-light-blue);
+}
+
+.btn-link-personlized {
+  color: var(--iq-success);
 }
 </style>
