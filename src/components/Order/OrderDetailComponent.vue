@@ -56,6 +56,7 @@
                         </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note">Nota de taller: "{{item.note}}"</label> </b-col>
                         <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.note_design">Nota de diseño: "{{item.note_design}}"</label> </b-col>
+                        <b-col md="12"> <label class="text-italic text-muted" for="" v-show="item.personalized_text">Texto personalizado: "{{item.personalized_text}}"</label> </b-col>
                         <b-col md="4" v-show="item.additionals.length > 0">
                           <b-button variant="link" @click="showHideDetail(index)">
                             <!-- <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
@@ -75,13 +76,6 @@
                   "{{ data.dedication | capitalize }}"
                 </label>
               </b-col>
-              <b-col md="12" class="mb-3">
-                Texto personalizado: <br>
-                <label for="" class="text-italic text-muted" v-show="data.personalized_text">
-                  "{{ data.personalized_text | capitalize }}"
-                </label>
-              </b-col>
-
               <b-col md="12"><hr></b-col>
 
               <!-- Datos de la entrega -->
@@ -157,6 +151,7 @@ export default {
       this.index = this.idList.indexOf(this.dataId)
       orderService.getById(this.dataId)
         .then(response => {
+          console.log(response.data)
           this.data = response.data
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
