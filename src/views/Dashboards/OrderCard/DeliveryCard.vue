@@ -9,7 +9,7 @@
                 <h3>#{{order.id}}</h3>
               </b-col>
               <b-col sm="8" md="6">
-                <img class="logo" :src="require('../../../assets/images/logo-gold.png')" alt="logo" />
+                <img class="logo" :src="require('../../../assets/images/logo-black.png')" alt="logo" />
               </b-col>
             </b-row>
           </template>
