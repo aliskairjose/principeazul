@@ -164,7 +164,6 @@ export default {
   },
   data () {
     return {
-      deliveryTime: '00:00:00',
       loading: false,
       isUpdated: false
     }
@@ -172,7 +171,7 @@ export default {
   methods: {
     onSubmit () {
       this.loading = true
-      this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      this.order.delivery_date = `${this.order.delivery_date}`
       orderService.update(this.order.id, this.order)
         .then(response => {
           this.orderResponse = response.data
