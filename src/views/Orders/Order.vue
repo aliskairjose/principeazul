@@ -30,8 +30,7 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder"
-              >
+                :before-change="validateOrder">
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
@@ -192,7 +191,8 @@
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
-                      <p class="h6" id="price">{{ p.price }} $</p>
+                      <p class="h6" id="price" v-if="p.tax === 7">{{ p.price + ((p.price * 7) / 100) | money }}</p>
+                      <p class="h6" id="price" v-else>{{ p.price | money }}</p>
                       <h6>Nota de taller: {{ p.note }}</h6>
                       <h6>Nota de diseño: {{ p.note_design }}</h6>
                       <h6 v-if="p.personalized">Texto personalizado: {{ p.personalized_text }}</h6>
@@ -758,7 +758,6 @@ export default {
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
-      // const object = this.payments
       let amount = 0
       for (const key in this.payments) {
         if (this.payments.hasOwnProperty(key)) {
@@ -1028,13 +1027,18 @@ export default {
           if (this.orderProducts.hasOwnProperty(key)) {
             const element = this.orderProducts[key]
             this.product = {}
+            if (element.tax === 7) {
+              const price = element.price + ((element.price * element.tax) / 100)
+              this.product.price = parseFloat(price).toFixed(2)
+            } else {
+              this.product.price = element.price
+            }
             this.product.product_id = element.id
             this.product.name = element.name
             this.product.note_design = element.note_design
             this.product.note = element.note
             this.product.personalized_text = element.personalized_text
             this.product.image = element.image
-            this.product.price = element.price
             this.product.quantity = 1
             this.product.additionals = []
             for (const key in element.additionals) {

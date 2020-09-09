@@ -36,5 +36,6 @@ Vue.filter('money', (value) => {
   if (value === 0) {
     return `$ 0.00`
   }
+  value = parseFloat(value).toFixed(2)
   return `$ ${value}`
 })

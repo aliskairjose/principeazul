@@ -58,7 +58,8 @@
                 <p>Persona que recibe: {{ order.addressee }}</p>
                 <p v-if="order.client.phone">Teléfono: {{ order.client.phone }}</p>
                 <p>Dirección: {{ order.delivery_address }}</p>
-                <p>Persona que recibio: {{ order.order_receiver || '--------' }}</p>
+                <!-- Debe ser input -->
+                <p>Persona que recibió: {{ order.order_receiver || '--------' }}</p>
               </b-col>
             </b-row>
             <b-row class="mt-3 mb-0 d-flex justify-content-between">
