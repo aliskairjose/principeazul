@@ -61,7 +61,7 @@
                     </label>
                   </b-col>
                 </b-row>
-                <b-row>
+                <!-- <b-row>
                   <b-col md="12">
                     <label
                       class="text-muted"
@@ -70,34 +70,34 @@
                       "{{product.note | capitalize}}"
                     </label>
                   </b-col>
-                </b-row>
+                </b-row> -->
                 <b-row>
                 </b-row>
               </b-col>
             </b-row>
             <b-row>
               <b-col md="12">
-                <div v-for="item in order.products" :key="item.id" >
+                <div v-for="(item, index) in order.products" :key="item.id" >
                   <p v-if="item.note">
-                    Nota de taller:
+                    Nota de taller {{ index + 1}}:
                     <label class="text-muted text-capitalize" style="font-style: italic;">{{item.note}}</label>
                   </p>
                   <p v-if="item.note_design">
-                    Nota de diseño:
+                    Nota de diseño {{ index + 1}}:
                     <label class="text-muted text-capitalize" style="font-style: italic;">{{item.note_design}}</label>
+                  </p>
+                  <p v-if="item.personalized_text">
+                    Texto personalizado {{ index + 1}}:
+                    <label class="text-muted text-capitalize" style="font-style: italic;">{{item.personalized_text}}</label>
                   </p>
                 </div>
                 <p v-if="order.dedication">
                   Dedicatoria:
                   <label class="text-muted text-capitalize" style="font-style: italic;">{{order.dedication}}</label>
                 </p>
-                <p  v-if="order.personalized_text">
-                  Texto personalización:
-                  <label class="text-muted text-capitalize" style="font-style: italic;">{{order.personalized_text}}</label>
-                </p>
               </b-col>
             </b-row>
-            <b-row class="mt-3 mb-0 d-flex justify-content-between align-items-center footer">
+            <b-row class="mt-5 mb-0 d-flex justify-content-between align-items-center">
               <b-col lg="8" md="8">
                 <b-form-select
                   v-model="order.status"
