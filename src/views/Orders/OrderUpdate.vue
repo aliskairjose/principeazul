@@ -1,6 +1,8 @@
 <template>
   <div>
-    <img class="logo my-4" :src="require('../../assets/images/logo-black.png')" alt="logo" />
+    <div class="text-center">
+      <img class="logo my-4 w-75" :src="require('../../assets/images/logo-black.png')" alt="logo" />
+    </div>
     <p>Gracias por su compra!, Su orden es la NO. {{order.id}} e incluye lo siguiente:</p>
     <div v-for="item in order.products" :key="item.id" class="text-center">
       {{ item.name }}
@@ -51,3 +53,6 @@ export default {
   }
 }
 </script>
+<style lang="stylus" scoped>
+
+</style>
