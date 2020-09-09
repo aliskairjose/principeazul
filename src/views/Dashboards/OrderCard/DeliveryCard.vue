@@ -2,6 +2,14 @@
   <b-container fluid>
     <b-row class="card-order">
       <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
+        <div class="text-center" id="spinner" v-show="loading">
+          <b-spinner
+            variant="primary"
+            type="grow"
+            label="Spinning"
+            style="width: 5rem; height: 5rem;">
+          </b-spinner>
+        </div>
         <iq-card>
           <template v-slot:headerTitle>
             <b-row>
@@ -58,8 +66,22 @@
                 <p>Persona que recibe: {{ order.addressee }}</p>
                 <p v-if="order.client.phone">Teléfono: {{ order.client.phone }}</p>
                 <p>Dirección: {{ order.delivery_address }}</p>
-                <!-- Debe ser input -->
-                <p>Persona que recibió: {{ order.order_receiver || '--------' }}</p>
+                <div class="form-group">
+                  <label class="mr-2" for="destinatarioInput">Persona que recibió:</label>
+                  <input
+                    type="text"
+                    id="destinatarioInput"
+                    v-model="order.order_receiver"
+                    placeholder="Persona que recibió"/>
+                    <b-button
+                      v-b-tooltip.right="'Actualizar'"
+                      size="sm"
+                      class="ml-1"
+                      variant="light"
+                      @click="updateOrder(order)">
+                      <i class="ri-refresh-line"></i>
+                    </b-button>
+                </div>
               </b-col>
             </b-row>
             <b-row class="mt-3 mb-0 d-flex justify-content-between">
@@ -87,6 +109,7 @@
 
 <script>
 import { vito } from '../../../config/pluginInit'
+import orderService from '@/services/order'
 
 export default {
   name: 'DeliveryCard',
@@ -97,10 +120,25 @@ export default {
   mounted () {
     vito.index()
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
     onStatusChange (id, $event) {
       const status = $event
       this.$emit('status-change', { id, status })
+    },
+    updateOrder (order) {
+      this.loading = true
+      orderService.update(this.order.id, this.order)
+        .then(response => {
+          this.orderResponse = response.data
+          this.isUpdated = true
+        })
+        .catch(error => { console.log(error) })
+        .finally(() => { this.loading = false })
     }
   }
 }
