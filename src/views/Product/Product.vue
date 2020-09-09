@@ -134,7 +134,7 @@
                     <!-- ITBMS -->
                     <b-form-group class="col-md-6" label="ITBMS:" label-for="itbms_price">
                         <b-form-select
-                          v-model="product.itbms_price"
+                          v-model="product.tax"
                           :options="itbms">
                         </b-form-select>
                     </b-form-group>
@@ -262,6 +262,7 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
+          console.log(response.data)
           this.product = response.data
           this.subProducts = this.product.additionals
           this.subs = this.product.additionals.length
@@ -291,7 +292,7 @@ export default {
         name: '',
         description: '',
         price: null,
-        itbms_price: 7,
+        tax: 7,
         sale_price: null,
         category_id: null,
         type: null,
