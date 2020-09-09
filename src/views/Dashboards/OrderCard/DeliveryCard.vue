@@ -134,6 +134,7 @@ export default {
       this.loading = true
       orderService.update(this.order.id, this.order)
         .then(response => {
+          console.log(response)
           this.orderResponse = response.data
           this.isUpdated = true
         })
