@@ -19,12 +19,12 @@ axios.interceptors.response.use(
     }
   },
   (error) => {
-    // console.log(error.response.data.message)
+    console.log(error.response)
     if ([401].indexOf(error.response.status) !== -1) {
       if (error.response.data.message !== 'Credenciales inválidas') {
-        localStorage.removeItem('user')
-        localStorage.removeItem('access_token')
-        window.location.assign(window.location.origin + '/auth1/sign-in')
+        // localStorage.removeItem('user')
+        // localStorage.removeItem('access_token')
+        // window.location.assign(window.location.origin + '/auth1/sign-in')
       }
     }
     if ([403].indexOf(error.response.status) !== -1) {
