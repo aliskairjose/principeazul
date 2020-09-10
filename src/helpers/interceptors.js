@@ -20,6 +20,8 @@ axios.interceptors.response.use(
   },
   (error) => {
     console.log(error.response)
+    alert(`Ha ocurrido un error inesperado: ${error.response.data.message}`)
+
     if ([401].indexOf(error.response.status) !== -1) {
       if (error.response.data.message !== 'Credenciales inválidas') {
         // localStorage.removeItem('user')

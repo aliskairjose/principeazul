@@ -299,17 +299,17 @@
                   </div>
                   <div class="col-md-3 text-right">
                     Monto a pagar:
-                    <label for class="success">{{amount}}$</label>
+                    <label for class="success">{{amount | money }}</label>
                     <br />Monto delivery:
-                    <label for class="success">{{deliveryCost}}$</label>
+                    <label for class="success">{{deliveryCost | money }}</label>
                     <br />Monto descuento:
-                    <label for class="success">{{order.discount}}$</label>
+                    <label for class="success">{{order.discount | money }}</label>
                     <br />Total a pagar:
-                    <label for class="success">{{finalPrice}}$</label>
+                    <label for class="success">{{finalPrice | money }}</label>
                     <br />Pagado:
-                    <label :class="payOut > finalPrice ? 'error' : 'success' ">{{ payOut }}$</label>
+                    <label :class="payOut > finalPrice ? 'error' : 'success' ">{{ payOut | money }}</label>
                     <br />Restante:
-                    <label for :class="rest > 0 ? 'success' : 'error' ">{{ rest }}$</label>
+                    <label for :class="rest > 0 ? 'success' : 'error' ">{{ rest | money}}</label>
                   </div>
                 </b-row>
               </tab-content>
@@ -744,14 +744,19 @@ export default {
     amount () {
       // Total a pagar
       let price = 0
+      let prices = []
       let products = this.order.products
       for (const key in products) {
         if (products.hasOwnProperty(key)) {
           const element = products[key]
-          price += element.price
+          // price += element.price
+          prices.push(parseFloat(element.price))
         }
       }
-      return parseFloat(price).toFixed(2)
+      console.log(prices)
+      const add = prices => prices.reduce((a, b) => a + b, 0)
+      price = add(prices)
+      return price
     },
     finalPrice () {
       const monto = (parseFloat(this.amount) + this.deliveryCost) - this.order.discount
