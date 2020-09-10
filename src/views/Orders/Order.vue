@@ -749,11 +749,9 @@ export default {
       for (const key in products) {
         if (products.hasOwnProperty(key)) {
           const element = products[key]
-          // price += element.price
           prices.push(parseFloat(element.price))
         }
       }
-      console.log(prices)
       const add = prices => prices.reduce((a, b) => a + b, 0)
       price = add(prices)
       return price
