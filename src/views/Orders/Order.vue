@@ -191,7 +191,7 @@
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
-                      <p class="h6" id="price" v-if="p.tax === 7">{{ p.price + ((p.price * 7) / 100) | money }}</p>
+                      <p class="h6" id="price" v-if="p.tax !== 0">{{ p.price + ((p.price * p.tax) / 100) | money }}</p>
                       <p class="h6" id="price" v-else>{{ p.price | money }}</p>
                       <h6>Nota de taller: {{ p.note }}</h6>
                       <h6>Nota de diseño: {{ p.note_design }}</h6>
@@ -914,7 +914,11 @@ export default {
     handleOkExtra () {
       if (this.tempExtra.length > 0) {
         for (const iterator of this.tempExtra) {
-          this.orderProducts[this.index].price += iterator.sale_price * iterator.quantity
+          if (iterator.tax !== 0) {
+            this.orderProducts[this.index].price += (iterator.sale_price + (iterator.sale_price * iterator.tax) / 100) * iterator.quantity
+          } else {
+            this.orderProducts[this.index].price += iterator.sale_price * iterator.quantity
+          }
         }
         this.orderProducts[this.index].additionals.push(...this.tempExtra)
       }
@@ -1030,7 +1034,7 @@ export default {
           if (this.orderProducts.hasOwnProperty(key)) {
             const element = this.orderProducts[key]
             this.product = {}
-            if (element.tax === 7) {
+            if (element.tax !== 0) {
               const price = element.price + ((element.price * element.tax) / 100)
               this.product.price = parseFloat(price).toFixed(2)
             } else {
