@@ -7,8 +7,8 @@
             variant="primary"
             type="grow"
             label="Spinning"
-            style="width: 5rem; height: 5rem;">
-          </b-spinner>
+            style="width: 5rem; height: 5rem;"
+          ></b-spinner>
         </div>
         <iq-card>
           <template v-slot:headerTitle>
@@ -17,7 +17,11 @@
                 <h3>#{{order.id}}</h3>
               </b-col>
               <b-col sm="8" md="6">
-                <img class="logo" :src="require('../../../assets/images/logo-black.png')" alt="logo" />
+                <img
+                  class="logo"
+                  :src="require('../../../assets/images/logo-black.png')"
+                  alt="logo"
+                />
               </b-col>
             </b-row>
           </template>
@@ -29,8 +33,8 @@
                   center
                   rounded="circle"
                   :src="product.product.image ? product.product.image : require(`@/assets/images/no-image.png`)"
-                  class="image">
-                </b-img>
+                  class="image"
+                ></b-img>
               </b-col>
               <b-col md="4" v-if="!product.product">
                 <b-img
@@ -38,8 +42,8 @@
                   center
                   rounded="circle"
                   :src="require(`@/assets/images/no-image.png`)"
-                  class="image">
-                </b-img>
+                  class="image"
+                ></b-img>
               </b-col>
               <b-col md="8">
                 <b-row>
@@ -72,15 +76,23 @@
                     type="text"
                     id="destinatarioInput"
                     v-model="order.order_receiver"
-                    placeholder="Persona que recibió"/>
-                    <b-button
-                      v-b-tooltip.right="'Actualizar'"
-                      size="sm"
-                      class="ml-1"
-                      variant="light"
-                      @click="updateOrder(order)">
-                      <i class="ri-refresh-line"></i>
-                    </b-button>
+                    placeholder="Persona que recibió"
+                  />
+                  <b-button
+                    v-b-tooltip.right="'Actualizar'"
+                    size="sm"
+                    class="ml-1"
+                    variant="light"
+                    @click="updateOrder(order)"
+                  >
+                    <i class="ri-refresh-line"></i>
+                  </b-button>
+                  <b-alert :show="isUpdated" variant=" " dismissible fade class="text-white bg-info">
+                  <div class="iq-alert-text">
+                    Datos actualizados con
+                    <b>éxito</b>!
+                  </div>
+                </b-alert>
                 </div>
               </b-col>
             </b-row>
@@ -122,7 +134,8 @@ export default {
   },
   data () {
     return {
-      loading: false
+      loading: false,
+      isUpdated: false
     }
   },
   methods: {
@@ -134,9 +147,10 @@ export default {
       this.loading = true
       orderService.update(this.order.id, this.order)
         .then(response => {
-          console.log(response)
-          this.orderResponse = response.data
           this.isUpdated = true
+          setTimeout(() => {
+            this.isUpdated = false
+          }, 3000)
         })
         .catch(error => { console.log(error) })
         .finally(() => { this.loading = false })

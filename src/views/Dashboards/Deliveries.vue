@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-row>
       <b-col md="12">
-        <iq-card >
+        <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
@@ -16,7 +16,11 @@
               </b-col>
               <b-col md="12" v-else>
                 <div class="text-center mt-5 mb-5">
-                  <img class="logo w-25" :src="require('@/assets/images/logo-black.png')" alt="logo" />
+                  <img
+                    class="logo w-25"
+                    :src="require('@/assets/images/logo-black.png')"
+                    alt="logo"
+                  />
                 </div>
               </b-col>
               <b-col md="4">
@@ -103,11 +107,11 @@ export default {
 </script>
 
 <style>
-  .iq-footer {
-    margin-left: 0px !important;
-  }
+.iq-footer {
+  margin-left: 0px !important;
+}
 
-  .altura {
-    height: 98vh;
-  }
+.altura {
+  height: 98vh;
+}
 </style>
