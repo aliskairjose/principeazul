@@ -39,7 +39,7 @@
           id="turnInput"
           v-model="order.turn"
         />
-      </div> -->
+      </div>-->
       <!-- Persona que recibe -->
       <ValidationProvider
         vid="Persona que recibe"
@@ -115,16 +115,18 @@
       <!-- <div class="form-group" v-show="order.personalizedRequired"> -->
       <div class="form-group">
         <div v-for="product in order.products" :key="product.id">
-          <label for="dedicationInput">Texto Personalizado</label>
-          <label v-if="order.products.length > 1"> - {{product.name}}</label>
-          <input
-            type="text"
-            class="form-control mb-0"
-            id="dedicationInput"
-            v-model="product.personalized_text"
-            placeholder="Texto personalizado"
-            maxlength="60"
-          />
+          <div v-if="product.product.personalized">
+            <label for="dedicationInput">Texto Personalizado</label>
+            <label v-if="order.products.length > 1">- {{product.name}}</label>
+            <input
+              type="text"
+              class="form-control mb-0"
+              id="dedicationInput"
+              v-model="product.personalized_text"
+              placeholder="Texto personalizado"
+              maxlength="60"
+            />
+          </div>
         </div>
       </div>
       <!-- Persona que recibio -->
@@ -136,7 +138,7 @@
           id="recibidoInput"
           placeholder="Persona que recibio"
           v-model="order.order_receiver"/>
-      </div> -->
+      </div>-->
       <div class="d-inline-block w-100">
         <button type="submit" class="btn btn-primary float-right">Enviar</button>
       </div>
