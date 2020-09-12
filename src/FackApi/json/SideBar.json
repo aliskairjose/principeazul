@@ -12,6 +12,18 @@
     "icon": "ri-home-3-line"
   },
   {
+    "title": "Dashboard Taller",
+    "name": "Dashboard Taller",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "dashboard.taller"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-home-3-line"
+  },
+  {
     "title": "Calendario de entregas",
     "name": "Calendario de entregas",
     "is_heading": false,
