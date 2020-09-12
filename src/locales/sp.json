@@ -148,6 +148,7 @@
     "countries": "Países"
   },
   "dropdown": {
+    "link": "Enlace",
     "view": "Ver",
     "delete": "Eliminar",
     "edit": "Editar",

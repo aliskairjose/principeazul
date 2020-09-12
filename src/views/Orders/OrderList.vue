@@ -27,7 +27,8 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0 pt-3">
+                  class="mb-0 pt-3"
+                >
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
@@ -120,10 +121,9 @@
                       v-slot:cell(delivery_date)="orders"
                     >{{orders.item.delivery_date | formatWeekDate}}</template>
                     <template
-                      v-slot:cell(personalizedRequired)="orders">
-                      {{orders.item.personalizedRequired ? ' Personalizado':  'Estándar'}}</template>
-                    <template
-                      v-slot:cell(editor)="orders">
+                      v-slot:cell(personalizedRequired)="orders"
+                    >{{orders.item.personalizedRequired ? ' Personalizado': 'Estándar'}}</template>
+                    <template v-slot:cell(editor)="orders">
                       <b-button
                         v-show="role === 'admin'"
                         v-b-tooltip.top="'Editar dedicatoria'"
@@ -134,8 +134,7 @@
                         <i class="ri-align-left m-0"></i>
                       </b-button>
                     </template>
-                    <template
-                      v-slot:cell(status)="orders">
+                    <template v-slot:cell(status)="orders">
                       <b-badge
                         variant="primary"
                         v-if="orders.item.status === 'Creado'"
@@ -169,8 +168,7 @@
                         v-if="orders.item.status === 'Cancelado'"
                       >{{orders.item.status}}</b-badge>
                     </template>
-                    <template
-                      v-slot:cell(update)="orders">
+                    <template v-slot:cell(update)="orders">
                       <b-form-select
                         :disabled="orders.item.status === 'Entregado' || orders.item.status === 'Cancelado'"
                         v-model="orders.item.status"
@@ -178,31 +176,45 @@
                         @change="onStatusUpdate(orders.item.id, $event)"
                       ></b-form-select>
                     </template>
-                    <template
-                      v-slot:cell(action)="orders">
-                       <b-dropdown id="dropdownMenuButton5" right variant="none" data-toggle="dropdown">
+                    <template v-slot:cell(action)="orders">
+                      <b-dropdown
+                        id="dropdownMenuButton5"
+                        right
+                        variant="none"
+                        data-toggle="dropdown"
+                      >
                         <template v-slot:button-content>
-                          <span class="text-primary"><i class="ri-more-fill"></i></span>
+                          <span class="text-primary">
+                            <i class="ri-more-fill"></i>
+                          </span>
                         </template>
                         <b-dropdown-item
-                          @click="details(orders.item)"
-                          variant=" iq-bg-primary mr-1 mb-1">
-                          <i class="ri-eye-fill mr-2"></i>
-                            {{ $t('dropdown.view') }}
+                          @click="showLink(orders.item)"
+                          variant=" iq-bg-success mr-1 mb-1"
+                        >
+                          <i class="ri-link-m mr-2"></i>
+                          {{ $t('dropdown.link') }}
                         </b-dropdown-item>
-
+                        <b-dropdown-item
+                          @click="details(orders.item)"
+                          variant=" iq-bg-primary mr-1 mb-1"
+                        >
+                          <i class="ri-eye-fill mr-2"></i>
+                          {{ $t('dropdown.view') }}
+                        </b-dropdown-item>
                         <b-dropdown-item
                           @click="edit(orders.item)"
-                          variant=" iq-bg-success mr-1 mb-1">
+                          variant=" iq-bg-success mr-1 mb-1"
+                        >
                           <i class="ri-pencil-fill mr-2"></i>
-                            {{ $t('dropdown.edit') }}
+                          {{ $t('dropdown.edit') }}
                         </b-dropdown-item>
-
                         <b-dropdown-item
                           @click="remove(orders.item)"
-                          variant=" iq-bg-danger mr-1 mb-1">
+                          variant=" iq-bg-danger mr-1 mb-1"
+                        >
                           <i class="ri-delete-bin-6-fill mr-2"></i>
-                            {{ $t('dropdown.delete') }}
+                          {{ $t('dropdown.delete') }}
                         </b-dropdown-item>
                       </b-dropdown>
                     </template>
@@ -250,7 +262,8 @@
       ok-only
       no-close-on-esc
       no-close-on-backdrop
-      hide-header-close>
+      hide-header-close
+    >
       <OrderDetailComponent
         :dataId="orderId"
         :idList="ids"
@@ -268,11 +281,12 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="closeEditor">
+      @ok="closeEditor"
+    >
       <editor
         v-model="dedication"
         api-key="dtwycivggpsc9sq8d6ddmy3zr8xbydnjateyum1wpxjwn37c"
-       :init="{
+        :init="{
          height: 500,
          menubar: true,
          plugins: [
@@ -285,7 +299,7 @@
            alignleft aligncenter alignright alignjustify | \
            bullist numlist outdent indent | removeformat | print'
        }"
-     />
+      />
     </b-modal>
   </b-container>
 </template>
@@ -375,6 +389,11 @@ export default {
     }
   },
   methods: {
+    showLink (item) {
+      console.log(item)
+      const route = this.$router.resolve({ path: `/form/public/${item.id}` })
+      window.open(route.href, '_blank')
+    },
     loadData (params = '') {
       this.loading = true
       orderService.getAll(params)
@@ -453,7 +472,7 @@ export default {
 </script>
 
 <style>
-  input[type="date"] {
-    height: 33px !important;
-  }
+input[type="date"] {
+  height: 33px !important;
+}
 </style>
