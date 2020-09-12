@@ -166,6 +166,9 @@ export default {
           this.loading = false
           this.disabled = false
           window.scrollTo(0, 0)
+          setTimeout(() => {
+            this.isUpdated = false
+          }, 3000)
         })
     }
   }
