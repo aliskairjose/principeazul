@@ -220,20 +220,6 @@ const authChildRoutes = (prop, mode = false) => [
     name: prop + '.update',
     meta: { dark: mode, auth: false },
     component: OrderUpdate
-  },
-  {
-    path: 'deliveries',
-    name: prop + '.deliveries',
-    meta: { dark: mode, auth: false },
-    component: Deliveries,
-    props: { mode: 'delivery' }
-  },
-  {
-    path: 'local',
-    name: prop + '.local',
-    meta: { dark: mode, auth: false },
-    component: Deliveries,
-    props: { mode: 'local' }
   }
 ]
 
@@ -255,6 +241,23 @@ const pagesChildRoutes = (prop, mode = false) => [
     name: prop + '.maintenance',
     meta: { dark: mode, auth: true },
     component: Maintenance
+  }
+]
+
+const publicRoutes = (prop, mode = false) => [
+  {
+    path: 'deliveries',
+    name: prop + '.deliveries',
+    meta: { dark: mode, auth: false },
+    component: Deliveries,
+    props: { mode: 'delivery' }
+  },
+  {
+    path: 'local',
+    name: prop + '.local',
+    meta: { dark: mode, auth: false },
+    component: Deliveries,
+    props: { mode: 'local' }
   }
 ]
 
@@ -294,7 +297,7 @@ const routes = [
     name: 'deliveries',
     component: PublicLayout,
     meta: { auth: true },
-    children: authChildRoutes('public')
+    children: publicRoutes('public')
   },
   {
     path: '/orders',

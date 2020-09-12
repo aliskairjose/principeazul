@@ -390,7 +390,6 @@ export default {
   },
   methods: {
     showLink (item) {
-      console.log(item)
       const route = this.$router.resolve({ path: `/form/public/${item.id}` })
       window.open(route.href, '_blank')
     },

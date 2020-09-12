@@ -142,5 +142,18 @@
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-account-circle-line"
+  },
+  {
+    "title": "Deliveries",
+    "name": "Deliveries",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "display": "standalone",
+      "name": "public.deliveries"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-send-plane-line"
   }
 ]
