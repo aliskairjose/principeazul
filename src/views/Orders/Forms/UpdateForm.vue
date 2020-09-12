@@ -30,16 +30,6 @@
           </div>
         </div>
       </ValidationProvider>
-      <!-- Turno -->
-      <!-- <div class="form-group">
-        <label for="destinatarioInput">Turno</label>
-        <input
-          type="text"
-          class="form-control"
-          id="turnInput"
-          v-model="order.turn"
-        />
-      </div>-->
       <!-- Persona que recibe -->
       <ValidationProvider
         vid="Persona que recibe"
@@ -129,18 +119,8 @@
           </div>
         </div>
       </div>
-      <!-- Persona que recibio -->
-      <!-- <div class="form-group">
-        <label for="destinatarioInput">Persona que recibio</label>
-        <input
-          type="text"
-          class="form-control"
-          id="recibidoInput"
-          placeholder="Persona que recibio"
-          v-model="order.order_receiver"/>
-      </div>-->
       <div class="d-inline-block w-100">
-        <button type="submit" class="btn btn-primary float-right">Enviar</button>
+        <button type="submit" class="btn btn-primary float-right" :disabled="disabled">Enviar</button>
       </div>
     </form>
   </ValidationObserver>
@@ -167,12 +147,14 @@ export default {
   data () {
     return {
       loading: false,
-      isUpdated: false
+      isUpdated: false,
+      disabled: false
     }
   },
   methods: {
     onSubmit () {
       this.loading = true
+      this.disabled = true
       this.order.delivery_date = `${this.order.delivery_date}`
       orderService.update(this.order.id, this.order)
         .then(response => {
@@ -180,7 +162,11 @@ export default {
           this.isUpdated = true
         })
         .catch(error => { console.log(error) })
-        .finally(() => { this.loading = false })
+        .finally(() => {
+          this.loading = false
+          this.disabled = false
+          window.scrollTo(0, 0)
+        })
     }
   }
 }
