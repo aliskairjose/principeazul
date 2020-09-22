@@ -101,9 +101,17 @@
             </b-row>
             <b-modal ok-only ref="modal-recipes" title="Receta de producto">
               <b-col md="12">
-                <label v-for="a in recipes" :key="a.id" class="text-muted text-capitalize mr-3">
+                <h5>Receta</h5>
+                <label v-for="recipe in recipes" :key="recipe.id" class="text-muted text-capitalize mr-3">
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ a.name }}</b-badge>
+                    <b-badge variant="primary" class="px-2">{{ recipe.name }}</b-badge>
+                  </h6>
+                </label>
+                <hr>
+                <h5>Adicionales</h5>
+                <label v-for="additional in additionals" :key="additional.id" class="text-muted text-capitalize mr-3">
+                  <h6 class="mx-1">
+                    <b-badge variant="primary" class="px-2">{{ additional.name }} x {{additional.quantity}}</b-badge>
                   </h6>
                 </label>
               </b-col>
@@ -168,6 +176,7 @@ export default {
   data () {
     return {
       params: '',
+      additionals: [],
       recipes: [],
       selectedType: 1,
       selectedPersonalize: null,
@@ -230,6 +239,7 @@ export default {
         })
     },
     showModalRecipes ($event) {
+      this.additionals = [...$event.additionals]
       productService.getById($event.productID)
         .then(response => {
           this.recipes = [...response.data.additionals]
