@@ -27,14 +27,15 @@
                   label-align-sm="right"
                   label-size="sm"
                   label-for="filterInput"
-                  class="mb-0 pt-3">
+                  class="mb-0 pt-3"
+                >
                   <b-input-group size="sm">
                     <b-form-input
                       v-model="filter"
                       type="search"
                       id="filterInput"
-                      placeholder="Escriba para buscar">
-                    </b-form-input>
+                      placeholder="Escriba para buscar"
+                    ></b-form-input>
                     <b-input-group-append>
                       <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
                     </b-input-group-append>
@@ -100,12 +101,9 @@
             </b-row>
             <b-modal ok-only ref="modal-recipes" title="Receta de producto">
               <b-col md="12">
-                <label
-                  v-for="a in recipes"
-                  :key="a.id"
-                  class="text-muted text-capitalize mr-3">
+                <label v-for="a in recipes" :key="a.id" class="text-muted text-capitalize mr-3">
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ a.name }} x {{a.quantity}}</b-badge>
+                    <b-badge variant="primary" class="px-2">{{ a.name }}</b-badge>
                   </h6>
                 </label>
               </b-col>
@@ -121,6 +119,7 @@
 import { vito } from '../../config/pluginInit'
 import OrderCard from '@/views/Dashboards/OrderCard/OrderCard'
 import orderService from '@/services/order'
+import productService from '@/services/product'
 import moment from 'moment'
 
 export default {
@@ -231,8 +230,11 @@ export default {
         })
     },
     showModalRecipes ($event) {
-      this.recipes = [...$event.recipes]
-      this.$refs['modal-recipes'].show()
+      productService.getById($event.productID)
+        .then(response => {
+          this.recipes = [...response.data.additionals]
+          this.$refs['modal-recipes'].show()
+        })
     },
     loadData (params = '') {
       this.params = params

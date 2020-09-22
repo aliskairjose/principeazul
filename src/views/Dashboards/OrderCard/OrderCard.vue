@@ -37,8 +37,7 @@
                       class="mx-2"
                       size="sm"
                       variant="light"
-                      @click="showModalRecipe(product.additionals)"
-                      v-if="product.additionals.length > 0">
+                      @click="showModalRecipe(product.product_id)">
                         Receta
                         <b-icon icon="search" style="color: #7952b3;"></b-icon>
                     </b-button>
@@ -138,8 +137,8 @@ export default {
       const status = $event
       this.$emit('status-change', { id, status })
     },
-    showModalRecipe (recipes) {
-      this.$emit('modal-recipes', { recipes })
+    showModalRecipe (productID) {
+      this.$emit('modal-recipes', { productID })
     }
   }
 }
