@@ -8,6 +8,12 @@
               <b-col md="12" class="d-flex justify-content-between">
                 <h4>#{{order.id}}</h4>
                 <label style="font-size: 13px">{{order.delivery_date | formatWeekDate}}</label>
+                <b-button
+                  size="sm"
+                  variant="light"
+                  v-print="`#${order.id}`">
+                  <b-icon icon="printer" style="color: #7952b3;"></b-icon>
+                </b-button>
               </b-col>
             </b-row>
             <b-row class="my-4" v-for="product in order.products" :key="product.id">
@@ -40,13 +46,6 @@
                       @click="showModalRecipe(product.product_id, product.additionals)">
                         Receta
                         <b-icon icon="search" style="color: #7952b3;"></b-icon>
-                    </b-button>
-                    <b-button
-                      size="sm"
-                      variant="light"
-                      v-print="`#${order.id}`"
-                      v-if="product.additionals.length > 0">
-                        <b-icon icon="printer" style="color: #7952b3;"></b-icon>
                     </b-button>
                   </b-col>
                   <b-col md="12" class="additionals">
