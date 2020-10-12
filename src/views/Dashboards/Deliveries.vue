@@ -77,7 +77,6 @@ export default {
 
     const date = new Date()
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
-    this.loadData()
     this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}&mode=${this.mode}`)
   },
   data () {
@@ -91,7 +90,6 @@ export default {
     loadData (params = '') {
       this.loading = true
       orderService.getAll(params).then(response => {
-        console.log(response)
         this.orders = [...response.data]
       })
         .catch(() => {})

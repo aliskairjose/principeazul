@@ -242,9 +242,11 @@ export default {
       this.additionals = [...$event.additionals]
       productService.getById($event.productID)
         .then(response => {
+          // console.log(response)
           this.recipes = [...response.data.additionals]
           this.$refs['modal-recipes'].show()
         })
+      // console.log({ adicionales: this.additionals, recipe: this.recipes })
     },
     loadData (params = '') {
       this.params = params

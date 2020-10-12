@@ -966,7 +966,8 @@ export default {
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
-      // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      console.log(this.order)
+      this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
         orderService.create(this.order)
