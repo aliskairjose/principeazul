@@ -167,5 +167,18 @@
     "class_name": "",
     "is_icon_class": true,
     "icon": "ri-send-plane-line"
+  },
+  {
+    "title": "Entregas local",
+    "name": "Entregas local",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "display": "standalone",
+      "name": "public.local"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-send-plane-line"
   }
 ]
