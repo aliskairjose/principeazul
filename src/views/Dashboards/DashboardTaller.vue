@@ -111,7 +111,7 @@
                 <h5>Adicionales</h5>
                 <label v-for="additional in additionals" :key="additional.id" class="text-muted text-capitalize mr-3">
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ additional.name }}</b-badge>
+                    <b-badge variant="primary" class="px-2">{{ additional.name }} x {{additional.quantity}}</b-badge>
                   </h6>
                 </label>
               </b-col>
