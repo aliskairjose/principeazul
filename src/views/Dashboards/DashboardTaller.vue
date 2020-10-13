@@ -104,14 +104,14 @@
                 <h5>Receta</h5>
                 <label v-for="recipe in recipes" :key="recipe.id" class="text-muted text-capitalize mr-3">
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ recipe.name }}</b-badge>
+                    <b-badge variant="primary" class="px-2">{{ recipe.name }} x {{recipe.pivot.quantity}}</b-badge>
                   </h6>
                 </label>
                 <hr>
                 <h5>Adicionales</h5>
                 <label v-for="additional in additionals" :key="additional.id" class="text-muted text-capitalize mr-3">
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ additional.name }} x {{additional.quantity}}</b-badge>
+                    <b-badge variant="primary" class="px-2">{{ additional.name }}</b-badge>
                   </h6>
                 </label>
               </b-col>
@@ -239,14 +239,15 @@ export default {
         })
     },
     showModalRecipes ($event) {
-      this.additionals = [...$event.additionals]
+      this.additionals = []
+      $event.additionals.map(additional => {
+        if (additional.type === 'extra') { this.additionals.push(additional) }
+      })
       productService.getById($event.productID)
         .then(response => {
-          // console.log(response)
           this.recipes = [...response.data.additionals]
           this.$refs['modal-recipes'].show()
         })
-      // console.log({ adicionales: this.additionals, recipe: this.recipes })
     },
     loadData (params = '') {
       this.params = params
