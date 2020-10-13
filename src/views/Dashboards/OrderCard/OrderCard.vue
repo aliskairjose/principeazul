@@ -59,16 +59,6 @@
                     </label>
                   </b-col>
                 </b-row>
-                <!-- <b-row>
-                  <b-col md="12">
-                    <label
-                      class="text-muted"
-                      style="max-width: 200px; font-style: italic; font-size: 11px"
-                      for v-if="product.note">
-                      "{{product.note | capitalize}}"
-                    </label>
-                  </b-col>
-                </b-row> -->
                 <b-row>
                 </b-row>
               </b-col>
@@ -85,7 +75,7 @@
                     <label class="text-muted text-capitalize" style="font-style: italic;">{{item.note_design}}</label>
                   </p>
                   <p v-if="item.personalized_text">
-                    Texto personalizado {{ index + 1}}:
+                    Texto personalizado {{ item.name }}:
                     <label class="text-muted text-capitalize" style="font-style: italic;">{{item.personalized_text}}</label>
                   </p>
                 </div>
