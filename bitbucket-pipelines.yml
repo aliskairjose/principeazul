@@ -3,18 +3,16 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:10.21.0-jessie
+image: node:10.22.1-stretch-slim
 
 options:
-  max-time: 60
+  max-time: 10
 
 pipelines:
   branches:
     master:
       - step:
           name: Build
-          caches:
-            - node
           script:
             - npm i
             - npm i --save vue-class-component
