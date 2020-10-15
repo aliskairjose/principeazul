@@ -13,6 +13,8 @@ pipelines:
     master:
       - step:
           name: Build
+          caches:
+            - node
           script:
             - npm i
             - npm i --save vue-class-component
