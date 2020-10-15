@@ -23,7 +23,28 @@ pipelines:
             - dist/**
       - step:
           name: Build
-          deployment: production
+          deployment: Production
+          script:
+            - pipe: atlassian/scp-deploy:0.3.3
+              variables:
+                USER: $USER_APP
+                SERVER: $SERVER_APP
+                REMOTE_PATH: $PATH_APP
+                LOCAL_PATH: $LOCAL_PATH
+    staging:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm i
+            - npm i --save vue-class-component
+            - npm run build
+          artifacts:
+            - dist/**
+      - step:
+          name: Build
+          deployment: Staging
           script:
             - pipe: atlassian/scp-deploy:0.3.3
               variables:
