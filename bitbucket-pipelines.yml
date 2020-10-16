@@ -23,7 +23,7 @@ pipelines:
           script:
             - npm i
             - npm i --save vue-class-component
-            # - npm run build
+            - npm run build:prod
           artifacts:
             - dist
       - step:
