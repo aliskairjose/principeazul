@@ -3,10 +3,15 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
+# https://support.atlassian.com/bitbucket-cloud/docs/laravel-with-bitbucket-pipelines/
 image: node:10.22.1-stretch
 
 options:
   max-time: 10
+
+definitions:
+  caches:
+    vendor: vendor
 
 pipelines:
   branches:
@@ -18,19 +23,19 @@ pipelines:
           script:
             - npm i
             - npm i --save vue-class-component
-            - npm run build
+            # - npm run build
           artifacts:
-            - dist/**
+            - dist
       - step:
-          name: Build
-          deployment: Production
+          name: Publish
+          deployment: Production-SCP
           script:
             - pipe: atlassian/scp-deploy:0.3.3
               variables:
-                USER: $USER_APP
-                SERVER: $SERVER_APP
-                REMOTE_PATH: $PATH_APP
-                LOCAL_PATH: $LOCAL_PATH
+                USER: ${USER_APP}
+                SERVER: ${SERVER_APP}
+                REMOTE_PATH: ${PATH_APP}
+                LOCAL_PATH: ${LOCAL_PATH}
     staging:
       - step:
           name: Build
@@ -41,14 +46,14 @@ pipelines:
             - npm i --save vue-class-component
             - npm run build
           artifacts:
-            - dist/**
+            - dist
       - step:
-          name: Build
-          deployment: Staging
+          name: Publish
+          deployment: Staging-SCP
           script:
-            - pipe: atlassian/scp-deploy:0.3.3
+            - pipe: atlassian/scp-deploy:0.3.12
               variables:
-                USER: $USER_APP
-                SERVER: $SERVER_APP
-                REMOTE_PATH: $PATH_APP
-                LOCAL_PATH: $LOCAL_PATH
+                USER: ${USER_APP}
+                SERVER: ${SERVER_APP}
+                REMOTE_PATH: ${PATH_APP}
+                LOCAL_PATH: ${LOCAL_PATH}
