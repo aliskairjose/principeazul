@@ -1,8 +1,5 @@
 module.exports = {
-  'exclude': [
-    ''
-  ],
-  'presets': [
+  presets: [
     '@vue/cli-plugin-babel/preset'
   ]
 }
