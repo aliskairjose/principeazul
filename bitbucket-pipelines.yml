@@ -23,6 +23,7 @@ pipelines:
           script:
             - npm i
             - npm i --save vue-class-component
+            - echo "$ENV_FILE_PROD" | base64 -d > .env.development.local
             - npm run build:prod
           artifacts:
             - dist/**
