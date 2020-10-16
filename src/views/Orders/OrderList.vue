@@ -465,6 +465,9 @@ export default {
     },
     closeEditor () {
       this.dedication = ''
+    },
+    remove (order) {
+      console.log('remove')
     }
   }
 }
