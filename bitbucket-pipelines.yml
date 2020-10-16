@@ -25,7 +25,7 @@ pipelines:
             - npm i --save vue-class-component
             - npm run build:prod
           artifacts:
-            - dist
+            - dist/**
       - step:
           name: Publish
           deployment: Production-SCP
@@ -46,7 +46,7 @@ pipelines:
             - npm i --save vue-class-component
             - npm run build
           artifacts:
-            - dist
+            - dist/**
       - step:
           name: Publish
           deployment: Staging-SCP
