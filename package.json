@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "node --max_old_space_size=16000 node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode development",
-    "build:prod": "node --max_old_space_size=16000 node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode production",
+    "build": "cross-env NODE_ENV=development node --max_old_space_size=16000 node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode development",
+    "build:prod": "cross-env NODE_ENV=production node --max_old_space_size=16000 node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode production",
     "lint": "vue-cli-service lint",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
@@ -93,9 +93,10 @@
     "@vue/cli-plugin-vuex": "^4.1.0",
     "@vue/cli-service": "^4.5.0",
     "@vue/eslint-config-standard": "^4.0.0",
-    "babel-loader": "^8.1.0",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "bootstrap": "^4.3.1",
+    "cross-env": "^7.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "less": "^3.10.3",

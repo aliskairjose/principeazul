@@ -201,14 +201,14 @@ export default {
               .then(res => {
                 this.isShow = true
               })
-              .catch((error) => { console.log(error) })
+              .catch((error) => { console.error(error) })
               .finally(() => {
                 this.isRemoving = false
                 this.loadData()
               })
           }
         })
-        .catch((error) => { console.log(error) })
+        .catch((error) => { console.error(error) })
     }
   }
 }

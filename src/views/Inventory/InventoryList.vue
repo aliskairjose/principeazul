@@ -114,8 +114,8 @@ export default {
           this.providerOptions.push(this.providers)
         })
       })
-      .catch(error => { console.log(error) })
-      .finally(() => { console.log('finally') })
+      .catch(error => { console.error(error) })
+      .finally(() => { console.error('finally') })
   },
   data () {
     return {
@@ -171,8 +171,8 @@ export default {
           .then(response => {
             this.loadData()
           })
-          .catch((error) => { console.log(error) })
-          .finally(() => { console.log('finally') })
+          .catch((error) => { console.error(error) })
+          .finally(() => { console.error('finally') })
       } else {
         this.isError = true
       }
@@ -182,7 +182,7 @@ export default {
         .then(response => {
           this.data = response.data
         })
-        .then((error) => { console.log(error) })
+        .then((error) => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   }

@@ -63,7 +63,7 @@ export default {
       this.loading = true
       auth.resetPassword(this.data)
         .then(response => {
-          console.log(response)
+          // console.log(response)
           if (response.status) { this.isSuccess = true }
         })
         .catch(() => {

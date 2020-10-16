@@ -229,7 +229,7 @@ export default {
         .then(response => {
           this.products = response.data
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => {
           this.loading = false
           setTimeout(() => {
@@ -263,14 +263,14 @@ export default {
               .then(res => {
                 this.isShow = true
               })
-              .catch((error) => { console.log(error) })
+              .catch((error) => { console.error(error) })
               .finally(() => {
                 this.isRemoving = false
                 this.loadData()
               })
           }
         })
-        .catch(err => { console.log(err) })
+        .catch(err => { console.error(err) })
     },
     inventory (item) {
       this.product = item

@@ -102,7 +102,7 @@ export default {
         .then(response => {
           this.client = response.data
         })
-        .catch((error) => { console.log(error) })
+        .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   },
@@ -144,7 +144,7 @@ export default {
               }
             }
           })
-          .catch((error) => { console.log(error) })
+          .catch((error) => { console.error(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
@@ -154,7 +154,7 @@ export default {
               this.$router.push({ name: 'client.list' })
             }
           })
-          .catch((error) => { console.log(error) })
+          .catch((error) => { console.error(error) })
           .finally(() => { this.loading = false })
       }
     },

@@ -161,7 +161,7 @@ export default {
           this.orderResponse = response.data
           this.isUpdated = true
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => {
           this.loading = false
           this.disabled = false

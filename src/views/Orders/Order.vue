@@ -599,7 +599,7 @@ export default {
           this.client = data.client
           this.orderProducts = data.products
         })
-        .catch((error) => { console.log(error) })
+        .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   },
@@ -966,7 +966,7 @@ export default {
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
-      console.log(this.order)
+      // console.log(this.order)
       this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
@@ -975,7 +975,7 @@ export default {
             this.orderResponse = response.data
             this.$refs['modal-order'].show()
           })
-          .catch(error => { console.log(error) })
+          .catch(error => { console.error(error) })
           .finally(() => { this.loading = false })
       }
       if (this.status === 'edit') {
@@ -984,7 +984,7 @@ export default {
             this.orderResponse = response.data
             this.$refs['modal-order'].show()
           })
-          .catch(error => { console.log(error) })
+          .catch(error => { console.error(error) })
           .finally(() => { this.loading = false })
       }
     },
@@ -1081,7 +1081,7 @@ export default {
           .then(response => {
             if (response.status) { this.$router.push({ name: 'orders.list' }) }
           })
-          .catch(error => { console.log(error) })
+          .catch(error => { console.error(error) })
           .finally(() => { this.loading = false })
       } else {
         this.$router.push({ name: 'orders.list' })

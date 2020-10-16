@@ -73,7 +73,7 @@ export default {
           this.statuses.push(status)
         }
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { console.error(error) })
 
     const date = new Date()
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
