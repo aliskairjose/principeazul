@@ -152,7 +152,7 @@ export default {
             this.isUpdated = false
           }, 3000)
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   }

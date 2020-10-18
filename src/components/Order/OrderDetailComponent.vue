@@ -151,7 +151,7 @@ export default {
       this.index = this.idList.indexOf(this.dataId)
       orderService.getById(this.dataId)
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
           this.data = response.data
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
@@ -160,7 +160,7 @@ export default {
             }
           }
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => { this.loading = false })
     },
     prevNext (i) {

@@ -47,7 +47,7 @@ export default {
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   }

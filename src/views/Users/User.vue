@@ -110,7 +110,7 @@ export default {
         .then(response => {
           this.user = response.data
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   },
@@ -146,7 +146,7 @@ export default {
           .then(response => {
             this.$router.push({ name: 'user.list' })
           })
-          .catch(error => { console.log(error) })
+          .catch(error => { console.error(error) })
           .finally(() => { this.loading = false })
       }
 
@@ -155,7 +155,7 @@ export default {
           .then(response => {
             if (response.status) { this.$router.push({ name: 'user.list' }) }
           })
-          .catch(error => { console.log(error) })
+          .catch(error => { console.error(error) })
           .finally(() => { this.loading = false })
       }
     }

@@ -328,7 +328,7 @@ export default {
           this.statuses.push(status)
         }
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { console.error(error) })
 
     this.loadData()
   },
@@ -435,7 +435,7 @@ export default {
       this.isRemoving = true
       orderService.updateSatus(id, status)
         .then(response => {})
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => { this.isRemoving = false })
     },
     createOrder () {

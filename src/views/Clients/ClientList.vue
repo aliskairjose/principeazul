@@ -166,7 +166,7 @@ export default {
         .then(response => {
           this.clients = response.data
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { console.error(error) })
         .finally(() => {
           this.loading = false
           setTimeout(() => {
@@ -200,14 +200,14 @@ export default {
               .then(res => {
                 this.isShow = true
               })
-              .catch((error) => { console.log(error) })
+              .catch((error) => { console.error(error) })
               .finally(() => {
                 this.isRemoving = false
                 this.loadData()
               })
           }
         })
-        .catch((error) => { console.log(error) })
+        .catch((error) => { console.error(error) })
     },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering

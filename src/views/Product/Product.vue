@@ -242,7 +242,7 @@ export default {
           this.categories.push(this.category)
         })
       })
-      .catch((error) => { console.log(error) })
+      .catch((error) => { console.error(error) })
     if (this.getStatus() === 'add') {
       this.title = 'Agregar nuevo producto'
       this.btnTitle = 'Nuevo producto'
@@ -254,7 +254,7 @@ export default {
           })
           this.subProducts = data
         })
-        .catch((error) => { console.log(error) })
+        .catch((error) => { console.error(error) })
     }
     if (this.getStatus() === 'edit') {
       this.loading = true
@@ -262,7 +262,7 @@ export default {
       this.btnTitle = 'Guardar cambios'
       productService.getById(this.$route.params.id)
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
           this.product = response.data
           this.subProducts = this.product.additionals
           this.subs = this.product.additionals.length
@@ -272,7 +272,7 @@ export default {
           this.selectedType = this.product.type
           this.selectedCategory = this.product.category_id
         })
-        .catch((error) => { console.log(error) })
+        .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })
     }
   },
@@ -373,7 +373,7 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => { console.log(error) })
+          .catch((error) => { console.error(error) })
           .finally(() => { this.loading = false })
       }
       if (this.getStatus() === 'edit') {
@@ -383,7 +383,7 @@ export default {
               this.$router.push({ name: 'product.list' })
             }
           })
-          .catch((error) => { console.log(error) })
+          .catch((error) => { console.error(error) })
           .finally(() => { this.loading = false })
       }
     }
