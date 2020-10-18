@@ -112,7 +112,6 @@ export default {
         return dy
       })
 
-      // eslint-disable-next-line no-unused-lets
       chart.yAxes.push(new am4charts.ValueAxis())
 
       // Create series

@@ -441,6 +441,14 @@ export default {
     createOrder () {
       this.$router.push({ name: 'orders.add' })
     },
+    remove (order) {
+      this.isRemoving = true
+      orderService.delete(order.id)
+        .then(response => {
+          this.isRemoving = false
+          if (response.status) { this.loadData() }
+        })
+    },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
@@ -465,9 +473,6 @@ export default {
     },
     closeEditor () {
       this.dedication = ''
-    },
-    remove (order) {
-      console.log('remove')
     }
   }
 }
