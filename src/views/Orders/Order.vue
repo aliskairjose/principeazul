@@ -10,7 +10,7 @@
                   variant="primary"
                   type="grow"
                   label="Spinning"
-                  style="width: 3rem; height: 3rem;"
+                  style="width: 3rem; height: 3rem"
                 ></b-spinner>
               </div>
             </b-row>
@@ -30,13 +30,22 @@
               <tab-content
                 title="Datos de la orden"
                 icon="ti-pencil-alt"
-                :before-change="validateOrder">
+                :before-change="validateOrder"
+              >
                 <ValidationObserver ref="form">
                   <form @submit.prevent="onSubmit">
                     <b-row id="row">
                       <!-- Cliente -->
-                      <b-form-group class="col-md-6" label="Cliente:" label-for="cliente">
-                        <ValidationProvider name="Cliente" rules="required" v-slot="{ errors }">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Cliente:"
+                        label-for="cliente"
+                      >
+                        <ValidationProvider
+                          name="Cliente"
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
                           <b-input-group>
                             <b-form-input
                               autocomplete="off"
@@ -46,11 +55,18 @@
                               type="text"
                               placeholder="Cliente"
                               :value="client.id"
-                              :class="(errors.length > 0 ? ' is-invalid' : '')"
+                              :class="errors.length > 0 ? ' is-invalid' : ''"
                             ></b-form-input>
                             <b-input-group-append is-text>
-                              <b-button size="sm" variant="outline" @click="showClientModal">
-                                <b-icon icon="person-plus-fill" aria-label="Help"></b-icon>
+                              <b-button
+                                size="sm"
+                                variant="outline"
+                                @click="showClientModal"
+                              >
+                                <b-icon
+                                  icon="person-plus-fill"
+                                  aria-label="Help"
+                                ></b-icon>
                               </b-button>
                             </b-input-group-append>
                           </b-input-group>
@@ -60,7 +76,11 @@
                         </ValidationProvider>
                       </b-form-group>
                       <!-- Fecha de entrega -->
-                      <b-form-group class="col-md-6" label="Fecha de entrega:" label-for="date">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Fecha de entrega:"
+                        label-for="date"
+                      >
                         <ValidationProvider
                           name="Fecha de entrega"
                           rules="required"
@@ -69,7 +89,7 @@
                           <b-form-datepicker
                             v-model="order.delivery_date"
                             :value="client.delivery_date"
-                            :class="(errors.length > 0 ? ' is-invalid' : '')"
+                            :class="errors.length > 0 ? ' is-invalid' : ''"
                             placeholder="Fecha de entrega"
                           ></b-form-datepicker>
                           <div class="invalid-feedback">
@@ -78,7 +98,11 @@
                         </ValidationProvider>
                       </b-form-group>
                       <!-- Modo de entrega -->
-                      <b-form-group class="col-md-6" label="Modo de entrega:" label-for="delivery">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Modo de entrega:"
+                        label-for="delivery"
+                      >
                         <b-form-select
                           v-model="order.mode"
                           :options="deliveryType"
@@ -86,12 +110,23 @@
                         ></b-form-select>
                       </b-form-group>
                       <!-- Tipo de compra -->
-                      <b-form-group class="col-md-6" label="Tipo de compra:" label-for="shopType">
-                        <b-form-select v-model="order.type" :options="purchaseType"></b-form-select>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Tipo de compra:"
+                        label-for="shopType"
+                      >
+                        <b-form-select
+                          v-model="order.type"
+                          :options="purchaseType"
+                        ></b-form-select>
                       </b-form-group>
 
                       <!-- Modo de entrega -->
-                      <b-form-group class="col-md-6" label="Zona de entrega:" label-for="delivery">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Zona de entrega:"
+                        label-for="delivery"
+                      >
                         <b-form-select
                           :disabled="order.mode !== 'delivery'"
                           v-model="order.delivery_zone_id"
@@ -101,8 +136,15 @@
                       </b-form-group>
 
                       <!-- Turnos -->
-                      <b-form-group class="col-md-6" label="Turno:" label-for="turn">
-                        <b-form-select v-model="order.turn" :options="turns"></b-form-select>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Turno:"
+                        label-for="turn"
+                      >
+                        <b-form-select
+                          v-model="order.turn"
+                          :options="turns"
+                        ></b-form-select>
                       </b-form-group>
 
                       <b-form-group class="col-md-12">
@@ -110,7 +152,11 @@
                       </b-form-group>
 
                       <!-- Direccion -->
-                      <b-form-group class="col-md-6" label="Dirección de entrega:" label-for="name">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Dirección de entrega:"
+                        label-for="name"
+                      >
                         <b-form-textarea
                           v-model="order.delivery_address"
                           placeholder="Dirección de entrega"
@@ -134,7 +180,11 @@
                       </b-form-group>
 
                       <!-- Persona quien recibe -->
-                      <b-form-group class="col-md-6" label="Persona que recibe:" label-for="name">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Persona que recibe:"
+                        label-for="name"
+                      >
                         <b-form-input
                           v-model="order.addressee"
                           type="text"
@@ -143,11 +193,22 @@
                       </b-form-group>
 
                       <!-- Motivo -->
-                      <b-form-group class="col-md-6" label="Motivo:" label-for="delivery">
-                        <b-form-select v-model="order.reason" :options="reasons"></b-form-select>
+                      <b-form-group
+                        class="col-md-6"
+                        label="Motivo:"
+                        label-for="delivery"
+                      >
+                        <b-form-select
+                          v-model="order.reason"
+                          :options="reasons"
+                        ></b-form-select>
                       </b-form-group>
                       <!-- Phone number -->
-                      <b-form-group class="col-md-6" label="Teléfono:" label-for="phone">
+                      <b-form-group
+                        class="col-md-6"
+                        label="Teléfono:"
+                        label-for="phone"
+                      >
                         <b-form-input
                           v-model="order.phone"
                           type="tel"
@@ -167,7 +228,10 @@
                         label-for="statuses"
                       >
                         <b-form-select
-                          :disabled="order.status === 'Entregado' || order.status === 'Cancelado'"
+                          :disabled="
+                            order.status === 'Entregado' ||
+                            order.status === 'Cancelado'
+                          "
                           v-model="order.status"
                           :options="statuses"
                         ></b-form-select>
@@ -177,25 +241,37 @@
                 </ValidationObserver>
               </tab-content>
               <!-- Tab Productos -->
-              <tab-content title="Productos" icon="ti-package" :before-change="validateProducts">
+              <tab-content
+                title="Productos"
+                icon="ti-package"
+                :before-change="validateProducts"
+              >
                 <div v-for="(p, index) in orderProducts" :key="index">
                   <b-row id="row" class="mb-2">
                     <b-col class="col-md-3">
                       <b-img
-                        v-viewer="{movable: false}"
+                        v-viewer="{ movable: false }"
                         center
                         rounded="circle"
-                        :src="p.image ? p.image : require(`@/assets/images/no-image.png`)"
+                        :src="
+                          p.image
+                            ? p.image
+                            : require(`@/assets/images/no-image.png`)
+                        "
                         id="image"
                       ></b-img>
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
-                      <p class="h6" id="price" v-if="p.tax !== 0">{{ p.price + ((p.price * p.tax) / 100) | money }}</p>
+                      <p class="h6" id="price" v-if="p.tax !== 0">
+                        {{ (p.price + (p.price * p.tax) / 100) | money }}
+                      </p>
                       <p class="h6" id="price" v-else>{{ p.price | money }}</p>
                       <h6>Nota de taller: {{ p.note }}</h6>
                       <h6>Nota de diseño: {{ p.note_design }}</h6>
-                      <h6 v-if="p.personalized">Texto personalizado: {{ p.personalized_text }}</h6>
+                      <h6 v-if="p.personalized">
+                        Texto personalizado: {{ p.personalized_text }}
+                      </h6>
                       <p class="mt-2">Extras</p>
                       <b-button
                         v-for="(item, indice) in p.additionals"
@@ -234,7 +310,8 @@
                         v-b-tooltip.right="'Agregar notas'"
                         size="sm"
                         variant="outline-link"
-                        @click="showModalNote(index)">
+                        @click="showModalNote(index)"
+                      >
                         <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                       <br />
@@ -242,7 +319,8 @@
                         v-b-tooltip.right="'Agregar notas de diseño'"
                         size="sm"
                         variant="link"
-                        @click="showModalDesignNote(index)">
+                        @click="showModalDesignNote(index)"
+                      >
                         <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                       <br />
@@ -252,7 +330,8 @@
                         v-b-tooltip.right="'Añadir texto Personalizado'"
                         size="sm"
                         variant="link"
-                        @click="showPersonalizedText(index)">
+                        @click="showPersonalizedText(index)"
+                      >
                         <i class="ri-file-4-fill ri-lg pr-0"></i>
                       </b-button>
                     </b-col>
@@ -265,7 +344,8 @@
                       pill
                       variant="outline-secondary"
                       class="mb-3 pr-5 pl-5"
-                      v-if="status === 'add'">
+                      v-if="status === 'add'"
+                    >
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
                     </b-button>
@@ -273,7 +353,11 @@
                 </b-row>
               </tab-content>
               <!-- Tab Pago -->
-              <tab-content title="Pago" icon="ti-credit-card" :before-change="validatePayment">
+              <tab-content
+                title="Pago"
+                icon="ti-credit-card"
+                :before-change="validatePayment"
+              >
                 <b-row align-h="center" id="row">
                   <div class="col-md-6">
                     <div v-for="item in payments" :key="item.id">
@@ -282,11 +366,20 @@
                           v-model="item.checkBox"
                           :name="item.payment_method"
                           class="mb-2 mr-sm-2 mb-sm-0"
-                        >{{ item.payment_method }}</b-form-checkbox>
-                        <b-form-input v-money="money" v-show="item.checkBox" v-model="item.amount"></b-form-input>
+                          >{{ item.payment_method }}</b-form-checkbox
+                        >
+                        <b-form-input
+                          v-money="money"
+                          v-show="item.checkBox"
+                          v-model="item.amount"
+                        ></b-form-input>
                       </b-form>
                     </div>
-                    <b-form-group class="col-md-6" label="Descuento" label-for="cliente">
+                    <b-form-group
+                      class="col-md-6"
+                      label="Descuento"
+                      label-for="cliente"
+                    >
                       <b-form-input
                         id="discount"
                         autocomplete="off"
@@ -299,17 +392,25 @@
                   </div>
                   <div class="col-md-3 text-right">
                     Monto a pagar:
-                    <label for class="success">{{amount | money }}</label>
+                    <label for class="success">{{ amount | money }}</label>
                     <br />Monto delivery:
-                    <label for class="success">{{deliveryCost | money }}</label>
+                    <label for class="success">{{
+                      deliveryCost | money
+                    }}</label>
                     <br />Monto descuento:
-                    <label for class="success">{{order.discount | money }}</label>
+                    <label for class="success">{{
+                      order.discount | money
+                    }}</label>
                     <br />Total a pagar:
-                    <label for class="success">{{finalPrice | money }}</label>
+                    <label for class="success">{{ finalPrice | money }}</label>
                     <br />Pagado:
-                    <label :class="payOut > finalPrice ? 'error' : 'success' ">{{ payOut | money }}</label>
+                    <label :class="payOut > finalPrice ? 'error' : 'success'">{{
+                      payOut | money
+                    }}</label>
                     <br />Restante:
-                    <label for :class="rest > 0 ? 'success' : 'error' ">{{ rest | money}}</label>
+                    <label for :class="rest > 0 ? 'success' : 'error'">{{
+                      rest | money
+                    }}</label>
                   </div>
                 </b-row>
               </tab-content>
@@ -320,15 +421,39 @@
     </b-row>
 
     <!-- Modal Nota -->
-    <b-modal ref="modal-note" ok-only id="modal-note" title="Añadir nota" @ok="addNote">
-      <b-form-group class="col-md-12" label="Nota de taller:" label-for="cliente">
+    <b-modal
+      ref="modal-note"
+      ok-only
+      id="modal-note"
+      title="Añadir nota"
+      @ok="addNote"
+    >
+      <b-form-group
+        class="col-md-12"
+        label="Nota de taller:"
+        label-for="cliente"
+      >
         <b-form-textarea v-model="note" rows="3" max-rows="6"></b-form-textarea>
       </b-form-group>
     </b-modal>
     <!-- Modal Texto Personalizado -->
-    <b-modal ref="modal-personalized" ok-only id="modal-personalized" title="Texto personalizado" @ok="addPersonalizedNote">
-      <b-form-group class="col-md-12" label="Texto personalizado:" label-for="cliente">
-        <b-form-textarea v-model="personalized_text" rows="3" max-rows="6"></b-form-textarea>
+    <b-modal
+      ref="modal-personalized"
+      ok-only
+      id="modal-personalized"
+      title="Texto personalizado"
+      @ok="addPersonalizedNote"
+    >
+      <b-form-group
+        class="col-md-12"
+        label="Texto personalizado:"
+        label-for="cliente"
+      >
+        <b-form-textarea
+          v-model="personalized_text"
+          rows="3"
+          max-rows="6"
+        ></b-form-textarea>
       </b-form-group>
     </b-modal>
     <!-- Modal Nota de diseño -->
@@ -340,7 +465,11 @@
       @ok="addDesignNote"
     >
       <b-form-group class="col-md-12" label="Nota de diseño:">
-        <b-form-textarea v-model="note_design" rows="3" max-rows="6"></b-form-textarea>
+        <b-form-textarea
+          v-model="note_design"
+          rows="3"
+          max-rows="6"
+        ></b-form-textarea>
       </b-form-group>
     </b-modal>
 
@@ -415,7 +544,11 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
-      <modal-table :items="clients" :titems="cTitles" v-on:add-item="addClient"></modal-table>
+      <modal-table
+        :items="clients"
+        :titems="cTitles"
+        v-on:add-item="addClient"
+      ></modal-table>
     </b-modal>
 
     <!-- Final Order Modal -->
@@ -428,20 +561,26 @@
       no-close-on-esc
       no-close-on-backdrop
       hide-header-close
-      @ok="finishOrder">
-      <OrderDetailComponent :dataId="orderResponse.id" :idList="ids" :enableButtons="false">
+      @ok="finishOrder"
+    >
+      <OrderDetailComponent
+        :dataId="orderResponse.id"
+        :idList="ids"
+        :enableButtons="false"
+      >
         <h5 class="mt-3">Formulario de datos</h5>
 
         <b-row>
           <b-col md="10">
-            <a :href="url">{{url}}</a>
+            <a :href="url">{{ url }}</a>
           </b-col>
           <b-col md="2">
             <b-button
               v-b-tooltip.top="'Copiar'"
               variant="link"
               class="mb-3 mr-1"
-              v-clipboard:copy="url">
+              v-clipboard:copy="url"
+            >
               <i class="ri-file-copy-line pr-0"></i>
             </b-button>
           </b-col>
@@ -451,7 +590,8 @@
           v-model="sendForm"
           name="sendForm"
           class="mb-2 mr-sm-2 mb-sm-0"
-        >Enviar formulario por email</b-form-checkbox>
+          >Enviar formulario por email</b-form-checkbox
+        >
       </OrderDetailComponent>
     </b-modal>
   </b-container>
@@ -700,16 +840,11 @@ export default {
       ],
       purchaseType: [
         { value: null, text: 'Seleccione tipo de compra' },
-        { value: 'apetito24', text: 'Apetito24' },
-        { value: 'delivery', text: 'Delivery' },
-        { value: 'local', text: 'Local' },
-        { value: 'instagram', text: 'Instagram' },
-        { value: 'paginaweb', text: 'Pagina Web' },
-        { value: 'redes', text: 'Redes' },
-        { value: 'tienda', text: 'Tienda' },
-        { value: 'web', text: 'Web' },
         { value: 'whatsapp', text: 'WhatsApp' },
-        { value: 'otros', text: 'Otros' }
+        { value: 'tienda', text: 'Tienda' },
+        { value: 'paginaweb', text: 'Pagina Web' },
+        { value: 'instagram', text: 'Instagram' },
+        { value: 'apetito24', text: 'Apetito24' }
       ],
       tempProd: [],
       tempExtra: [],
@@ -813,12 +948,12 @@ export default {
       this.deliveryCost = object.price
     },
     onModeChange () {
-      if (this.order.mode === 'local') {
-        this.order.type = 'local'
-        this.order.delivery_address = 'Local'
-        this.deliveryCost = 0
-        this.order.delivery_zone_id = null
-      }
+      // if (this.order.mode === 'local') {
+      //   this.order.type = 'local'
+      //   this.order.delivery_address = 'Local'
+      //   this.deliveryCost = 0
+      //   this.order.delivery_zone_id = null
+      // }
       if (this.order.mode === 'apetito24') {
         this.order.delivery_zone_id = null
       }
