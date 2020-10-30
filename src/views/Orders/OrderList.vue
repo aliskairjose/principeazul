@@ -13,242 +13,277 @@
         </b-alert>
         <iq-card>
           <template v-slot:body>
-            <b-col md="12" class="text-center spinner" v-show="isRemoving" id="removing">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+            <b-col
+              md="12"
+              class="text-center spinner"
+              v-show="isRemoving"
+              id="removing"
+            >
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-col md="12" class="text-center spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
-            <b-row v-else align-h="between" align-v="center">
-              <b-col md="3">
-                <b-form-group
-                  label="Filtro"
-                  label-cols-sm="3"
-                  label-align-sm="right"
-                  label-size="sm"
-                  label-for="filterInput"
-                  class="mb-0 pt-3"
-                >
-                  <b-input-group size="sm">
-                    <b-form-input
-                      v-model="filter"
-                      type="search"
-                      id="filterInput"
-                      placeholder="Escriba para buscar"
-                    ></b-form-input>
-                    <b-input-group-append>
-                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
-                    </b-input-group-append>
-                  </b-input-group>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group class="mb-0 pt-3">
-                  <b-form-select
-                    v-model="selectedPersonalize"
-                    id="types"
-                    size="sm"
-                    :options="perOptions"
-                    @change="onChangePersonalized"
-                  ></b-form-select>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group class="mb-0 pt-3">
-                  <b-form-select
-                    v-model="selectedType"
-                    id="types"
-                    size="sm"
-                    :options="typeOptions"
-                    @change="onSelectedChange"
-                  ></b-form-select>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group label="Fecha inicial:" label-for="date">
-                  <b-form-input
-                    :disabled="selectedType ? false : true"
-                    v-model="initDate"
-                    type="date"
-                    @change="onDateChange"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group label="Fecha final:" label-for="date">
-                  <b-form-input
-                    :disabled="selectedType ? false : true"
-                    v-model="endDate"
-                    type="date"
-                    @change="onDateChange"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="12">
-                <b-form-group>
-                  <b-button variant="primary" @click="createOrder">Crear orden</b-button>
-                </b-form-group>
-              </b-col>
-              <template v-if="orders.length === 0">
-                <b-col class="col-md-12">
-                  <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text">
-                      <b>No hay registros para mostrar.</b> Por favor agrege un cliente para comenzar!
-                    </div>
-                  </b-alert>
-                </b-col>
-              </template>
-              <template v-else>
-                <b-col md="12" class="table-responsive">
-                  <b-table
-                    striped
-                    bordered
-                    hover
-                    :items="orders"
-                    :filter="filter"
-                    :fields="titles"
-                    :per-page="perPage"
-                    :sort-by.sync="sortBy"
-                    :sort-desc.sync="sortDesc"
-                    :current-page="currentPage"
-                    @filtered="onFiltered"
-                  >
-                    <template v-slot:cell(mode)="orders">{{orders.item.mode | capitalize }}</template>
-                    <template
-                      v-slot:cell(created_at)="orders"
-                    >{{orders.item.created_at | formatDate}}</template>
-                    <template
-                      v-slot:cell(delivery_date)="orders"
-                    >{{orders.item.delivery_date | formatWeekDate}}</template>
-                    <template
-                      v-slot:cell(personalizedRequired)="orders"
-                    >{{orders.item.personalizedRequired ? ' Personalizado': 'Estándar'}}</template>
-                    <template v-slot:cell(editor)="orders">
-                      <b-button
-                        v-show="role === 'admin'"
-                        v-b-tooltip.top="'Editar dedicatoria'"
-                        variant=" iq-bg-success mr-1 mb-1"
-                        size="sm"
-                        @click="openEditor(orders.item)"
-                      >
-                        <i class="ri-align-left m-0"></i>
-                      </b-button>
-                    </template>
-                    <template v-slot:cell(status)="orders">
-                      <b-badge
-                        variant="primary"
-                        v-if="orders.item.status === 'Creado'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="secondary"
-                        v-if="orders.item.status === 'Pendiente'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="warning"
-                        v-if="orders.item.status === 'En confección'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="warning"
-                        v-if="orders.item.status === 'Confección urgente'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="light"
-                        v-if="orders.item.status === 'Confeccionado'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="info"
-                        v-if="orders.item.status === 'En camino a reparto'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="success"
-                        v-if="orders.item.status === 'Entregado'"
-                      >{{orders.item.status}}</b-badge>
-                      <b-badge
-                        variant="danger"
-                        v-if="orders.item.status === 'Cancelado'"
-                      >{{orders.item.status}}</b-badge>
-                    </template>
-                    <template v-slot:cell(update)="orders">
-                      <b-form-select
-                        :disabled="orders.item.status === 'Entregado' || orders.item.status === 'Cancelado'"
-                        v-model="orders.item.status"
-                        :options="statuses"
-                        @change="onStatusUpdate(orders.item.id, $event)"
-                      ></b-form-select>
-                    </template>
-                    <template v-slot:cell(action)="orders">
-                      <b-dropdown
-                        id="dropdownMenuButton5"
-                        right
-                        variant="none"
-                        data-toggle="dropdown"
-                      >
-                        <template v-slot:button-content>
-                          <span class="text-primary">
-                            <i class="ri-more-fill"></i>
-                          </span>
-                        </template>
-                        <b-dropdown-item
-                          @click="showLink(orders.item)"
-                          variant=" iq-bg-success mr-1 mb-1"
-                        >
-                          <i class="ri-link-m mr-2"></i>
-                          {{ $t('dropdown.link') }}
-                        </b-dropdown-item>
-                        <b-dropdown-item
-                          @click="details(orders.item)"
-                          variant=" iq-bg-primary mr-1 mb-1"
-                        >
-                          <i class="ri-eye-fill mr-2"></i>
-                          {{ $t('dropdown.view') }}
-                        </b-dropdown-item>
-                        <b-dropdown-item
-                          @click="edit(orders.item)"
-                          variant=" iq-bg-success mr-1 mb-1"
-                        >
-                          <i class="ri-pencil-fill mr-2"></i>
-                          {{ $t('dropdown.edit') }}
-                        </b-dropdown-item>
-                        <b-dropdown-item
-                          @click="remove(orders.item)"
-                          variant=" iq-bg-danger mr-1 mb-1"
-                        >
-                          <i class="ri-delete-bin-6-fill mr-2"></i>
-                          {{ $t('dropdown.delete') }}
-                        </b-dropdown-item>
-                      </b-dropdown>
-                    </template>
-                  </b-table>
-                </b-col>
-                <b-col sm="5" md="4">
+            <div v-else>
+              <b-row>
+                <b-col md="4">
                   <b-form-group
-                    label="Resultados por página"
-                    label-cols-sm="6"
-                    label-cols-md="6"
+                    label="Filtro"
+                    label-cols-sm="3"
                     label-align-sm="right"
                     label-size="sm"
-                    label-for="perPageSelect"
-                    class="mb-0"
+                    label-for="filterInput"
+                    class="mb-0 pt-3"
                   >
+                    <b-input-group size="sm">
+                      <b-form-input
+                        v-model="filter"
+                        type="search"
+                        id="filterInput"
+                        placeholder="Escriba para buscar"
+                      ></b-form-input>
+                      <b-input-group-append>
+                        <b-button :disabled="!filter" @click="filter = ''"
+                          >Limpiar</b-button
+                        >
+                      </b-input-group-append>
+                    </b-input-group>
+                  </b-form-group>
+                </b-col>
+                <b-col md="2">
+                  <b-form-group class="mb-0 pt-3">
                     <b-form-select
-                      v-model="perPage"
-                      id="perPageSelect"
+                      v-model="selectedPersonalize"
+                      id="types"
                       size="sm"
-                      :options="pageOptions"
+                      :options="perOptions"
                     ></b-form-select>
                   </b-form-group>
                 </b-col>
-                <b-col sm="7" md="8">
-                  <b-pagination
-                    v-model="currentPage"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    align="right"
-                    aria-controls="my-table"
-                  ></b-pagination>
+                <b-col md="2">
+                  <b-form-group class="mb-0 pt-3">
+                    <b-form-select
+                      v-model="selectedType"
+                      id="types"
+                      size="sm"
+                      :options="typeOptions"
+                    ></b-form-select>
+                  </b-form-group>
                 </b-col>
-              </template>
-            </b-row>
+              </b-row>
+              <b-row align-v="center">
+                <b-col md="1"></b-col>
+                <b-col md="2">
+                  <b-form-group label="Fecha inicial:" label-for="date">
+                    <b-form-input v-model="initDate" type="date"></b-form-input>
+                  </b-form-group>
+                </b-col>
+                <b-col md="2">
+                  <b-form-group label="Fecha final:" label-for="date">
+                    <b-form-input v-model="endDate" type="date"></b-form-input>
+                  </b-form-group>
+                </b-col>
+                <b-col md="2">
+                  <b-button
+                    size="md"
+                    variant="outline-primary"
+                    @click="filterData"
+                  >
+                    Buscar
+                  </b-button>
+                </b-col>
+                <b-col md="12">
+                  <b-form-group>
+                    <b-button variant="primary" @click="createOrder"
+                      >Crear orden</b-button
+                    >
+                  </b-form-group>
+                </b-col>
+                <template v-if="orders.length === 0">
+                  <b-col class="col-md-12">
+                    <b-alert :show="true" variant="secondary">
+                      <div class="iq-alert-text">
+                        <b>No hay registros para mostrar.</b> Por favor agrege
+                        un cliente para comenzar!
+                      </div>
+                    </b-alert>
+                  </b-col>
+                </template>
+                <template v-else>
+                  <b-col md="12" class="table-responsive">
+                    <b-table
+                      striped
+                      bordered
+                      hover
+                      :items="orders"
+                      :filter="filter"
+                      :fields="titles"
+                      :per-page="perPage"
+                      :sort-by.sync="sortBy"
+                      :sort-desc.sync="sortDesc"
+                      :current-page="currentPage"
+                      @filtered="onFiltered"
+                    >
+                      <template v-slot:cell(mode)="orders">{{
+                        orders.item.mode | capitalize
+                      }}</template>
+                      <template v-slot:cell(created_at)="orders">{{
+                        orders.item.created_at | formatDate
+                      }}</template>
+                      <template v-slot:cell(delivery_date)="orders">{{
+                        orders.item.delivery_date | formatWeekDate
+                      }}</template>
+                      <template v-slot:cell(personalizedRequired)="orders">{{
+                        orders.item.personalizedRequired
+                          ? " Personalizado"
+                          : "Estándar"
+                      }}</template>
+                      <template v-slot:cell(editor)="orders">
+                        <b-button
+                          v-show="role === 'admin'"
+                          v-b-tooltip.top="'Editar dedicatoria'"
+                          variant=" iq-bg-success mr-1 mb-1"
+                          size="sm"
+                          @click="openEditor(orders.item)"
+                        >
+                          <i class="ri-align-left m-0"></i>
+                        </b-button>
+                      </template>
+                      <template v-slot:cell(status)="orders">
+                        <b-badge
+                          variant="primary"
+                          v-if="orders.item.status === 'Creado'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="secondary"
+                          v-if="orders.item.status === 'Pendiente'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="warning"
+                          v-if="orders.item.status === 'En confección'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="warning"
+                          v-if="orders.item.status === 'Confección urgente'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="light"
+                          v-if="orders.item.status === 'Confeccionado'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="info"
+                          v-if="orders.item.status === 'En camino a reparto'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="success"
+                          v-if="orders.item.status === 'Entregado'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                        <b-badge
+                          variant="danger"
+                          v-if="orders.item.status === 'Cancelado'"
+                          >{{ orders.item.status }}</b-badge
+                        >
+                      </template>
+                      <template v-slot:cell(update)="orders">
+                        <b-form-select
+                          :disabled="
+                            orders.item.status === 'Entregado' ||
+                            orders.item.status === 'Cancelado'
+                          "
+                          v-model="orders.item.status"
+                          :options="statuses"
+                          @change="onStatusUpdate(orders.item.id, $event)"
+                        ></b-form-select>
+                      </template>
+                      <template v-slot:cell(action)="orders">
+                        <b-dropdown
+                          id="dropdownMenuButton5"
+                          right
+                          variant="none"
+                          data-toggle="dropdown"
+                        >
+                          <template v-slot:button-content>
+                            <span class="text-primary">
+                              <i class="ri-more-fill"></i>
+                            </span>
+                          </template>
+                          <b-dropdown-item
+                            @click="showLink(orders.item)"
+                            variant=" iq-bg-success mr-1 mb-1"
+                          >
+                            <i class="ri-link-m mr-2"></i>
+                            {{ $t("dropdown.link") }}
+                          </b-dropdown-item>
+                          <b-dropdown-item
+                            @click="details(orders.item)"
+                            variant=" iq-bg-primary mr-1 mb-1"
+                          >
+                            <i class="ri-eye-fill mr-2"></i>
+                            {{ $t("dropdown.view") }}
+                          </b-dropdown-item>
+                          <b-dropdown-item
+                            @click="edit(orders.item)"
+                            variant=" iq-bg-success mr-1 mb-1"
+                          >
+                            <i class="ri-pencil-fill mr-2"></i>
+                            {{ $t("dropdown.edit") }}
+                          </b-dropdown-item>
+                          <b-dropdown-item
+                            @click="remove(orders.item)"
+                            variant=" iq-bg-danger mr-1 mb-1"
+                          >
+                            <i class="ri-delete-bin-6-fill mr-2"></i>
+                            {{ $t("dropdown.delete") }}
+                          </b-dropdown-item>
+                        </b-dropdown>
+                      </template>
+                    </b-table>
+                  </b-col>
+                  <b-col sm="5" md="4">
+                    <b-form-group
+                      label="Resultados por página"
+                      label-cols-sm="6"
+                      label-cols-md="6"
+                      label-align-sm="right"
+                      label-size="sm"
+                      label-for="perPageSelect"
+                      class="mb-0"
+                    >
+                      <b-form-select
+                        v-model="perPage"
+                        id="perPageSelect"
+                        size="sm"
+                        :options="pageOptions"
+                      ></b-form-select>
+                    </b-form-group>
+                  </b-col>
+                  <b-col sm="7" md="8">
+                    <b-pagination
+                      v-model="currentPage"
+                      :total-rows="rows"
+                      :per-page="perPage"
+                      align="right"
+                      aria-controls="my-table"
+                    ></b-pagination>
+                  </b-col>
+                </template>
+              </b-row>
+            </div>
           </template>
         </iq-card>
       </b-col>
@@ -287,18 +322,18 @@
         v-model="dedication"
         api-key="dtwycivggpsc9sq8d6ddmy3zr8xbydnjateyum1wpxjwn37c"
         :init="{
-         height: 500,
-         menubar: true,
-         plugins: [
-           'advlist autolink lists link image charmap print preview anchor',
-           'searchreplace visualblocks code fullscreen',
-           'insertdatetime media table paste code help wordcount'
-         ],
-         toolbar:
-           'undo redo | formatselect | bold italic backcolor | \
+          height: 500,
+          menubar: true,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount',
+          ],
+          toolbar:
+            'undo redo | formatselect | bold italic backcolor | \
            alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | print'
-       }"
+           bullist numlist outdent indent | removeformat | print',
+        }"
       />
     </b-modal>
   </b-container>
@@ -309,6 +344,7 @@ import Editor from '@tinymce/tinymce-vue'
 import { vito } from '../../config/pluginInit'
 import orderService from '@/services/order'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
+import moment from 'moment'
 
 export default {
   name: 'OrderList',
@@ -334,19 +370,23 @@ export default {
   },
   mounted () {
     vito.index()
+    const date = new Date()
+    date.setDate(date.getDate())
+    const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    this.initDate = formatDate
+    this.endDate = formatDate
     this.role = localStorage.getItem('role')
   },
   data () {
     return {
       dedication: '',
-      selectedType: null,
-      selectedPersonalize: null,
+      selectedType: 1,
+      selectedPersonalize: 2,
       initDate: '',
       endDate: '',
       typeOptions: [
-        { value: null, text: 'Rango de fecha' },
-        { value: 1, text: 'Fecha de creación' },
-        { value: 2, text: 'Fecha de entrega' }
+        { value: 1, text: 'Fecha de entrega' },
+        { value: 2, text: 'Fecha de creación' }
       ],
       perOptions: [
         { value: null, text: 'Tipo de orden' },
@@ -393,6 +433,27 @@ export default {
       const route = this.$router.resolve({ path: `/form/public/${item.id}` })
       window.open(route.href, '_blank')
     },
+    filterData () {
+      let params = ''
+      if (this.selectedPersonalize !== 2) {
+        if (this.selectedType === 1) {
+          // Fecha de creación
+          params = `delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&required_personalized=${this.selectedPersonalize}`
+        } else {
+          // Fecha de entrega
+          params = `init_date=${this.initDate}&end_date=${this.endDate}&required_personalized=${this.selectedPersonalize}`
+        }
+      } else {
+        if (this.selectedType === 1) {
+          // Fecha de creación
+          params = `delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`
+        } else {
+          // Fecha de entrega
+          params = `init_date=${this.initDate}&end_date=${this.endDate}`
+        }
+      }
+      this.loadData(params)
+    },
     loadData (params = '') {
       this.loading = true
       orderService.getAll(params)
@@ -404,32 +465,6 @@ export default {
         })
         .catch(() => { })
         .finally(() => { this.loading = false })
-    },
-    onChangePersonalized () {
-      if (this.selectedPersonalize !== 2) {
-        this.loadData(`required_personalized=${this.selectedPersonalize}`)
-      } else {
-        this.loadData(``)
-      }
-    },
-    onDateChange () {
-      if (this.initDate && this.endDate) {
-        if (this.selectedType === 1) {
-          // Fecha de creación
-          this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
-        } else {
-          // Fecha de entrega
-          this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
-        }
-      }
-    },
-    onSelectedChange () {
-      if (!this.selectedType) {
-        // Limpia los campos fechas
-        this.initDate = ''
-        this.endDate = ''
-        this.loadData()
-      }
     },
     onStatusUpdate (id, status) {
       this.isRemoving = true
