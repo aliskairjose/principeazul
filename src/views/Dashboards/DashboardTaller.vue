@@ -5,10 +5,20 @@
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <div class="d-flex align-items-center justify-content-between">
-              <iframe :src="iframeUrl" frameborder="0" width="100%" height="350" allowtransparency></iframe>
+              <iframe
+                :src="iframeUrl"
+                frameborder="0"
+                width="100%"
+                height="350"
+                allowtransparency
+              ></iframe>
             </div>
           </template>
         </iq-card>
@@ -18,9 +28,9 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
-            <b-row align-h="between" align-v="center">
-              <!-- Fiiltro texto -->
-              <b-col md="3">
+            <b-row align-h="start" align-v="center">
+              <b-col md="4">
+                <!-- Fiiltro texto -->
                 <b-form-group
                   label="Filtro"
                   label-cols-sm="3"
@@ -37,7 +47,9 @@
                       placeholder="Escriba para buscar"
                     ></b-form-input>
                     <b-input-group-append>
-                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
+                      <b-button :disabled="!filter" @click="filter = ''"
+                        >Limpiar</b-button
+                      >
                     </b-input-group-append>
                   </b-input-group>
                 </b-form-group>
@@ -50,7 +62,6 @@
                     id="types"
                     size="sm"
                     :options="perOptions"
-                    @change="onChangePersonalized"
                   ></b-form-select>
                 </b-form-group>
               </b-col>
@@ -62,31 +73,40 @@
                     id="types"
                     size="sm"
                     :options="typeOptions"
-                    @change="onSelectedChange"
                   ></b-form-select>
                 </b-form-group>
               </b-col>
+            </b-row>
+            <b-row align-h="start" align-v="center">
+              <b-col md="1"></b-col>
               <!-- Filtro Fecha Inicial -->
-              <b-col md="2">
+              <b-col md="3">
                 <b-form-group label="Fecha inicial:" label-for="date">
                   <b-form-input
                     :disabled="selectedType ? false : true"
                     v-model="initDate"
                     type="date"
-                    @change="onDateChange"
                   ></b-form-input>
                 </b-form-group>
               </b-col>
               <!-- Filtro Fecha Final -->
-              <b-col md="2">
+              <b-col md="3">
                 <b-form-group label="Fecha final:" label-for="date">
                   <b-form-input
                     :disabled="selectedType ? false : true"
                     v-model="endDate"
                     type="date"
-                    @change="onDateChange"
                   ></b-form-input>
                 </b-form-group>
+              </b-col>
+              <b-col md="2">
+                <b-button
+                  size="md"
+                  variant="outline-primary"
+                  @click="filterData"
+                >
+                  Buscar
+                </b-button>
               </b-col>
             </b-row>
             <b-row cols-md="3" cols-sm="1">
@@ -102,16 +122,29 @@
             <b-modal ok-only ref="modal-recipes" title="Receta de producto">
               <b-col md="12">
                 <h5>Receta</h5>
-                <label v-for="recipe in recipes" :key="recipe.id" class="text-muted text-capitalize mr-3">
+                <label
+                  v-for="recipe in recipes"
+                  :key="recipe.id"
+                  class="text-muted text-capitalize mr-3"
+                >
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ recipe.name }} x {{recipe.pivot.quantity}}</b-badge>
+                    <b-badge variant="primary" class="px-2"
+                      >{{ recipe.name }} x {{ recipe.pivot.quantity }}</b-badge
+                    >
                   </h6>
                 </label>
-                <hr>
+                <hr />
                 <h5>Adicionales</h5>
-                <label v-for="additional in additionals" :key="additional.id" class="text-muted text-capitalize mr-3">
+                <label
+                  v-for="additional in additionals"
+                  :key="additional.id"
+                  class="text-muted text-capitalize mr-3"
+                >
                   <h6 class="mx-1">
-                    <b-badge variant="primary" class="px-2">{{ additional.name }} x {{additional.quantity}}</b-badge>
+                    <b-badge variant="primary" class="px-2"
+                      >{{ additional.name }} x
+                      {{ additional.quantity }}</b-badge
+                    >
                   </h6>
                 </label>
               </b-col>
@@ -154,7 +187,7 @@ export default {
   mounted () {
     vito.index()
     const date = new Date()
-    date.setDate(date.getDate() + 1)
+    date.setDate(date.getDate())
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
     this.initDate = formatDate
     this.endDate = formatDate
@@ -214,6 +247,15 @@ export default {
       }
       // Fecha de entrega
       if (this.selectedType === 2) {
+        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+      }
+    },
+    filterData () {
+      if (this.selectedType === 1) {
+        // Fecha de creación
+        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
+      } else {
+        // Fecha de entrega
         this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
       }
     },

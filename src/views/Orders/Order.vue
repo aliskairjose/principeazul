@@ -682,7 +682,7 @@ export default {
             const element = data[key]
             this.deliveryZone = {}
             this.deliveryZone.value = element.id
-            this.deliveryZone.text = element.name
+            this.deliveryZone.text = `${element.name} - $${element.price}`
             this.deliveryZone.price = element.price
             this.deliveryZones.push(this.deliveryZone)
           }
