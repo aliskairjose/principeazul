@@ -267,8 +267,12 @@
                         {{ (p.price + (p.price * p.tax) / 100) | money }}
                       </p>
                       <p class="h6" id="price" v-else>{{ p.price | money }}</p>
-                      <h6>Nota de taller: {{ p.note }}</h6>
-                      <h6>Nota de diseño: {{ p.note_design }}</h6>
+                      <h6>
+                        Nota de taller: <strong>{{ p.note }}</strong>
+                      </h6>
+                      <h6>
+                        Nota de diseño: <strong>{{ p.note_design }}</strong>
+                      </h6>
                       <h6 v-if="p.personalized">
                         Texto personalizado: {{ p.personalized_text }}
                       </h6>
