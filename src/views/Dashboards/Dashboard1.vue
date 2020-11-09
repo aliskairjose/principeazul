@@ -5,12 +5,21 @@
         <iq-card>
           <template v-slot:body>
             <div class="d-flex align-items-center justify-content-between">
-              <iframe
+              <!-- <iframe
                 :src="iframeUrl"
                 frameborder="0"
                 width="100%"
                 height="650"
-                allowtransparency>
+                allowtransparency
+              >
+              </iframe> -->
+              <iframe
+                src="http://64.225.42.188:3000/public/dashboard/943f48b0-4286-4bba-bf23-bd8c47094e8f"
+                frameborder="0"
+                width="800"
+                height="600"
+                allowtransparency
+              >
               </iframe>
             </div>
           </template>
@@ -48,5 +57,4 @@ export default {
 </script>
 
 <style>
-
 </style>
