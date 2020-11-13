@@ -97,6 +97,17 @@
                           </div>
                         </ValidationProvider>
                       </b-form-group>
+                      <!-- Tipo de compra -->
+                      <b-form-group
+                        class="col-md-6"
+                        label="Tipo de compra:"
+                        label-for="shopType"
+                      >
+                        <b-form-select
+                          v-model="order.type"
+                          :options="purchaseType"
+                        ></b-form-select>
+                      </b-form-group>
                       <!-- Modo de entrega -->
                       <b-form-group
                         class="col-md-6"
@@ -109,19 +120,7 @@
                           @change="onModeChange"
                         ></b-form-select>
                       </b-form-group>
-                      <!-- Tipo de compra -->
-                      <b-form-group
-                        class="col-md-6"
-                        label="Tipo de compra:"
-                        label-for="shopType"
-                      >
-                        <b-form-select
-                          v-model="order.type"
-                          :options="purchaseType"
-                        ></b-form-select>
-                      </b-form-group>
-
-                      <!-- Modo de entrega -->
+                      <!-- Zona de entrega -->
                       <b-form-group
                         class="col-md-6"
                         label="Zona de entrega:"
@@ -838,7 +837,7 @@ export default {
       ],
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
-        { value: 'apetito24', text: 'Apetito24' },
+        { value: 'pedidosya', text: 'PedidosYa' },
         { value: 'delivery', text: 'Delivery' },
         { value: 'local', text: 'Local' }
       ],
