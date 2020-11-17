@@ -847,7 +847,7 @@ export default {
         { value: 'tienda', text: 'Tienda' },
         { value: 'paginaweb', text: 'Pagina Web' },
         { value: 'instagram', text: 'Instagram' },
-        { value: 'apetito24', text: 'Apetito24' }
+        { value: 'pedidosya', text: 'PedidosYa' }
       ],
       tempProd: [],
       tempExtra: [],
