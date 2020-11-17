@@ -101,15 +101,19 @@
               </b-col>
               <b-col md="2">
                 <b-button
+                  class="mr-3"
                   size="md"
                   variant="outline-primary"
                   @click="filterData"
                 >
                   Buscar
                 </b-button>
+                <b-button size="sm" variant="light" v-print="'#printOrders'">
+                  <b-icon icon="printer" style="color: #7952b3"></b-icon>
+                </b-button>
               </b-col>
             </b-row>
-            <b-row cols-md="3" cols-sm="1">
+            <b-row cols-md="3" cols-sm="1" id="printOrders">
               <b-col v-for="order in orders" :key="order.id">
                 <OrderCard
                   :order="order"
