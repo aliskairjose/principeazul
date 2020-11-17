@@ -108,7 +108,7 @@
                     >
                   </p>
                 </div>
-                <p v-if="order.dedication">
+                <p v-if="order.reason">
                   Motivo:
                   <label
                     class="text-muted text-capitalize"
