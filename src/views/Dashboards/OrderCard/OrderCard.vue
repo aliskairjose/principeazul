@@ -109,7 +109,7 @@
                   </p>
                 </div>
                 <p v-if="order.dedication">
-                  Dedicatoria:
+                  Ocasión:
                   <label
                     class="text-muted text-capitalize"
                     style="font-style: italic"
