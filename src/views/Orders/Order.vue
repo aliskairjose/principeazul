@@ -927,6 +927,9 @@ export default {
     },
     backBtn () {
       if (this.tabIndex === 1) {
+        return 'Datos de la orden'
+      }
+      if (this.tabIndex === 2) {
         return 'Añadir productos'
       }
       return 'Método de pago'
