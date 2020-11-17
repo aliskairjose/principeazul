@@ -108,14 +108,14 @@
                     >
                   </p>
                 </div>
-                <p v-if="order.dedication">
-                  Ocasión:
+                <!-- <p v-if="order.dedication">
+                  Dedicatoria:
                   <label
                     class="text-muted text-capitalize"
                     style="font-style: italic"
                     >{{ order.dedication }}</label
                   >
-                </p>
+                </p> -->
               </b-col>
             </b-row>
             <b-row
