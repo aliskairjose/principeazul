@@ -114,11 +114,21 @@
                         label="Modo de entrega:"
                         label-for="delivery"
                       >
-                        <b-form-select
-                          v-model="order.mode"
-                          :options="deliveryType"
-                          @change="onModeChange"
-                        ></b-form-select>
+                        <ValidationProvider
+                          name="Modo de entrega"
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <b-form-select
+                            v-model="order.mode"
+                            :options="deliveryType"
+                            @change="onModeChange"
+                            :class="errors.length > 0 ? ' is-invalid' : ''"
+                          ></b-form-select>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
                       </b-form-group>
                       <!-- Zona de entrega -->
                       <b-form-group
