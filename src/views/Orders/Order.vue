@@ -394,26 +394,34 @@
                     </b-form-group>
                   </div>
                   <div class="col-md-3 text-right">
+                    ITMS:
+                    <label for class="success">{{ itms | money }}</label>
+                    <br />
                     Monto a pagar:
                     <label for class="success">{{ amount | money }}</label>
-                    <br />Monto delivery:
-                    <label for class="success">{{
+                    <br />
+                    Monto delivery:<label for class="success">{{
                       deliveryCost | money
                     }}</label>
-                    <br />Monto descuento:
-                    <label for class="success">{{
+                    <br />
+                    Monto descuento:<label for class="success">{{
                       order.discount | money
                     }}</label>
-                    <br />Total a pagar:
-                    <label for class="success">{{ finalPrice | money }}</label>
-                    <br />Pagado:
-                    <label :class="payOut > finalPrice ? 'error' : 'success'">{{
-                      payOut | money
+                    <br />
+                    Total a pagar:<label for class="success">{{
+                      finalPrice | money
                     }}</label>
-                    <br />Restante:
-                    <label for :class="rest > 0 ? 'success' : 'error'">{{
-                      rest | money
-                    }}</label>
+                    <br />
+                    Pagado:<label
+                      :class="payOut > finalPrice ? 'error' : 'success'"
+                      >{{ payOut | money }}</label
+                    >
+                    <br />
+                    Restante:<label
+                      for
+                      :class="rest > 0 ? 'success' : 'error'"
+                      >{{ rest | money }}</label
+                    >
                   </div>
                 </b-row>
               </tab-content>
@@ -879,6 +887,16 @@ export default {
     url () {
       return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
+    itms () {
+      let products = this.order.products
+      for (const key in products) {
+        if (products.hasOwnProperty(key)) {
+          const element = products[key]
+          console.log(element)
+        }
+      }
+      return 0
+    },
     amount () {
       // Total a pagar
       let price = 0
@@ -954,13 +972,7 @@ export default {
       this.deliveryCost = object.price
     },
     onModeChange () {
-      // if (this.order.mode === 'local') {
-      //   this.order.type = 'local'
-      //   this.order.delivery_address = 'Local'
-      //   this.deliveryCost = 0
-      //   this.order.delivery_zone_id = null
-      // }
-      if (this.order.mode === 'apetito24') {
+      if (this.order.mode === 'pedidosya') {
         this.order.delivery_zone_id = null
       }
     },

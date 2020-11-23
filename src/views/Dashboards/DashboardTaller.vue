@@ -225,8 +225,8 @@ export default {
       endDate: '',
       statuses: [],
       typeOptions: [
-        { value: 1, text: 'Fecha de creación' },
-        { value: 2, text: 'Fecha de entrega' }
+        { value: 1, text: 'Fecha de entrega' },
+        { value: 2, text: 'Fecha de creación' }
       ],
       perOptions: [
         { value: null, text: 'Tipo de orden' },
