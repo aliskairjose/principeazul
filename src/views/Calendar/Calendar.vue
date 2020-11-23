@@ -5,25 +5,27 @@
         <iq-card>
           <b-col md="12">
             <template>
-              <Fullcalendar locale="es"
+              <Fullcalendar
+                locale="es"
                 :plugins="calendarPlugins"
                 :header="{
                   left: '',
                   center: 'title',
-                  right: 'prev today next'
+                  right: 'prev today next',
                 }"
                 :buttonText="{
                   today: 'Hoy',
                   month: 'Mes',
                   week: 'Semana',
                   day: 'Día',
-                  list: 'Listado'
+                  list: 'Listado',
                 }"
                 @eventClick="handleEventClick"
                 :weekends="true"
                 :selectable="true"
                 :editable="true"
-                :events="formatCalendar"/>
+                :events="formatCalendar"
+              />
             </template>
           </b-col>
         </iq-card>
@@ -35,13 +37,15 @@
       id="modal-details"
       cancel-title="Cancelar"
       ok-only
-      :title="details.modalTitle">
-        <OrderDetailComponent
-          :dataId="orderId"
-          :idList="ids"
-          :enableButtons="false">
-        </OrderDetailComponent>
-      </b-modal>
+      :title="details.modalTitle"
+    >
+      <OrderDetailComponent
+        :dataId="orderId"
+        :idList="ids"
+        :enableButtons="false"
+      >
+      </OrderDetailComponent>
+    </b-modal>
   </b-container>
 </template>
 
@@ -112,12 +116,11 @@ export default {
   computed: {
     formatCalendar () {
       return this.calendar.map(item => ({
-        id: item.id, title: `Pedido  #  ${item.id}`, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
+        // id: item.id, title: `Pedido  #  ${item.id}`, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
+        title: `Pedido  #  ${item.id}`, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
       }))
     }
   }
 }
 </script>
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>

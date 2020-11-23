@@ -2,15 +2,39 @@
   <b-container fluid>
     <b-row>
       <b-col cols="12">
-        <div class="iq-card mb-0" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0" id="menu">
-          <div id="menu-navi" class="iq-card-body d-flex align-items-center justify-content-between" @click="onClickNavi($event)">
-            <button type="button" class="btn mr-1 btn-outline-primary" data-action="move-today">Today</button>
+        <div
+          class="iq-card mb-0"
+          style="border-bottom-left-radius: 0; border-bottom-right-radius: 0"
+          id="menu"
+        >
+          <div
+            id="menu-navi"
+            class="iq-card-body d-flex align-items-center justify-content-between"
+            @click="onClickNavi($event)"
+          >
+            <button
+              type="button"
+              class="btn mr-1 btn-outline-primary"
+              data-action="move-today"
+            >
+              Today
+            </button>
             <div class="d-flex">
-              <button type="button" class="btn btn-link iq-bg-primary" data-action="move-prev">
+              <button
+                type="button"
+                class="btn btn-link iq-bg-primary"
+                data-action="move-prev"
+              >
                 <i class="fa fa-chevron-left mr-0" data-action="move-prev" />
               </button>
-              <h5 id="renderRange" class="render-range mt-1 mx-4">{{ dateRange }}</h5>
-              <button type="button" class="btn btn-link iq-bg-primary" data-action="move-next">
+              <h5 id="renderRange" class="render-range mt-1 mx-4">
+                {{ dateRange }}
+              </h5>
+              <button
+                type="button"
+                class="btn btn-link iq-bg-primary"
+                data-action="move-next"
+              >
                 <i class="fa fa-chevron-right mr-0" data-action="move-prev" />
               </button>
             </div>
@@ -28,24 +52,26 @@
         </div>
       </b-col>
       <b-col cols="12">
-        <calendar style="height: 800px" id="calender"
-                  ref="tuiCal"
-                  :useDetailPopup="useDetailPopup"
-                  :view="selectedView"
-                  :calendars="calendarList"
-                  :schedules="scheduleList"
-                  :template="template"
-                  :taskView="true"
-                  :scheduleView="true"
-                  :month="month"
-                  :week="week"
-                  :disableDblClick="disableDblClick"
-                  :isReadOnly="isReadOnly"
-                  @clickSchedule="onClickSchedule"
-                  @clickDayname="onClickDayname"
-                  @beforeCreateSchedule="onBeforeCreateSchedule"
-                  @beforeUpdateSchedule="onBeforeUpdateSchedule"
-                  @beforeDeleteSchedule="onBeforeDeleteSchedule"
+        <calendar
+          style="height: 800px"
+          id="calender"
+          ref="tuiCal"
+          :useDetailPopup="useDetailPopup"
+          :view="selectedView"
+          :calendars="calendarList"
+          :schedules="scheduleList"
+          :template="template"
+          :taskView="true"
+          :scheduleView="true"
+          :month="month"
+          :week="week"
+          :disableDblClick="disableDblClick"
+          :isReadOnly="isReadOnly"
+          @clickSchedule="onClickSchedule"
+          @clickDayname="onClickDayname"
+          @beforeCreateSchedule="onBeforeCreateSchedule"
+          @beforeUpdateSchedule="onBeforeUpdateSchedule"
+          @beforeDeleteSchedule="onBeforeDeleteSchedule"
         />
       </b-col>
     </b-row>
