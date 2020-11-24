@@ -11,178 +11,22 @@
                 label="Spinning"
               ></b-spinner>
             </b-col>
-            <b-row>
-              <b-col md="10" class="mb-4">
-                <h4>
-                  Detalles de la orden #{{ data.id }}
-                  <small>{{ data.created_at | formatWeekDate }}</small>
-                </h4>
-              </b-col>
-              <b-col md="2">
+            <b-col md="12" class="text-center">
+              <img
+                class="logo my-4 w-25"
+                :src="require('../../assets/images/logo-black.png')"
+                alt="logo"
+              />
+            </b-col>
+            <b-col>
+              <div class="clearfix">
+                <small>{{ data.created_at | formatWeekDate }}</small>
+                <h3>{{ data.id }}</h3>
                 <b-button variant="link" class="mb-3 mr-1" v-print="'#printMe'">
                   <i class="ri-printer-fill ri-lg"></i>
                 </b-button>
-              </b-col>
-              <!-- Información del cliente -->
-              <b-col md="6" class="mb-3">Cliente: {{ data.client.name }}</b-col>
-              <b-col md="6" class="mb-3"
-                >Teléfono: {{ data.client.phone }}</b-col
-              >
-              <b-col md="6" class="mb-3"
-                >Entrega: {{ data.mode | capitalize }}</b-col
-              >
-              <b-col md="6" class="mb-3"
-                >Tipo de compra: {{ data.type | capitalize }}</b-col
-              >
-              <b-col md="6" class="mb-3"
-                >Monto total: {{ data.total | money }}</b-col
-              >
-              <b-col md="6" class="mb-3"
-                >Total pagado: {{ data.totalPaid | money }}</b-col
-              >
-              <b-col md="6" class="mb-3">
-                Método de pago:
-                <ul v-for="p in data.payments" :key="p.id">
-                  <li v-show="p.amount > 0">
-                    {{ p.payment_method }}: {{ p.amount | money }}
-                  </li>
-                </ul>
-              </b-col>
-              <b-col md="12"><hr /></b-col>
-
-              <!-- Información del producto -->
-              <b-col md="12" class="mb-3">
-                <div
-                  v-for="(item, index) in data.products"
-                  :key="item.id"
-                  class="product-info pt-3"
-                >
-                  <b-row>
-                    <b-col md="2">
-                      <b-img
-                        v-viewer="{ movable: false }"
-                        center
-                        rounded="circle"
-                        :src="
-                          item.product.image
-                            ? item.product.image
-                            : require(`@/assets/images/no-image.png`)
-                        "
-                        class="image"
-                      >
-                      </b-img>
-                    </b-col>
-                    <b-col md="10">
-                      <b-row>
-                        <b-col md="6">
-                          <h5>{{ item.name }}</h5>
-                        </b-col>
-                        <b-col md="4">
-                          <h6 class="mx-1">
-                            <b-badge
-                              :variant="
-                                item.product.personalized ? 'info' : 'warning'
-                              "
-                              class="px-3"
-                            >
-                              {{
-                                item.product.personalized
-                                  ? "Personalizado"
-                                  : "Standard"
-                              }}
-                            </b-badge>
-                          </h6>
-                        </b-col>
-                        <b-col md="12">
-                          <label
-                            class="text-italic text-muted"
-                            for=""
-                            v-show="item.note"
-                            >Nota de taller: "{{ item.note }}"</label
-                          >
-                        </b-col>
-                        <b-col md="12">
-                          <label
-                            class="text-italic text-muted"
-                            for=""
-                            v-show="item.note_design"
-                            >Nota de diseño: "{{ item.note_design }}"</label
-                          >
-                        </b-col>
-                        <b-col md="12">
-                          <label
-                            class="text-italic text-muted"
-                            for=""
-                            v-show="item.personalized_text"
-                            >Texto personalizado: "{{
-                              item.personalized_text
-                            }}"</label
-                          >
-                        </b-col>
-                        <b-col md="4" v-show="item.additionals.length > 0">
-                          <b-button
-                            variant="link"
-                            @click="showHideDetail(index)"
-                          >
-                            <!-- <i class="ri-arrow-down-s-fill" v-if="!item.showDetails"></i>
-                            <i class="ri-arrow-up-s-fill" v-else></i> -->
-                          </b-button>
-                        </b-col>
-                      </b-row>
-                    </b-col>
-                  </b-row>
-                </div>
-              </b-col>
-              <b-col md="6" class="mb-3">
-                Motivo: {{ data.reason ? data.reason : "Sin motivo" }}
-              </b-col>
-              <b-col md="12" class="mb-3">
-                Mensaje para la tarjeta dedicatoria: <br />
-                <label
-                  for=""
-                  class="text-italic text-muted"
-                  v-show="data.dedication"
-                >
-                  "{{ data.dedication | capitalize }}"
-                </label>
-              </b-col>
-              <b-col md="12"><hr /></b-col>
-
-              <!-- Datos de la entrega -->
-              <b-col md="12" class="mb-2 mt-3">
-                <h5 class="text-muted">Datos de la entrega</h5>
-              </b-col>
-              <b-col md="6" class="mb-3"
-                >Fecha entrega: {{ data.delivery_date | formatWeekDate }}</b-col
-              >
-              <b-col md="6" class="mb-3" v-if="data.turn"
-                >Turno: {{ data.turn }}</b-col
-              >
-              <b-col md="6" class="mb-3"
-                >Dirección de entrega: {{ data.delivery_address }}</b-col
-              >
-              <b-col md="6" class="mb-3">Recibe: {{ data.addressee }}</b-col>
-              <b-col md="6" class="mb-3">Teléfono: {{ data.phone }}</b-col>
-
-              <b-col md="12">
-                <slot></slot>
-              </b-col>
-            </b-row>
-            <b-row align-h="center" class="mt-3" v-show="enableButtons">
-              <b-col md="4">
-                <b-button
-                  variant="primary"
-                  v-show="index > 0 ? true : false"
-                  @click="prevNext(-1)"
-                  >Orden Anterior</b-button
-                >
-              </b-col>
-              <b-col md="4">
-                <b-button variant="primary" @click="prevNext(1)"
-                  >Orden Siguiente</b-button
-                >
-              </b-col>
-            </b-row>
+              </div>
+            </b-col>
           </template>
         </iq-card>
       </b-col>

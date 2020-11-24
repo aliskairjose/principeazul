@@ -263,8 +263,8 @@
                         center
                         rounded="circle"
                         :src="
-                          p.image
-                            ? p.image
+                          p.product.image
+                            ? p.product.image
                             : require(`@/assets/images/no-image.png`)
                         "
                         id="image"
@@ -759,6 +759,7 @@ export default {
           this.payments = data.payments
           this.client = data.client
           this.orderProducts = data.products
+          console.log(this.orderProducts)
         })
         .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })
@@ -1130,6 +1131,7 @@ export default {
     },
     onComplete () {
       // console.log(this.order)
+
       this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
