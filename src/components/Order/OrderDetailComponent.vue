@@ -145,7 +145,7 @@
                 <p>{{ data.addressee }}</p>
                 <p>{{ data.turn }}</p>
                 <p>{{ data.phone }}</p>
-                <!-- <p>{{ data.products.length }}</p> -->
+                <p>{{ data.products.length }}</p>
                 <p v-for="(p, i) in data.products" :key="i">
                   {{ p.name | capitalize }}
                 </p>
@@ -180,6 +180,7 @@ export default {
       showDetails: '',
       index: '',
       data: {
+        products: [],
         delivery_address: '',
         created_at: '',
         addressee: '',

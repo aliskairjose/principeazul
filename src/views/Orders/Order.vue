@@ -930,13 +930,13 @@ export default {
       return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
     itms () {
-      let products = this.order.products
-      for (const key in products) {
-        if (products.hasOwnProperty(key)) {
-          const element = products[key]
-          console.log(element)
-        }
-      }
+      // let products = this.order.products
+      // for (const key in products) {
+      //   if (products.hasOwnProperty(key)) {
+      //     const element = products[key]
+      //     console.log(element)
+      //   }
+      // }
       return 0
     },
     amount () {
