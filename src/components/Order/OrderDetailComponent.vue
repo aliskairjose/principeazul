@@ -18,15 +18,139 @@
                 alt="logo"
               />
             </b-col>
-            <b-col>
+            <b-col md="12">
               <div class="clearfix">
-                <small>{{ data.created_at | formatWeekDate }}</small>
-                <h3>{{ data.id }}</h3>
-                <b-button variant="link" class="mb-3 mr-1" v-print="'#printMe'">
-                  <i class="ri-printer-fill ri-lg"></i>
-                </b-button>
+                <div class="float-left">
+                  {{ data.created_at | formatWeekDate }}
+                </div>
+                <div class="float-right">
+                  <h3 class="d-inline">{{ data.id }}</h3>
+                  <b-button
+                    variant="link"
+                    class="d-inline mb-3 mr-1"
+                    v-print="'#printMe'"
+                  >
+                    <i class="ri-printer-fill ri-lg"></i>
+                  </b-button>
+                </div>
               </div>
             </b-col>
+            <div class="row">
+              <div class="col-md-3">
+                <p class="text-uppercase font-weight-bolder">Cliente:</p>
+                <p class="text-uppercase">Teléfono:</p>
+                <p class="text-uppercase">Tipo de compra:</p>
+                <p class="text-uppercase">Total a pagar</p>
+                <p class="text-uppercase">Pagado:</p>
+                <p class="text-uppercase">Saldo Pendiente:</p>
+                <p class="text-uppercase">Método de pago:</p>
+              </div>
+              <div class="col-md-3">
+                <p class="font-weight-bolder">{{ data.client.name }}</p>
+                <p>{{ data.client.phone }}</p>
+                <p>{{ data.type }}</p>
+                <p>{{ data.total | money }}</p>
+              </div>
+            </div>
+            <hr />
+            <!-- Detalle de los productos -->
+            <b-row>
+              <b-col md="6">
+                <p class="text-uppercase">Motivo:</p>
+                <p class="text-uppercase">
+                  Mensaje para la tarjeta dedicatoria:
+                </p>
+              </b-col>
+              <b-col md="6">
+                <p>{{ data.reason }}</p>
+                <p>{{ data.dedication }}</p>
+              </b-col>
+            </b-row>
+            <b-row v-for="(p, index) in data.products" :key="index">
+              <b-col md="8">
+                <h4>{{ p.name | capitalize }} {{ p.price | money }}</h4>
+                <div v-for="(a, index) in p.additionals" :key="index">
+                  <h6 v-if="a.type === 'extra'">
+                    {{ a.name | capitalize }} x {{ a.quantity }}
+                  </h6>
+                </div>
+                <b-row class="mt-2">
+                  <b-col md="6">
+                    <p class="text-uppercase">Nota de taller:</p>
+                    <p class="text-uppercase">Nota de diseño:</p>
+                    <p class="text-uppercase">Personalización de texto:</p>
+                  </b-col>
+                  <b-col md="6">
+                    <p>{{ p.note }}</p>
+                    <p>{{ p.note_design }}</p>
+                    <p>{{ p.personalized_text }}</p>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col md="4">
+                <b-img
+                  v-viewer="{ movable: false }"
+                  center
+                  rounded="circle"
+                  :src="
+                    p.product.image
+                      ? p.product.image
+                      : require(`@/assets/images/no-image.png`)
+                  "
+                  class="image-list"
+                ></b-img>
+                <div v-for="(a, i) in p.additionals" :key="i">
+                  <b-img
+                    v-if="a.type === 'extra'"
+                    v-viewer="{ movable: false }"
+                    center
+                    rounded="circle"
+                    :src="
+                      a.product.image
+                        ? a.product.image
+                        : require(`@/assets/images/no-image.png`)
+                    "
+                    class="image-list"
+                  ></b-img>
+                </div>
+              </b-col>
+            </b-row>
+            <hr />
+            <!-- Datos de la entrega -->
+            <b-col md="12">
+              <div class="clearfix">
+                <div class="float-left">
+                  <h5>Datos de la entrega</h5>
+                </div>
+                <div class="float-right">
+                  <h3 class="d-inline">{{ data.id }}</h3>
+                </div>
+              </div>
+            </b-col>
+            <b-row>
+              <b-col md="4">
+                <p class="text-uppercase">Fecha de entrega:</p>
+                <p class="text-uppercase">Dirección de entrega:</p>
+                <p class="text-uppercase">Recibe:</p>
+                <p class="text-uppercase">Turno:</p>
+                <p class="text-uppercase">Teléfono:</p>
+                <p class="text-uppercase">Cantidad:</p>
+                <p class="text-uppercase">Productos:</p>
+              </b-col>
+              <b-col md="8">
+                <p>
+                  {{ data.delivery_date | formatWeekDate }}
+                </p>
+                <p>{{ data.delivery_address }}</p>
+                <p>{{ data.addressee }}</p>
+                <p>{{ data.turn }}</p>
+                <p>{{ data.phone }}</p>
+                <!-- <p>{{ data.products.length }}</p> -->
+                <p v-for="(p, i) in data.products" :key="i">
+                  {{ p.name | capitalize }}
+                </p>
+              </b-col>
+            </b-row>
           </template>
         </iq-card>
       </b-col>
@@ -112,6 +236,10 @@ export default {
 }
 .image {
   width: 64px;
+  height: auto;
+}
+.image-list {
+  width: 80px;
   height: auto;
 }
 

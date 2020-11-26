@@ -259,6 +259,19 @@
                   <b-row id="row" class="mb-2">
                     <b-col class="col-md-3">
                       <b-img
+                        v-if="status === 'add'"
+                        v-viewer="{ movable: false }"
+                        center
+                        rounded="circle"
+                        :src="
+                          p.image
+                            ? p.image
+                            : require(`@/assets/images/no-image.png`)
+                        "
+                        id="image"
+                      ></b-img>
+                      <b-img
+                        v-if="status === 'edit'"
                         v-viewer="{ movable: false }"
                         center
                         rounded="circle"
@@ -286,28 +299,47 @@
                         Texto personalizado: {{ p.personalized_text }}
                       </h6>
                       <p class="mt-2">Extras</p>
-                      <b-button
+                      <div
+                        class="d-inline"
                         v-for="(item, indice) in p.additionals"
                         :key="indice"
-                        variant="primary"
-                        class="mb-3 mr-1 text-capitalize"
-                        @click="deleteExtra(index, indice)"
                       >
-                        {{ item.name }} x {{ item.quantity }}
-                        <i
-                          class="ri-indeterminate-circle-line"
+                        <b-button
+                          v-if="item.type === 'extra' && status === 'edit'"
+                          variant="primary"
+                          class="mb-3 mr-1 text-capitalize"
+                          @click="deleteExtra(index, indice)"
+                        >
+                          {{ item.name }} x {{ item.quantity }}
+                          <i
+                            class="ri-indeterminate-circle-line"
+                            v-if="status === 'add'"
+                          ></i>
+                        </b-button>
+                        <b-button
                           v-if="status === 'add'"
-                        ></i>
-                      </b-button>
-                      <b-button
-                        variant="success"
-                        class="mb-3 mr-1"
-                        @click="showModal('extras', index)"
-                        v-if="status === 'add'"
-                      >
-                        Añadir
-                        <i class="ri-add-line"></i>
-                      </b-button>
+                          variant="primary"
+                          class="mb-3 mr-1 text-capitalize"
+                          @click="deleteExtra(index, indice)"
+                        >
+                          {{ item.name }} x {{ item.quantity }}
+                          <i
+                            class="ri-indeterminate-circle-line"
+                            v-if="status === 'add'"
+                          ></i>
+                        </b-button>
+                      </div>
+                      <div class="d-inline">
+                        <b-button
+                          variant="success"
+                          class="mb-3 mr-1"
+                          @click="showModal('extras', index)"
+                          v-if="status === 'add'"
+                        >
+                          Añadir
+                          <i class="ri-add-line"></i>
+                        </b-button>
+                      </div>
                     </b-col>
                     <b-col class="col-md-3">
                       <b-button
@@ -759,7 +791,6 @@ export default {
           this.payments = data.payments
           this.client = data.client
           this.orderProducts = data.products
-          console.log(this.orderProducts)
         })
         .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })
@@ -1131,7 +1162,6 @@ export default {
     },
     onComplete () {
       // console.log(this.order)
-
       this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
