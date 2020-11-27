@@ -248,6 +248,9 @@ export default {
   font-style: italic;
 }
 @media print {
+  p {
+    text-transform: uppercase;
+  }
   .image {
     width: 80px;
     height: auto;
