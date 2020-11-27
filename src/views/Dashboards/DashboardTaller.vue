@@ -176,9 +176,9 @@ export default {
         }
       })
 
-    setInterval(() => {
-      this.loadData(this.params)
-    }, 60000)
+    // setInterval(() => {
+    //   this.loadData(this.params)
+    // }, 60000)
   },
   mounted () {
     vito.index()
