@@ -65,7 +65,7 @@
                   ></b-form-select>
                 </b-form-group>
               </b-col>
-              <!-- Rango de fechas -->
+              <!-- Fecha de entrega | Fecha de creación -->
               <b-col md="2">
                 <b-form-group class="mb-0 pt-3">
                   <b-form-select
@@ -82,21 +82,13 @@
               <!-- Filtro Fecha Inicial -->
               <b-col md="3">
                 <b-form-group label="Fecha inicial:" label-for="date">
-                  <b-form-input
-                    :disabled="selectedType ? false : true"
-                    v-model="initDate"
-                    type="date"
-                  ></b-form-input>
+                  <b-form-input v-model="initDate" type="date"></b-form-input>
                 </b-form-group>
               </b-col>
               <!-- Filtro Fecha Final -->
               <b-col md="3">
                 <b-form-group label="Fecha final:" label-for="date">
-                  <b-form-input
-                    :disabled="selectedType ? false : true"
-                    v-model="endDate"
-                    type="date"
-                  ></b-form-input>
+                  <b-form-input v-model="endDate" type="date"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="2">
@@ -195,8 +187,7 @@ export default {
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
     this.initDate = formatDate
     this.endDate = formatDate
-    this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
-
+    this.filterData()
     let jwt = require('jsonwebtoken')
 
     const METABASE_SITE_URL = 'http://64.225.42.188:3000'
@@ -229,48 +220,28 @@ export default {
         { value: 2, text: 'Fecha de creación' }
       ],
       perOptions: [
+        { value: 0, text: 'Standard' },
         { value: 1, text: 'Personalizada' },
-        { value: 2, text: 'Todos' },
-        { value: 0, text: 'Standard' }
+        { value: 2, text: 'Todos' } // se elimina de la url
       ]
     }
   },
   methods: {
-    onChangePersonalized () {
-      if (this.selectedPersonalize !== 2) {
+    filterData () {
+      if (this.selectedPersonalize !== 2 && this.selectedType === 1) {
         this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
         return
       }
-      this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
-    },
-    onSelectedChange () {
-      // Fecha de creacion
-      if (this.selectedType === 1) {
-        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
-      }
-      // Fecha de entrega
-      if (this.selectedType === 2) {
+      if (this.selectedPersonalize === 2 && this.selectedType === 1) {
         this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+        return
       }
-    },
-    filterData () {
-      if (this.selectedType === 1) {
-        // Fecha de creación
+      if (this.selectedPersonalize !== 2 && this.selectedType === 2) {
+        this.loadData(`required_personalized=${this.selectedPersonalize}&init_date=${this.initDate}&end_date=${this.endDate}`)
+        return
+      }
+      if (this.selectedPersonalize === 2 && this.selectedType === 2) {
         this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
-      } else {
-        // Fecha de entrega
-        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
-      }
-    },
-    onDateChange () {
-      if (this.initDate && this.endDate) {
-        if (this.selectedType === 1) {
-          // Fecha de creación
-          this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
-        } else {
-          // Fecha de entrega
-          this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
-        }
       }
     },
     updateStatus ($event) {
