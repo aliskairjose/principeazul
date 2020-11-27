@@ -13,13 +13,18 @@
                 <label style="font-size: 13px">{{
                   order.delivery_date | formatWeekDate
                 }}</label>
-                <b-button size="sm" variant="light" v-print="`#${order.id}`">
+                <b-button
+                  size="sm"
+                  variant="light"
+                  v-print="`#${order.id}`"
+                  class="hidde-print"
+                >
                   <b-icon icon="printer" style="color: #7952b3"></b-icon>
                 </b-button>
               </b-col>
             </b-row>
             <b-row
-              class="my-4"
+              class="my-4 hidde-print"
               v-for="product in order.products"
               :key="product.id"
             >
@@ -52,7 +57,7 @@
                   <b-col md="12">
                     <h5>{{ product.name }}</h5>
                     <b-button
-                      class="mx-2"
+                      class="mx-2 hidde-print"
                       size="sm"
                       variant="light"
                       @click="
@@ -63,7 +68,7 @@
                       <b-icon icon="search" style="color: #7952b3"></b-icon>
                     </b-button>
                   </b-col>
-                  <b-col md="12" class="additionals">
+                  <b-col md="12" class="hidde-print additionals">
                     <label
                       v-for="a in product.additionals"
                       :key="a.id"
@@ -195,12 +200,12 @@ export default {
 }
 
 @media print {
+  .hidde-print {
+    display: none;
+  }
   .footer {
     position: inherit;
     width: 30%;
-  }
-  .additionals {
-    display: block;
   }
 }
 </style>
