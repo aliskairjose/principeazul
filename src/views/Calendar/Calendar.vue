@@ -103,6 +103,7 @@ export default {
       calendarService.getAll()
         .then(response => {
           this.calendar = [...response.data]
+          console.log(this.calendar)
         })
         .catch(() => { })
         .finally(() => {
@@ -116,8 +117,7 @@ export default {
   computed: {
     formatCalendar () {
       return this.calendar.map(item => ({
-        // id: item.id, title: `Pedido  #  ${item.id}`, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
-        title: `Pedido  #  ${item.id}`, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
+        title: item.client.name, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
       }))
     }
   }
