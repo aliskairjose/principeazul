@@ -91,35 +91,35 @@
                         <p>{{ p.note_design }}</p>
                         <p>{{ p.personalized_text }}</p>
                       </b-col>
+                      <b-col>
+                        <b-img
+                          v-viewer="{ movable: false }"
+                          center
+                          rounded="circle"
+                          :src="
+                            p.product.image
+                              ? p.product.image
+                              : require(`@/assets/images/no-image.png`)
+                          "
+                          class="image-list"
+                        ></b-img>
+                        <div v-for="(a, i) in p.additionals" :key="i">
+                          <b-img
+                            v-if="a.type === 'extra'"
+                            v-viewer="{ movable: false }"
+                            center
+                            rounded="circle"
+                            :src="
+                              a.product.image
+                                ? a.product.image
+                                : require(`@/assets/images/no-image.png`)
+                            "
+                            class="image-list"
+                          ></b-img>
+                        </div>
+                      </b-col>
                     </b-row>
                   </b-container>
-                </b-col>
-                <b-col>
-                  <b-img
-                    v-viewer="{ movable: false }"
-                    center
-                    rounded="circle"
-                    :src="
-                      p.product.image
-                        ? p.product.image
-                        : require(`@/assets/images/no-image.png`)
-                    "
-                    class="image-list"
-                  ></b-img>
-                  <div v-for="(a, i) in p.additionals" :key="i">
-                    <b-img
-                      v-if="a.type === 'extra'"
-                      v-viewer="{ movable: false }"
-                      center
-                      rounded="circle"
-                      :src="
-                        a.product.image
-                          ? a.product.image
-                          : require(`@/assets/images/no-image.png`)
-                      "
-                      class="image-list"
-                    ></b-img>
-                  </div>
                 </b-col>
               </b-row>
             </b-container>
