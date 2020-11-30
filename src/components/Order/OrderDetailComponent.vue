@@ -214,7 +214,7 @@ export default {
             }
           }
         })
-        .catch(error => { console.error(error) })
+        .catch(() => { this.loading = false })
         .finally(() => { this.loading = false })
     },
     prevNext (i) {

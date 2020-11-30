@@ -103,7 +103,6 @@ export default {
       calendarService.getAll()
         .then(response => {
           this.calendar = [...response.data]
-          console.log(this.calendar)
         })
         .catch(() => { })
         .finally(() => {
