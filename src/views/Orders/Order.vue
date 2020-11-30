@@ -436,28 +436,34 @@
                     </b-form-group>
                   </div>
                   <div class="col-md-3 text-right">
+                    <div v-for="product in order.products" :key="product.id">
+                      {{ product.name | capitalize }}:
+                      <label for class="success">{{
+                        product.price | money
+                      }}</label>
+                    </div>
                     ITMS:
                     <label for class="success">{{ itms | money }}</label>
                     <br />
                     Monto a pagar:
                     <label for class="success">{{ amount | money }}</label>
                     <br />
-                    Monto delivery:<label for class="success">{{
-                      deliveryCost | money
-                    }}</label>
+                    Delivery:<label for class="success">
+                      {{ deliveryCost | money }}
+                    </label>
                     <br />
-                    Monto descuento:<label for class="success">{{
-                      order.discount | money
-                    }}</label>
+                    Descuento:
+                    <label for class="success">
+                      {{ order.discount | money }}
+                    </label>
                     <br />
-                    Total a pagar:<label for class="success">{{
-                      finalPrice | money
-                    }}</label>
+                    Total a pagar:
+                    <label for class="success">{{ finalPrice | money }}</label>
                     <br />
-                    Pagado:<label
-                      :class="payOut > finalPrice ? 'error' : 'success'"
-                      >{{ payOut | money }}</label
-                    >
+                    Pagado:
+                    <label :class="payOut > finalPrice ? 'error' : 'success'">{{
+                      payOut | money
+                    }}</label>
                     <br />
                     Restante:<label
                       for
@@ -798,6 +804,7 @@ export default {
   },
   data () {
     return {
+      tax: 0,
       deliveryCost: 0,
       percent: null,
       deliveryPrice: 0,
@@ -930,14 +937,14 @@ export default {
       return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
     itms () {
-      // let products = this.order.products
-      // for (const key in products) {
-      //   if (products.hasOwnProperty(key)) {
-      //     const element = products[key]
-      //     console.log(element)
-      //   }
-      // }
-      return 0
+      let tax = 0
+      for (const key in this.order.products) {
+        if (this.order.products.hasOwnProperty(key)) {
+          const element = this.order.products[key]
+          tax += (element.price * 7) / 100
+        }
+      }
+      return tax
     },
     amount () {
       // Total a pagar
@@ -955,7 +962,7 @@ export default {
       return price
     },
     finalPrice () {
-      const monto = (parseFloat(this.amount) + this.deliveryCost) - this.order.discount
+      const monto = (parseFloat(this.amount) + this.deliveryCost + parseFloat(this.itms)) - this.order.discount
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
