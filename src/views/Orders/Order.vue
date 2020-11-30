@@ -1168,7 +1168,7 @@ export default {
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
-      // console.log(this.order)
+      console.log(this.order)
       this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
@@ -1283,7 +1283,7 @@ export default {
           .then(response => {
             if (response.status) { this.$router.push({ name: 'orders.list' }) }
           })
-          .catch(error => { console.error(error) })
+          .catch(() => { this.loading = false })
           .finally(() => { this.loading = false })
       } else {
         this.$router.push({ name: 'orders.list' })

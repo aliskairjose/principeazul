@@ -49,7 +49,7 @@
                 <b-col>
                   <p class="font-weight-bolder">{{ data.client.name }}</p>
                   <p>{{ data.client.phone }}</p>
-                  <p>{{ data.type }}</p>
+                  <p>{{ shopType }}</p>
                   <p>{{ data.total | money }}</p>
                 </b-col>
                 <b-col></b-col>
@@ -210,6 +210,17 @@ export default {
           email: ''
         }
       }
+    }
+  },
+  computed: {
+    shopType () {
+      let type = ''
+      if (this.data.type) {
+        type = this.data.type
+      } else {
+        type = '------'
+      }
+      return type
     }
   },
   methods: {
