@@ -700,6 +700,7 @@ export default {
         }
         this.payments = [ ...list ]
       })
+
     generalService.reasons()
       .then(response => {
         const object = response.data
@@ -789,14 +790,13 @@ export default {
       this.loading = true
       orderService.getById(this.$route.params.id)
         .then(response => {
-          const data = response.data
-          this.order = data
+          this.order = response.data
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
 
-          this.payments = data.payments
-          this.client = data.client
-          this.orderProducts = data.products
+          this.payments = this.order.payments
+          this.client = this.order.client
+          this.orderProducts = this.order.products
         })
         .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })

@@ -36,7 +36,7 @@
               </div>
             </b-col>
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3 div-left">
                 <p class="text-uppercase font-weight-bolder">Cliente:</p>
                 <p class="text-uppercase">Teléfono:</p>
                 <p class="text-uppercase">Tipo de compra:</p>
@@ -45,7 +45,7 @@
                 <p class="text-uppercase">Saldo Pendiente:</p>
                 <p class="text-uppercase">Método de pago:</p>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3 div-rigth">
                 <p class="font-weight-bolder">{{ data.client.name }}</p>
                 <p>{{ data.client.phone }}</p>
                 <p>{{ data.type }}</p>
@@ -248,6 +248,10 @@ export default {
   font-style: italic;
 }
 @media print {
+  .div-left {
+    width: 30%;
+    background-color: red;
+  }
   p {
     text-transform: uppercase;
   }

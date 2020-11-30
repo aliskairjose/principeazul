@@ -270,13 +270,14 @@ export default {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
-          let list = []
-          for (const d of response.data) {
-            if (d.status === 'Creado' || d.status === 'Pendiente' || d.status === 'En confección' || d.status === 'Confección urgente') {
-              list.push(d)
-            }
-          }
-          this.orders = [...list]
+          // let list = []
+          // for (const d of response.data) {
+          //   if (d.status === 'Creado' || d.status === 'Pendiente' || d.status === 'En confección' || d.status === 'Confección urgente') {
+          //     list.push(d)
+          //   }
+          // }
+          // this.orders = [...list]
+          this.orders = [...response.data]
         })
         .catch(() => {})
         .finally(() => { this.loading = false })
