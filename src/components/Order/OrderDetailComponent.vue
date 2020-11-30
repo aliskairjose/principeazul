@@ -52,6 +52,8 @@
                   <p>{{ data.type }}</p>
                   <p>{{ data.total | money }}</p>
                 </b-col>
+                <b-col></b-col>
+                <b-col></b-col>
               </b-row>
             </b-container>
             <hr />
@@ -118,6 +120,7 @@
                           ></b-img>
                         </div>
                       </b-col>
+                      <b-col></b-col>
                     </b-row>
                   </b-container>
                 </b-col>
