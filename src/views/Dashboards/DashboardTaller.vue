@@ -105,16 +105,18 @@
                 </b-button>
               </b-col>
             </b-row>
-            <b-row cols-md="3" cols-sm="1" id="printOrders">
-              <b-col v-for="order in orders" :key="order.id">
-                <OrderCard
-                  :order="order"
-                  :statuses="statuses"
-                  @status-change="updateStatus($event)"
-                  @modal-recipes="showModalRecipes($event)"
-                ></OrderCard>
-              </b-col>
-            </b-row>
+            <b-container>
+              <b-row cols-md="3" cols-sm="1" id="printOrders">
+                <b-col v-for="order in orders" :key="order.id">
+                  <OrderCard
+                    :order="order"
+                    :statuses="statuses"
+                    @status-change="updateStatus($event)"
+                    @modal-recipes="showModalRecipes($event)"
+                  ></OrderCard>
+                </b-col>
+              </b-row>
+            </b-container>
             <b-modal ok-only ref="modal-recipes" title="Receta de producto">
               <b-col md="12">
                 <h5>Receta</h5>
@@ -175,10 +177,6 @@ export default {
           this.statuses.push(status)
         }
       })
-
-    // setInterval(() => {
-    //   this.loadData(this.params)
-    // }, 60000)
   },
   mounted () {
     vito.index()
@@ -270,13 +268,6 @@ export default {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
-          // let list = []
-          // for (const d of response.data) {
-          //   if (d.status === 'Creado' || d.status === 'Pendiente' || d.status === 'En confección' || d.status === 'Confección urgente') {
-          //     list.push(d)
-          //   }
-          // }
-          // this.orders = [...list]
           this.orders = [...response.data]
         })
         .catch(() => {})
@@ -286,4 +277,7 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+@media print {
+}
+</style>

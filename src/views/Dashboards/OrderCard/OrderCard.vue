@@ -24,7 +24,7 @@
               </b-col>
             </b-row>
             <b-row
-              class="my-4 hidde-print"
+              class="my-4"
               v-for="product in order.products"
               :key="product.id"
             >
@@ -123,27 +123,29 @@
                 </p>
               </b-col>
             </b-row>
-            <b-row
-              class="mt-5 mb-0 d-flex justify-content-between align-items-center"
-            >
-              <b-col lg="8" md="8">
-                <b-form-select
-                  v-model="order.status"
-                  :options="statuses"
-                  @change="onStatusChange(order.id, $event)"
-                >
-                </b-form-select>
-              </b-col>
-              <b-col lg="4" md="4" sm="12" style="padding: 0px">
-                <b-badge
-                  variant="primary"
-                  class="px-3"
-                  v-if="order.personalizedRequired"
-                >
-                  Personalizado
-                </b-badge>
-              </b-col>
-            </b-row>
+            <b-container>
+              <b-row
+                class="mt-5 mb-0 d-flex justify-content-between align-items-center"
+              >
+                <b-col>
+                  <b-form-select
+                    v-model="order.status"
+                    :options="statuses"
+                    @change="onStatusChange(order.id, $event)"
+                  >
+                  </b-form-select>
+                </b-col>
+                <b-col style="padding: 0px">
+                  <b-badge
+                    variant="primary"
+                    class="px-3"
+                    v-if="order.personalizedRequired"
+                  >
+                    Personalizado
+                  </b-badge>
+                </b-col>
+              </b-row>
+            </b-container>
           </template>
         </iq-card>
       </b-col>
@@ -200,6 +202,10 @@ export default {
 }
 
 @media print {
+  .custom-select {
+    border-color: transparent;
+    font-weight: bold;
+  }
   .hidde-print {
     display: none;
   }
