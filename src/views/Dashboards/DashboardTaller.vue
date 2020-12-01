@@ -268,7 +268,14 @@ export default {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
-          this.orders = [...response.data]
+          let list = []
+          for (const d of response.data) {
+            if (d.status !== 'Confeccionado') {
+              list.push(d)
+            }
+          }
+          this.orders = [...list]
+          // this.orders = [...response.data]
         })
         .catch(() => {})
         .finally(() => { this.loading = false })
