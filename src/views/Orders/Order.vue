@@ -285,10 +285,11 @@
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
-                      <p class="h6" id="price" v-if="p.tax !== 0">
+                      <p class="h6" id="price">{{ p.price }}</p>
+                      <!-- <p class="h6" id="price" v-if="p.tax !== 0">
                         {{ (p.price + (p.price * p.tax) / 100) | money }}
                       </p>
-                      <p class="h6" id="price" v-else>{{ p.price | money }}</p>
+                      <p class="h6" id="price" v-else>{{ p.price | money }}</p> -->
                       <h6>
                         Nota de taller: <strong>{{ p.note }}</strong>
                       </h6>
@@ -1237,12 +1238,13 @@ export default {
           if (this.orderProducts.hasOwnProperty(key)) {
             const element = this.orderProducts[key]
             this.product = {}
-            if (element.tax !== 0) {
-              const price = element.price + ((element.price * element.tax) / 100)
-              this.product.price = parseFloat(price).toFixed(2)
-            } else {
-              this.product.price = element.price
-            }
+            // if (element.tax !== 0) {
+            //   const price = element.price + ((element.price * element.tax) / 100)
+            //   this.product.price = parseFloat(price).toFixed(2)
+            // } else {
+            //   this.product.price = element.price
+            // }
+            this.product.price = element.price
             this.product.product_id = element.id
             this.product.name = element.name
             this.product.note_design = element.note_design
