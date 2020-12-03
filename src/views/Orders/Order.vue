@@ -390,7 +390,6 @@
                       pill
                       variant="outline-secondary"
                       class="mb-3 pr-5 pl-5"
-                      v-if="status === 'add'"
                     >
                       <i class="ri-add-line"></i>
                       {{ buttonTitle }}
@@ -794,10 +793,10 @@ export default {
           this.order = response.data
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
-
           this.payments = this.order.payments
           this.client = this.order.client
           this.orderProducts = this.order.products
+          console.log(this.order)
         })
         .catch(() => { this.loading = false })
         .finally(() => { this.loading = false })
@@ -1034,11 +1033,35 @@ export default {
       this.$refs['lista-clientes'].hide()
     },
     addItem (item) {
-      if (item.type === 'principal') {
-        this.tempProd.push(item)
+      if (this.status === 'add') {
+        if (item.type === 'principal') {
+          this.tempProd.push(item)
+          this.handleOk()
+        } else {
+          this.tempExtra.push(item)
+        }
+      }
+      if (this.status === 'edit') {
+        let product = {}
+        product.additionals = []
+        product.created_at = null
+        product.deleted_at = null
+        product.extraCost = 0
+        product.id = null
+        product.name = item.name
+        product.note = ''
+        product.note_design = ''
+        product.order_id = this.order.id
+        product.personalized_text = ''
+        product.price = item.price
+        product.priceWithTax = item.priceWithTax
+        product.product = item
+        product.product_id = item.id
+        product.quantity = 1
+        product.tax = item.tax
+        this.orderProducts.push(product)
+        console.log(this.orderProducts)
         this.handleOk()
-      } else {
-        this.tempExtra.push(item)
       }
     },
     addNote () {
