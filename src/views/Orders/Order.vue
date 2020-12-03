@@ -285,7 +285,7 @@
                     </b-col>
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
-                      <p class="h6" id="price">{{ p.price }}</p>
+                      <p class="h6" id="price">{{ p.price | money }}</p>
                       <!-- <p class="h6" id="price" v-if="p.tax !== 0">
                         {{ (p.price + (p.price * p.tax) / 100) | money }}
                       </p>
@@ -436,19 +436,32 @@
                     </b-form-group>
                   </div>
                   <div class="col-md-3 text-right">
-                    <div v-for="product in order.products" :key="product.id">
+                    <div v-for="product in orderProducts" :key="product.id">
                       {{ product.name | capitalize }}:
-                      <label for class="success">{{
-                        product.price | money
-                      }}</label>
+                      <label for class="success">
+                        {{ product.price | money }}
+                      </label>
+                      <div v-for="item in product.additionals" :key="item.id">
+                        <div v-if="status === 'edit' && item.type === 'extra'">
+                          {{ item.name }} x {{ item.quantity }}:
+                          <label class="success">
+                            {{
+                              (item.salePriceWithTax * item.quantity) | money
+                            }}
+                          </label>
+                        </div>
+                        <div v-if="status === 'add'">
+                          {{ item.name }} x {{ item.quantity }}:
+                          <label class="success">
+                            {{
+                              (item.salePriceWithTax * item.quantity) | money
+                            }}
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                    ITBM:
-                    <label for class="success">{{ itbm | money }}</label>
-                    <br />
-                    Monto a pagar:
-                    <label for class="success">{{ amount | money }}</label>
-                    <br />
-                    Delivery:<label for class="success">
+                    Delivery:
+                    <label for class="success">
                       {{ deliveryCost | money }}
                     </label>
                     <br />
@@ -457,19 +470,21 @@
                       {{ order.discount | money }}
                     </label>
                     <br />
+                    ITBM:
+                    <label for class="success">{{ itbm | money }}</label>
+                    <br />
                     Total a pagar:
                     <label for class="success">{{ finalPrice | money }}</label>
                     <br />
                     Pagado:
-                    <label :class="payOut > finalPrice ? 'error' : 'success'">{{
-                      payOut | money
-                    }}</label>
+                    <label :class="payOut > finalPrice ? 'error' : 'success'">
+                      {{ payOut | money }}
+                    </label>
                     <br />
-                    Restante:<label
-                      for
-                      :class="rest > 0 ? 'success' : 'error'"
-                      >{{ rest | money }}</label
-                    >
+                    Restante:
+                    <label :class="rest > 0 ? 'success' : 'error'">
+                      {{ rest | money }}
+                    </label>
                   </div>
                 </b-row>
               </tab-content>
@@ -938,9 +953,9 @@ export default {
     },
     itbm () {
       let tax = 0
-      for (const key in this.order.products) {
-        if (this.order.products.hasOwnProperty(key)) {
-          const element = this.order.products[key]
+      for (const key in this.orderProducts) {
+        if (this.orderProducts.hasOwnProperty(key)) {
+          const element = this.orderProducts[key]
           tax += (element.price * 7) / 100
         }
       }
@@ -950,7 +965,7 @@ export default {
       // Total a pagar
       let price = 0
       let prices = []
-      let products = this.order.products
+      let products = this.orderProducts
       for (const key in products) {
         if (products.hasOwnProperty(key)) {
           const element = products[key]
@@ -961,8 +976,23 @@ export default {
       price = add(prices)
       return price
     },
+    additionalsPrice () {
+      let total = 0
+      for (const key in this.orderProducts) {
+        if (this.orderProducts.hasOwnProperty(key)) {
+          const product = this.orderProducts[key]
+          for (const key in product.additionals) {
+            if (product.additionals.hasOwnProperty(key)) {
+              const a = product.additionals[key]
+              total += a.salePriceWithTax * a.quantity
+            }
+          }
+        }
+      }
+      return total
+    },
     finalPrice () {
-      const monto = (parseFloat(this.amount) + this.deliveryCost + parseFloat(this.itbm)) - this.order.discount
+      const monto = (parseFloat(this.amount) + this.additionalsPrice + this.deliveryCost + parseFloat(this.itbm)) - this.order.discount
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
@@ -1139,13 +1169,13 @@ export default {
     },
     handleOkExtra () {
       if (this.tempExtra.length > 0) {
-        for (const iterator of this.tempExtra) {
-          if (iterator.tax !== 0) {
-            this.orderProducts[this.index].price += (iterator.sale_price + (iterator.sale_price * iterator.tax) / 100) * iterator.quantity
-          } else {
-            this.orderProducts[this.index].price += iterator.sale_price * iterator.quantity
-          }
-        }
+        // for (const iterator of this.tempExtra) {
+        //   if (iterator.tax !== 0) {
+        //     this.orderProducts[this.index].price += (iterator.sale_price + (iterator.sale_price * iterator.tax) / 100) * iterator.quantity
+        //   } else {
+        //     this.orderProducts[this.index].price += iterator.sale_price * iterator.quantity
+        //   }
+        // }
         this.orderProducts[this.index].additionals.push(...this.tempExtra)
       }
       this.tempExtra.length = 0
