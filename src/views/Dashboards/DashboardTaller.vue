@@ -286,5 +286,10 @@ export default {
 
 <style>
 @media print {
+  #printOrders {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
 }
 </style>

@@ -442,8 +442,8 @@
                         product.price | money
                       }}</label>
                     </div>
-                    ITMS:
-                    <label for class="success">{{ itms | money }}</label>
+                    ITBM:
+                    <label for class="success">{{ itbm | money }}</label>
                     <br />
                     Monto a pagar:
                     <label for class="success">{{ amount | money }}</label>
@@ -936,7 +936,7 @@ export default {
     url () {
       return `${window.location.origin}/form/public/${this.orderResponse.id}`
     },
-    itms () {
+    itbm () {
       let tax = 0
       for (const key in this.order.products) {
         if (this.order.products.hasOwnProperty(key)) {
@@ -962,7 +962,7 @@ export default {
       return price
     },
     finalPrice () {
-      const monto = (parseFloat(this.amount) + this.deliveryCost + parseFloat(this.itms)) - this.order.discount
+      const monto = (parseFloat(this.amount) + this.deliveryCost + parseFloat(this.itbm)) - this.order.discount
       return parseFloat(monto).toFixed(2)
     },
     payOut () {

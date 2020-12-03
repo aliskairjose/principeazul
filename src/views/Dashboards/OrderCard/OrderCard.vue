@@ -9,7 +9,7 @@
           <template v-slot:body>
             <b-row>
               <b-col md="12" class="d-flex justify-content-between">
-                <h4>#{{ order.id }}</h4>
+                <h5>#{{ order.id }}</h5>
                 <label style="font-size: 13px">{{
                   order.delivery_date | formatWeekDate
                 }}</label>
@@ -24,11 +24,12 @@
               </b-col>
             </b-row>
             <b-row
+              cols-md="4"
               class="my-4"
               v-for="product in order.products"
               :key="product.id"
             >
-              <b-col md="4" v-if="product.product">
+              <b-col v-if="product.product">
                 <b-img
                   v-viewer="{ movable: false }"
                   center
@@ -42,7 +43,7 @@
                 >
                 </b-img>
               </b-col>
-              <b-col md="4" v-if="!product.product">
+              <b-col v-if="!product.product">
                 <b-img
                   v-viewer="{ movable: false }"
                   center
@@ -53,35 +54,40 @@
                 </b-img>
               </b-col>
               <b-col md="8">
-                <b-row>
-                  <b-col md="12">
-                    <h5>{{ product.name }}</h5>
-                    <b-button
-                      class="mx-2 hidde-print"
-                      size="sm"
-                      variant="light"
-                      @click="
-                        showModalRecipe(product.product_id, product.additionals)
-                      "
-                    >
-                      Receta
-                      <b-icon icon="search" style="color: #7952b3"></b-icon>
-                    </b-button>
-                  </b-col>
-                  <b-col md="12" class="hidde-print additionals">
-                    <label
-                      v-for="a in product.additionals"
-                      :key="a.id"
-                      class="text-muted text-capitalize mr-3"
-                    >
-                      <h6 class="mx-1">
-                        <b-badge variant="primary" class="px-2"
-                          >{{ a.name }} x {{ a.quantity }}</b-badge
-                        >
-                      </h6>
-                    </label>
-                  </b-col>
-                </b-row>
+                <b-container>
+                  <b-row>
+                    <b-col md="12">
+                      <h5>{{ product.name }}</h5>
+                      <b-button
+                        class="mx-2 hidde-print"
+                        size="sm"
+                        variant="light"
+                        @click="
+                          showModalRecipe(
+                            product.product_id,
+                            product.additionals
+                          )
+                        "
+                      >
+                        Receta
+                        <b-icon icon="search" style="color: #7952b3"></b-icon>
+                      </b-button>
+                    </b-col>
+                    <b-col md="12" class="hidde-print additionals">
+                      <label
+                        v-for="a in product.additionals"
+                        :key="a.id"
+                        class="text-muted text-capitalize mr-3"
+                      >
+                        <h6 class="mx-1">
+                          <b-badge variant="primary" class="px-2"
+                            >{{ a.name }} x {{ a.quantity }}</b-badge
+                          >
+                        </h6>
+                      </label>
+                    </b-col>
+                  </b-row>
+                </b-container>
                 <b-row> </b-row>
               </b-col>
             </b-row>
