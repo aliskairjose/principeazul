@@ -306,16 +306,13 @@
                         :key="indice"
                       >
                         <b-button
-                          v-if="item.type === 'extra' && status === 'edit'"
+                          v-if="item.type === 'extra'"
                           variant="primary"
                           class="mb-3 mr-1 text-capitalize"
                           @click="deleteExtra(index, indice)"
                         >
                           {{ item.name }} x {{ item.quantity }}
-                          <i
-                            class="ri-indeterminate-circle-line"
-                            v-if="status === 'add'"
-                          ></i>
+                          <i class="ri-indeterminate-circle-line"></i>
                         </b-button>
                         <b-button
                           v-if="status === 'add'"
@@ -335,7 +332,6 @@
                           variant="success"
                           class="mb-3 mr-1"
                           @click="showModal('extras', index)"
-                          v-if="status === 'add'"
                         >
                           Añadir
                           <i class="ri-add-line"></i>
@@ -811,7 +807,6 @@ export default {
           this.payments = this.order.payments
           this.client = this.order.client
           this.orderProducts = this.order.products
-          console.log(this.order)
         })
         .catch(() => { this.loading = false })
         .finally(() => { this.loading = false })
@@ -1072,26 +1067,46 @@ export default {
         }
       }
       if (this.status === 'edit') {
-        let product = {}
-        product.additionals = []
-        product.created_at = null
-        product.deleted_at = null
-        product.extraCost = 0
-        product.id = null
-        product.name = item.name
-        product.note = ''
-        product.note_design = ''
-        product.order_id = this.order.id
-        product.personalized_text = ''
-        product.price = item.price
-        product.priceWithTax = item.priceWithTax
-        product.product = item
-        product.product_id = item.id
-        product.quantity = 1
-        product.tax = item.tax
-        this.orderProducts.push(product)
-        console.log(this.orderProducts)
-        this.handleOk()
+        if (item.type === 'principal') {
+          let product = {}
+          product.additionals = []
+          product.created_at = null
+          product.deleted_at = null
+          product.extraCost = 0
+          product.id = null
+          product.name = item.name
+          product.note = ''
+          product.note_design = ''
+          product.order_id = this.order.id
+          product.personalized_text = ''
+          product.price = item.price
+          product.priceWithTax = item.priceWithTax
+          product.product = item
+          product.product_id = item.id
+          product.quantity = 1
+          product.tax = item.tax
+          this.orderProducts.push(product)
+          this.handleOk()
+        } else {
+          const extra = {}
+          extra.id = null
+          extra.order_product_id = 0
+          extra.product_id = item.id
+          extra.product = item
+          item.type = 'extra'
+          extra.created_at = null
+          extra.deleted_at = null
+          extra.name = item.name
+          extra.price = item.price
+          extra.priceWithTax = item.priceWithTax
+          extra.quantity = item.quantity
+          extra.salePriceWithTax = item.salePriceWithTax
+          extra.sale_price = item.sale_price
+          extra.tax = item.tax
+          extra.type = 'extra'
+          extra.updated_at = null
+          this.tempExtra.push(extra)
+        }
       }
     },
     addNote () {
