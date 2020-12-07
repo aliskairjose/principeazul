@@ -1090,7 +1090,7 @@ export default {
         } else {
           const extra = {}
           extra.id = null
-          extra.order_product_id = 0
+          // extra.order_product_id = 0
           extra.product_id = item.id
           extra.product = item
           item.type = 'extra'
@@ -1183,6 +1183,7 @@ export default {
       this.tempProd.length = 0
     },
     handleOkExtra () {
+      // let order_product_id = 0
       if (this.tempExtra.length > 0) {
         // for (const iterator of this.tempExtra) {
         //   if (iterator.tax !== 0) {
@@ -1191,6 +1192,13 @@ export default {
         //     this.orderProducts[this.index].price += iterator.sale_price * iterator.quantity
         //   }
         // }
+        this.orderProducts[this.index].additionals.map(a => {
+          if (a.type === 'extra') {
+            this.tempExtra.map(e => {
+              e.order_product_id = a.order_product_id
+            })
+          }
+        })
         this.orderProducts[this.index].additionals.push(...this.tempExtra)
       }
       this.tempExtra.length = 0
