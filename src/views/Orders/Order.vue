@@ -1246,7 +1246,7 @@ export default {
     },
     onComplete () {
       // console.log(this.order)
-      this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
+      // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
         orderService.create(this.order)
