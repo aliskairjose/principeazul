@@ -145,6 +145,7 @@
                   <p class="text-uppercase">Dirección de entrega:</p>
                   <p class="text-uppercase">Recibe:</p>
                   <p class="text-uppercase">Turno:</p>
+                  <p class="text-uppercase">Tipo de entrega:</p>
                   <p class="text-uppercase">Teléfono:</p>
                   <p class="text-uppercase">Cantidad:</p>
                   <p class="text-uppercase">Productos:</p>
@@ -156,6 +157,7 @@
                   <p>{{ data.delivery_address }}</p>
                   <p>{{ data.addressee }}</p>
                   <p>{{ data.turn }}</p>
+                  <p>{{ data.mode | capitalize }}</p>
                   <p>{{ data.phone }}</p>
                   <p>{{ data.products.length }}</p>
                   <p v-for="(p, i) in data.products" :key="i">
