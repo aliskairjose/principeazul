@@ -13,32 +13,48 @@
                         variant="primary"
                         type="grow"
                         label="Spinning"
-                        style="width: 3rem; height: 3rem;"
+                        style="width: 3rem; height: 3rem"
                       ></b-spinner>
                     </div>
                   </b-row>
                   <b-row align-v="end">
-                    <b-form-group class="col-md-6" label="Nombre:" label-for="name">
-                      <ValidationProvider name="Nombre" rules="required" v-slot="{ errors }">
+                    <b-form-group
+                      class="col-md-6"
+                      label="Nombre:"
+                      label-for="name"
+                    >
+                      <ValidationProvider
+                        name="Nombre"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
                         <b-form-input
                           v-model="product.name"
                           type="text"
                           placeholder="Nombre"
                           class="text-capitalize"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                         ></b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
                         </div>
                       </ValidationProvider>
                     </b-form-group>
-                    <b-form-group class="col-md-6" label="Descripción:" label-for="description">
-                      <ValidationProvider name="Description" rules="required" v-slot="{ errors }">
+                    <b-form-group
+                      class="col-md-6"
+                      label="Descripción:"
+                      label-for="description"
+                    >
+                      <ValidationProvider
+                        name="Description"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
                         <b-form-input
                           v-model="product.description"
                           type="text"
                           placeholder="Descripción"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                         ></b-form-input>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
@@ -51,9 +67,19 @@
                       label-for="category"
                       lot-scope="{ valid, errors }"
                     >
-                      <ValidationProvider name="Categoria" rules="required" v-slot="{ errors }">
+                      <ValidationProvider
+                        name="Categoria"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
                         <b-form-select
-                          :state="errors[0] ? false : (product.category_id ? true : null)"
+                          :state="
+                            errors[0]
+                              ? false
+                              : product.category_id
+                              ? true
+                              : null
+                          "
                           v-model="product.category_id"
                           :options="categories"
                         ></b-form-select>
@@ -63,13 +89,23 @@
                       </ValidationProvider>
                     </b-form-group>
                     <!-- Tipo -->
-                    <b-form-group class="col-md-6" label="Tipo:" label-for="type">
-                      <ValidationProvider name="Tipo" rules="required" v-slot="{ errors }">
+                    <b-form-group
+                      class="col-md-6"
+                      label="Tipo:"
+                      label-for="type"
+                    >
+                      <ValidationProvider
+                        name="Tipo"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
                         <b-form-select
-                          :state="errors[0] ? false : (product.type ? true : null)"
+                          :state="
+                            errors[0] ? false : product.type ? true : null
+                          "
                           v-model="product.type"
                           :options="types"
-                          @change=onTypeChange
+                          @change="onTypeChange"
                         ></b-form-select>
                         <div class="invalid-feedback">
                           <span>{{ errors[0] }}</span>
@@ -77,15 +113,23 @@
                       </ValidationProvider>
                     </b-form-group>
                     <!-- Precio -->
-                    <b-form-group class="col-md-6" label="Precio:" label-for="price">
-                      <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
+                    <b-form-group
+                      class="col-md-6"
+                      label="Precio:"
+                      label-for="price"
+                    >
+                      <ValidationProvider
+                        name="Precio"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
                         <b-form-input
                           v-if="product.price"
                           v-model.lazy="product.price"
                           type="text"
                           name="price"
                           id="price"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                           placeholder="Precio"
                         ></b-form-input>
                         <b-form-input
@@ -95,7 +139,7 @@
                           type="text"
                           name="price"
                           id="price"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                           placeholder="Precio"
                         ></b-form-input>
                         <div class="invalid-feedback">
@@ -104,8 +148,17 @@
                       </ValidationProvider>
                     </b-form-group>
                     <!-- Sale Price -->
-                    <b-form-group v-show="hideSalePrice" class="col-md-6" label="Precio de venta:" label-for="price">
-                      <ValidationProvider name="Precio" rules="required" v-slot="{ errors }">
+                    <b-form-group
+                      v-show="hideSalePrice"
+                      class="col-md-6"
+                      label="Precio de venta:"
+                      label-for="price"
+                    >
+                      <ValidationProvider
+                        name="Precio"
+                        rules="required"
+                        v-slot="{ errors }"
+                      >
                         <b-form-input
                           v-show="hideSalePrice"
                           v-if="product.sale_price"
@@ -113,7 +166,7 @@
                           type="text"
                           name="price"
                           id="price"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                           placeholder="Precio"
                         ></b-form-input>
                         <b-form-input
@@ -123,7 +176,7 @@
                           type="text"
                           name="sale_price"
                           id="sale_price"
-                          :class="(errors.length > 0 ? ' is-invalid' : '')"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                           placeholder="Precio de venta"
                         ></b-form-input>
                         <div class="invalid-feedback">
@@ -132,39 +185,50 @@
                       </ValidationProvider>
                     </b-form-group>
                     <!-- ITBMS -->
-                    <b-form-group class="col-md-6" label="ITBMS:" label-for="itbms_price">
-                        <b-form-select
-                          v-model="product.tax"
-                          :options="itbms">
-                        </b-form-select>
+                    <b-form-group
+                      class="col-md-6"
+                      label="ITBMS:"
+                      label-for="itbms_price"
+                    >
+                      <b-form-select v-model="product.tax" :options="itbms">
+                      </b-form-select>
                     </b-form-group>
                     <!-- CheckBox Personalizado -->
                     <b-form-group class="col-md-6" label-for="personalized">
                       <div class="checkbox d-inline-block mr-2">
-                        <input type="checkbox" class="checkbox-input" v-model="product.personalized">
-                        <label class="ml-2">Este producto es personalizado</label>
+                        <input
+                          type="checkbox"
+                          class="checkbox-input"
+                          v-model="product.personalized"
+                        />
+                        <label class="ml-2"
+                          >Este producto es personalizado</label
+                        >
                       </div>
                     </b-form-group>
                     <!-- Agregar Subproductos -->
                     <b-form-group
                       class="col-md-4"
                       label-for="type"
-                      v-show="product.type === 'principal'">
+                      v-show="product.type === 'principal'"
+                    >
                       <b-button
                         block
                         v-b-modal.modal-lg
                         variant="primary"
                         @click="addSubproduct"
                         v-b-modal.modal-1
-                      >Agregar subproductos</b-button>
+                        >Agregar subproductos</b-button
+                      >
                     </b-form-group>
                     <b-form-group
                       class="col-md-2"
                       label-for="type"
-                      v-show="product.type === 'principal'">
+                      v-show="product.type === 'principal'"
+                    >
                       <h6 class="mb-3">
                         Agregados
-                        <b-badge variant="info">{{subs}}</b-badge>
+                        <b-badge variant="info">{{ subs }}</b-badge>
                       </h6>
                     </b-form-group>
                     <b-form-group class="col-md-12">
@@ -172,12 +236,16 @@
                         :options="dropzoneOptions"
                         :useCustomSlot="true"
                         :id="'image'"
-                        v-on:vdropzone-success="fileAdded">
+                        v-on:vdropzone-success="fileAdded"
+                      >
                         <div class="dropzone-custom-content">
-                          <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
-                          <div
-                            class="subtitle"
-                          >...o haga clic para seleccionar un archivo de su computadora</div>
+                          <h3 class="dropzone-custom-title">
+                            Arrastra y suelta para subir contenido!
+                          </h3>
+                          <div class="subtitle">
+                            ...o haga clic para seleccionar un archivo de su
+                            computadora
+                          </div>
                         </div>
                       </vue-dropzone>
                     </b-form-group>
@@ -201,7 +269,9 @@
                       v-on:delete-item="deleteSub"
                     ></modal-table>
                   </b-modal>
-                  <b-button variant="primary" type="submit">{{btnTitle}}</b-button>
+                  <b-button variant="primary" type="submit">{{
+                    btnTitle
+                  }}</b-button>
                 </div>
               </template>
             </iq-card>
@@ -271,6 +341,9 @@ export default {
           })
           this.selectedType = this.product.type
           this.selectedCategory = this.product.category_id
+          if (this.product.type === 'additional') {
+            this.hideSalePrice = true
+          }
         })
         .catch((error) => { console.error(error) })
         .finally(() => { this.loading = false })
