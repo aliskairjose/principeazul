@@ -494,7 +494,9 @@ export default {
     },
     details (item) {
       if (this.role === 'admin') {
-        this.$router.push({ name: 'orders.details', params: { id: item.id } })
+        let routeData = this.$router.resolve({ name: 'orders.details', params: { id: item.id } })
+        window.open(routeData.href, '_blank')
+        // this.$router.push({ name: 'orders.details', params: { id: item.id } })
       }
       if (this.role === 'taller') {
         // Abrir el modal
