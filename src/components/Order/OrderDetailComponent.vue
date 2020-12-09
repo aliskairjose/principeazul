@@ -80,7 +80,7 @@
                 <b-col>
                   <h4>{{ p.name | capitalize }} {{ p.price | money }}</h4>
                   <div v-for="(a, index) in p.additionals" :key="index">
-                    <h6 v-if="a.type === 'extra'" class="ml-4 text-black-50">
+                    <h6 v-if="a.type === 'extra'" class="ml-4 text-danger">
                       {{ a.name | capitalize }} x {{ a.quantity }}
                     </h6>
                   </div>
