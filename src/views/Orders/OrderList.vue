@@ -380,7 +380,7 @@ export default {
   data () {
     return {
       dedication: '',
-      selectedType: 1,
+      selectedType: 2,
       selectedPersonalize: 2,
       initDate: '',
       endDate: '',
