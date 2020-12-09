@@ -14,10 +14,18 @@
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-show="isRemoving">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-col md="12" class="text-center spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-row align-h="between">
               <b-col md="4" class="my-1">
@@ -37,7 +45,9 @@
                       placeholder="Escriba para buscar"
                     ></b-form-input>
                     <b-input-group-append>
-                      <b-button :disabled="!filter" @click="filter = ''">Limpiar</b-button>
+                      <b-button :disabled="!filter" @click="filter = ''"
+                        >Limpiar</b-button
+                      >
                     </b-input-group-append>
                   </b-input-group>
                 </b-form-group>
@@ -55,14 +65,17 @@
               </b-col>
               <b-col md="2" class="my-1">
                 <b-form-group>
-                  <b-button variant="primary" @click="add">Nuevo producto</b-button>
+                  <b-button variant="primary" @click="add"
+                    >Nuevo producto</b-button
+                  >
                 </b-form-group>
               </b-col>
               <template v-if="products.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
                     <div class="iq-alert-text">
-                      <b>No hay registros para mostrar.</b> Por favor agrege un producto para comenzar!
+                      <b>No hay registros para mostrar.</b> Por favor agrege un
+                      producto para comenzar!
                     </div>
                   </b-alert>
                 </b-col>
@@ -83,49 +96,76 @@
                     @filtered="onFiltered"
                   >
                     <template v-slot:cell(name)="products">
-                      <label for class="text-capitalize">{{products.item.name}}</label>
+                      <label for class="text-capitalize">{{
+                        products.item.name
+                      }}</label>
                     </template>
-                    <template
-                      v-slot:cell(type)="products"
-                    >{{products.item.type === 'principal' ? 'Principal' : 'Adicional'}}</template>
-                    <template v-slot:cell(price)="products">{{products.item.price}} $</template>
+                    <template v-slot:cell(type)="products">{{
+                      products.item.type === "principal"
+                        ? "Principal"
+                        : "Adicional"
+                    }}</template>
+                    <template v-slot:cell(price)="products"
+                      >{{ products.item.price }} $</template
+                    >
+                    <template v-slot:cell(sale_price)="products"
+                      >{{ products.item.sale_price }} $</template
+                    >
                     <template v-slot:cell(personalized)="products">
-                      {{products.item.personalized === 0 ? 'Standard' : 'Personalizado'}}
+                      {{
+                        products.item.personalized === 0
+                          ? "Standard"
+                          : "Personalizado"
+                      }}
                     </template>
                     <template v-slot:cell(image)="products">
                       <b-img
-                        v-viewer="{movable: false}"
+                        v-viewer="{ movable: false }"
                         center
                         rounded="circle"
-                        :src="products.item.image ? products.item.image : require(`@/assets/images/no-image.png`)"
+                        :src="
+                          products.item.image
+                            ? products.item.image
+                            : require(`@/assets/images/no-image.png`)
+                        "
                         id="image"
                         class
                       ></b-img>
                     </template>
                     <template v-slot:cell(action)="products">
-                       <b-dropdown id="dropdownMenuButton5" right variant="none" data-toggle="dropdown">
+                      <b-dropdown
+                        id="dropdownMenuButton5"
+                        right
+                        variant="none"
+                        data-toggle="dropdown"
+                      >
                         <template v-slot:button-content>
-                          <span class="text-primary"><i class="ri-more-fill"></i></span>
+                          <span class="text-primary"
+                            ><i class="ri-more-fill"></i
+                          ></span>
                         </template>
                         <b-dropdown-item
                           @click="inventory(products.item)"
-                          variant=" iq-bg-primary mr-1 mb-1">
+                          variant=" iq-bg-primary mr-1 mb-1"
+                        >
                           <i class="ri-eye-fill mr-2"></i>
-                            Inventario
+                          Inventario
                         </b-dropdown-item>
 
                         <b-dropdown-item
                           @click="edit(products.item)"
-                          variant=" iq-bg-success mr-1 mb-1">
+                          variant=" iq-bg-success mr-1 mb-1"
+                        >
                           <i class="ri-pencil-fill mr-2"></i>
-                            {{ $t('dropdown.edit') }}
+                          {{ $t("dropdown.edit") }}
                         </b-dropdown-item>
 
                         <b-dropdown-item
                           @click="remove(products.item)"
-                          variant=" iq-bg-danger mr-1 mb-1">
+                          variant=" iq-bg-danger mr-1 mb-1"
+                        >
                           <i class="ri-delete-bin-6-fill mr-2"></i>
-                            {{ $t('dropdown.delete') }}
+                          {{ $t("dropdown.delete") }}
                         </b-dropdown-item>
                       </b-dropdown>
                     </template>
@@ -215,7 +255,8 @@ export default {
         { label: 'Foto', key: 'image', class: 'text-center' },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
         { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
-        { label: 'Precio', key: 'price', class: 'text-center', sortable: true },
+        { label: 'Precio Costo', key: 'price', class: 'text-center', sortable: true },
+        { label: 'Precio Venta', key: 'sale_price', class: 'text-center', sortable: true },
         { label: 'Tipo', key: 'type', class: 'text-center', sortable: true },
         { label: 'Personalizado', key: 'personalized', class: 'text-center', sortable: true },
         { label: 'Acción', key: 'action', class: 'text-center' }

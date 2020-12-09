@@ -51,6 +51,9 @@
                   <p>{{ data.client.phone }}</p>
                   <p>{{ shopType }}</p>
                   <p>{{ data.total | money }}</p>
+                  <p>{{ data.totalPaid | money }}</p>
+                  <p>-----</p>
+                  <p>{{ paymentMethod }}</p>
                 </b-col>
                 <b-col></b-col>
                 <b-col></b-col>
@@ -196,6 +199,7 @@ export default {
       index: '',
       data: {
         products: [],
+        payments: [],
         delivery_address: '',
         created_at: '',
         addressee: '',
@@ -223,6 +227,15 @@ export default {
         type = '------'
       }
       return type
+    },
+    paymentMethod () {
+      let pm = ''
+      this.data.payments.forEach(element => {
+        if (element.amount > 0) {
+          pm = `${element.payment_method}`
+        }
+      })
+      return pm
     }
   },
   methods: {
