@@ -205,7 +205,7 @@ export default {
       additionals: [],
       recipes: [],
       selectedType: 1,
-      selectedPersonalize: 1,
+      selectedPersonalize: 2,
       loading: false,
       orders: [],
       filter: null,
