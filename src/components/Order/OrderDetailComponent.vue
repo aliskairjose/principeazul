@@ -55,8 +55,29 @@
                   <p>-----</p>
                   <p>{{ paymentMethod }}</p>
                 </b-col>
-                <b-col></b-col>
-                <b-col></b-col>
+                <b-col>
+                  <b-row class="mb-5 text-center">
+                    <b-col>
+                      <h4 class="text-uppercase font-weight-bolder">
+                        {{ data.mode }}
+                      </h4>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <p class="text-uppercase">Productos:</p>
+                      <p class="text-uppercase">Delivery:</p>
+                      <p class="text-uppercase">Descuento:</p>
+                    </b-col>
+                    <b-col>
+                      <p class="text-uppercase">Productos:</p>
+                      <p class="text-uppercase">
+                        {{ data.delivery_price | money }}
+                      </p>
+                      <p class="text-uppercase">{{ data.discount | money }}</p>
+                    </b-col>
+                  </b-row>
+                </b-col>
               </b-row>
             </b-container>
             <hr />
