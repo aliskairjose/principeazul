@@ -52,7 +52,7 @@
                   <p>{{ shopType }}</p>
                   <p>{{ data.total | money }}</p>
                   <p>{{ data.totalPaid | money }}</p>
-                  <p v-if="!data.paymentComplete">
+                  <p v-if="!data.paymentCompleted">
                     {{ (data.total - data.totalPaid) | money }}
                   </p>
                   <p v-else>No hay pago pendiente</p>
