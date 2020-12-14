@@ -56,7 +56,9 @@
                     {{ (data.total - data.totalPaid) | money }}
                   </p>
                   <p v-else>No hay pago pendiente</p>
-                  <p>{{ paymentMethod }}</p>
+                  <p v-for="(pm, index) in paymentMethod" :key="index">
+                    {{ pm }}
+                  </p>
                 </b-col>
                 <b-col>
                   <b-row class="mb-5 text-center">
@@ -73,7 +75,7 @@
                       <p class="text-uppercase">Descuento:</p>
                     </b-col>
                     <b-col>
-                      <p class="text-uppercase">Productos:</p>
+                      <p class="text-uppercase">{{ productsTotal | money }}</p>
                       <p class="text-uppercase">
                         {{ data.delivery_price | money }}
                       </p>
@@ -243,6 +245,13 @@ export default {
     }
   },
   computed: {
+    productsTotal () {
+      let total = 0
+      this.data.products.forEach(element => {
+        total += element.price
+      })
+      return total
+    },
     shopType () {
       let type = ''
       if (this.data.type) {
@@ -253,10 +262,10 @@ export default {
       return type
     },
     paymentMethod () {
-      let pm = ''
+      let pm = []
       this.data.payments.forEach(element => {
         if (element.amount > 0) {
-          pm = `${element.payment_method}`
+          pm.push(element.payment_method)
         }
       })
       return pm
