@@ -185,7 +185,7 @@
                   </p>
                   <p>{{ data.delivery_address }}</p>
                   <p v-if="data.order_receiver">{{ data.order_receiver }}</p>
-                  <p v-if="!data.order_receiver">---------</p>
+                  <p v-if="!data.order_receiver">{{ data.addressee }}</p>
                   <p>{{ data.turn }}</p>
                   <p>{{ data.mode | capitalize }}</p>
                   <p>{{ data.phone }}</p>
