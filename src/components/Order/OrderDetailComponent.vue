@@ -184,7 +184,8 @@
                     {{ data.delivery_date | formatWeekDate }}
                   </p>
                   <p>{{ data.delivery_address }}</p>
-                  <p>{{ data.addressee }}</p>
+                  <p v-if="data.addressee">{{ data.addressee }}</p>
+                  <p v-if="!data.addressee">---------</p>
                   <p>{{ data.turn }}</p>
                   <p>{{ data.mode | capitalize }}</p>
                   <p>{{ data.phone }}</p>
