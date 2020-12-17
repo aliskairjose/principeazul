@@ -52,11 +52,37 @@
                   <p>{{ shopType }}</p>
                   <p>{{ data.total | money }}</p>
                   <p>{{ data.totalPaid | money }}</p>
-                  <p>-----</p>
-                  <p>{{ paymentMethod }}</p>
+                  <p v-if="!data.paymentCompleted">
+                    {{ (data.total - data.totalPaid) | money }}
+                  </p>
+                  <p v-else>No hay pago pendiente</p>
+                  <p v-for="(pm, index) in paymentMethod" :key="index">
+                    {{ pm }}
+                  </p>
                 </b-col>
-                <b-col></b-col>
-                <b-col></b-col>
+                <b-col>
+                  <b-row class="mb-5 text-center">
+                    <b-col>
+                      <h4 class="text-uppercase font-weight-bolder">
+                        {{ data.mode }}
+                      </h4>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <p class="text-uppercase">Productos:</p>
+                      <p class="text-uppercase">Delivery:</p>
+                      <p class="text-uppercase">Descuento:</p>
+                    </b-col>
+                    <b-col>
+                      <p class="text-uppercase">{{ productsTotal | money }}</p>
+                      <p class="text-uppercase">
+                        {{ data.delivery_price | money }}
+                      </p>
+                      <p class="text-uppercase">{{ data.discount | money }}</p>
+                    </b-col>
+                  </b-row>
+                </b-col>
               </b-row>
             </b-container>
             <hr />
@@ -158,7 +184,8 @@
                     {{ data.delivery_date | formatWeekDate }}
                   </p>
                   <p>{{ data.delivery_address }}</p>
-                  <p>{{ data.addressee }}</p>
+                  <p v-if="data.order_receiver">{{ data.order_receiver }}</p>
+                  <p v-if="!data.order_receiver">{{ data.addressee }}</p>
                   <p>{{ data.turn }}</p>
                   <p>{{ data.mode | capitalize }}</p>
                   <p>{{ data.phone }}</p>
@@ -219,6 +246,13 @@ export default {
     }
   },
   computed: {
+    productsTotal () {
+      let total = 0
+      this.data.products.forEach(element => {
+        total += element.price
+      })
+      return total
+    },
     shopType () {
       let type = ''
       if (this.data.type) {
@@ -229,10 +263,10 @@ export default {
       return type
     },
     paymentMethod () {
-      let pm = ''
+      let pm = []
       this.data.payments.forEach(element => {
         if (element.amount > 0) {
-          pm = `${element.payment_method}`
+          pm.push(element.payment_method)
         }
       })
       return pm

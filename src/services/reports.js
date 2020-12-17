@@ -5,6 +5,10 @@ export default {
     const res = await axios.get(`/inventories?${params}`)
     return res.data
   },
+  async getInventoryReport (params) {
+    const res = await axios.get(`/report/inventories?${params}`)
+    return res.data
+  },
   async getOrderReport (params) {
     const res = await axios.get(`/orders?${params}`)
     return res.data

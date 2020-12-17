@@ -457,8 +457,11 @@
                       </div>
                     </div>
                     Delivery:
-                    <label for class="success">
+                    <label for class="success" v-if="status === 'add'">
                       {{ deliveryCost | money }}
+                    </label>
+                    <label for class="success" v-else>
+                      {{ order.delivery_price | money }}
                     </label>
                     <br />
                     Descuento:
