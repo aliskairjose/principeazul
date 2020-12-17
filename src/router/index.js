@@ -27,7 +27,8 @@ import Callback from '@/views/AuthPages/Default/Callback'
 import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
 import BestSeller from '@/views/Reports/BestSeller.vue'
 import OrdersReport from '@/views/Reports/OrdersReport.vue'
-
+import MovementReport from '@/views/Reports/MovementReport.vue'
+import SalesJournalReport from '@/views/Reports/SalesJournalReport.vue'
 /* Calendar */
 /* -------------------- */
 import Calendar from '@/views/Calendar/Calendar.vue'
@@ -129,7 +130,20 @@ const reportRoutes = (prop, mode = false) => [
     name: prop + '.orderReport',
     meta: { dark: mode, auth: true, name: 'Reporte de ganancias' },
     component: OrdersReport
+  },
+  {
+    path: 'movement-report',
+    name: prop + '.movementReport',
+    meta: { dark: mode, auth: true, name: 'Reporte de movimientos' },
+    component: MovementReport
+  },
+  {
+    path: 'sales-journal',
+    name: prop + '.salesJournalReport',
+    meta: { dark: mode, auth: true, name: 'Reporte Diario de Ventas' },
+    component: SalesJournalReport
   }
+
 ]
 
 const calendarRoutes = (prop, mode = false) => [

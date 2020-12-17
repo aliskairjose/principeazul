@@ -12,6 +12,13 @@ export default {
   async getBestSellers () {
     const res = await axios.get('products/best-sellers')
     return res.data
+  },
+  async getMovementReport (params) {
+    const res = await axios.get(`reports/movement?${params}`)
+    return res.data
+  },
+  async getSalesJournalReport (params) {
+    const res = await axios.get(`reports/sales-journal?${params}`)
+    return res.data
   }
-
 }
