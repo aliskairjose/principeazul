@@ -27,6 +27,7 @@ import Callback from '@/views/AuthPages/Default/Callback'
 import ProductsMovements from '@/views/Reports/ProductsMovements.vue'
 import BestSeller from '@/views/Reports/BestSeller.vue'
 import OrdersReport from '@/views/Reports/OrdersReport.vue'
+import InventoryReport from '@/views/Reports/InventoryReport.vue'
 
 /* Calendar */
 /* -------------------- */
@@ -129,6 +130,12 @@ const reportRoutes = (prop, mode = false) => [
     name: prop + '.orderReport',
     meta: { dark: mode, auth: true, name: 'Reporte de ganancias' },
     component: OrdersReport
+  },
+  {
+    path: 'inventory-report',
+    name: prop + '.inventoryReport',
+    meta: { dark: mode, auth: true, name: 'Reporte de rotación de inventarios' },
+    component: InventoryReport
   }
 ]
 
