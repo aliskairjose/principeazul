@@ -24,5 +24,9 @@ export default {
   async getSalesJournalReport (params) {
     const res = await axios.get(`reports/sales-journal?${params}`)
     return res.data
+  },
+  async getAccountsReceivableReport (params) {
+    const res = await axios.get(`reports/accounts-receivable?${params}`)
+    return res.data
   }
 }

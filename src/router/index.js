@@ -29,6 +29,7 @@ import BestSeller from '@/views/Reports/BestSeller.vue'
 import OrdersReport from '@/views/Reports/OrdersReport.vue'
 import MovementReport from '@/views/Reports/MovementReport.vue'
 import SalesJournalReport from '@/views/Reports/SalesJournalReport.vue'
+import AccountsReceivableReport from '@/views/Reports/AccountsReceivableReport.vue'
 import InventoryReport from '@/views/Reports/InventoryReport.vue'
 
 /* Calendar */
@@ -150,6 +151,12 @@ const reportRoutes = (prop, mode = false) => [
     name: prop + '.salesJournalReport',
     meta: { dark: mode, auth: true, name: 'Reporte Diario de Ventas' },
     component: SalesJournalReport
+  },
+  {
+    path: 'accounts-receivable',
+    name: prop + '.accountsReceivableReport',
+    meta: { dark: mode, auth: true, name: 'Reporte de Cuentas X Cobrar' },
+    component: AccountsReceivableReport
   }
 ]
 

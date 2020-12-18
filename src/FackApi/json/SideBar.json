@@ -166,6 +166,18 @@
         "icon": "ri-file-line"
       },
       {
+        "title": "Reporte de Cuentas X Cobrar",
+        "name": "Reporte de Cuentas X Cobrar",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.accountsReceivableReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
         "title": "Reporte de inventarios",
         "name": "Reporte de inventarios",
         "is_heading": false,
