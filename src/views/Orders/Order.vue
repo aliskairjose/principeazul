@@ -915,7 +915,7 @@ export default {
         { value: null, text: 'Seleccione tipo de compra' },
         { value: 'whatsapp', text: 'WhatsApp' },
         { value: 'tienda', text: 'Tienda' },
-        { value: 'paginaweb', text: 'Pagina Web' },
+        { value: 'paginaweb', text: 'Página Web' },
         { value: 'instagram', text: 'Instagram' },
         { value: 'pedidosya', text: 'PedidosYa' }
       ],
