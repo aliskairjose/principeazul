@@ -907,7 +907,7 @@ export default {
       ],
       deliveryType: [
         { value: null, text: 'Seleccione modo de entrega' },
-        { value: 'pedidosya', text: 'PedidosYa' },
+        { value: 'pedidosya', text: 'Pedidos Ya' },
         { value: 'delivery', text: 'Delivery' },
         { value: 'local', text: 'Local' }
       ],
@@ -917,7 +917,7 @@ export default {
         { value: 'tienda', text: 'Tienda' },
         { value: 'paginaweb', text: 'Página Web' },
         { value: 'instagram', text: 'Instagram' },
-        { value: 'pedidosya', text: 'PedidosYa' }
+        { value: 'pedidosya', text: 'Pedidos Ya' }
       ],
       tempProd: [],
       tempExtra: [],
