@@ -140,6 +140,18 @@
         "class_name": "",
         "is_icon_class": true,
         "icon": "ri-file-line"
+      },
+      {
+        "title": "Reporte de inventarios",
+        "name": "Reporte de inventarios",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.inventoryReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
       }
     ]
   },
