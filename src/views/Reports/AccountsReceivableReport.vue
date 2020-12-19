@@ -101,8 +101,6 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import reportsService from '@/services/reports'
-import JsPDF from 'jspdf'
-import 'jspdf-autotable'
 import moment from 'moment'
 
 export default {
@@ -155,19 +153,8 @@ export default {
   },
   methods: {
     exportPDF () {
-      const doc = new JsPDF()
-      let columns = [
-        { title: '#Orden', dataKey: 'id' },
-        { title: 'Cliente', dataKey: 'client.name' },
-        { title: 'Teledono.', dataKey: 'client.phone' },
-        { title: 'Fecha de Compra', dataKey: 'created_at' },
-        { title: 'Total Compra', dataKey: 'total' },
-        { title: 'Abono', dataKey: 'totalPaid' },
-        { title: 'Saldo', dataKey: 'saldo' }
-      ]
-      doc.text('Cuentas x Cobrar', 20, 20)
-      doc.autoTable(columns, this.results, { margin: { top: 30 } })
-      doc.save('Cuentas x Cobrar.pdf')
+      let params = `start_date=${this.startDate}&end_date=${this.endDate}`
+      reportsService.getAccountsReceivableReportPdf(params)
     },
     getData () {
       // eslint-disable-next-line no-unused-vars

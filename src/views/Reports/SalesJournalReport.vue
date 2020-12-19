@@ -117,8 +117,6 @@
 <script>
 import { vito } from '../../config/pluginInit'
 import reportsService from '@/services/reports'
-import JsPDF from 'jspdf'
-import 'jspdf-autotable'
 import moment from 'moment'
 
 export default {
@@ -167,14 +165,8 @@ export default {
   },
   methods: {
     exportPDF () {
-      const doc = new JsPDF()
-      let columns = [
-        { title: 'Producto', dataKey: 'name' },
-        { title: 'Total', dataKey: 'total' }
-      ]
-      doc.text('Best Sellers', 20, 20)
-      doc.autoTable(columns, this.results, { margin: { top: 30 } })
-      doc.save('Best Sellers.pdf')
+      let params = `?start_date=${this.startDate}`
+      reportsService.getSalesJournalReportPdf(params)
     },
     getData () {
       // eslint-disable-next-line no-unused-vars

@@ -28,5 +28,47 @@ export default {
   async getAccountsReceivableReport (params) {
     const res = await axios.get(`reports/accounts-receivable?${params}`)
     return res.data
+  },
+  async getAccountsReceivableReportPdf (params) {
+    axios({
+      url: `reports/accounts-receivable-pdf?${params}`,
+      method: 'GET',
+      responseType: 'blob' // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'accounts-receivable.pdf')
+      document.body.appendChild(link)
+      link.click()
+    })
+  },
+  async getSalesJournalReportPdf (params) {
+    axios({
+      url: `reports/sales-journal-pdf${params}`,
+      method: 'GET',
+      responseType: 'blob' // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'sales-journal' + params + '.pdf')
+      document.body.appendChild(link)
+      link.click()
+    })
+  },
+  async getMovementReportPdf (params) {
+    axios({
+      url: `reports/movement-pdf${params}`,
+      method: 'GET',
+      responseType: 'blob' // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'movement.pdf')
+      document.body.appendChild(link)
+      link.click()
+    })
   }
 }
