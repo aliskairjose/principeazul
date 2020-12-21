@@ -47,7 +47,7 @@
                         </b-row>
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">ITMB Cobrado</b-col>
-                          <b-col sm="6"> ${{ itbmTotal.toFixed(2) }}</b-col>
+                          <b-col sm="6"> ${{ parseFloat(itbmTotal).toFixed(2) }}</b-col>
                         </b-row>
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">Descuentos</b-col>
@@ -83,10 +83,10 @@
                             <label v-for="(pay,i) in results.item.payments" :key="i"><span v-if="pay.amount">{{ pay.payment_method }} </span></label>
                           </template>
                           <template v-slot:cell(itbm)="results">
-                            {{results.item.itbm.toFixed(2)}}
+                            {{parseFloat(results.item.itbm).toFixed(2)}}
                         </template>
                           <template v-slot:cell(monto)="results">
-                            {{ parseFloat(parseInt(results.item.total) - parseFloat(results.item.itbm.toFixed(2))).toFixed(2) }}
+                            {{ (parseFloat(results.item.total) - parseFloat(results.item.itbm.toFixed(2))).toFixed(2) }}
                           </template>
                           <template v-slot:cell(saldo)="results">
                             {{ (parseFloat(results.item.total) - parseFloat(results.item.totalPaid)).toFixed(2)}}
@@ -166,7 +166,7 @@ export default {
       reportsService.getSalesJournalReport(params)
         .then(response => {
           this.results = response.data
-          this.itbmTotal = this.results.orders.reduce((a, b) => a + parseInt(b.itbm), 0)
+          this.itbmTotal = this.results.orders.reduce((a, b) => a + parseFloat(b.itbm), 0)
         })
         .catch(() => {
         })
