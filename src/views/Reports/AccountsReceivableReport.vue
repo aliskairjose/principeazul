@@ -4,39 +4,28 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
-            <b-row align-v="center">
-              <b-col md="1"></b-col>
-              <b-col md="2">
-                <b-form-group label="Fecha inicial:" label-for="date">
-                  <b-form-input v-model="startDate" type="date"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group label="Fecha final:" label-for="date">
-                  <b-form-input v-model="endDate" type="date"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-button
-                  size="md"
-                  variant="outline-primary"
-                  @click="getData"
-                >
-                  Buscar
-                </b-button>
-              </b-col>
-            </b-row>
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row v-else align-h="between">
-              <b-col md="12" class="my-1 text-center">
-                <b-row align-h="end" class="mb-2 mt-2" >
-                  <div class="col-md-2 text-right">
+              <b-col md="12" class="my-1 mb-3">
+                <b-row align-h="end">
+                  <b-col md="3">
+                    Fecha inicial
+                    <b-form-input v-model="startDate" type="date"></b-form-input>
+                  </b-col>
+                  <b-col md="3">
+                    Fecha final
+                    <b-form-input v-model="endDate" type="date"></b-form-input>
+                  </b-col>
+                  <b-col md="2" align-self="end">
+                    <b-button variant="primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                      <i class="ri-search-line"></i>
+                    </b-button>
                     <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
                       <i class="ri-download-cloud-line"></i>
-                      </b-button>
-                  </div>
+                    </b-button>
+                  </b-col>
                 </b-row>
               </b-col>
               <template v-if="results.length === 0">
@@ -48,7 +37,7 @@
               </template>
               <template v-else>
                 <b-col md="12">
-                  <b-container class="my-3">
+                  <div class="my-3">
                     <b-row align-h="end">
                       <b-col sm="6">
                         <b-row>
@@ -61,8 +50,8 @@
                       </b-row>
                       </b-col>
                     </b-row>
-                  </b-container>
-                  <b-container class="my-3">
+                  </div>
+                  <div class="my-3">
                     <b-row>
                       <b-col md="12" class="table-responsive">
                         <b-table
@@ -87,7 +76,7 @@
                         </b-table>
                       </b-col>
                     </b-row>
-                  </b-container>
+                  </div>
                 </b-col>
               </template>
             </b-row>
@@ -138,7 +127,7 @@ export default {
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Teledono.', key: 'client.phone', class: 'text-center', sortable: true },
-        { label: 'Fecha de Compra', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'F. de Compra', key: 'created_at', class: 'text-center', sortable: true },
         { label: 'productos', key: 'products', class: 'text-center', sortable: true },
         { label: 'Total Compra', key: 'total', class: 'text-center', sortable: false },
         { label: 'Abono', key: 'totalPaid', class: 'text-center', sortable: false },

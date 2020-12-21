@@ -4,41 +4,30 @@
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
-            <b-row align-v="center">
-              <b-col md="1"></b-col>
-              <b-col md="2">
-                <b-form-group label="Fecha inicial:" label-for="date">
-                  <b-form-input v-model="startDate" type="date"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group label="Fecha final:" label-for="date">
-                  <b-form-input v-model="endDate" type="date"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-button
-                  size="md"
-                  variant="outline-primary"
-                  @click="getData"
-                >
-                  Buscar
-                </b-button>
-              </b-col>
-            </b-row>
             <b-col md="12" class="text-center spinner" v-if="loading">
               <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
             </b-col>
             <b-row v-else align-h="between">
-              <b-col md="12" class="my-1 text-center">
-                <b-row align-h="end" class="mb-2 mt-2" >
-                  <div class="col-md-2 text-right">
-                    <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
-                      <i class="ri-download-cloud-line"></i>
+              <b-col md="12" class="my-1 mb-3">
+                  <b-row align-h="end">
+                    <b-col md="3">
+                      Fecha inicial
+                      <b-form-input v-model="startDate" type="date"></b-form-input>
+                    </b-col>
+                    <b-col md="3">
+                      Fecha final
+                      <b-form-input v-model="endDate" type="date"></b-form-input>
+                    </b-col>
+                    <b-col md="2" align-self="end">
+                      <b-button variant="primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                        <i class="ri-search-line"></i>
                       </b-button>
-                  </div>
-                </b-row>
-              </b-col>
+                      <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
+                        <i class="ri-download-cloud-line"></i>
+                      </b-button>
+                    </b-col>
+                  </b-row>
+                </b-col>
               <template v-if="results.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
