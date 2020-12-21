@@ -1,6 +1,7 @@
 export default {
   // webBaseURL: 'http://api.pa.dev.cronapis.com/api',
-  webBaseURL: 'http://127.0.0.1:8000/api',
+  // webBaseURL: 'http://127.0.0.1:8000/api',
+  webBaseURL: 'https://principeazul.cronapis.com:444/api',
   firebaseConfig: {
     apiKey: '',
     authDomain: '',
