@@ -70,8 +70,14 @@
                           <template v-slot:cell(products)="results">
                           <label v-for="(product,i) in results.item.products" :key="i">{{ product.name }}<span v-if="(results.item.products.length-1)>i"> - </span></label>
                         </template>
+                          <template v-slot:cell(total)="results">
+                          {{ parseFloat(results.item.total).toFixed(2)}}
+                        </template>
+                         <template v-slot:cell(totalPaid)="results">
+                          {{ parseFloat(results.item.totalPaid).toFixed(2)}}
+                        </template>
                           <template v-slot:cell(saldo)="results">
-                            {{ (parseFloat(results.item.total) - parseFloat(results.item.totalPaid)).toFixed(2)}}
+                            {{ parseFloat((parseFloat(results.item.total) - parseFloat(results.item.totalPaid)).toFixed(2)).toFixed(2)}}
                           </template>
                         </b-table>
                       </b-col>
