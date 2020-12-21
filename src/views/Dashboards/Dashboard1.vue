@@ -41,7 +41,7 @@ export default {
     const METABASE_SITE_URL = 'https://intelligence.cronapis.com'
     const METABASE_SECRET_KEY = '0156c408fdcb44a1d69051733b6b982a9a6bd4dbd0678c5c274fa654f1ea1fb7'
     const payload = {
-      resource: { dashboard: 1 },
+      resource: { dashboard: 10 },
       params: { },
       exp: Math.round(Date.now() / 1000) + (10 * 60) // 10 minute expiration
     }
