@@ -148,7 +148,7 @@ export default {
     getData () {
       // eslint-disable-next-line no-unused-vars
       let params = ''
-      params = `?start_date=${this.startDate}&end_date=${this.endDate}`
+      params = `start_date=${this.startDate}&end_date=${this.endDate}`
       reportsService.getAccountsReceivableReport(params)
         .then(response => {
           this.results = response.data

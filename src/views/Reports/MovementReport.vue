@@ -60,12 +60,12 @@
                     <b-row style="font-weight: bold; color: #0b0b0b">
                       <b-col sm="4" align="center">Total Pedidos</b-col>
                       <b-col sm="4">{{category.qty}}</b-col>
-                      <b-col sm="4"> {{category.val}}</b-col>
+                      <b-col sm="4"> {{category.val.toFixed(2)}}</b-col>
                     </b-row>
                     <b-row v-for="(category, j) in results.quantityByCategory" :key="j">
                       <b-col sm="4" align="center" style="font-weight: bold; color: #0b0b0b">{{ category.name }}</b-col>
                       <b-col sm="4"> {{ category.quantity }}</b-col>
-                      <b-col sm="4"> $ {{ category.value }}</b-col>
+                      <b-col sm="4"> $ {{ category.value.toFixed(2) }}</b-col>
                     </b-row>
                   </b-container>
 
@@ -80,12 +80,12 @@
                         <b-row style="font-weight: bold; color: #0b0b0b">
                           <b-col sm="4" align="center">{{ j }}</b-col>
                           <b-col sm="4"> {{ category.qty }}</b-col>
-                          <b-col sm="4"> $ {{ category.val }}</b-col>
+                          <b-col sm="4"> $ {{ category.val.toFixed(2) }}</b-col>
                         </b-row>
                         <b-row v-for="(item, k) in category.products" :key="k">
                           <b-col sm="4" style="color: #0b0b0b">{{ item.name }}</b-col>
                           <b-col sm="4"> {{ item.quantity }}</b-col>
-                          <b-col sm="4"> $ {{ item.value }}</b-col>
+                          <b-col sm="4"> $ {{ item.value.toFixed(2) }}</b-col>
                         </b-row>
                       </b-col>
                     </b-row>
@@ -154,7 +154,7 @@ export default {
     getData () {
       // eslint-disable-next-line no-unused-vars
       let params = ''
-      params = `?start_date=${this.startDate}&end_date=${this.endDate}`
+      params = `start_date=${this.startDate}&end_date=${this.endDate}`
       reportsService.getMovementReport(params)
         .then(response => {
           this.results = response.data

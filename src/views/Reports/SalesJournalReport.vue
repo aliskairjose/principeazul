@@ -39,7 +39,7 @@
                       <b-col sm="6">
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">VENTA TOTAL</b-col>
-                          <b-col sm="6"> ${{ results.totalOrder.total }}</b-col>
+                          <b-col sm="6"> ${{ results.totalOrder.total.toFixed(2) }}</b-col>
                         </b-row>
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">No. de Pedidos</b-col>
@@ -162,7 +162,7 @@ export default {
     getData () {
       // eslint-disable-next-line no-unused-vars
       let params = ''
-      params = `?start_date=${this.startDate}`
+      params = `start_date=${this.startDate}`
       reportsService.getSalesJournalReport(params)
         .then(response => {
           this.results = response.data
