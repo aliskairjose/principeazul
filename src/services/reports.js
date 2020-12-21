@@ -45,7 +45,7 @@ export default {
   },
   async getSalesJournalReportPdf (params) {
     axios({
-      url: `reports/sales-journal-pdf${params}`,
+      url: `reports/sales-journal-pdf?${params}`,
       method: 'GET',
       responseType: 'blob' // important
     }).then((response) => {
@@ -59,7 +59,7 @@ export default {
   },
   async getMovementReportPdf (params) {
     axios({
-      url: `reports/movement-pdf${params}`,
+      url: `reports/movement-pdf?${params}`,
       method: 'GET',
       responseType: 'blob' // important
     }).then((response) => {

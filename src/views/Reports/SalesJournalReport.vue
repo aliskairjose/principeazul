@@ -39,7 +39,7 @@
                       <b-col sm="6">
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">VENTA TOTAL</b-col>
-                          <b-col sm="6"> ${{ results.totalOrder.total.toFixed(2) }}</b-col>
+                          <b-col sm="6"> ${{ parseFloat(results.totalOrder.total).toFixed(2) }}</b-col>
                         </b-row>
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">No. de Pedidos</b-col>
@@ -47,11 +47,11 @@
                         </b-row>
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">ITMB Cobrado</b-col>
-                          <b-col sm="6"> ${{ itbmTotal.toFixed(2) }}</b-col>
+                          <b-col sm="6"> ${{ parseFloat(itbmTotal).toFixed(2) }}</b-col>
                         </b-row>
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">Descuentos</b-col>
-                          <b-col sm="6"> {{ results.totalOrder.discount }}</b-col>
+                          <b-col sm="6"> {{ parseFloat(results.totalOrder.discount).toFixed(2) }}</b-col>
                         </b-row>
                       </b-col>
                     </b-row>
@@ -61,7 +61,7 @@
                       <b-col sm="6" align-self="start">
                         <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">{{ payment.payment_method }}</b-col>
-                          <b-col sm="6"> ${{ payment.amount }}</b-col>
+                          <b-col sm="6"> ${{ parseFloat(payment.amount).toFixed(2) }}</b-col>
                         </b-row>
                       </b-col>
                     </b-row>
@@ -83,10 +83,10 @@
                             <label v-for="(pay,i) in results.item.payments" :key="i"><span v-if="pay.amount">{{ pay.payment_method }} </span></label>
                           </template>
                           <template v-slot:cell(itbm)="results">
-                            {{results.item.itbm.toFixed(2)}}
+                            {{parseFloat(results.item.itbm).toFixed(2)}}
                         </template>
                           <template v-slot:cell(monto)="results">
-                            {{ parseInt(results.item.total) - parseFloat(results.item.itbm.toFixed(2)) }}
+                            {{ (parseFloat(results.item.total) - parseFloat(results.item.itbm.toFixed(2))).toFixed(2) }}
                           </template>
                           <template v-slot:cell(saldo)="results">
                             {{ (parseFloat(results.item.total) - parseFloat(results.item.totalPaid)).toFixed(2)}}
@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     exportPDF () {
-      let params = `?start_date=${this.startDate}`
+      let params = `start_date=${this.startDate}`
       reportsService.getSalesJournalReportPdf(params)
     },
     getData () {
@@ -166,7 +166,7 @@ export default {
       reportsService.getSalesJournalReport(params)
         .then(response => {
           this.results = response.data
-          this.itbmTotal = this.results.orders.reduce((a, b) => a + parseInt(b.itbm), 0)
+          this.itbmTotal = this.results.orders.reduce((a, b) => a + parseFloat(b.itbm), 0)
         })
         .catch(() => {
         })
