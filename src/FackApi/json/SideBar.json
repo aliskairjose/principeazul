@@ -142,6 +142,42 @@
         "icon": "ri-file-line"
       },
       {
+        "title": "Reporte de Movimientos",
+        "name": "Reporte de Movimientos",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.movementReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
+        "title": "Reporte Diario de Ventas",
+        "name": "Reporte Diario de Ventas",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.salesJournalReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
+        "title": "Reporte de Cuentas X Cobrar",
+        "name": "Reporte de Cuentas X Cobrar",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.accountsReceivableReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      },
+      {
         "title": "Reporte de inventarios",
         "name": "Reporte de inventarios",
         "is_heading": false,
