@@ -107,8 +107,6 @@
 import { vito } from '../../config/pluginInit'
 import reportsService from '@/services/reports'
 import categoryService from '@/services/category'
-import JsPDF from 'jspdf'
-import 'jspdf-autotable'
 
 export default {
   name: 'OrdersReport',
@@ -187,17 +185,14 @@ export default {
   },
   methods: {
     exportPDF () {
-      const doc = new JsPDF()
-      let columns = [
-        { title: 'Producto', dataKey: 'name' },
-        { title: 'Inventario Inicial', dataKey: 'initialInventory' },
-        { title: 'Entradas', dataKey: 'entries' },
-        { title: 'Salidas', dataKey: 'outputs' },
-        { title: 'Existencia', dataKey: 'existence' }
-      ]
-      doc.text('Reporte de rotación de inventarios', 20, 20)
-      doc.autoTable(columns, this.results, { margin: { top: 30 } })
-      doc.save('Reporte de rotación de inventarios.pdf')
+      let params = `?init_date=${this.filters.initDate}&end_date=${this.filters.endDate}`
+      if (this.filters.typeProduct) {
+        params += `&type_product=${this.filters.typeProduct}`
+      }
+      if (this.filters.categoryId) {
+        params += `&category_id=${this.filters.categoryId}`
+      }
+      reportsService.getInvengoryPdf(params)
     },
     getData () {
       this.search = true
