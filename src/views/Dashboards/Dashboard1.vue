@@ -5,22 +5,22 @@
         <iq-card>
           <template v-slot:body>
             <div class="d-flex align-items-center justify-content-between">
-              <!-- <iframe
+              <iframe
                 :src="iframeUrl"
                 frameborder="0"
                 width="100%"
                 height="650"
                 allowtransparency
               >
-              </iframe> -->
-              <iframe
-                src="http://64.225.42.188:3000/public/dashboard/943f48b0-4286-4bba-bf23-bd8c47094e8f"
+              </iframe>
+              <!-- <iframe
+                src="iframeUrl"
                 frameborder="0"
                 width="800"
                 height="600"
                 allowtransparency
               >
-              </iframe>
+              </iframe> -->
             </div>
           </template>
         </iq-card>
@@ -38,7 +38,7 @@ export default {
     vito.index()
     let jwt = require('jsonwebtoken')
 
-    const METABASE_SITE_URL = 'http://64.225.42.188:3000'
+    const METABASE_SITE_URL = 'https://intelligence.cronapis.com'
     const METABASE_SECRET_KEY = '0156c408fdcb44a1d69051733b6b982a9a6bd4dbd0678c5c274fa654f1ea1fb7'
     const payload = {
       resource: { dashboard: 1 },
