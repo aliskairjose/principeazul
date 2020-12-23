@@ -393,11 +393,12 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/auth/sign-in', '/auth/sign-up']
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = localStorage.getItem('user')
+  const user = JSON.parse(loggedIn)
   if (to.meta.auth) {
     if (authRequired && loggedIn === null) {
       return next('/auth/sign-in')
-    } else if (to.name === 'dashboard' || to.name === 'dashboard.home') {
-      if (loggedIn.role === 'admin') {
+    } else if (to.name === 'dashboard') {
+      if (user.role === 'admin') {
         return next('/home')
       } else {
         return next('/home-taller')
