@@ -396,8 +396,12 @@ router.beforeEach((to, from, next) => {
   if (to.meta.auth) {
     if (authRequired && loggedIn === null) {
       return next('/auth/sign-in')
-    } else if (to.name === 'dashboard') {
-      return next('/home')
+    } else if (to.name === 'dashboard' || to.name === 'dashboard.home') {
+      if (loggedIn.role === 'admin') {
+        return next('/home')
+      } else {
+        return next('/home-taller')
+      }
     }
   }
   next()
