@@ -132,6 +132,12 @@
                       :current-page="currentPage"
                       @filtered="onFiltered"
                     >
+                      <template v-slot:cell(products)="orders">
+                        <!-- {{products.item}} -->
+                        <div v-for="item in orders.item.products" :key="item.id">
+                          {{ item.name }}
+                        </div>
+                      </template>
                       <template v-slot:cell(mode)="orders">{{
                         orders.item.mode | capitalize
                       }}</template>
@@ -412,10 +418,11 @@ export default {
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
         { label: 'Fecha Creación', key: 'created_at', class: 'text-center', sortable: true },
+        { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
+        { label: 'Productos', key: 'products', class: 'text-center', sortable: true },
+        { label: 'Tipo', key: 'personalizedRequired', class: 'text-center', sortable: true },
         { label: 'Entrega Est.', key: 'delivery_date', class: 'text-center', sortable: true },
         { label: 'Modo de entrega', key: 'mode', class: 'text-center', sortable: true },
-        { label: 'Tipo', key: 'personalizedRequired', class: 'text-center', sortable: true },
-        { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
         { label: 'Estatus', key: 'status', class: 'text-center', sortable: true },
         { label: 'Nuevo status', key: 'update', class: 'text-center', sortable: false },
         { label: 'Editor', key: 'editor', class: 'text-center', sortable: false },

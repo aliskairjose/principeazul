@@ -177,6 +177,7 @@
                             placeholder="Dirección de entrega"
                             rows="3"
                             max-rows="6"
+                            class="printable"
                             no-resize
                           ></b-form-textarea>
                           <div class="invalid-feedback">
@@ -1332,12 +1333,6 @@ export default {
           if (this.orderProducts.hasOwnProperty(key)) {
             const element = this.orderProducts[key]
             this.product = {}
-            // if (element.tax !== 0) {
-            //   const price = element.price + ((element.price * element.tax) / 100)
-            //   this.product.price = parseFloat(price).toFixed(2)
-            // } else {
-            //   this.product.price = element.price
-            // }
             this.product.price = element.price
             this.product.product_id = element.id
             this.product.name = element.name
@@ -1422,5 +1417,11 @@ export default {
 
 .btn-link-personlized {
   color: var(--iq-success);
+}
+
+@media print{
+  .printable {
+    text-transform: none;
+  }
 }
 </style>
