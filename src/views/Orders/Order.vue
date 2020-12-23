@@ -166,12 +166,23 @@
                         label="Dirección de entrega:"
                         label-for="name"
                       >
-                        <b-form-textarea
-                          v-model="order.delivery_address"
-                          placeholder="Dirección de entrega"
-                          rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
+                      <ValidationProvider
+                          name="Dirección de entrega"
+                          rules="max:255"
+                          v-slot="{ errors }"
+                        >
+                          <b-form-textarea
+                            :class="errors.length > 0 ? ' is-invalid' : ''"
+                            v-model="order.delivery_address"
+                            placeholder="Dirección de entrega"
+                            rows="3"
+                            max-rows="6"
+                            no-resize
+                          ></b-form-textarea>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
                       </b-form-group>
 
                       <!-- Dedicatoria -->
@@ -180,12 +191,23 @@
                         label="Dedicatoria del arreglo:"
                         label-for="dedication"
                       >
+                      <ValidationProvider
+                          name="Dedicatoria del arreglo"
+                          rules="max:255"
+                          v-slot="{ errors }"
+                        >
                         <b-form-textarea
-                          v-model="order.dedication"
-                          placeholder="Dedicatoria del arreglo"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                           rows="3"
                           max-rows="6"
+                          no-resize
+                          v-model="order.dedication"
+                          placeholder="Dedicatoria del arreglo"
                         ></b-form-textarea>
+                        <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
                       </b-form-group>
 
                       <!-- Persona quien recibe -->
@@ -1188,13 +1210,6 @@ export default {
     handleOkExtra () {
       // let order_product_id = 0
       if (this.tempExtra.length > 0) {
-        // for (const iterator of this.tempExtra) {
-        //   if (iterator.tax !== 0) {
-        //     this.orderProducts[this.index].price += (iterator.sale_price + (iterator.sale_price * iterator.tax) / 100) * iterator.quantity
-        //   } else {
-        //     this.orderProducts[this.index].price += iterator.sale_price * iterator.quantity
-        //   }
-        // }
         this.orderProducts[this.index].additionals.map(a => {
           if (a.type === 'extra') {
             this.tempExtra.map(e => {
@@ -1248,7 +1263,6 @@ export default {
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
-      // console.log(this.order)
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
       if (this.status === 'add') {
@@ -1261,6 +1275,7 @@ export default {
           .finally(() => { this.loading = false })
       }
       if (this.status === 'edit') {
+        console.log(this.order)
         orderService.update(this.order.id, this.order)
           .then(response => {
             this.orderResponse = response.data
