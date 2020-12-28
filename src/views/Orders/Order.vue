@@ -228,12 +228,22 @@
                       <b-form-group
                         class="col-md-6"
                         label="Motivo:"
-                        label-for="delivery"
+                        label-for="reason"
                       >
+                      <ValidationProvider
+                          name="Motivo"
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
                         <b-form-select
                           v-model="order.reason"
                           :options="reasons"
+                          :class="errors.length > 0 ? ' is-invalid' : ''"
                         ></b-form-select>
+                          <div class="invalid-feedback">
+                            <span>{{ errors[0] }}</span>
+                          </div>
+                        </ValidationProvider>
                       </b-form-group>
                       <!-- Phone number -->
                       <b-form-group

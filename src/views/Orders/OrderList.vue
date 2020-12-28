@@ -133,7 +133,6 @@
                       @filtered="onFiltered"
                     >
                       <template v-slot:cell(products)="orders">
-                        <!-- {{products.item}} -->
                         <div v-for="item in orders.item.products" :key="item.id">
                           {{ item.name }}
                         </div>
