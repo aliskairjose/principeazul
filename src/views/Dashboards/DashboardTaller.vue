@@ -180,6 +180,7 @@ export default {
   },
   mounted () {
     vito.index()
+    this.role = localStorage.getItem('role')
     const date = new Date()
     date.setDate(date.getDate())
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
@@ -201,6 +202,7 @@ export default {
   },
   data () {
     return {
+      role: '',
       params: '',
       additionals: [],
       recipes: [],
@@ -269,11 +271,20 @@ export default {
       orderService.getAll(params)
         .then(response => {
           let list = []
-          for (const d of response.data) {
-            if (d.status !== 'Confeccionado') {
-              list.push(d)
+          if (this.role === 'design') {
+            for (const d of response.data) {
+              if (d.status !== 'Confeccionado' && d.personalizedRequired) {
+                list.push(d)
+              }
+            }
+          } else {
+            for (const d of response.data) {
+              if (d.status !== 'Confeccionado') {
+                list.push(d)
+              }
             }
           }
+
           this.orders = [...list]
           // this.orders = [...response.data]
         })
