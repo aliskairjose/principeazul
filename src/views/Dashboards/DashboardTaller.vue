@@ -279,9 +279,10 @@ export default {
             }
           } else {
             for (const d of response.data) {
-              if (d.status !== 'Confeccionado') {
-                list.push(d)
-              }
+              list.push(d)
+              // if (d.status !== 'Confeccionado') {
+              //   list.push(d)
+              // }
             }
           }
 
