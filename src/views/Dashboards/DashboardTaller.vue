@@ -181,6 +181,9 @@ export default {
   mounted () {
     vito.index()
     this.role = localStorage.getItem('role')
+    if (this.role === 'design') {
+      this.selectedPersonalize = 1
+    }
     const date = new Date()
     date.setDate(date.getDate())
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
@@ -271,18 +274,23 @@ export default {
       orderService.getAll(params)
         .then(response => {
           let list = []
-          if (this.role === 'design') {
-            for (const d of response.data) {
-              if (d.status !== 'Confeccionado' && d.personalizedRequired) {
-                list.push(d)
-              }
-            }
-          } else {
-            for (const d of response.data) {
+          // if (this.role === 'design') {
+          //   for (const d of response.data) {
+          //     if (d.status !== 'Confeccionado' && d.personalizedRequired) {
+          //       list.push(d)
+          //     }
+          //   }
+          // } else {
+          //   for (const d of response.data) {
+          //     if (d.status !== 'Confeccionado') {
+          //       list.push(d)
+          //     }
+          //   }
+          // }
+
+          for (const d of response.data) {
+            if (d.status !== 'Confeccionado') {
               list.push(d)
-              // if (d.status !== 'Confeccionado') {
-              //   list.push(d)
-              // }
             }
           }
 
