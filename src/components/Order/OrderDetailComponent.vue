@@ -118,9 +118,9 @@
                         <p class="text-uppercase">Personalización de texto:</p>
                       </b-col>
                       <b-col>
-                        <p>{{ p.note }}</p>
-                        <p>{{ p.note_design }}</p>
-                        <p>{{ p.personalized_text }}</p>
+                        <h6>{{ p.note }}</h6>
+                        <h6>{{ p.note_design }}</h6>
+                        <h6>{{ p.personalized_text }}</h6>
                       </b-col>
                       <b-col>
                         <b-img
