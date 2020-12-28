@@ -91,7 +91,7 @@ export default {
           if (resp.data.role === 'admin') {
             this.$router.push({ name: 'dashboard.home' })
           }
-          if (resp.data.role === 'taller') {
+          if (resp.data.role === 'taller' || resp.data.role === 'design') {
             this.$router.push({ name: 'dashboard.taller' })
           }
         } else if (response.data.errors.length > 0) {
