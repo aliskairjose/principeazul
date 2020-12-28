@@ -134,7 +134,8 @@ export default {
         { value: null, text: 'Seleccione un rol' },
         { value: 'admin', text: 'Admin' },
         { value: 'ventas', text: 'Ventas' },
-        { value: 'taller', text: 'Taller' }
+        { value: 'taller', text: 'Taller' },
+        { value: 'design', text: 'Diseño' }
       ]
     }
   },
