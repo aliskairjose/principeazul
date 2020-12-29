@@ -96,6 +96,7 @@ export default {
     print () {
     },
     handleEventClick (clickInfo) {
+      console.log(clickInfo)
       this.orderId = clickInfo.event.id
       this.$refs['modal-details'].show()
     },
@@ -116,7 +117,7 @@ export default {
   computed: {
     formatCalendar () {
       return this.calendar.map(item => ({
-        title: item.client.name, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
+        id: item.id, title: item.client.name, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
       }))
     }
   }
