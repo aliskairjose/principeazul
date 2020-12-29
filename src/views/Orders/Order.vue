@@ -168,7 +168,7 @@
                       >
                       <ValidationProvider
                           name="Dirección de entrega"
-                          rules="max:255"
+                          rules="max:600"
                           v-slot="{ errors }"
                         >
                           <b-form-textarea
@@ -194,7 +194,7 @@
                       >
                       <ValidationProvider
                           name="Dedicatoria del arreglo"
-                          rules="max:255"
+                          rules="max:600"
                           v-slot="{ errors }"
                         >
                         <b-form-textarea
