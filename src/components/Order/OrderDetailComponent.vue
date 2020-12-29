@@ -120,7 +120,7 @@
                       <b-col>
                         <h6>{{ p.note }}</h6>
                         <h6>{{ p.note_design }}</h6>
-                        <h6>{{ p.personalized_text }}</h6>
+                        <h6 :class="{'font-weight-bold': role === 'design' }">{{ p.personalized_text }}</h6>
                       </b-col>
                       <b-col>
                         <b-img
@@ -217,9 +217,11 @@ export default {
   mounted () {
     vito.index()
     this.loadData()
+    this.role = localStorage.getItem('role')
   },
   data () {
     return {
+      role: '',
       variant: '',
       loading: true,
       showDetails: '',
