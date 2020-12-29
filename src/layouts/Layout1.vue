@@ -161,7 +161,7 @@ export default {
     this.updateRadio()
     body.classList.remove('sidebar-main-active')
     body.classList.remove('right-column-fixed')
-    if (role === 'taller') {
+    if (role === 'taller' || role === 'design') {
       this.verticalMenu = MenuTaller
     }
     if (role === 'ventas') {
