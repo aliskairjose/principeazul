@@ -5,7 +5,7 @@
         md="12"
         style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important"
       >
-        <iq-card :id="`${order.id}`">
+        <iq-card :id="`${order.id}`" :class="{'xpress': order.turn === 'Xpress'}" >
           <template v-slot:body>
             <b-row>
               <b-col md="12" class="d-flex justify-content-between">
@@ -205,6 +205,10 @@ export default {
 }
 .additionals {
   display: none;
+}
+
+.xpress {
+  background-color: yellow !important;
 }
 
 @media print {
