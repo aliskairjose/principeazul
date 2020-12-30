@@ -253,7 +253,7 @@ export default {
         .then(() => {})
         .catch(() => { })
         .finally(() => {
-          this.loadData(``)
+          this.filterData()
           this.loading = false
         })
     },
