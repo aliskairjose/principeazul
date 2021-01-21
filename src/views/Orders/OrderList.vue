@@ -133,7 +133,10 @@
                       @filtered="onFiltered"
                     >
                       <template v-slot:cell(products)="orders">
-                        <div v-for="item in orders.item.products" :key="item.id">
+                        <div
+                          v-for="item in orders.item.products"
+                          :key="item.id"
+                        >
                           {{ item.name }}
                         </div>
                       </template>
@@ -206,10 +209,7 @@
                       </template>
                       <template v-slot:cell(update)="orders">
                         <b-form-select
-                          :disabled="
-                            orders.item.status === 'Entregado' ||
-                            orders.item.status === 'Cancelado'
-                          "
+                          :disabled="orders.item.status === 'Cancelado'"
                           v-model="orders.item.status"
                           :options="statuses"
                           @change="onStatusUpdate(orders.item.id, $event)"
