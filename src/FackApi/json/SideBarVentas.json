@@ -1,11 +1,11 @@
 [
-  {
+   {
     "title": "Dashboard",
-    "name": "Dashboard",
+    "name": "Dashboard Taller",
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "dashboard.home"
+      "name": "dashboard.taller"
     },
     "class_name": "",
     "is_icon_class": true,

@@ -13,7 +13,13 @@
             style="width: 5rem; height: 5rem"
           ></b-spinner>
         </div>
-        <iq-card>
+        <iq-card
+          :class="{
+            xpress:
+              order.turn === 'Express (indicar hora exacta)' ||
+              order.mode === 'pedidosya',
+          }"
+        >
           <template v-slot:headerTitle>
             <b-row>
               <b-col sm="2" md="6">
@@ -186,6 +192,10 @@ export default {
 </script>
 
 <style>
+.xpress {
+  background-color: yellow !important;
+}
+
 .card-order {
   height: auto;
   margin-bottom: 10px;
