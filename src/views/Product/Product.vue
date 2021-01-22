@@ -330,9 +330,18 @@ export default {
       this.loading = true
       this.title = 'Editar producto'
       this.btnTitle = 'Guardar cambios'
+      productService.getAll('type=additional')
+        .then(response => {
+          const data = response.data
+          data.map(r => {
+            r.quantity = 0
+          })
+          this.subProducts = data
+        })
+        .catch((error) => { console.error(error) })
+
       productService.getById(this.$route.params.id)
         .then(response => {
-          // console.log(response.data)
           this.product = response.data
           this.subProducts = this.product.additionals
           this.subs = this.product.additionals.length
@@ -419,6 +428,9 @@ export default {
       let subItem = {}
       subItem.additional_product_id = item.id
       subItem.quantity = item.quantity
+      if (!this.product.relatedProducts) {
+        this.product.relatedProducts = []
+      }
       this.product.relatedProducts.push(subItem)
       this.subs = this.product.relatedProducts.length
     },

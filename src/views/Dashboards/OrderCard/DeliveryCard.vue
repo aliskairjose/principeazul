@@ -1,20 +1,23 @@
 <template>
   <b-container fluid>
     <b-row class="card-order">
-      <b-col md="12" style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important;">
+      <b-col
+        md="12"
+        style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important"
+      >
         <div class="text-center" id="spinner" v-show="loading">
           <b-spinner
             variant="primary"
             type="grow"
             label="Spinning"
-            style="width: 5rem; height: 5rem;"
+            style="width: 5rem; height: 5rem"
           ></b-spinner>
         </div>
         <iq-card>
           <template v-slot:headerTitle>
             <b-row>
               <b-col sm="2" md="6">
-                <h3>#{{order.id}}</h3>
+                <h3>#{{ order.id }}</h3>
               </b-col>
               <b-col sm="8" md="6">
                 <img
@@ -29,16 +32,20 @@
             <b-row v-for="product in order.products" :key="product.id">
               <b-col md="4" v-if="product.product">
                 <b-img
-                  v-viewer="{movable: false}"
+                  v-viewer="{ movable: false }"
                   center
                   rounded="circle"
-                  :src="product.product.image ? product.product.image : require(`@/assets/images/no-image.png`)"
+                  :src="
+                    product.product.image
+                      ? product.product.image
+                      : require(`@/assets/images/no-image.png`)
+                  "
                   class="image"
                 ></b-img>
               </b-col>
               <b-col md="4" v-if="!product.product">
                 <b-img
-                  v-viewer="{movable: false}"
+                  v-viewer="{ movable: false }"
                   center
                   rounded="circle"
                   :src="require(`@/assets/images/no-image.png`)"
@@ -48,30 +55,42 @@
               <b-col md="8">
                 <b-row>
                   <b-col md="12">
-                    <h5>{{product.name}}</h5>
+                    <h5>{{ product.name }}</h5>
                   </b-col>
                 </b-row>
                 <b-row>
                   <b-col md="12">
                     <label
                       class="text-muted"
-                      style="max-width: 200px; font-style: italic; font-size: 11px"
+                      style="
+                        max-width: 200px;
+                        font-style: italic;
+                        font-size: 11px;
+                      "
                       for
                       v-if="product.note"
-                    >"{{product.note | capitalize}}"</label>
+                      >"{{ product.note | capitalize }}"</label
+                    >
                   </b-col>
                 </b-row>
               </b-col>
             </b-row>
             <b-row class="mt-3">
               <b-col md="12">
-                <p>Día de entrega: {{ order.delivery_date | formatWeekDate }}</p>
+                <p>
+                  Día de entrega: {{ order.delivery_date | formatWeekDate }}
+                </p>
                 <p>Turno: {{ order.turn }}</p>
                 <p>Persona que recibe: {{ order.addressee }}</p>
-                <p v-if="order.client.phone">Teléfono: {{ order.client.phone }}</p>
+                <p>Teléfono: {{ order.phone }}</p>
+                <p v-if="order.client.phone">
+                  Teléfono: {{ order.client.phone }}
+                </p>
                 <p>Dirección: {{ order.delivery_address }}</p>
                 <div class="form-group">
-                  <label class="mr-2" for="destinatarioInput">Persona que recibió:</label>
+                  <label class="mr-2" for="destinatarioInput"
+                    >Persona que recibió:</label
+                  >
                   <input
                     type="text"
                     id="destinatarioInput"
@@ -87,12 +106,18 @@
                   >
                     <i class="ri-refresh-line"></i>
                   </b-button>
-                  <b-alert :show="isUpdated" variant=" " dismissible fade class="text-white bg-info">
-                  <div class="iq-alert-text">
-                    Datos actualizados con
-                    <b>éxito</b>!
-                  </div>
-                </b-alert>
+                  <b-alert
+                    :show="isUpdated"
+                    variant=" "
+                    dismissible
+                    fade
+                    class="text-white bg-info"
+                  >
+                    <div class="iq-alert-text">
+                      Datos actualizados con
+                      <b>éxito</b>!
+                    </div>
+                  </b-alert>
                 </div>
               </b-col>
             </b-row>
@@ -109,7 +134,8 @@
                   variant="primary"
                   class="px-3"
                   v-if="order.personalizedRequired"
-                >Personalizado</b-badge>
+                  >Personalizado</b-badge
+                >
               </b-col>
             </b-row>
           </template>
