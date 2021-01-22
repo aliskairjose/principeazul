@@ -86,6 +86,10 @@
                 <p>
                   Día de entrega: {{ order.delivery_date | formatWeekDate }}
                 </p>
+                <div v-for="product in order.products" :key="product.id">
+                  <p>Producto: {{ product.name }}</p>
+                  <p>Cantidad: {{ product.quantity }}</p>
+                </div>
                 <p>Turno: {{ order.turn }}</p>
                 <p>Persona que recibe: {{ order.addressee }}</p>
                 <p>Teléfono: {{ order.phone }}</p>

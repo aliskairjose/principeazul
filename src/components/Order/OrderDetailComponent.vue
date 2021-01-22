@@ -35,7 +35,7 @@
                 </div>
               </div>
             </b-col>
-            <b-container>
+            <b-container v-if="!ocultar">
               <b-row>
                 <b-col>
                   <p class="text-uppercase font-weight-bolder">Cliente:</p>
@@ -120,7 +120,9 @@
                       <b-col>
                         <h6>{{ p.note }}</h6>
                         <h6>{{ p.note_design }}</h6>
-                        <h6 :class="{'font-weight-bold': role === 'design' }">{{ p.personalized_text }}</h6>
+                        <h6 :class="{ 'font-weight-bold': role === 'design' }">
+                          {{ p.personalized_text }}
+                        </h6>
                       </b-col>
                       <b-col>
                         <b-img
@@ -157,17 +159,19 @@
             </b-container>
             <hr />
             <!-- Datos de la entrega -->
-            <b-col>
-              <div class="clearfix">
-                <div class="float-left">
-                  <h5>Datos de la entrega</h5>
+            <b-container v-if="!ocultar">
+              <b-col>
+                <div class="clearfix">
+                  <div class="float-left">
+                    <h5>Datos de la entrega</h5>
+                  </div>
+                  <div class="float-right">
+                    <h3 class="d-inline">{{ data.id }}</h3>
+                  </div>
                 </div>
-                <div class="float-right">
-                  <h3 class="d-inline">{{ data.id }}</h3>
-                </div>
-              </div>
-            </b-col>
-            <b-container>
+              </b-col>
+            </b-container>
+            <b-container v-if="!ocultar">
               <b-row>
                 <b-col>
                   <p class="text-uppercase">Fecha de entrega:</p>
@@ -212,7 +216,8 @@ export default {
   props: {
     dataId: { type: Number },
     idList: { type: Array },
-    enableButtons: { type: Boolean }
+    enableButtons: { type: Boolean },
+    ocultar: { type: Boolean }
   },
   mounted () {
     vito.index()
@@ -221,7 +226,6 @@ export default {
   },
   data () {
     return {
-      role: '',
       variant: '',
       loading: true,
       showDetails: '',

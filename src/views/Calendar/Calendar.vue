@@ -43,6 +43,7 @@
         :dataId="orderId"
         :idList="ids"
         :enableButtons="false"
+        :ocultar="hidden"
       >
       </OrderDetailComponent>
     </b-modal>
@@ -69,10 +70,19 @@ export default {
   },
   mounted () {
     vito.index()
+    this.role = localStorage.getItem('role')
+    if (this.role === 'admin') {
+      this.hidden = false
+    } else {
+      this.hidden = true
+    }
   },
   data: () => ({
     orderId: '',
+    hidden: false,
     ids: [],
+    role: '',
+    title: '',
     details: {
       client: {
         name: '',
@@ -93,10 +103,7 @@ export default {
     OrderDetailComponent
   },
   methods: {
-    print () {
-    },
     handleEventClick (clickInfo) {
-      console.log(clickInfo)
       this.orderId = clickInfo.event.id
       this.$refs['modal-details'].show()
     },
@@ -116,6 +123,11 @@ export default {
   },
   computed: {
     formatCalendar () {
+      if (this.role === 'design' || this.role === 'taller') {
+        return this.calendar.map(item => ({
+          id: item.id, title: item.products[0]?.name, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
+        }))
+      }
       return this.calendar.map(item => ({
         id: item.id, title: item.client.name, date: item.delivery_date, color: '#111FF0', textColor: '#FFFFFF'
       }))
