@@ -96,8 +96,8 @@
                   </p>
                 </b-col>
                 <b-col>
-                  <p>{{ data.reason }}</p>
-                  <p>{{ data.dedication }}</p>
+                  <h6>{{ data.reason }}</h6>
+                  <h6>{{ data.dedication }}</h6>
                 </b-col>
               </b-row>
             </b-container>

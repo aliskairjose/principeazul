@@ -166,7 +166,7 @@
                         label="Dirección de entrega:"
                         label-for="name"
                       >
-                      <ValidationProvider
+                        <ValidationProvider
                           name="Dirección de entrega"
                           rules="max:600"
                           v-slot="{ errors }"
@@ -192,20 +192,20 @@
                         label="Dedicatoria del arreglo:"
                         label-for="dedication"
                       >
-                      <ValidationProvider
+                        <ValidationProvider
                           name="Dedicatoria del arreglo"
                           rules="max:600"
                           v-slot="{ errors }"
                         >
-                        <b-form-textarea
-                          :class="errors.length > 0 ? ' is-invalid' : ''"
-                          rows="3"
-                          max-rows="6"
-                          no-resize
-                          v-model="order.dedication"
-                          placeholder="Dedicatoria del arreglo"
-                        ></b-form-textarea>
-                        <div class="invalid-feedback">
+                          <b-form-textarea
+                            :class="errors.length > 0 ? ' is-invalid' : ''"
+                            rows="3"
+                            max-rows="6"
+                            no-resize
+                            v-model="order.dedication"
+                            placeholder="Dedicatoria del arreglo"
+                          ></b-form-textarea>
+                          <div class="invalid-feedback">
                             <span>{{ errors[0] }}</span>
                           </div>
                         </ValidationProvider>
@@ -1276,7 +1276,6 @@ export default {
           .finally(() => { this.loading = false })
       }
       if (this.status === 'edit') {
-        console.log(this.order)
         orderService.update(this.order.id, this.order)
           .then(response => {
             this.orderResponse = response.data
@@ -1419,7 +1418,7 @@ export default {
   color: var(--iq-success);
 }
 
-@media print{
+@media print {
   .printable {
     text-transform: none;
   }

@@ -232,19 +232,19 @@ export default {
   methods: {
     filterData () {
       if (this.selectedPersonalize !== 2 && this.selectedType === 1) {
-        this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+        this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&includes=products.product,products.additionals.product`)
         return
       }
       if (this.selectedPersonalize === 2 && this.selectedType === 1) {
-        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`)
+        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&includes=products.product,products.additionals.product`)
         return
       }
       if (this.selectedPersonalize !== 2 && this.selectedType === 2) {
-        this.loadData(`required_personalized=${this.selectedPersonalize}&init_date=${this.initDate}&end_date=${this.endDate}`)
+        this.loadData(`required_personalized=${this.selectedPersonalize}&init_date=${this.initDate}&end_date=${this.endDate}&includes=products.product,products.additionals.product`)
         return
       }
       if (this.selectedPersonalize === 2 && this.selectedType === 2) {
-        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}`)
+        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}&includes=products.product,products.additionals.product`)
       }
     },
     updateStatus ($event) {
