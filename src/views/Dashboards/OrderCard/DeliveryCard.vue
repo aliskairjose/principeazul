@@ -113,6 +113,7 @@
                     class="ml-1"
                     variant="light"
                     @click="updateOrder(order)"
+                    hidden
                   >
                     <i class="ri-refresh-line"></i>
                   </b-button>
