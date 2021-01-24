@@ -128,7 +128,7 @@
       <template v-slot:left>
       </template>
       <template v-slot:right>
-        Copyright 2020 <a href="#">Príncipe Azul</a> All Rights Reserved.
+        Copyright 2020 <a href="#">El príncipe azul</a> All Rights Reserved.
       </template>
     </FooterStyle1>
   </div>
