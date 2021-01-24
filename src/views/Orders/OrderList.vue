@@ -444,23 +444,23 @@ export default {
       if (this.selectedPersonalize !== 2) {
         if (this.selectedType === 1) {
           // Fecha de creación
-          params = `delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&required_personalized=${this.selectedPersonalize}`
+          params = `delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&required_personalized=${this.selectedPersonalize}&orderBy=created_at&orderDirection=desc`
         } else {
           // Fecha de entrega
-          params = `init_date=${this.initDate}&end_date=${this.endDate}&required_personalized=${this.selectedPersonalize}`
+          params = `init_date=${this.initDate}&end_date=${this.endDate}&required_personalized=${this.selectedPersonalize}&orderBy=created_at&orderDirection=desc`
         }
       } else {
         if (this.selectedType === 1) {
           // Fecha de creación
-          params = `delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}`
+          params = `delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&orderBy=created_at&orderDirection=desc`
         } else {
           // Fecha de entrega
-          params = `init_date=${this.initDate}&end_date=${this.endDate}`
+          params = `init_date=${this.initDate}&end_date=${this.endDate}&orderBy=created_at&orderDirection=desc`
         }
       }
       this.loadData(params)
     },
-    loadData (params = '') {
+    loadData (params = '?orderBy=created_at&orderDirection=desc') {
       this.loading = true
       orderService.getAll(params)
         .then(response => {
