@@ -834,7 +834,6 @@ export default {
           this.client = this.order.client
           this.orderProducts = this.order.products
           this.deliveryCost = this.order.delivery_price
-          console.log(this.order)
         })
         .catch(() => { this.loading = false })
         .finally(() => { this.loading = false })
@@ -1016,11 +1015,6 @@ export default {
     },
     finalPrice () {
       const monto = (parseFloat(this.amount) + this.additionalsPrice + this.deliveryCost + parseFloat(this.itbm)) - this.order.discount
-      console.log({ monto: parseFloat(this.amount),
-        adittionalPrice: this.additionalsPrice,
-        delivery: this.deliveryCost,
-        tax: parseFloat(this.itbm),
-        descuento: this.order.discount })
       return parseFloat(monto).toFixed(2)
     },
     payOut () {

@@ -56,7 +56,11 @@
                     {{ (data.total - data.totalPaid) | money }}
                   </p>
                   <p v-else>No hay pago pendiente</p>
-                  <p v-for="(pm, index) in paymentMethod" :key="index">
+                  <p
+                    v-for="(pm, index) in paymentMethod"
+                    :key="index"
+                    :class="{ custome: pm === 'Crédito' }"
+                  >
                     {{ pm }}
                   </p>
                 </b-col>
@@ -284,7 +288,7 @@ export default {
       this.index = this.idList.indexOf(this.dataId)
       orderService.getById(this.dataId)
         .then(response => {
-          // console.log(response.data)
+          console.log(response.data)
           this.data = response.data
           for (const key in this.data.products) {
             if (this.data.products.hasOwnProperty(key)) {
@@ -325,6 +329,10 @@ export default {
 
 .text-italic {
   font-style: italic;
+}
+
+.custome {
+  font-weight: bold;
 }
 @media print {
   .row-data {
