@@ -135,9 +135,10 @@
             <b-row class="mt-3 mb-0 d-flex justify-content-between">
               <b-col md="6">
                 <b-form-select
+                  :disabled="!order.order_receiver"
                   v-model="order.status"
                   :options="statuses"
-                  @change="onStatusChange(order.id, $event)"
+                  @change="onStatusChange(order.id, $event, order)"
                 ></b-form-select>
               </b-col>
               <b-col lg="4" md="12" sm="12" style="padding: 0px">
@@ -176,8 +177,9 @@ export default {
     }
   },
   methods: {
-    onStatusChange (id, $event) {
+    onStatusChange (id, $event, order) {
       const status = $event
+      this.updateOrder(order)
       this.$emit('status-change', { id, status })
     },
     updateOrder (order) {
