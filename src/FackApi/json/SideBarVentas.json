@@ -22,6 +22,30 @@
     "is_icon_class": true,
     "icon": "ri-pages-line"
   },
+   {
+    "title": "Reportes",
+    "name": "Reportes",
+    "is_heading": false,
+    "is_active": false,
+    "link": "",
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-bar-chart-grouped-line",
+    "children": [
+      {
+        "title": "Reporte Diario de Ventas",
+        "name": "Reporte Diario de Ventas",
+        "is_heading": false,
+        "is_active": false,
+        "link": {
+          "name": "reports.salesJournalReport"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-file-line"
+      }
+    ]
+  },
   {
     "title": "Clientes",
     "name": "Clientes",
