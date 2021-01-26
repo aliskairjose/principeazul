@@ -185,7 +185,7 @@ export default {
     updateOrder (order) {
       this.loading = true
       orderService.update(this.order.id, this.order)
-        .then(response => {
+        .then(() => {
           this.isUpdated = true
           setTimeout(() => {
             this.isUpdated = false
