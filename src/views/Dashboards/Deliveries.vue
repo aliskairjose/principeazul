@@ -77,7 +77,7 @@ export default {
 
     const date = new Date()
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
-    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}&mode=${this.mode}`)
+    this.loadData(`delivery_init_date=${formatDate}&delivery_end_date=${formatDate}&excludeStatus=entregado&mode=${this.mode}`)
   },
   data () {
     return {

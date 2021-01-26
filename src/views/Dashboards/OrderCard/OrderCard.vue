@@ -2,6 +2,11 @@
   <b-container fluid>
     <b-row class="card-order">
       <b-col
+        :class="{
+            xpress:
+              order.turn === 'Express (indicar hora exacta)' ||
+              order.mode === 'pedidosya',
+          }"
         md="12"
         style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important"
       >
@@ -16,7 +21,7 @@
           <template v-slot:body>
             <b-row>
               <b-col md="12" class="d-flex justify-content-between">
-                <h5>#{{ order.id }}</h5>
+                <h5 style="margin-right: 20px">#{{ order.id }}</h5>
                 <label style="font-size: 13px">{{
                   order.delivery_date | formatWeekDate
                 }}</label>
@@ -140,7 +145,7 @@
               <b-row
                 class="mt-5 mb-0 d-flex justify-content-between align-items-center"
               >
-                <b-col>
+                <b-col sm="12" md="6">
                   <b-form-select
                     v-model="order.status"
                     :options="statuses"
@@ -148,7 +153,7 @@
                   >
                   </b-form-select>
                 </b-col>
-                <b-col style="padding: 0px">
+                <b-col sm="12" md="6">
                   <b-badge
                     variant="primary"
                     class="px-3"
@@ -215,7 +220,7 @@ export default {
 }
 
 .xpress {
-  background-color: yellow !important;
+  background-color: #ffdedd !important;
 }
 
 @media print {

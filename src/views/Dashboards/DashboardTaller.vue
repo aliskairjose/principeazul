@@ -106,8 +106,8 @@
               </b-col>
             </b-row>
             <b-container>
-              <b-row cols-md="3" cols-sm="1" id="printOrders">
-                <b-col v-for="order in orders" :key="order.id">
+              <b-row cols-lg="3" cols-md="2" cols-sm="2" id="printOrders">
+                <b-col  v-for="order in orders" :key="order.id">
                   <OrderCard
                     :order="order"
                     :statuses="statuses"
@@ -121,6 +121,7 @@
               <b-col md="12">
                 <h5>Receta</h5>
                 <label
+
                   v-for="recipe in recipes"
                   :key="recipe.id"
                   class="text-muted text-capitalize mr-3"
@@ -232,19 +233,19 @@ export default {
   methods: {
     filterData () {
       if (this.selectedPersonalize !== 2 && this.selectedType === 1) {
-        this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&includes=products.product,products.additionals.product`)
+        this.loadData(`required_personalized=${this.selectedPersonalize}&delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&excludeStatus=entregado&prioritizeType=pedidosya&includes=products.product,products.additionals.product`)
         return
       }
       if (this.selectedPersonalize === 2 && this.selectedType === 1) {
-        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&includes=products.product,products.additionals.product`)
+        this.loadData(`delivery_init_date=${this.initDate}&delivery_end_date=${this.endDate}&excludeStatus=entregado&prioritizeType=pedidosya&includes=products.product,products.additionals.product`)
         return
       }
       if (this.selectedPersonalize !== 2 && this.selectedType === 2) {
-        this.loadData(`required_personalized=${this.selectedPersonalize}&init_date=${this.initDate}&end_date=${this.endDate}&includes=products.product,products.additionals.product`)
+        this.loadData(`required_personalized=${this.selectedPersonalize}&init_date=${this.initDate}&end_date=${this.endDate}&excludeStatus=entregado&prioritizeType=pedidosya&includes=products.product,products.additionals.product`)
         return
       }
       if (this.selectedPersonalize === 2 && this.selectedType === 2) {
-        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}&includes=products.product,products.additionals.product`)
+        this.loadData(`init_date=${this.initDate}&end_date=${this.endDate}&excludeStatus=entregado&prioritizeType=pedidosya&includes=products.product,products.additionals.product`)
       }
     },
     updateStatus ($event) {
