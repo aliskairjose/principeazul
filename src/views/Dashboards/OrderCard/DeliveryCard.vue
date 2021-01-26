@@ -125,9 +125,17 @@
                     class="text-white bg-info"
                   >
                     <div class="iq-alert-text">
-                      Datos actualizados con
-                      <b>éxito</b>!
+                      Datos actualizados con <b>éxito</b>!
                     </div>
+                  </b-alert>
+                  <b-alert
+                    :show="updtadeError"
+                    variant=" "
+                    dismissible
+                    fade
+                    class="text-white bg-info"
+                  >
+                    <div class="iq-alert-text">Ha ocurrido un error!</div>
                   </b-alert>
                 </div>
               </b-col>
@@ -135,9 +143,10 @@
             <b-row class="mt-3 mb-0 d-flex justify-content-between">
               <b-col md="6">
                 <b-form-select
+                  :disabled="!order.order_receiver"
                   v-model="order.status"
                   :options="statuses"
-                  @change="onStatusChange(order.id, $event)"
+                  @change="onStatusChange(order.id, $event, order)"
                 ></b-form-select>
               </b-col>
               <b-col lg="4" md="12" sm="12" style="padding: 0px">
@@ -172,24 +181,26 @@ export default {
   data () {
     return {
       loading: false,
-      isUpdated: false
+      isUpdated: false,
+      updtadeError: ''
     }
   },
   methods: {
-    onStatusChange (id, $event) {
+    onStatusChange (id, $event, order) {
       const status = $event
+      this.updateOrder(order)
       this.$emit('status-change', { id, status })
     },
     updateOrder (order) {
       this.loading = true
       orderService.update(this.order.id, this.order)
-        .then(response => {
+        .then(() => {
           this.isUpdated = true
           setTimeout(() => {
             this.isUpdated = false
           }, 3000)
         })
-        .catch(error => { console.error(error) })
+        .catch(error => { this.updtadeError = error })
         .finally(() => { this.loading = false })
     }
   }
