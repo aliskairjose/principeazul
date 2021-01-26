@@ -182,7 +182,7 @@ export default {
     return {
       loading: false,
       isUpdated: false,
-      updtadeError: ''
+      updtadeError: null
     }
   },
   methods: {
