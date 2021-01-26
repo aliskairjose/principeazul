@@ -42,6 +42,10 @@
                           <b-col sm="6"> ${{ parseFloat(results.totalOrder.total).toFixed(2) }}</b-col>
                         </b-row>
                         <b-row>
+                          <b-col sm="6" style="font-weight: bold; color: #0b0b0b">TOTAL PAGADO</b-col>
+                          <b-col sm="6"> ${{ parseFloat(results.paymentsOrders.payment).toFixed(2) }}</b-col>
+                        </b-row>
+                        <b-row>
                           <b-col sm="6" style="font-weight: bold; color: #0b0b0b">No. de Pedidos</b-col>
                           <b-col sm="6"> {{ results.totalOrder.quantity }}</b-col>
                         </b-row>
