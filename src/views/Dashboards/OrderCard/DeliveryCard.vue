@@ -125,9 +125,17 @@
                     class="text-white bg-info"
                   >
                     <div class="iq-alert-text">
-                      Datos actualizados con
-                      <b>éxito</b>!
+                      Datos actualizados con <b>éxito</b>!
                     </div>
+                  </b-alert>
+                  <b-alert
+                    :show="updtadeError"
+                    variant=" "
+                    dismissible
+                    fade
+                    class="text-white bg-info"
+                  >
+                    <div class="iq-alert-text">Ha ocurrido un error!</div>
                   </b-alert>
                 </div>
               </b-col>
@@ -173,7 +181,8 @@ export default {
   data () {
     return {
       loading: false,
-      isUpdated: false
+      isUpdated: false,
+      updtadeError: ''
     }
   },
   methods: {
@@ -191,7 +200,7 @@ export default {
             this.isUpdated = false
           }, 3000)
         })
-        .catch(error => { console.error(error) })
+        .catch(error => { this.updtadeError = error })
         .finally(() => { this.loading = false })
     }
   }
