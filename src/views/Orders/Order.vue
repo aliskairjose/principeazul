@@ -735,7 +735,9 @@ export default {
           this.$set(this.payment, 'amount', 0)
           list.push(this.payment)
         }
-        this.payments = [ ...list ]
+        if (!this.$route.params.id) {
+          this.payments = [ ...list ]
+        }
       })
 
     generalService.reasons()
@@ -830,7 +832,17 @@ export default {
           this.order = response.data
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
-          this.payments = this.order.payments
+          // this.payments = this.order.payments
+          for (let position in response.data.payments) {
+            this.payments.push({
+              checkBox: response.data.payments[position].amount > 0,
+              amount: response.data.payments[position].amount,
+              payment_method: response.data.payments[position].payment_method,
+              id: response.data.payments[position].id,
+              order_id: response.data.payments[position].order_id,
+              created_at: response.data.payments[position].created_at
+            })
+          }
           this.client = this.order.client
           this.orderProducts = this.order.products
           this.deliveryCost = this.order.delivery_price
@@ -978,7 +990,7 @@ export default {
       for (const key in this.orderProducts) {
         if (this.orderProducts.hasOwnProperty(key)) {
           const element = this.orderProducts[key]
-          tax += (element.price * 7) / 100
+          tax += (element.price * element.tax) / 100
         }
       }
       return tax
