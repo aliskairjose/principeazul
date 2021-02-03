@@ -836,7 +836,7 @@ export default {
           for (let position in response.data.payments) {
             this.payments.push({
               checkBox: response.data.payments[position].amount > 0,
-              amount: response.data.payments[position].amount,
+              amount: (response.data.payments[position].amount).toFixed(2),
               payment_method: response.data.payments[position].payment_method,
               id: response.data.payments[position].id,
               order_id: response.data.payments[position].order_id,
