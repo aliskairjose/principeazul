@@ -109,7 +109,7 @@
                   <p v-if="item.note">
                     Nota de taller {{ index + 1 }}:
                     <label
-                      class="text-muted text-capitalize"
+                      class="text-muted"
                       style="font-style: italic"
                       ><strong>{{ item.note }}</strong></label
                     >
@@ -117,7 +117,7 @@
                   <p v-if="item.note_design">
                     Nota de diseño {{ index + 1 }}:
                     <label
-                      class="text-muted text-capitalize"
+                      class="text-muted"
                       style="font-style: italic"
                       ><strong>{{ item.note_design }}</strong></label
                     >
@@ -125,7 +125,7 @@
                   <p v-if="item.personalized_text">
                     Texto personalizado {{ item.name }}:
                     <label
-                      class="text-muted text-capitalize"
+                      class="text-muted"
                       style="font-style: italic"
                       >{{ item.personalized_text }}</label
                     >
