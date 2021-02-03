@@ -3,10 +3,10 @@
     <b-row class="card-order">
       <b-col
         :class="{
-            xpress:
-              order.turn === 'Express (indicar hora exacta)' ||
-              order.mode === 'pedidosya',
-          }"
+          xpress:
+            order.turn === 'Express (indicar hora exacta)' ||
+            order.mode === 'pedidosya',
+        }"
         md="12"
         style="box-shadow: 5px 5px 5px var(--iq-secondary-light) !important"
       >
@@ -106,30 +106,24 @@
             <b-row>
               <b-col md="12">
                 <div v-for="(item, index) in order.products" :key="item.id">
-                  <p v-if="item.note">
+                  <h6 v-if="item.note">
                     Nota de taller {{ index + 1 }}:
-                    <label
-                      class="text-muted"
-                      style="font-style: italic"
+                    <label class="text-muted" style="font-style: italic"
                       ><strong>{{ item.note }}</strong></label
                     >
-                  </p>
-                  <p v-if="item.note_design">
+                  </h6>
+                  <h6 v-if="item.note_design">
                     Nota de diseño {{ index + 1 }}:
-                    <label
-                      class="text-muted"
-                      style="font-style: italic"
+                    <label class="text-muted" style="font-style: italic"
                       ><strong>{{ item.note_design }}</strong></label
                     >
-                  </p>
-                  <p v-if="item.personalized_text">
+                  </h6>
+                  <h6 v-if="item.personalized_text">
                     Texto personalizado {{ item.name }}:
-                    <label
-                      class="text-muted"
-                      style="font-style: italic"
-                      >{{ item.personalized_text }}</label
-                    >
-                  </p>
+                    <label class="text-muted" style="font-style: italic">{{
+                      item.personalized_text
+                    }}</label>
+                  </h6>
                 </div>
                 <p v-if="order.reason">
                   Motivo:
