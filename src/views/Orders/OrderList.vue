@@ -460,7 +460,7 @@ export default {
       }
       this.loadData(params)
     },
-    loadData (params = '?orderBy=created_at&orderDirection=desc') {
+    loadData (params = 'orderBy=created_at&orderDirection=desc') {
       this.loading = true
       console.log(params)
       orderService.getAll(params)
