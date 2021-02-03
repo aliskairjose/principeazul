@@ -830,6 +830,7 @@ export default {
       orderService.getById(this.$route.params.id)
         .then(response => {
           this.order = response.data
+          this.order.discount = (response.data.discount).toFixed(2)
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
           // this.payments = this.order.payments
