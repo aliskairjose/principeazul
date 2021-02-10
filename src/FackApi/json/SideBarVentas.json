@@ -12,8 +12,8 @@
     "icon": "ri-home-3-line"
   },
   {
-    "title": "Ordenes / Compras",
-    "name": "Ordenes / Compras",
+    "title": "Órdenes / Compras",
+    "name": "Órdenes / Compras",
     "is_active": false,
     "link": {
       "name": "orders.list"

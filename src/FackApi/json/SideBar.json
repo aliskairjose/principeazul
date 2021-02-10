@@ -60,7 +60,7 @@
     "icon": "ri-terminal-window-line"
   },
   {
-    "title": "Ordenes",
+    "title": "Órdenes",
     "name": "Órdenes",
     "is_heading": false,
     "is_active": false,
@@ -82,7 +82,7 @@
         "icon": "ri-file-add-line"
       },
       {
-        "title": "Listado de ordenes",
+        "title": "Listado de órdenes",
         "name": "Listado de órdenes",
         "is_heading": false,
         "is_active": false,

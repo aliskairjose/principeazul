@@ -77,7 +77,7 @@ const orderRoutes = (prop, mode = false) => [
   {
     path: 'list',
     name: prop + '.list',
-    meta: { dark: mode, auth: true, name: 'Lista de ordenes' },
+    meta: { dark: mode, auth: true, name: 'Lista de órdenes' },
     component: OrderList
   },
   {
