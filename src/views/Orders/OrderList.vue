@@ -371,16 +371,20 @@ export default {
       })
       .catch(error => { console.error(error) })
 
-    this.loadData()
+    // const param = `init_date=${this.initDate}&end_date=${this.endDate}&orderBy=created_at&orderDirection=desc`
+    // this.loadData(param)
   },
   mounted () {
     vito.index()
     const date = new Date()
     date.setDate(date.getDate())
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
+    const formatDate2 = moment(String(date)).add(7, 'days').format('YYYY-MM-DD')
     this.initDate = formatDate
-    this.endDate = formatDate
+    this.endDate = formatDate2
     this.role = localStorage.getItem('role')
+    const param = `init_date=${this.initDate}&end_date=${this.endDate}&orderBy=created_at&orderDirection=desc`
+    this.loadData(param)
   },
   data () {
     return {
