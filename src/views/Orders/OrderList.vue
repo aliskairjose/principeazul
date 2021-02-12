@@ -381,9 +381,9 @@ export default {
     const formatDate = moment(String(date)).format('YYYY-MM-DD')
     const formatDate2 = moment(String(date)).add(7, 'days').format('YYYY-MM-DD')
     this.initDate = formatDate
-    this.endDate = formatDate2
+    this.endDate = formatDate
     this.role = localStorage.getItem('role')
-    const param = `init_date=${this.initDate}&end_date=${this.endDate}&orderBy=created_at&orderDirection=desc`
+    const param = `init_date=${this.initDate}&end_date=${formatDate2}&orderBy=created_at&orderDirection=desc`
     this.loadData(param)
   },
   data () {
