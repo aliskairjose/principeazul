@@ -319,7 +319,7 @@
                       <h6>
                         Nota de diseño: <strong>{{ p.note_design }}</strong>
                       </h6>
-                      <h6 v-if="p.personalized">
+                      <h6 v-if="p.personalized || (status === 'edit' && p.product.personalized)">
                         Texto personalizado: {{ p.personalized_text }}
                       </h6>
                       <p class="mt-2">Extras</p>
@@ -391,7 +391,7 @@
                       <br />
                       <b-button
                         class="btn-link-personlized"
-                        v-if="p.personalized"
+                        v-if="p.personalized || (status === 'edit' && p.product.personalized)"
                         v-b-tooltip.right="'Añadir texto Personalizado'"
                         size="sm"
                         variant="link"
@@ -1267,6 +1267,10 @@ export default {
     },
     showPersonalizedText (index) {
       this.index = index
+      if (this.status === 'edit' && this.orderProducts[this.index].product.personalized) {
+        this.personalized_text = this.orderProducts[this.index].personalized_text
+      }
+
       this.$refs['modal-personalized'].show()
     },
     showModalNote (index) {
