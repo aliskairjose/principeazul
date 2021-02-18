@@ -40,7 +40,7 @@
                     </b-button>
                     <download-excel
                       class="btn btn-outline-warning"
-                      :data="results"
+                      :data="results.orders"
                       worksheet="Reporte diario de ventas"
                       name="Reporte diario de ventas.xls"
                     >
