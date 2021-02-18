@@ -1,26 +1,45 @@
 <template>
-   <b-container fluid>
+  <b-container fluid>
     <b-row>
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-row v-else align-h="between">
               <b-col md="12" class="my-1 text-center">
-                <b-row align-h="end" class="mb-2 mt-2" >
+                <b-row align-h="end" class="mb-2 mt-2">
                   <div class="col-md-2 text-right">
-                    <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
+                    <b-button
+                      class="mr-2"
+                      variant="outline-success"
+                      v-b-tooltip.top="'Descargar a PDF'"
+                      @click="exportPDF"
+                    >
                       <i class="ri-download-cloud-line"></i>
-                      </b-button>
+                    </b-button>
+                    <download-excel
+                      class="btn btn-outline-warning"
+                      :data="results"
+                      worksheet="Productos más vendidos"
+                      name="Productos más vendidos.xls"
+                    >
+                      <i class="ri-file-excel-2-line"></i>
+                    </download-excel>
                   </div>
                 </b-row>
               </b-col>
               <template v-if="results.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b></div>
+                    <div class="iq-alert-text">
+                      <b>No hay registros para mostrar.</b>
+                    </div>
                   </b-alert>
                 </b-col>
               </template>
@@ -38,16 +57,27 @@
                     :sort-by.sync="sortBy"
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
-                    @filtered="onFiltered">
+                    @filtered="onFiltered"
+                  >
                     <template v-slot:cell(name)="results">
-                      <label for="" class="text-capitalize">{{ results.item.name }}</label>
+                      <label for="" class="text-capitalize">{{
+                        results.item.name
+                      }}</label>
                     </template>
                     <template v-slot:cell(created_at)="results">
-                      {{results.item.created_at | formatDate}}
+                      {{ results.item.created_at | formatDate }}
                     </template>
                     <template v-slot:cell(type)="results">
-                      <b-badge variant="success" v-if="results.item.type === 'sale'">Venta</b-badge>
-                      <b-badge variant="primary" v-if="results.item.type === 'purchase'">Compra</b-badge>
+                      <b-badge
+                        variant="success"
+                        v-if="results.item.type === 'sale'"
+                        >Venta</b-badge
+                      >
+                      <b-badge
+                        variant="primary"
+                        v-if="results.item.type === 'purchase'"
+                        >Compra</b-badge
+                      >
                     </template>
                   </b-table>
                 </b-col>
@@ -59,7 +89,8 @@
                     label-align-sm="right"
                     label-size="sm"
                     label-for="perPageSelect"
-                    class="mb-0">
+                    class="mb-0"
+                  >
                     <b-form-select
                       v-model="perPage"
                       id="perPageSelect"
@@ -74,7 +105,8 @@
                     :total-rows="rows"
                     :per-page="perPage"
                     align="right"
-                    aria-controls="my-table">
+                    aria-controls="my-table"
+                  >
                   </b-pagination>
                 </b-col>
               </template>

@@ -22,6 +22,7 @@ import VueRouterUserRoles from 'vue-router-user-roles'
 import Print from 'vue-print-nb'
 import VueClipboard from 'vue-clipboard2'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import JsonExcel from 'vue-json-excel'
 
 Object.keys(rules).forEach(rule => {
   extend(rule, {
@@ -32,6 +33,7 @@ Object.keys(rules).forEach(rule => {
 
 global.Raphael = Raphael
 
+Vue.use(JsonExcel)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(VueClipboard)
@@ -47,6 +49,7 @@ Vue.use(money, {
   masked: false
 })
 
+Vue.component('downloadExcel', JsonExcel)
 Vue.config.productionTip = false
 
 let vm = new Vue({

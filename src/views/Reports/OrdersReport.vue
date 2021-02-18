@@ -1,5 +1,5 @@
 <template>
-   <b-container fluid>
+  <b-container fluid>
     <b-row>
       <b-col md="12">
         <b-alert :show="isShow" variant="success" class="bg-white" id="alert">
@@ -10,43 +10,77 @@
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-show="search">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-col md="12" class="text-center spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-row v-else align-h="end">
               <b-col md="12" class="my-1 mb-3">
                 <b-row align-h="end">
                   <b-col md="3">
                     Fecha inicial
-                    <b-form-input v-model="filters.initDate" type="date"></b-form-input>
+                    <b-form-input
+                      v-model="filters.initDate"
+                      type="date"
+                    ></b-form-input>
                   </b-col>
                   <b-col md="3">
                     Fecha final
-                    <b-form-input v-model="filters.endDate" type="date"></b-form-input>
+                    <b-form-input
+                      v-model="filters.endDate"
+                      type="date"
+                    ></b-form-input>
                   </b-col>
                   <b-col md="2" align-self="end">
-                    <b-button variant="primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
+                    <b-button
+                      variant="primary"
+                      v-b-tooltip.top="'Buscar'"
+                      class="mx-2"
+                      @click="getData()"
+                    >
                       <i class="ri-search-line"></i>
-                      </b-button>
-                    <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
+                    </b-button>
+                    <b-button
+                      class="mr-2"
+                      variant="outline-success"
+                      v-b-tooltip.top="'Descargar a PDF'"
+                      @click="exportPDF"
+                    >
                       <i class="ri-download-cloud-line"></i>
-                      </b-button>
+                    </b-button>
+                    <download-excel
+                      class="btn btn-outline-warning"
+                      :data="results"
+                      worksheet="Reporte de ganancias"
+                      name="Reporte de ganancias.xls"
+                    >
+                      <i class="ri-file-excel-2-line"></i>
+                    </download-excel>
                   </b-col>
                 </b-row>
               </b-col>
               <template v-if="results.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b></div>
+                    <div class="iq-alert-text">
+                      <b>No hay registros para mostrar.</b>
+                    </div>
                   </b-alert>
                 </b-col>
               </template>
               <template v-else>
                 <b-col md="12" class="table-responsive">
                   <b-table
-                     ref="content"
+                    ref="content"
                     striped
                     bordered
                     hover
@@ -57,18 +91,47 @@
                     :sort-by.sync="sortBy"
                     :sort-desc.sync="sortDesc"
                     :current-page="currentPage"
-                    @filtered="onFiltered">
+                    @filtered="onFiltered"
+                  >
                     <template v-slot:cell(type)="results">
-                      {{ results.item.type | capitalize}}
+                      {{ results.item.type | capitalize }}
                     </template>
                     <template v-slot:cell(status)="orders">
-                      <b-badge variant="primary" v-if="orders.item.status === 'Creado'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="secondary" v-if="orders.item.status === 'Pendiente'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="warning" v-if="orders.item.status === 'En confección'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="light" v-if="orders.item.status === 'Confeccionado'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="info" v-if="orders.item.status === 'En camino a reparto'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="success" v-if="orders.item.status === 'Entregado'">{{orders.item.status}}</b-badge>
-                      <b-badge variant="danger" v-if="orders.item.status === 'Cancelado'">{{orders.item.status}}</b-badge>
+                      <b-badge
+                        variant="primary"
+                        v-if="orders.item.status === 'Creado'"
+                        >{{ orders.item.status }}</b-badge
+                      >
+                      <b-badge
+                        variant="secondary"
+                        v-if="orders.item.status === 'Pendiente'"
+                        >{{ orders.item.status }}</b-badge
+                      >
+                      <b-badge
+                        variant="warning"
+                        v-if="orders.item.status === 'En confección'"
+                        >{{ orders.item.status }}</b-badge
+                      >
+                      <b-badge
+                        variant="light"
+                        v-if="orders.item.status === 'Confeccionado'"
+                        >{{ orders.item.status }}</b-badge
+                      >
+                      <b-badge
+                        variant="info"
+                        v-if="orders.item.status === 'En camino a reparto'"
+                        >{{ orders.item.status }}</b-badge
+                      >
+                      <b-badge
+                        variant="success"
+                        v-if="orders.item.status === 'Entregado'"
+                        >{{ orders.item.status }}</b-badge
+                      >
+                      <b-badge
+                        variant="danger"
+                        v-if="orders.item.status === 'Cancelado'"
+                        >{{ orders.item.status }}</b-badge
+                      >
                     </template>
                     <template v-slot:cell(created_at)="orders">
                       {{ orders.item.created_at | formatDate }}
@@ -83,7 +146,8 @@
                     label-align-sm="right"
                     label-size="sm"
                     label-for="perPageSelect"
-                    class="mb-0">
+                    class="mb-0"
+                  >
                     <b-form-select
                       v-model="perPage"
                       id="perPageSelect"
@@ -98,7 +162,8 @@
                     :total-rows="rows"
                     :per-page="perPage"
                     align="right"
-                    aria-controls="my-table">
+                    aria-controls="my-table"
+                  >
                   </b-pagination>
                 </b-col>
               </template>
@@ -207,5 +272,4 @@ export default {
 </script>
 
 <style>
-
 </style>

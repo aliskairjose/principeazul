@@ -1,91 +1,168 @@
 <template>
-   <b-container fluid>
+  <b-container fluid>
     <b-row>
       <b-col md="12">
         <iq-card>
           <template v-slot:body>
             <b-col md="12" class="text-center spinner" v-if="loading">
-              <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+              <b-spinner
+                variant="primary"
+                type="grow"
+                label="Spinning"
+              ></b-spinner>
             </b-col>
             <b-row v-else align-h="between">
               <b-col md="12" class="my-1 mb-3">
-                  <b-row align-h="end">
-                    <b-col md="3">
-                      Fecha inicial
-                      <b-form-input v-model="startDate" type="date"></b-form-input>
-                    </b-col>
-                    <b-col md="3">
-                      Fecha final
-                      <b-form-input v-model="endDate" type="date"></b-form-input>
-                    </b-col>
-                    <b-col md="2" align-self="end">
-                      <b-button variant="primary" v-b-tooltip.top="'Buscar'" class="mr-2" @click="getData()">
-                        <i class="ri-search-line"></i>
-                      </b-button>
-                      <b-button variant="outline-success" v-b-tooltip.top="'Descargar a PDF'" @click="exportPDF">
-                        <i class="ri-download-cloud-line"></i>
-                      </b-button>
-                    </b-col>
-                  </b-row>
-                </b-col>
+                <b-row align-h="end">
+                  <b-col md="3">
+                    Fecha inicial
+                    <b-form-input
+                      v-model="startDate"
+                      type="date"
+                    ></b-form-input>
+                  </b-col>
+                  <b-col md="3">
+                    Fecha final
+                    <b-form-input v-model="endDate" type="date"></b-form-input>
+                  </b-col>
+                  <b-col md="2" align-self="end">
+                    <b-button
+                      variant="primary"
+                      v-b-tooltip.top="'Buscar'"
+                      class="mx-2"
+                      @click="getData()"
+                    >
+                      <i class="ri-search-line"></i>
+                    </b-button>
+                    <b-button
+                      class="mr-2"
+                      variant="outline-success"
+                      v-b-tooltip.top="'Descargar a PDF'"
+                      @click="exportPDF"
+                    >
+                      <i class="ri-download-cloud-line"></i>
+                    </b-button>
+                    <download-excel
+                      class="btn btn-outline-warning"
+                      :data="results"
+                      worksheet="Reporte de movimientos"
+                      name="Reporte de movimientos.xls"
+                    >
+                      <i class="ri-file-excel-2-line"></i>
+                    </download-excel>
+                  </b-col>
+                </b-row>
+              </b-col>
               <template v-if="results.length === 0">
                 <b-col class="col-md-12">
                   <b-alert :show="true" variant="secondary">
-                    <div class="iq-alert-text"><b>No hay registros para mostrar.</b></div>
+                    <div class="iq-alert-text">
+                      <b>No hay registros para mostrar.</b>
+                    </div>
                   </b-alert>
                 </b-col>
               </template>
               <template v-else>
                 <b-col md="12">
                   <b-container class="my-3">
-                    <b-row v-for="(pers, i) in results.countPersonalizedByProduct" :key="i">
-                      <b-col sm="6" align="center" style="font-weight: bold; color: #0b0b0b"><span v-if="pers.personalized">PERSONALIZADOS</span><span v-else>STANDARD</span></b-col>
-                      <b-col sm="6"> {{pers.quantity}} </b-col>
+                    <b-row
+                      v-for="(pers, i) in results.countPersonalizedByProduct"
+                      :key="i"
+                    >
+                      <b-col
+                        sm="6"
+                        align="center"
+                        style="font-weight: bold; color: #0b0b0b"
+                        ><span v-if="pers.personalized">PERSONALIZADOS</span
+                        ><span v-else>STANDARD</span></b-col
+                      >
+                      <b-col sm="6"> {{ pers.quantity }} </b-col>
                     </b-row>
                   </b-container>
 
                   <b-container class="my-3">
-                  <b-row v-for="(mode, j) in results.countByMode" :key="j">
-                    <b-col sm="6" align="center" style="font-weight: bold; color: #0b0b0b">{{mode.mode}}</b-col>
-                    <b-col sm="6"> {{mode.quantity}} </b-col>
-                  </b-row>
+                    <b-row v-for="(mode, j) in results.countByMode" :key="j">
+                      <b-col
+                        sm="6"
+                        align="center"
+                        style="font-weight: bold; color: #0b0b0b"
+                        >{{ mode.mode }}</b-col
+                      >
+                      <b-col sm="6"> {{ mode.quantity }} </b-col>
+                    </b-row>
                   </b-container>
                   <b-container class="my-3">
                     <pre></pre>
-                    <b-row style="font-weight: bold; color: #0b0b0b; size: 12px!important; text-decoration: underline">
+                    <b-row
+                      style="
+                        font-weight: bold;
+                        color: #0b0b0b;
+                        size: 12px !important;
+                        text-decoration: underline;
+                      "
+                    >
                       <b-col sm="4" align="center"></b-col>
                       <b-col sm="4"> Unidades</b-col>
                       <b-col sm="4"> Venta</b-col>
                     </b-row>
                     <b-row style="font-weight: bold; color: #0b0b0b">
                       <b-col sm="4" align="center">Total Pedidos</b-col>
-                      <b-col sm="4">{{category.qty}}</b-col>
-                      <b-col sm="4"> {{parseFloat(category.val).toFixed(2)}}</b-col>
+                      <b-col sm="4">{{ category.qty }}</b-col>
+                      <b-col sm="4">
+                        {{ parseFloat(category.val).toFixed(2) }}</b-col
+                      >
                     </b-row>
-                    <b-row v-for="(category, j) in results.quantityByCategory" :key="j">
-                      <b-col sm="4" align="center" style="font-weight: bold; color: #0b0b0b">{{ category.name }}</b-col>
+                    <b-row
+                      v-for="(category, j) in results.quantityByCategory"
+                      :key="j"
+                    >
+                      <b-col
+                        sm="4"
+                        align="center"
+                        style="font-weight: bold; color: #0b0b0b"
+                        >{{ category.name }}</b-col
+                      >
                       <b-col sm="4"> {{ category.quantity }}</b-col>
-                      <b-col sm="4"> $ {{ parseFloat(category.value).toFixed(2) }}</b-col>
+                      <b-col sm="4">
+                        $ {{ parseFloat(category.value).toFixed(2) }}</b-col
+                      >
                     </b-row>
                   </b-container>
 
                   <b-container class="my-3">
-                    <b-row style="font-weight: bold; color: #0b0b0b; size: 12px!important; text-decoration: underline">
+                    <b-row
+                      style="
+                        font-weight: bold;
+                        color: #0b0b0b;
+                        size: 12px !important;
+                        text-decoration: underline;
+                      "
+                    >
                       <b-col sm="4" align="center"></b-col>
                       <b-col sm="4"> Unidades</b-col>
                       <b-col sm="4"> Venta</b-col>
                     </b-row>
-                    <b-row v-for="(category, j) in gProducts" :key="j" class="my-3">
+                    <b-row
+                      v-for="(category, j) in gProducts"
+                      :key="j"
+                      class="my-3"
+                    >
                       <b-col sm="12">
                         <b-row style="font-weight: bold; color: #0b0b0b">
                           <b-col sm="4" align="center">{{ j }}</b-col>
                           <b-col sm="4"> {{ category.qty }}</b-col>
-                          <b-col sm="4"> $ {{  parseFloat(category.val).toFixed(2) }}</b-col>
+                          <b-col sm="4">
+                            $ {{ parseFloat(category.val).toFixed(2) }}</b-col
+                          >
                         </b-row>
                         <b-row v-for="(item, k) in category.products" :key="k">
-                          <b-col sm="4" style="color: #0b0b0b">{{ item.name }}</b-col>
+                          <b-col sm="4" style="color: #0b0b0b">{{
+                            item.name
+                          }}</b-col>
                           <b-col sm="4"> {{ item.quantity }}</b-col>
-                          <b-col sm="4"> $ {{ parseFloat(item.value).toFixed(2) }}</b-col>
+                          <b-col sm="4">
+                            $ {{ parseFloat(item.value).toFixed(2) }}</b-col
+                          >
                         </b-row>
                       </b-col>
                     </b-row>
