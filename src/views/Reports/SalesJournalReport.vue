@@ -41,6 +41,7 @@
                     <download-excel
                       class="btn btn-outline-warning"
                       :data="results.orders"
+                      :fields="titulos"
                       worksheet="Reporte diario de ventas"
                       name="Reporte diario de ventas.xls"
                     >
@@ -217,6 +218,21 @@ export default {
   },
   data () {
     return {
+      titulos: {
+        '#Orden': 'id',
+        Cliente: 'client.name',
+        'Tipo de compra': 'type',
+        'Modo de Pago': '',
+        Monto: '',
+        ITBM: 'itbm',
+        Total: 'total',
+        Saldo: {
+          field: 'totalPaid',
+          callback: (total, totalPaid) => {
+            return parseFloat(total) - parseFloat(totalPaid)
+          }
+        }
+      },
       startDate: '',
       results: [],
       category: {
@@ -259,6 +275,7 @@ export default {
       reportsService.getSalesJournalReport(params)
         .then(response => {
           this.results = response.data
+          // console.log(this.results)
           this.itbmTotal = this.results.orders.reduce((a, b) => a + parseFloat(b.itbm), 0)
         })
         .catch(() => {

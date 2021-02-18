@@ -207,6 +207,7 @@ export default {
       reportsService.getAccountsReceivableReport(params)
         .then(response => {
           this.results = response.data
+          console.log(this.results)
           let totalPaid = this.results.reduce((a, b) => a + parseFloat(b.totalPaid), 0)
           let total = this.results.reduce((a, b) => a + parseFloat(b.total), 0)
           this.totalCredit = (total - totalPaid).toFixed(2)

@@ -76,6 +76,7 @@
                     <download-excel
                       class="btn btn-outline-warning"
                       :data="results"
+                      :fields="titulos"
                       worksheet="Reporte de inventario"
                       name="Reporte de inventario.xls"
                     >
@@ -184,6 +185,13 @@ export default {
   },
   data () {
     return {
+      titulos: {
+        'Producto': 'name',
+        'Inventario Inicial': 'initialInventory',
+        'Entradas': 'entries',
+        'Salidas': 'outputs',
+        'Existencia': 'existence'
+      },
       filters: {
         typeProduct: '',
         categoryId: '',

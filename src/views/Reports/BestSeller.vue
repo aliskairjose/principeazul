@@ -26,6 +26,7 @@
                     <download-excel
                       class="btn btn-outline-warning"
                       :data="results"
+                      :fields="titulos"
                       worksheet="Productos más vendidos"
                       name="Productos más vendidos.xls"
                     >
@@ -134,6 +135,10 @@ export default {
   },
   data () {
     return {
+      titulos: {
+        Producto: 'name',
+        Total: 'total'
+      },
       filters: {
         type: '',
         products: [],
