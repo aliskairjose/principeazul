@@ -503,7 +503,7 @@ export default {
       this.$router.push({ name: 'orders.edit', params: { id: item.id } })
     },
     details (item) {
-      if (this.role === 'admin') {
+      if (this.role === 'admin' || this.role === 'ventas') {
         let routeData = this.$router.resolve({ name: 'orders.details', params: { id: item.id } })
         window.open(routeData.href, '_blank')
         // this.$router.push({ name: 'orders.details', params: { id: item.id } })
