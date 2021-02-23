@@ -1155,9 +1155,11 @@ export default {
     },
     addNote () {
       this.orderProducts[this.index].note = this.note
+      this.note = ''
     },
     addDesignNote () {
       this.orderProducts[this.index].note_design = this.note_design
+      this.note_design = ''
     },
     addPersonalizedNote () {
       this.orderProducts[this.index].personalized_text = this.personalized_text
@@ -1280,10 +1282,12 @@ export default {
     },
     showModalNote (index) {
       this.index = index
+      this.note = this.orderProducts[this.index].note
       this.$refs['modal-note'].show()
     },
     showModalDesignNote (index) {
       this.index = index
+      this.note_design = this.orderProducts[this.index].note_design
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
