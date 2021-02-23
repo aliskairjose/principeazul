@@ -309,17 +309,18 @@
                     <b-col class="col-md-6">
                       <h5 class="text-capitalize">{{ p.name }}</h5>
                       <p class="h6" id="price">{{ p.price | money }}</p>
-                      <!-- <p class="h6" id="price" v-if="p.tax !== 0">
-                        {{ (p.price + (p.price * p.tax) / 100) | money }}
-                      </p>
-                      <p class="h6" id="price" v-else>{{ p.price | money }}</p> -->
                       <h6>
                         Nota de taller: <strong>{{ p.note }}</strong>
                       </h6>
                       <h6>
                         Nota de diseño: <strong>{{ p.note_design }}</strong>
                       </h6>
-                      <h6 v-if="p.personalized || (status === 'edit' && p.product.personalized)">
+                      <h6
+                        v-if="
+                          p.personalized ||
+                          (status === 'edit' && p.product.personalized)
+                        "
+                      >
                         Texto personalizado: {{ p.personalized_text }}
                       </h6>
                       <p class="mt-2">Extras</p>
@@ -391,7 +392,10 @@
                       <br />
                       <b-button
                         class="btn-link-personlized"
-                        v-if="p.personalized || (status === 'edit' && p.product.personalized)"
+                        v-if="
+                          p.personalized ||
+                          (status === 'edit' && p.product.personalized)
+                        "
                         v-b-tooltip.right="'Añadir texto Personalizado'"
                         size="sm"
                         variant="link"
@@ -573,7 +577,7 @@
     <b-modal
       ref="modal-client"
       size="lg"
-      id="lista-productos"
+      id="modal-client"
       title="Lista de productos"
       ok-only
       ok-title="Cerrar"
@@ -1199,7 +1203,7 @@ export default {
         if (this.tempProd.length > 0) {
           for (const key in this.tempProd) {
             if (this.tempProd.hasOwnProperty(key)) {
-              const element = this.tempProd[key]
+              const element = { ...this.tempProd[key] }
               this.orderProducts.push(element)
             }
           }
@@ -1266,6 +1270,7 @@ export default {
       })
     },
     showPersonalizedText (index) {
+      this.personalized_text = ''
       this.index = index
       if (this.status === 'edit' && this.orderProducts[this.index].product.personalized) {
         this.personalized_text = this.orderProducts[this.index].personalized_text
@@ -1332,7 +1337,6 @@ export default {
     validateOrder () {
       return this.$refs.form.validate().then(success => {
         return success
-        // return true
       })
     },
     validateProducts () {
