@@ -1,9 +1,9 @@
 const webpack = require('webpack')
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? process.env.VUE_APP_BASE_URL
-    : '/',
+  lintOnSave: false,
+  publicPath:
+    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : '/',
 
   configureWebpack: {
     plugins: [

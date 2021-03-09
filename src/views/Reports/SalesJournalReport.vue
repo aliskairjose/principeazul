@@ -104,7 +104,7 @@
                           <b-col
                             sm="6"
                             style="font-weight: bold; color: #0b0b0b"
-                            >ITMB Cobrado</b-col
+                            >ITBMS Cobrado</b-col
                           >
                           <b-col sm="6">
                             ${{ parseFloat(itbmTotal).toFixed(2) }}</b-col
@@ -206,8 +206,7 @@ import moment from 'moment'
 
 export default {
   name: 'Moment',
-  created () {
-  },
+  created () {},
   mounted () {
     vito.index()
     const dateInit = new Date()
@@ -248,9 +247,24 @@ export default {
       itbmTotal: 0,
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
-        { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
-        { label: 'Tipo de Compra.', key: 'type', class: 'text-center', sortable: true },
-        { label: 'Modo de Pago', key: 'payment_method', class: 'text-center', sortable: true },
+        {
+          label: 'Cliente',
+          key: 'client.name',
+          class: 'text-center',
+          sortable: true
+        },
+        {
+          label: 'Tipo de Compra.',
+          key: 'type',
+          class: 'text-center',
+          sortable: true
+        },
+        {
+          label: 'Modo de Pago',
+          key: 'payment_method',
+          class: 'text-center',
+          sortable: true
+        },
         { label: 'Monto', key: 'monto', class: 'text-center', sortable: true },
         { label: 'ITBMS', key: 'itbm', class: 'text-center', sortable: false },
         { label: 'Total', key: 'total', class: 'text-center', sortable: false },
@@ -272,14 +286,17 @@ export default {
       // eslint-disable-next-line no-unused-vars
       let params = ''
       params = `start_date=${this.startDate}`
-      reportsService.getSalesJournalReport(params)
-        .then(response => {
+      reportsService
+        .getSalesJournalReport(params)
+        .then((response) => {
           this.results = response.data
           // console.log(this.results)
-          this.itbmTotal = this.results.orders.reduce((a, b) => a + parseFloat(b.itbm), 0)
+          this.itbmTotal = this.results.orders.reduce(
+            (a, b) => a + parseFloat(b.itbm),
+            0
+          )
         })
-        .catch(() => {
-        })
+        .catch(() => {})
         .finally(() => {
           this.loading = false
         })
