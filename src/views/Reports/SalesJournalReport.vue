@@ -224,7 +224,7 @@ export default {
         'Tipo de compra': 'type',
         'Modo de Pago': '',
         Monto: '',
-        ITBM: 'itbm',
+        ITBMS: 'itbm',
         Total: 'total',
         Saldo: {
           field: 'totalPaid',
@@ -252,7 +252,7 @@ export default {
         { label: 'Tipo de Compra.', key: 'type', class: 'text-center', sortable: true },
         { label: 'Modo de Pago', key: 'payment_method', class: 'text-center', sortable: true },
         { label: 'Monto', key: 'monto', class: 'text-center', sortable: true },
-        { label: 'ITBM', key: 'itbm', class: 'text-center', sortable: false },
+        { label: 'ITBMS', key: 'itbm', class: 'text-center', sortable: false },
         { label: 'Total', key: 'total', class: 'text-center', sortable: false },
         { label: 'Saldo', key: 'saldo', class: 'text-center' }
       ]
