@@ -487,16 +487,13 @@
                     <label for class="success">
                       {{ deliveryCost | money }}
                     </label>
-                    <!-- <label for class="success" v-else>
-                      {{ order.delivery_price | money }}
-                    </label> -->
                     <br />
                     Descuento:
                     <label for class="success">
                       {{ order.discount | money }}
                     </label>
                     <br />
-                    ITBM:
+                    ITBMS:
                     <label for class="success">{{ itbm | money }}</label>
                     <br />
                     Total a pagar:
