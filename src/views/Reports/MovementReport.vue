@@ -44,7 +44,8 @@
                     </b-button>
                     <download-excel
                       class="btn btn-outline-warning"
-                      :data="results"
+                      :data="results.quantityByCategory"
+                      :fields="titulos"
                       worksheet="Reporte de movimientos"
                       name="Reporte de movimientos.xls"
                     >
@@ -215,7 +216,12 @@ export default {
       titles: [
         { label: 'Producto', key: 'name', class: 'text-center' },
         { label: 'Total', key: 'total', class: 'text-center' }
-      ]
+      ],
+      titulos: {
+        'Categoría': 'name',
+        'Cantidad vendida': 'quantity',
+        'Ventas': 'value'
+      }
     }
   },
   computed: {
