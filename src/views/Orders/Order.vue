@@ -511,6 +511,22 @@
                   </div>
                 </b-row>
               </tab-content>
+              <template slot="footer" slot-scope="props">
+                <div class="wizard-footer-left">
+                  <span v-if="tabIndex !== 0" role="button">
+                    <button @click="props.prevTab()" type="button" class="wizard-btn" style="background-color: rgb(6, 48, 228); border-color: rgb(6, 48, 228); color: white;">
+                      {{backBtn}}
+                    </button>
+                  </span>
+                </div>
+                <div class="wizard-footer-right">
+                  <span role="button">
+                    <button :disabled="loading" @click="props.nextTab()" type="button" class="wizard-btn" style="background-color: rgb(6, 48, 228); border-color: rgb(6, 48, 228); color: white;">
+                      {{tabIndex > 1 ? "Finalizar Compra" : nextBtn}}
+                    </button>
+                  </span>
+                </div>
+              </template>
             </form-wizard>
           </template>
         </iq-card>
@@ -1326,10 +1342,9 @@ export default {
       this.note_design = this.orderProducts[this.index].note_design
       this.$refs['modal-design-note'].show()
     },
-    onComplete: function (event) {
+    onComplete () {
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
-      console.log(event)
 
       if (this.status === 'add') {
         orderService
