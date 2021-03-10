@@ -44,7 +44,7 @@
                     </b-button>
                     <download-excel
                       class="btn btn-outline-warning"
-                      :data="results"
+                      :data="excel"
                       worksheet="Cuentas por cobrar"
                       name="Cuentas por cobrar.xls"
                     >
@@ -193,6 +193,25 @@ export default {
   computed: {
     rows () {
       return this.results.length
+    },
+    excel () {
+      let excelResults = JSON.parse(JSON.stringify(this.results))
+      excelResults = excelResults.map(result => {
+        result.client = result.client.name
+
+        result.products = result.products.reduce((acc, value) => {
+          acc.push(value.name)
+          return acc
+        }, []).join(', ')
+
+        result.payments = result.payments.reduce((acc, value) => {
+          acc.push(value.payment_method)
+          return acc
+        }, []).join(', ')
+
+        return result
+      })
+      return excelResults
     }
   },
   methods: {

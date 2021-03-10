@@ -66,7 +66,7 @@
                     </b-button>
                     <download-excel
                       class="btn btn-outline-warning"
-                      :data="results"
+                      :data="excel"
                       worksheet="Moviemiento de productos"
                       name="Movimiento de productos.xls"
                     >
@@ -229,6 +229,15 @@ export default {
   computed: {
     rows () {
       return this.results.length
+    },
+
+    excel () {
+      let excelResults = [...this.results]
+      excelResults = excelResults.map(value => {
+        value.product = value.product.name
+        return value
+      })
+      return excelResults
     }
   },
   methods: {

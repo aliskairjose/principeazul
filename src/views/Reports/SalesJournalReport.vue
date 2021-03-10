@@ -40,7 +40,7 @@
                     </b-button>
                     <download-excel
                       class="btn btn-outline-warning"
-                      :data="results.orders"
+                      :data="excel"
                       :fields="titulos"
                       worksheet="Reporte diario de ventas"
                       name="Reporte diario de ventas.xls"
@@ -221,14 +221,17 @@ export default {
         '#Orden': 'id',
         Cliente: 'client.name',
         'Tipo de compra': 'type',
-        'Modo de Pago': '',
-        Monto: '',
+        'Modo de Pago': 'payments',
+        Monto: {
+          callback: (item) => {
+            return (parseFloat(item.total) - parseFloat(item.itbm)).toFixed(2)
+          }
+        },
         ITBMS: 'itbm',
         Total: 'total',
         Saldo: {
-          field: 'totalPaid',
-          callback: (total, totalPaid) => {
-            return parseFloat(total) - parseFloat(totalPaid)
+          callback: (item) => {
+            return (parseFloat(item.total) - parseFloat(item.totalPaid)).toFixed(2)
           }
         }
       },
@@ -275,6 +278,20 @@ export default {
   computed: {
     rows () {
       return this.results.length
+    },
+
+    excel () {
+      let excelResults = JSON.parse(JSON.stringify(this.results))
+
+      excelResults.orders = excelResults.orders.map(order => {
+        order.payments = order.payments.reduce((acc, value) => {
+          if (value.amount > 0) acc.push(value.payment_method)
+          return acc
+        }, []).join(', ')
+        return order
+      })
+
+      return excelResults.orders
     }
   },
   methods: {
