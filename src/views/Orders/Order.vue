@@ -1049,7 +1049,9 @@ export default {
           for (const key in product.additionals) {
             if (product.additionals.hasOwnProperty(key)) {
               const a = product.additionals[key]
-              total += a.salePriceWithTax * a.quantity
+              if (a.type === 'extra') {
+                total += a.salePriceWithTax * a.quantity
+              }
             }
           }
         }
