@@ -36,6 +36,11 @@ export default {
   name: 'Dashboard1',
   mounted () {
     vito.index()
+    if (localStorage.getItem('role') === 'ventas') {
+      this.$router.push({ name: 'dashboard.home-taller' })
+      return
+    }
+
     let jwt = require('jsonwebtoken')
 
     const METABASE_SITE_URL = 'https://intelligence.cronapis.com'
