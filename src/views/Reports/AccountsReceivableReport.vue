@@ -181,9 +181,9 @@ export default {
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
         { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
-        { label: 'Teledono.', key: 'client.phone', class: 'text-center', sortable: true },
+        { label: 'Teléfono.', key: 'client.phone', class: 'text-center', sortable: true },
         { label: 'F. de Compra', key: 'created_at', class: 'text-center', sortable: true },
-        { label: 'productos', key: 'products', class: 'text-center', sortable: true },
+        { label: 'Productos', key: 'products', class: 'text-center', sortable: true },
         { label: 'Total Compra', key: 'total', class: 'text-center', sortable: false },
         { label: 'Abono', key: 'totalPaid', class: 'text-center', sortable: false },
         { label: 'Saldo', key: 'saldo', class: 'text-center' }
