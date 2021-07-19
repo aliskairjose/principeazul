@@ -59,6 +59,8 @@ import InteractionPlugin from '@fullcalendar/interaction'
 import ListPlugin from '@fullcalendar/list'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 import calendarService from '@/services/calendar'
+import moment from 'moment'
+
 require('@fullcalendar/core/main.min.css')
 require('@fullcalendar/daygrid/main.min.css')
 require('@fullcalendar/timegrid/main.min.css')
@@ -108,7 +110,12 @@ export default {
       this.$refs['modal-details'].show()
     },
     loadData () {
-      calendarService.getAll()
+      const date = new Date()
+      const primerDia = new Date(date.getFullYear(), date.getMonth(), 1)
+      const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+      const firstDay = moment(String(primerDia)).format('YYYY-MM-DD')
+      const lastDay = moment(String(ultimoDia)).format('YYYY-MM-DD')
+      calendarService.getAll(firstDay, lastDay)
         .then(response => {
           this.calendar = [...response.data]
         })

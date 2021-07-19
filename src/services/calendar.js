@@ -1,8 +1,8 @@
 import axios from './index'
 
 export default {
-  async getAll () {
-    const res = await axios.get('/orders?includes=products')
+  async getAll (firstDay, lastDay) {
+    const res = await axios.get(`/orders?init_date=${firstDay}&end_date=${lastDay}`)
     return res.data
   }
 }
