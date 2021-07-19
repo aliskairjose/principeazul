@@ -1,11 +1,32 @@
 <template>
   <b-container fluid>
     <b-row>
+      <div class="text-center spinner" v-show="loading">
+        <b-spinner
+          variant="primary"
+          type="grow"
+          label="Spinning"
+          style="width: 3rem; height: 3rem"
+        ></b-spinner>
+      </div>
+    </b-row>
+    <b-row>
       <b-col md="12">
         <iq-card>
           <b-col md="12">
             <template>
               <Fullcalendar
+                ref="mycalendar"
+                :custom-buttons="{
+                  prev: {
+                    text: 'PREV',
+                    click: prevMonth,
+                  },
+                  next: {
+                    text: 'NEXT',
+                    click: nextMonth,
+                  },
+                }"
                 locale="es"
                 :plugins="calendarPlugins"
                 :header="{
@@ -59,6 +80,8 @@ import InteractionPlugin from '@fullcalendar/interaction'
 import ListPlugin from '@fullcalendar/list'
 import OrderDetailComponent from '@/components/Order/OrderDetailComponent'
 import calendarService from '@/services/calendar'
+import moment from 'moment'
+
 require('@fullcalendar/core/main.min.css')
 require('@fullcalendar/daygrid/main.min.css')
 require('@fullcalendar/timegrid/main.min.css')
@@ -66,7 +89,9 @@ require('@fullcalendar/timegrid/main.min.css')
 export default {
   name: 'Calendar',
   created () {
-    this.loadData()
+    const initDate = moment().format('YYYY-MM-01')
+    const endDate = moment().endOf('month').format('YYYY-MM-DD')
+    this.loadData(initDate, endDate)
   },
   mounted () {
     vito.index()
@@ -78,7 +103,11 @@ export default {
     }
   },
   data: () => ({
+    loading: true,
+    nextMes: 0,
+    prevMes: 0,
     orderId: '',
+    calendarApi: '',
     hidden: false,
     ids: [],
     role: '',
@@ -103,16 +132,47 @@ export default {
     OrderDetailComponent
   },
   methods: {
+    prevMonth () {
+      let calendarApi = this.$refs.mycalendar.getApi()
+      calendarApi.prev()
+      if (this.nextMes > 0) {
+        this.nextMes -= 1
+        const initDate = moment().add(this.nextMes, 'month').startOf('month').format('YYYY-MM-DD')
+        const endDate = moment().add(this.nextMes, 'month').endOf('month').format('YYYY-MM-DD')
+        this.loadData(initDate, endDate)
+      } else {
+        this.prevMes += 1
+        const initDate = moment().subtract(this.prevMes, 'month').startOf('month').format('YYYY-MM-DD')
+        const endDate = moment().subtract(this.prevMes, 'month').endOf('month').format('YYYY-MM-DD')
+        this.loadData(initDate, endDate)
+      }
+    },
+    nextMonth () {
+      let calendarApi = this.$refs.mycalendar.getApi()
+      calendarApi.next()
+      if (this.prevMes > 0) {
+        this.nextMes -= 1
+        const initDate = moment().subtract(this.prevMes, 'month').startOf('month').format('YYYY-MM-DD')
+        const endDate = moment().subtract(this.prevMes, 'month').endOf('month').format('YYYY-MM-DD')
+        this.loadData(initDate, endDate)
+      } else {
+        this.nextMes += 1
+        const initDate = moment().add(this.nextMes, 'month').startOf('month').format('YYYY-MM-DD')
+        const endDate = moment().add(this.nextMes, 'month').endOf('month').format('YYYY-MM-DD')
+        this.loadData(initDate, endDate)
+      }
+    },
     handleEventClick (clickInfo) {
       this.orderId = clickInfo.event.id
       this.$refs['modal-details'].show()
     },
-    loadData () {
-      calendarService.getAll()
+    loadData (initDate, endDate) {
+      this.loading = true
+      calendarService.getAll(initDate, endDate)
         .then(response => {
           this.calendar = [...response.data]
         })
-        .catch(() => { })
+        .catch(() => { this.loading = false })
         .finally(() => {
           this.loading = false
           setTimeout(() => {
@@ -135,4 +195,8 @@ export default {
   }
 }
 </script>
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.spinner {
+  width: 100%;
+}
+</style>
