@@ -61,8 +61,8 @@
       </ValidationProvider>
       <div class="d-inline-block w-100">
         <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-          <input type="checkbox" class="custom-control-input" />
-          <label class="custom-control-label">Recordarme</label>
+          <input id='rememberme' type="checkbox" class="custom-control-input" />
+          <label for='rememberme' class="custom-control-label">Recordarme</label>
         </div>
         <button type="submit" class="btn btn-primary float-right">
           Inicia sesión

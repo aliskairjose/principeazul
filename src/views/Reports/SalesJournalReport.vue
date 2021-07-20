@@ -40,7 +40,7 @@
                     </b-button>
                     <download-excel
                       class="btn btn-outline-warning"
-                      :data="results.orders"
+                      :data="excel"
                       :fields="titulos"
                       worksheet="Reporte diario de ventas"
                       name="Reporte diario de ventas.xls"
@@ -104,7 +104,7 @@
                           <b-col
                             sm="6"
                             style="font-weight: bold; color: #0b0b0b"
-                            >ITMB Cobrado</b-col
+                            >ITBMS Cobrado</b-col
                           >
                           <b-col sm="6">
                             ${{ parseFloat(itbmTotal).toFixed(2) }}</b-col
@@ -206,8 +206,7 @@ import moment from 'moment'
 
 export default {
   name: 'Moment',
-  created () {
-  },
+  created () {},
   mounted () {
     vito.index()
     const dateInit = new Date()
@@ -222,14 +221,17 @@ export default {
         '#Orden': 'id',
         Cliente: 'client.name',
         'Tipo de compra': 'type',
-        'Modo de Pago': '',
-        Monto: '',
-        ITBM: 'itbm',
+        'Modo de Pago': 'payments',
+        Monto: {
+          callback: (item) => {
+            return (parseFloat(item.total) - parseFloat(item.itbm)).toFixed(2)
+          }
+        },
+        ITBMS: 'itbm',
         Total: 'total',
         Saldo: {
-          field: 'totalPaid',
-          callback: (total, totalPaid) => {
-            return parseFloat(total) - parseFloat(totalPaid)
+          callback: (item) => {
+            return (parseFloat(item.total) - parseFloat(item.totalPaid)).toFixed(2)
           }
         }
       },
@@ -248,11 +250,26 @@ export default {
       itbmTotal: 0,
       titles: [
         { label: '#Orden', key: 'id', class: 'text-center', sortable: true },
-        { label: 'Cliente', key: 'client.name', class: 'text-center', sortable: true },
-        { label: 'Tipo de Compra.', key: 'type', class: 'text-center', sortable: true },
-        { label: 'Modo de Pago', key: 'payment_method', class: 'text-center', sortable: true },
+        {
+          label: 'Cliente',
+          key: 'client.name',
+          class: 'text-center',
+          sortable: true
+        },
+        {
+          label: 'Tipo de Compra.',
+          key: 'type',
+          class: 'text-center',
+          sortable: true
+        },
+        {
+          label: 'Modo de Pago',
+          key: 'payment_method',
+          class: 'text-center',
+          sortable: true
+        },
         { label: 'Monto', key: 'monto', class: 'text-center', sortable: true },
-        { label: 'ITBM', key: 'itbm', class: 'text-center', sortable: false },
+        { label: 'ITBMS', key: 'itbm', class: 'text-center', sortable: false },
         { label: 'Total', key: 'total', class: 'text-center', sortable: false },
         { label: 'Saldo', key: 'saldo', class: 'text-center' }
       ]
@@ -261,6 +278,20 @@ export default {
   computed: {
     rows () {
       return this.results.length
+    },
+
+    excel () {
+      let excelResults = JSON.parse(JSON.stringify(this.results))
+
+      excelResults.orders = excelResults.orders.map(order => {
+        order.payments = order.payments.reduce((acc, value) => {
+          if (value.amount > 0) acc.push(value.payment_method)
+          return acc
+        }, []).join(', ')
+        return order
+      })
+
+      return excelResults.orders
     }
   },
   methods: {
@@ -272,14 +303,17 @@ export default {
       // eslint-disable-next-line no-unused-vars
       let params = ''
       params = `start_date=${this.startDate}`
-      reportsService.getSalesJournalReport(params)
-        .then(response => {
+      reportsService
+        .getSalesJournalReport(params)
+        .then((response) => {
           this.results = response.data
           // console.log(this.results)
-          this.itbmTotal = this.results.orders.reduce((a, b) => a + parseFloat(b.itbm), 0)
+          this.itbmTotal = this.results.orders.reduce(
+            (a, b) => a + parseFloat(b.itbm),
+            0
+          )
         })
-        .catch(() => {
-        })
+        .catch(() => {})
         .finally(() => {
           this.loading = false
         })

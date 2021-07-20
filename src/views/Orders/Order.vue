@@ -262,7 +262,7 @@
                         <b-form-select
                           :disabled="
                             order.status === 'Entregado' ||
-                            order.status === 'Cancelado'
+                              order.status === 'Cancelado'
                           "
                           v-model="order.status"
                           :options="statuses"
@@ -318,7 +318,7 @@
                       <h6
                         v-if="
                           p.personalized ||
-                          (status === 'edit' && p.product.personalized)
+                            (status === 'edit' && p.product.personalized)
                         "
                       >
                         Texto personalizado: {{ p.personalized_text }}
@@ -394,7 +394,7 @@
                         class="btn-link-personlized"
                         v-if="
                           p.personalized ||
-                          (status === 'edit' && p.product.personalized)
+                            (status === 'edit' && p.product.personalized)
                         "
                         v-b-tooltip.right="'Añadir texto Personalizado'"
                         size="sm"
@@ -487,16 +487,13 @@
                     <label for class="success">
                       {{ deliveryCost | money }}
                     </label>
-                    <!-- <label for class="success" v-else>
-                      {{ order.delivery_price | money }}
-                    </label> -->
                     <br />
                     Descuento:
                     <label for class="success">
                       {{ order.discount | money }}
                     </label>
                     <br />
-                    ITBM:
+                    ITBMS:
                     <label for class="success">{{ itbm | money }}</label>
                     <br />
                     Total a pagar:
@@ -514,6 +511,22 @@
                   </div>
                 </b-row>
               </tab-content>
+              <template slot="footer" slot-scope="props">
+                <div class="wizard-footer-left">
+                  <span v-if="tabIndex !== 0" role="button">
+                    <button @click="props.prevTab()" type="button" class="wizard-btn" style="background-color: rgb(6, 48, 228); border-color: rgb(6, 48, 228); color: white;">
+                      {{backBtn}}
+                    </button>
+                  </span>
+                </div>
+                <div class="wizard-footer-right">
+                  <span role="button">
+                    <button :disabled="loading" @click="props.nextTab()" type="button" class="wizard-btn" style="background-color: rgb(6, 48, 228); border-color: rgb(6, 48, 228); color: white;">
+                      {{tabIndex > 1 ? "Finalizar Compra" : nextBtn}}
+                    </button>
+                  </span>
+                </div>
+              </template>
             </form-wizard>
           </template>
         </iq-card>
@@ -696,6 +709,7 @@
     </b-modal>
   </b-container>
 </template>
+
 <script>
 import { vito } from '../../config/pluginInit'
 import { mask } from 'vue-the-mask'
@@ -729,86 +743,81 @@ export default {
   mounted () {
     vito.index()
     this.loading = true
-    generalService.paymentMethods()
-      .then(response => {
-        const object = response.data
-        const list = []
-        for (const iterator of object) {
-          this.payment = {}
-          this.$set(this.payment, 'payment_method', iterator)
-          this.$set(this.payment, 'amount', 0)
-          list.push(this.payment)
-        }
-        if (!this.$route.params.id) {
-          this.payments = [ ...list ]
-        }
-      })
+    generalService.paymentMethods().then(response => {
+      const object = response.data
+      const list = []
+      for (const iterator of object) {
+        this.payment = {}
+        this.$set(this.payment, 'payment_method', iterator)
+        this.$set(this.payment, 'amount', 0)
+        list.push(this.payment)
+      }
+      if (!this.$route.params.id) {
+        this.payments = [...list]
+      }
+    })
 
-    generalService.reasons()
-      .then(response => {
-        const object = response.data
-        this.reason.text = 'Seleccione un motivo'
-        this.reason.value = null
+    generalService.reasons().then(response => {
+      const object = response.data
+      this.reason.text = 'Seleccione un motivo'
+      this.reason.value = null
+      this.reasons.push(this.reason)
+      for (const iterator of object) {
+        this.reason = {}
+        this.reason.value = iterator
+        this.reason.text = iterator
         this.reasons.push(this.reason)
-        for (const iterator of object) {
-          this.reason = {}
-          this.reason.value = iterator
-          this.reason.text = iterator
-          this.reasons.push(this.reason)
-        }
-      })
+      }
+    })
 
-    generalService.turns()
-      .then(response => {
-        const object = response.data
-        this.turn.text = 'Seleccione un turno'
-        this.turn.value = null
+    generalService.turns().then(response => {
+      const object = response.data
+      this.turn.text = 'Seleccione un turno'
+      this.turn.value = null
+      this.turns.push(this.turn)
+      for (const iterator of object) {
+        this.turn = {}
+        this.turn.value = iterator
+        this.turn.text = iterator
         this.turns.push(this.turn)
-        for (const iterator of object) {
-          this.turn = {}
-          this.turn.value = iterator
-          this.turn.text = iterator
-          this.turns.push(this.turn)
+      }
+    })
+
+    generalService.deliveryZones().then(response => {
+      const data = response.data
+      this.deliveryZone.value = null
+      this.deliveryZone.text = 'Seleccione una zona'
+      this.deliveryZone.price = 0
+      this.deliveryZones.push(this.deliveryZone)
+
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const element = data[key]
+          this.deliveryZone = {}
+          this.deliveryZone.value = element.id
+          this.deliveryZone.text = `${element.name} - $${element.price}`
+          this.deliveryZone.price = element.price
+          this.deliveryZones.push(this.deliveryZone)
         }
-      })
+      }
+    })
 
-    generalService.deliveryZones()
-      .then(response => {
-        const data = response.data
-        this.deliveryZone.value = null
-        this.deliveryZone.text = 'Seleccione una zona'
-        this.deliveryZone.price = 0
-        this.deliveryZones.push(this.deliveryZone)
+    generalService.orderStatus().then(response => {
+      const object = response.data
+      for (const iterator of object) {
+        let status = {}
+        status.value = iterator
+        status.text = iterator
+        this.statuses.push(status)
+      }
+    })
 
-        for (const key in data) {
-          if (data.hasOwnProperty(key)) {
-            const element = data[key]
-            this.deliveryZone = {}
-            this.deliveryZone.value = element.id
-            this.deliveryZone.text = `${element.name} - $${element.price}`
-            this.deliveryZone.price = element.price
-            this.deliveryZones.push(this.deliveryZone)
-          }
-        }
-      })
+    clientService.getAll().then(response => {
+      this.clients = response.data
+    })
 
-    generalService.orderStatus()
-      .then(response => {
-        const object = response.data
-        for (const iterator of object) {
-          let status = {}
-          status.value = iterator
-          status.text = iterator
-          this.statuses.push(status)
-        }
-      })
-
-    clientService.getAll()
-      .then(response => {
-        this.clients = response.data
-      })
-
-    productService.getAll()
+    productService
+      .getAll()
       .then(response => {
         const data = response.data
         data.map(r => {
@@ -827,21 +836,24 @@ export default {
           }
         })
       })
-      .finally(() => { this.loading = false })
+      .finally(() => {
+        this.loading = false
+      })
 
     if (this.status === 'edit') {
       this.loading = true
-      orderService.getById(this.$route.params.id)
+      orderService
+        .getById(this.$route.params.id)
         .then(response => {
           this.order = response.data
-          this.order.discount = (response.data.discount).toFixed(2)
+          this.order.discount = response.data.discount.toFixed(2)
           const value = this.order.delivery_date
           this.order.delivery_date = value.slice(0, value.indexOf(' '))
           // this.payments = this.order.payments
           for (let position in response.data.payments) {
             this.payments.push({
               checkBox: response.data.payments[position].amount > 0,
-              amount: (response.data.payments[position].amount).toFixed(2),
+              amount: response.data.payments[position].amount.toFixed(2),
               payment_method: response.data.payments[position].payment_method,
               id: response.data.payments[position].id,
               order_id: response.data.payments[position].order_id,
@@ -852,8 +864,12 @@ export default {
           this.orderProducts = this.order.products
           this.deliveryCost = this.order.delivery_price
         })
-        .catch(() => { this.loading = false })
-        .finally(() => { this.loading = false })
+        .catch(() => {
+          this.loading = false
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   },
   data () {
@@ -965,7 +981,12 @@ export default {
       clients: [],
       cTitles: [
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
-        { label: 'Teléfono', key: 'phone', class: 'text-center', sortable: true },
+        {
+          label: 'Teléfono',
+          key: 'phone',
+          class: 'text-center',
+          sortable: true
+        },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ],
       principals: [],
@@ -981,7 +1002,12 @@ export default {
         { label: 'Id', key: 'id', class: 'text-center', sortable: true },
         { label: 'Foto', key: 'image', class: 'text-center', sortable: true },
         { label: 'Nombre', key: 'name', class: 'text-center', sortable: true },
-        { label: 'Cantidad', key: 'quantity', class: 'text-center', sortable: true },
+        {
+          label: 'Cantidad',
+          key: 'quantity',
+          class: 'text-center',
+          sortable: true
+        },
         { label: 'Acción', key: 'action', class: 'text-center' }
       ]
     }
@@ -1023,7 +1049,9 @@ export default {
           for (const key in product.additionals) {
             if (product.additionals.hasOwnProperty(key)) {
               const a = product.additionals[key]
-              total += a.salePriceWithTax * a.quantity
+              if (a.type === 'extra') {
+                total += a.salePriceWithTax * a.quantity
+              }
             }
           }
         }
@@ -1031,7 +1059,12 @@ export default {
       return total
     },
     finalPrice () {
-      const monto = (parseFloat(this.amount) + this.additionalsPrice + this.deliveryCost + parseFloat(this.itbm)) - this.order.discount
+      const monto =
+        parseFloat(this.amount) +
+        this.additionalsPrice +
+        this.deliveryCost +
+        parseFloat(this.itbm) -
+        this.order.discount
       return parseFloat(monto).toFixed(2)
     },
     payOut () {
@@ -1039,7 +1072,9 @@ export default {
       for (const key in this.payments) {
         if (this.payments.hasOwnProperty(key)) {
           const element = this.payments[key]
-          if (!element.checkBox) { element.amount = 0 }
+          if (!element.checkBox) {
+            element.amount = 0
+          }
           amount += parseFloat(element.amount)
         }
       }
@@ -1159,9 +1194,11 @@ export default {
     },
     addNote () {
       this.orderProducts[this.index].note = this.note
+      this.note = ''
     },
     addDesignNote () {
       this.orderProducts[this.index].note_design = this.note_design
+      this.note_design = ''
     },
     addPersonalizedNote () {
       this.orderProducts[this.index].personalized_text = this.personalized_text
@@ -1182,23 +1219,27 @@ export default {
       this.orderProducts[index].note = ''
       this.orderProducts[index].note_design = ''
       this.orderProducts[index].personalized_text = ''
-      this.orderProducts[index].price = this.orderProducts[index].price - salePrice
+      this.orderProducts[index].price =
+        this.orderProducts[index].price - salePrice
       this.orderProducts[index].additionals.length = 0
       this.orderProducts.splice(index, 1)
     },
     deleteExtra (index, indice) {
-      const extraPrice = this.orderProducts[index].additionals[indice].sale_price
+      const extraPrice = this.orderProducts[index].additionals[indice]
+        .sale_price
       const qty = this.orderProducts[index].additionals[indice].quantity
       const price = this.orderProducts[index].price
 
       if (this.status === 'add') {
-        this.orderProducts[index].price = price - (extraPrice * qty)
+        this.orderProducts[index].price = price - extraPrice * qty
         this.orderProducts[index].additionals.splice(indice, 1)
       }
     },
     getClient () {
       this.clients.map(r => {
-        if (r.isAddItem) { r.isAddItem = false }
+        if (r.isAddItem) {
+          r.isAddItem = false
+        }
       })
       this.$refs['lista-clientes'].show()
     },
@@ -1219,12 +1260,16 @@ export default {
     },
     handleCancel () {
       if (this.orderProducts.length === 0) {
-        this.principals.map(r => { r.isAddItem = false })
+        this.principals.map(r => {
+          r.isAddItem = false
+        })
       }
       if (this.tempProd.length > 0) {
         this.principals.map(r => {
           this.tempProd.map(x => {
-            if (r.id === x.id) { r.isAddItem = false }
+            if (r.id === x.id) {
+              r.isAddItem = false
+            }
           })
         })
       }
@@ -1247,7 +1292,9 @@ export default {
     },
     handleCancelExtra () {
       if (this.orderProducts[this.index].additionals.length === 0) {
-        this.additionals.map(r => { r.isAddItem = false })
+        this.additionals.map(r => {
+          r.isAddItem = false
+        })
       }
       if (this.tempExtra.length > 0) {
         let object = []
@@ -1256,7 +1303,9 @@ export default {
           if (object.hasOwnProperty(key)) {
             const element = object[key]
             this.additionals.map(r => {
-              if (r.id === element.id) { r.isAddItem = false }
+              if (r.id === element.id) {
+                r.isAddItem = false
+              }
             })
           }
         }
@@ -1265,18 +1314,25 @@ export default {
     },
     resetPrincipals () {
       this.principals.map(r => {
-        if (r.isAddItem) { r.isAddItem = false }
+        if (r.isAddItem) {
+          r.isAddItem = false
+        }
       })
     },
     resetAdditionals () {
       this.additionals.map(r => {
-        if (r.isAddItem) { r.isAddItem = false }
+        if (r.isAddItem) {
+          r.isAddItem = false
+        }
       })
     },
     showPersonalizedText (index) {
       this.personalized_text = ''
       this.index = index
-      if (this.status === 'edit' && this.orderProducts[this.index].product.personalized) {
+      if (
+        this.status === 'edit' &&
+        this.orderProducts[this.index].product.personalized
+      ) {
         this.personalized_text = this.orderProducts[this.index].personalized_text
       }
 
@@ -1284,32 +1340,45 @@ export default {
     },
     showModalNote (index) {
       this.index = index
+      this.note = this.orderProducts[this.index].note
       this.$refs['modal-note'].show()
     },
     showModalDesignNote (index) {
       this.index = index
+      this.note_design = this.orderProducts[this.index].note_design
       this.$refs['modal-design-note'].show()
     },
     onComplete () {
       // this.order.delivery_date = `${this.order.delivery_date} ${this.deliveryTime}`
       this.loading = true
+
       if (this.status === 'add') {
-        orderService.create(this.order)
+        orderService
+          .create(this.order)
           .then(response => {
             this.orderResponse = response.data
             this.$refs['modal-order'].show()
           })
-          .catch(() => { this.loading = false })
-          .finally(() => { this.loading = false })
+          .catch(() => {
+            this.loading = false
+          })
+          .finally(() => {
+            this.loading = false
+          })
       }
       if (this.status === 'edit') {
-        orderService.update(this.order.id, this.order)
+        orderService
+          .update(this.order.id, this.order)
           .then(response => {
             this.orderResponse = response.data
             this.$refs['modal-order'].show()
           })
-          .catch(() => { this.loading = false })
-          .finally(() => { this.loading = false })
+          .catch(() => {
+            this.loading = false
+          })
+          .finally(() => {
+            this.loading = false
+          })
       }
     },
     showModal (modal, index) {
@@ -1345,7 +1414,8 @@ export default {
     },
     validateProducts () {
       if (this.orderProducts.length === 0) {
-        this.validateMsg = 'Debe agregar al menos un producto antes de continuar'
+        this.validateMsg =
+          'Debe agregar al menos un producto antes de continuar'
         return false
       }
 
@@ -1395,12 +1465,19 @@ export default {
     finishOrder () {
       if (this.sendForm) {
         this.loading = true
-        orderService.emailForm(this.orderResponse.id)
+        orderService
+          .emailForm(this.orderResponse.id)
           .then(response => {
-            if (response.status) { this.$router.push({ name: 'orders.list' }) }
+            if (response.status) {
+              this.$router.push({ name: 'orders.list' })
+            }
           })
-          .catch(() => { this.loading = false })
-          .finally(() => { this.loading = false })
+          .catch(() => {
+            this.loading = false
+          })
+          .finally(() => {
+            this.loading = false
+          })
       } else {
         this.$router.push({ name: 'orders.list' })
       }

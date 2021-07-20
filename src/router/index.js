@@ -63,7 +63,6 @@ const paRoutes = (prop, mode = false) => [
     name: prop + '.taller',
     meta: { dark: mode, auth: true, name: 'Home taller' },
     component: DashboardTaller
-    // component: OrderList
   }
 ]
 

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:fix": "vue-cli-service serve --fix",
     "build": "cross-env NODE_ENV=development node --max_old_space_size=16384 --optimize_for_size --stack_size=16384 --trace-warnings node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode development",
     "build:prod": "cross-env NODE_ENV=production node --max_old_space_size=16384 --optimize_for_size --stack_size=16384 --trace-warnings node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode production",
     "lint": "vue-cli-service lint",
