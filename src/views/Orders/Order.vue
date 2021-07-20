@@ -1090,9 +1090,13 @@ export default {
       this.deliveryCost = object.price
     },
     onModeChange () {
-      if (this.order.mode === 'pedidosya') {
+      if (this.order.mode !== 'delivery') {
         this.order.delivery_zone_id = null
+        this.deliveryCost = 0
       }
+      // if (this.order.mode === 'pedidosya') {
+      //   this.order.delivery_zone_id = null
+      // }
     },
     addClient (item) {
       this.client = item
