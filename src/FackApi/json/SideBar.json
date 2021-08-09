@@ -204,13 +204,13 @@
     "icon": "ri-account-circle-line"
   },
   {
-    "title": "Deliveries",
-    "name": "Deliveries",
+    "title": "Delivery",
+    "name": "Delivery",
     "is_heading": false,
     "is_active": false,
     "link": {
       "display": "standalone",
-      "name": "public.deliveries"
+      "name": "public.delivery"
     },
     "class_name": "",
     "is_icon_class": true,

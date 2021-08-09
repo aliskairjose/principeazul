@@ -273,8 +273,8 @@ const pagesChildRoutes = (prop, mode = false) => [
 
 const publicRoutes = (prop, mode = false) => [
   {
-    path: 'deliveries',
-    name: prop + '.deliveries',
+    path: 'delivery',
+    name: prop + '.delivery',
     meta: { dark: mode, auth: false },
     component: Deliveries,
     props: { mode: 'delivery' }
